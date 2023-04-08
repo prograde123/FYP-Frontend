@@ -1,0 +1,13 @@
+body{
+    margin: 0;
+}
+
+Box:after {
+    content: "";
+    position:absolute;
+    margin:-20px;
+    width:40px;
+    height:40px;
+    border-radius: 50%; /* NEW */
+    box-shadow: 0 0 0 250px #522d5b;
+  }
