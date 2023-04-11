@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import SignupImage from '../assets/signup.png'
-import LogoImage from '../assets/logo.png'
-import GoogleImage from '../assets/google.png'
-import FbImage from '../assets/fb.png'
+import SignupImage from '../../../assets/signup.png'
+import LogoImage from '../../../assets/logo.png'
+import GoogleImage from '../../../assets/google.png'
+import FbImage from '../../../assets/fb.png'
 import { useTheme } from '@emotion/react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,6 +17,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Person2Icon from '@mui/icons-material/Person2';
 import { MuiTelInput } from 'mui-tel-input'
 import { Link } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SignUp = () => {
     const theme = useTheme()
@@ -27,6 +28,8 @@ const SignUp = () => {
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
     const [phone, setPhone] = React.useState('+92')
+    const [cv, setCv] = React.useState('')
+    const [pic, setPic] = React.useState('')
     const [firstPage, setFirstPage] = React.useState(true)
     
 // axios function
@@ -138,17 +141,20 @@ const SignUp = () => {
       function RenderAdditionalInfo() {
         return (
             <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-            <MuiTelInput value={phone} onChange={(e) => setPhone(e.target.value)} sx={{ marginTop: 4 }} variant="outlined" color='secondary'>
+            
+            <MuiTelInput value={phone} onChange={(e) => setPhone(e.target.value)} variant="outlined" color='secondary'>
                         </MuiTelInput>
-                        <Box sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold' }} >
-                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload CV*  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                        <Box sx={{ marginTop: 3, fontWeight: 'bold' }} >
+                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload CV*  <Button value={cv}
+                                onChange={(e) => setCv(e.target.value)} variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                 Click to browse or <br />
                                 Drag and Drop Files
                                 <input hidden accept="file/*" multiple type="file" />
                             </Button></Button></Typography>
                         </Box>
-                        <Box sx={{ marginTop: 2, marginBottom: 4, fontWeight: 'bold' }} >
-                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile Picture* (Optional)  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                        <Box sx={{ marginTop: 3, fontWeight: 'bold' }} >
+                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile Picture* <Button value={pic}
+                                onChange={(e) => setPic(e.target.value)} variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                 Click to browse or <br />
                                 Drag and Drop Files
                                 <input hidden accept="file/*" multiple type="file" />
@@ -173,7 +179,9 @@ const SignUp = () => {
                 </Box>
             </Box>
             <Box sx={{ width: '80%' }}>
-                <Box sx={{ marginLeft: 10, marginRight: 10, marginTop: 4 }}>
+            <ArrowBackIcon onClick={()=>setFirstPage(true)} sx={{marginRight:4,marginLeft:4,marginTop:2}}>Go Back</ArrowBackIcon>
+                <Box sx={{ marginLeft: 10, marginRight: 10}}>
+            
                     <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 3 }}>Create Account (Teacher) </Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                         <Button variant="outlined" color='secondary'> <img src={GoogleImage} height={28} style={{ marginRight: 15 }} />Signup with Google</Button>
@@ -183,9 +191,9 @@ const SignUp = () => {
                         <Typography sx={{ fontWeight: 'bold', marginBottom: 2, marginTop:2 }}>- OR -</Typography>
                     </Box>
                     {firstPage ? <RenderBasicInfo /> : <RenderAdditionalInfo />}
-                    <Box >
+                    <Box sx={{ marginTop: 4 }} >
                         {
-                            firstPage ?  <Button onClick={()=>setFirstPage(false)} variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
+                            firstPage ?  <Button onClick={()=>setFirstPage(false)}  variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
                             Next
                         </Button>
                         :
