@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import SignupImage from '../../../assets/signup.png'
@@ -17,7 +17,6 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Person2Icon from '@mui/icons-material/Person2';
 import { MuiTelInput } from 'mui-tel-input'
 import { Link } from "react-router-dom";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SignUp = () => {
     const theme = useTheme()
@@ -28,9 +27,6 @@ const SignUp = () => {
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
     const [phone, setPhone] = React.useState('+92')
-    const [cv, setCv] = React.useState('')
-    const [pic, setPic] = React.useState('')
-    const [firstPage, setFirstPage] = React.useState(true)
     
 // axios function
 
@@ -46,9 +42,32 @@ const SignUp = () => {
           console.log(e);
         }
       }
-      function RenderBasicInfo() {
-        return (
-            <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
+
+    return (
+        <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '100vh'}}>
+            <Box bgcolor={theme.palette.secondary.main} sx={{ borderBottomRightRadius: 16, borderTopRightRadius: 16, width: '60%' }} >
+                <Typography variant='h4' sx={{ color: theme.palette.primary.background, marginLeft: 3, marginTop: 4, fontWeight: 'bold' }}><img src={LogoImage} height={30} /> <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 3, justifyContent: 'center' }}>
+                    <Typography variant='h4' sx={{ color: theme.palette.primary.background, fontWeight: 'bold' }}>Welcome to <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    <Typography variant='h5' sx={{ color: theme.palette.primary.background }}>Sign In Now ! </Typography>
+                </Box>
+                <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center'}}>
+                    <img style={{ maxWidth: '100%', height: '60vh' }} src={SignupImage} />
+                </Box>
+            </Box>
+            <Box sx={{ width: '80%' }}>
+                <Box sx={{ marginLeft: 10, marginRight: 10, marginTop: 4 }}>
+                    <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 3 }}>Create Account (Teacher) </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <Button variant="outlined" color='secondary'> <img src={GoogleImage} height={28} style={{ marginRight: 15 }} />Signup with Google</Button>
+                        <Button variant="outlined" color='secondary' > <img src={FbImage} height={28} style={{ marginRight: 15 }} />Signup with Facebook</Button>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <Typography sx={{ fontWeight: 'bold', marginBottom: 2, marginTop:2 }}>- OR -</Typography>
+                    </Box>
+                    <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
                         <FormControl sx={{ width: '100%' }}>
                             <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Full Name</InputLabel>
                             <OutlinedInput
@@ -135,73 +154,27 @@ const SignUp = () => {
                                 label="Confirm Password"
                             />
                         </FormControl>
-                    </Box>
-        )
-      }
-      function RenderAdditionalInfo() {
-        return (
-            <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-            
-            <MuiTelInput value={phone} onChange={(e) => setPhone(e.target.value)} variant="outlined" color='secondary'>
+                        <MuiTelInput value={phone} onChange={(e) => setPhone(e.target.value)} sx={{ marginTop: 4 }} variant="outlined" color='secondary'>
                         </MuiTelInput>
-                        <Box sx={{ marginTop: 3, fontWeight: 'bold' }} >
-                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload CV*  <Button value={cv}
-                                onChange={(e) => setCv(e.target.value)} variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                        <Box sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold' }} >
+                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload CV*  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                 Click to browse or <br />
                                 Drag and Drop Files
                                 <input hidden accept="file/*" multiple type="file" />
                             </Button></Button></Typography>
                         </Box>
-                        <Box sx={{ marginTop: 3, fontWeight: 'bold' }} >
-                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile Picture* <Button value={pic}
-                                onChange={(e) => setPic(e.target.value)} variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                        <Box sx={{ marginTop: 2, marginBottom: 4, fontWeight: 'bold' }} >
+                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile Picture* (Optional)  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                 Click to browse or <br />
                                 Drag and Drop Files
                                 <input hidden accept="file/*" multiple type="file" />
                             </Button></Button></Typography>
                         </Box>
-                        </Box>
-
-        )
-      }
-    return (
-        <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '100vh'}}>
-            <Box bgcolor={theme.palette.secondary.main} sx={{ borderBottomRightRadius: 16, borderTopRightRadius: 16, width: '60%' }} >
-                <Typography variant='h4' sx={{ color: theme.palette.primary.background, marginLeft: 3, marginTop: 4, fontWeight: 'bold' }}><img src={LogoImage} height={30} /> <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 3, justifyContent: 'center' }}>
-                    <Typography variant='h4' sx={{ color: theme.palette.primary.background, fontWeight: 'bold' }}>Welcome to <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                    <Typography variant='h5' sx={{ color: theme.palette.primary.background }}>Sign In Now ! </Typography>
-                </Box>
-                <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center'}}>
-                    <img style={{ maxWidth: '100%', height: '60vh' }} src={SignupImage} />
-                </Box>
-            </Box>
-            <Box sx={{ width: '80%' }}>
-            <ArrowBackIcon onClick={()=>setFirstPage(true)} sx={{marginRight:4,marginLeft:4,marginTop:2}}>Go Back</ArrowBackIcon>
-                <Box sx={{ marginLeft: 10, marginRight: 10}}>
-            
-                    <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 3 }}>Create Account (Teacher) </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <Button variant="outlined" color='secondary'> <img src={GoogleImage} height={28} style={{ marginRight: 15 }} />Signup with Google</Button>
-                        <Button variant="outlined" color='secondary' > <img src={FbImage} height={28} style={{ marginRight: 15 }} />Signup with Facebook</Button>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <Typography sx={{ fontWeight: 'bold', marginBottom: 2, marginTop:2 }}>- OR -</Typography>
-                    </Box>
-                    {firstPage ? <RenderBasicInfo /> : <RenderAdditionalInfo />}
-                    <Box sx={{ marginTop: 4 }} >
-                        {
-                            firstPage ?  <Button onClick={()=>setFirstPage(false)}  variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
-                            Next
-                        </Button>
-                        :
+                    <Box >
                         <Button variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
                             Sign Up
                         </Button>
-                        }
-                       
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: 'row', marginTop: 1, width: '100%', justifyContent: 'center', marginBottom: 4 }}>
                         <Typography variant='body1' sx={{ color: '#999999', marginBottom:4 }} >Already have an account?<Link style={{ textDecoration: 'none' }} to="/SignIn"><span style={{ color: "#6614A5" }}>Sign In</span></Link> </Typography>
