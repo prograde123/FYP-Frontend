@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
-import { Box, Stack } from '@mui/system';
+import  Box from '@mui/material/Box';
+import {Stack} from '@mui/system'
 import SignupImage from '../../../assets/signup.png'
 import LogoImage from '../../../assets/logo.png'
 import GoogleImage from '../../../assets/google.png'
@@ -17,6 +18,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Person2Icon from '@mui/icons-material/Person2';
 import { MuiTelInput } from 'mui-tel-input'
 import { Link } from "react-router-dom";
+import { Register } from '../../../../Axios/axiosall';
 
 const SignUp = () => {
     const theme = useTheme()
@@ -27,6 +29,8 @@ const SignUp = () => {
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
     const [phone, setPhone] = React.useState('+92')
+    const [pic,setPic] = React.useState('')
+    const [cv,setCv] = React.useState('/')
     
 // axios function
 
@@ -172,7 +176,8 @@ const SignUp = () => {
                         </Box>
                     </Box>
                     <Box >
-                        <Button variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
+                        <Button onClick={()=> Register(name,email,pass,"Teacher",phone,pic,cv,'')}
+                        variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
                             Sign Up
                         </Button>
                     </Box>
