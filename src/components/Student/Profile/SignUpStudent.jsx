@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
-import { Box, Stack } from '@mui/system';
+import  Box from '@mui/material/Box';
+import {Stack} from '@mui/system'
 import SignupImage from '../../../assets/signup.png'
 import LogoImage from '../../../assets/logo.png'
 import GoogleImage from '../../../assets/google.png'
@@ -19,6 +20,7 @@ import Person2Icon from '@mui/icons-material/Person2';
 import { MuiTelInput } from 'mui-tel-input'
 import { Link } from "react-router-dom";
 import PortraitIcon from '@mui/icons-material/Portrait';
+import { Register } from '../../../../Axios/axiosall';
 
 function SignUpStudent() {
     const theme = useTheme()
@@ -192,7 +194,8 @@ function SignUpStudent() {
                     </Box>
                 </Box>
                 <Box >
-                    <Button variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
+                    <Button onClick={()=> Register(name,email,pass,"Student",phone,pic,'',username)}
+                    variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
                         Sign Up
                     </Button>
                 </Box>
