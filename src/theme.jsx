@@ -7,10 +7,9 @@ export const theme = createTheme({
       background: '#FFFFFF'
     },
     secondary: {
-      main: '#6614A5'
-    },
-    otherColor: {
-      main: '#9F8C62'
+      main: '#6614A5',
+      background:'#F8ECF1',
+      logo: '#9F8C62'
     }
   }
 })
