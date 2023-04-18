@@ -23,6 +23,17 @@ import { useAppStore } from '../../appStore';
 import CreateCourse from './Course/CreateCourse';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import CreateIcon from '@mui/icons-material/Create';
+import PreviewIcon from '@mui/icons-material/Preview';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import GradingIcon from '@mui/icons-material/Grading';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 const drawerWidth = 260;
 
@@ -111,7 +122,7 @@ export default function Sidebar() {
                   color: theme.palette.primary.background
                 }}
               >
-                <InboxIcon />
+                <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -121,7 +132,7 @@ export default function Sidebar() {
           <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
             <ListItemButton onClick={handleClick}>
               <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                <InboxIcon />
+                <ContentPasteIcon />
               </ListItemIcon>
               <ListItemText primary="Courses" />
               {sopen ? <ExpandLess /> : <ExpandMore />}
@@ -131,7 +142,7 @@ export default function Sidebar() {
                 
                 <ListItemButton sx={{ pl: 4 }} onClick={()=> navigate('/Teacher/CreateCourse')}>
                   <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                    <StarBorder />
+                    <CreateIcon />
                   </ListItemIcon>
                   <ListItemText primary="Create Course" />
                 </ListItemButton>
@@ -140,11 +151,11 @@ export default function Sidebar() {
             </Collapse>
             <Collapse in={sopen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton sx={{ pl: 4 }} onClick={()=> navigate('/Teacher/CoursesList')}>
                   <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                    <StarBorder />
+                    <PreviewIcon />
                   </ListItemIcon>
-                  <ListItemText primary="View Courses" />
+                  <ListItemText primary="All Courses" />
                 </ListItemButton>
               </List>
             </Collapse>
@@ -152,9 +163,9 @@ export default function Sidebar() {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                    <StarBorder />
+                    <PersonAddAltIcon/>
                   </ListItemIcon>
-                  <ListItemText primary="Requests" />
+                  <ListItemText primary="Enrolment Requests" />
                 </ListItemButton>
               </List>
             </Collapse>
@@ -162,7 +173,7 @@ export default function Sidebar() {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                    <StarBorder />
+                    <AddBoxIcon />
                   </ListItemIcon>
                   <ListItemText primary="Add Course Content" />
                 </ListItemButton>
@@ -172,9 +183,9 @@ export default function Sidebar() {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                    <StarBorder />
+                    <GradingIcon />
                   </ListItemIcon>
-                  <ListItemText primary="View Contents" />
+                  <ListItemText primary="Course Contents" />
                 </ListItemButton>
               </List>
             </Collapse>
@@ -182,15 +193,13 @@ export default function Sidebar() {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                    <StarBorder />
+                    <PeopleAltIcon />
                   </ListItemIcon>
                   <ListItemText primary="Students" />
                 </ListItemButton>
               </List>
             </Collapse>
           </ListItem>
-
-
           <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
             <ListItemButton
               sx={{
@@ -207,7 +216,7 @@ export default function Sidebar() {
                   color: theme.palette.primary.background
                 }}
               >
-                <InboxIcon />
+                <AssignmentIcon />
               </ListItemIcon>
               <ListItemText primary="Assignments" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -228,7 +237,7 @@ export default function Sidebar() {
                   color: theme.palette.primary.background
                 }}
               >
-                <InboxIcon />
+                <SupervisedUserCircleIcon />
               </ListItemIcon>
               <ListItemText primary="Students" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -249,7 +258,7 @@ export default function Sidebar() {
                   color: theme.palette.primary.background
                 }}
               >
-                <InboxIcon />
+                <SummarizeIcon />
               </ListItemIcon>
               <ListItemText primary="Reports" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
