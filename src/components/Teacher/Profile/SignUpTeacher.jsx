@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
 import  Box from '@mui/material/Box';
-import {Stack} from '@mui/system'
 import SignupImage from '../../../assets/signup.png'
 import LogoImage from '../../../assets/logo.png'
 import GoogleImage from '../../../assets/google.png'

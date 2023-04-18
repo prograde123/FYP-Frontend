@@ -9,17 +9,21 @@ import ViewProfileTeacher from "./components/Teacher/Profile/ViewProfile";
 import ViewProfileStudent from "./components/Student/Profile/ViewProfile";
 import Dashboard from "./components/Teacher/Dashboard";
 import CreateCourse from "./components/Teacher/Course/CreateCourse";
+import FullFeaturedCrudGrid from "./components/Table";
+import ViewCoursesList from "./components/Teacher/Course/ViewCoursesList";
 
 function App() {
   return (
     <>
       <Routes>
-
+         
+      {/* <Route path="/" element={<FullFeaturedCrudGrid />}></Route> */}
         //Teacher Routes
         <Route path="/Teacher/SignUp" element={<SignUpTeacher />}></Route>
         <Route path="/Student/ViewProfile" element={<ViewProfileTeacher />}></Route>
         <Route path="/Teacher/Dashboard" element={<Dashboard />}></Route>
         <Route path="/Teacher/CreateCourse" element={<CreateCourse />}></Route>
+        <Route path="/Teacher/CoursesList" element={<ViewCoursesList />}></Route>
 
 
         //Student Routes
