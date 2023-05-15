@@ -107,7 +107,7 @@ function SignIn() {
                         </Button>
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: 'row', marginTop: 2, width: '100%', justifyContent: 'center' }}>
-                        <Typography variant='body1' sx={{ color: '#999999' }} >Don't have an account?<Link to="/Teacher/SignUp" style={{ textDecoration: 'none' }}><span style={{ color: "#6614A5" }}>Sign Up</span></Link> </Typography>
+                        <Typography variant='body1' sx={{ color: '#999999' }} >Don't have an account?<Link to="/TeacherSignUp" style={{ textDecoration: 'none' }}><span style={{ color: "#6614A5" }}>Sign Up</span></Link> </Typography>
                     </Box>
                 </Box>
             </Box>

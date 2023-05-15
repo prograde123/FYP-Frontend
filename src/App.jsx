@@ -5,36 +5,17 @@ import OTP from './components/OTP'
 import SignUpTeacher from "./components/Teacher/Profile/SignUpTeacher";
 import SignUpStudent from "./components/Student/Profile/SignUpStudent";
 import ForgotPassword from "./components/ForgotPassword";
-import ViewProfileTeacher from "./components/Teacher/Profile/ViewProfile";
-import ViewProfileStudent from "./components/Student/Profile/ViewProfile";
-import Dashboard from "./components/Teacher/Dashboard";
-import CreateCourse from "./components/Teacher/Course/CreateCourse";
-import FullFeaturedCrudGrid from "./components/Table";
-import ViewCoursesList from "./components/Teacher/Course/ViewCoursesList";
-
+import TeacherBody from "./components/Teacher/Body/TeacherBody";
 function App() {
   return (
     <>
       <Routes>
-         
-      {/* <Route path="/" element={<FullFeaturedCrudGrid />}></Route> */}
-        //Teacher Routes
-        <Route path="/Teacher/SignUp" element={<SignUpTeacher />}></Route>
-        <Route path="/Student/ViewProfile" element={<ViewProfileTeacher />}></Route>
-        <Route path="/Teacher/Dashboard" element={<Dashboard />}></Route>
-        <Route path="/Teacher/CreateCourse" element={<CreateCourse />}></Route>
-        <Route path="/Teacher/CoursesList" element={<ViewCoursesList />}></Route>
-
-
-        //Student Routes
-        <Route path="/Student/SignUp" element={<SignUpStudent />}></Route>
-        <Route path="/Student/ViewProfile" element={<ViewProfileStudent />}></Route>
-
-
-        //Teacher and Student
-        <Route path="/SignIn" element={<SignIn />}></Route>
-        <Route path="/ForgotPassword" element={<ForgotPassword />}></Route>
-        <Route path="/OTPVerification" element={<OTP />}></Route>
+        <Route path='/SignIn' element={<SignIn />}></Route>
+        <Route path="/TeacherSignUp" element={<SignUpTeacher />} />
+        <Route path="/StudentSignUp" element={<SignUpStudent />} />
+        <Route path='/Teacher/*' element={<TeacherBody />} />
+        <Route path="ForgotPassword" element={<ForgotPassword />} />
+        <Route path="OTPVerification" element={<OTP />} />
       </Routes>
     </>
   )
