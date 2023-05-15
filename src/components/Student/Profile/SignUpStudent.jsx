@@ -3,6 +3,7 @@ import { Button, Typography } from '@mui/material';
 import  Box from '@mui/material/Box';
 import {Stack} from '@mui/system'
 import SignupImage from '../../../assets/signup.png'
+import signImage from '../../../assets/sign.png' 
 import LogoImage from '../../../assets/logo.png'
 import GoogleImage from '../../../assets/google.png'
 import FbImage from '../../../assets/fb.png'
@@ -21,6 +22,7 @@ import { MuiTelInput } from 'mui-tel-input'
 import { Link } from "react-router-dom";
 import PortraitIcon from '@mui/icons-material/Portrait';
 import { Register } from '../../../../Axios/axiosall';
+
 
 function SignUpStudent() {
     const theme = useTheme()

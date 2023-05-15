@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from '@emotion/react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchBar from '@mkyy/mui-search-bar';
+import DownloadIcon from '@mui/icons-material/Download';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -18,81 +19,27 @@ import {
   randomId,
 } from '@mui/x-data-grid-generator';
 import { useNavigate } from 'react-router-dom';
-import SearchAppBar from './Teacher/Search';
 import { Paper } from '@mui/material';
 
 
 const initialRows = [
   {
     id: randomId(),
-    imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
-    name: "Introduction to Computers",
-    instructor: "ahmar",
-    creditHours: 4,
-    language: 'Python',
+    imageUrl: 'https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png',
+    lecture: "Lecture 01",
+    title: "Loops and Arrays",
+    size: "720KB",
     dateCreated: randomCreatedDate(),
-    dateEnding: randomCreatedDate(),
   },
   {
     id: randomId(),
-    imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
-    name: "Introduction to Python",
-    instructor: "ahmar",
-    creditHours: 4,
-    language: 'Python',
+    imageUrl: 'https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png',
+    lecture: "Lecture 02",
+    title: "Functions",
+    size: "620KB",
     dateCreated: randomCreatedDate(),
-    dateEnding: randomCreatedDate(),
   },
-  {
-    id: randomId(),
-    imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
-    name: "assembly language",
-    instructor: "ahmar",
-    creditHours: 4,
-    language: 'Masm',
-    dateCreated: randomCreatedDate(),
-    dateEnding: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
-    name: "C++",
-    instructor: "ahmar",
-    creditHours: 4,
-    language: 'C++',
-    dateCreated: randomCreatedDate(),
-    dateEnding: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
-    name: "C Sharp",
-    instructor: "ahmar",
-    creditHours: 4,
-    language: 'C#',
-    dateCreated: randomCreatedDate(),
-    dateEnding: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
-    name: "Java Script",
-    instructor: "ahmar",
-    creditHours: 4,
-    language: 'Java',
-    dateCreated: randomCreatedDate(),
-    dateEnding: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
-    name: "Programming Fundamentals",
-    instructor: "ahmar",
-    creditHours: 4,
-    language: 'Java',
-    dateCreated: randomCreatedDate(),
-    dateEnding: randomCreatedDate(),
-  },
+ 
 ];
 
 
@@ -105,7 +52,7 @@ function EditToolbar(props) {
 
   const requestSearch = (searchedVal) => {
     const filteredRows = initialRows.filter((row) => {
-      return row.name.toLowerCase().includes(searchedVal.toLowerCase());
+      return row.title.toLowerCase().includes(searchedVal.toLowerCase());
     });
     setRows(filteredRows);
   };
@@ -117,7 +64,7 @@ function EditToolbar(props) {
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
       <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/CreateCourse') }} startIcon={<AddIcon />}>
-        Create Course
+        Add Course Content
       </Button>
       <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, border: 2, borderColor: theme.palette.secondary.main }}>
         <SearchBar value={searched}
@@ -135,7 +82,7 @@ EditToolbar.propTypes = {
   setRows: PropTypes.func.isRequired,
 };
 
-export default function FullFeaturedCrudGrid() {
+export default function Contents() {
   const theme = useTheme();
   const navigate = useNavigate()
   const [rows, setRows] = React.useState(initialRows);
@@ -152,38 +99,31 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const columns = [
-    { field: 'imageUrl', headerName: 'Image', renderCell: (params) => (
-     <img src={params.row.imageUrl} style={{width: 50, borderRadius: '50%'}}/>
-    ) },
-    { field: 'name', headerName: 'Course Name', width: 230, editable: true, validate: rowData => rowData.name !== '' },
-    { field: 'instructor', headerName: 'Instructor', width: 150, editable: true },
-    { field: 'language', headerName: 'Language', editable: true },
+    {
+        field: 'imageUrl', headerName: 'File', renderCell: (params) => (
+          <img src={params.row.imageUrl} style={{ width: 50, borderRadius: '50%' }} />
+        )
+      },
+    { field: 'lecture', headerName: 'Lecture', width: 200},
+    { field: 'title', headerName: 'Title', width: 200},
+    { field: 'size', headerName: 'Size', width: 200},
     {
       field: 'dateCreated',
-      headerName: 'Started At',
+      headerName: 'Date Uploaded',
       type: 'date',
-      width: 150,
-      editable: true,
+      width: 200,
     },
-    {
-      field: 'dateEnding',
-      headerName: 'Ending At',
-      type: 'date',
-      width: 150,
-      editable: true,
-    },
-    { field: 'creditHours', headerName: 'Credit Hours', type: 'number', editable: true },
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 160,
+      width: 230,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
         return [
-          <GridActionsCellItem
-            icon={<VisibilityIcon />}
+            <GridActionsCellItem
+            icon={<DownloadIcon />}
             label="View"
             className="textPrimary"
             sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
@@ -214,7 +154,7 @@ export default function FullFeaturedCrudGrid() {
         height: "90%",
         marginLeft: 2,
         marginRight: 2,
-        padding:1,
+        padding: 1,
         '& .actions': {
           color: theme.palette.secondary.main,
         },
@@ -224,10 +164,11 @@ export default function FullFeaturedCrudGrid() {
       }}
     >
       <DataGrid
-        sx={{ backgroundColor: theme.palette.primary.background, boxShadow: 12,border: 2, borderColor: theme.palette.secondary.main,'& .MuiDataGrid-cell:hover': {
-          color: theme.palette.secondary.main,  
-          
-        }, marginTop: 3, borderRadius: 6, }}
+        sx={{
+          backgroundColor: theme.palette.primary.background, boxShadow: 12, border: 2, borderColor: theme.palette.secondary.main, '& .MuiDataGrid-cell:hover': {
+            color: theme.palette.secondary.main,
+          }, marginTop: 3, borderRadius: 6, height: '70vh'
+        }}
         rows={rows}
         rowHeight={70}
         columns={columns}
@@ -247,6 +188,8 @@ export default function FullFeaturedCrudGrid() {
         options={{
           search: true
         }}
+        // checkboxSelection
+        // disableRowSelectionOnClick
       />
     </Box>
   );
