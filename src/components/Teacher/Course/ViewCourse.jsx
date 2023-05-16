@@ -14,7 +14,7 @@ import { useTheme } from '@emotion/react';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { ColorLens } from '@mui/icons-material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate  } from 'react-router-dom';
 
 const ViewCourse = () => {
   const theme = useTheme()
@@ -79,7 +79,7 @@ const ViewCourse = () => {
                   width: '37%', height: '10%',
                   padding: 1, fontSize: 16, marginLeft: '5%',
                   fontWeight: 'bold', paddingRight: '3%'
-                }}>
+                }} onClick={()=> navigate('/Assignment/ViewUploadedAssigList')}>
                 View Course Assignments
               </Button>
 

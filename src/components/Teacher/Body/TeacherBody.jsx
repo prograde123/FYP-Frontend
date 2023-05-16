@@ -12,6 +12,8 @@ import { useTheme } from "@emotion/react";
 import ViewProfile from "../Profile/ViewProfileTeacher";
 import CreateCourseContent from '../Course/AddCourseContent'
 import ViewCourse from '../Course/ViewCourse'
+import AddAssignment from '../Assignment/AddAssignment';
+import ViewSubmittedAssigList from '../Assignment/ViewSubmittedAssigList'
 
 export default function TeacherBody() {
     const theme = useTheme()
@@ -34,6 +36,8 @@ export default function TeacherBody() {
                             <Route path="AddCourseContent" element={<CreateCourseContent/>}></Route>
                             <Route path="CourseDetails" element={<ViewCourse/>}></Route>
                             <Route path="Profile" element={<ViewProfile />}></Route>
+                            <Route path="AddAssignment" element={<AddAssignment />}></Route>
+                            <Route path="ViewSubmittedAssigList" element={<ViewSubmittedAssigList />}> </Route>
                         </Route>
                     </Routes>
                 </Box>
