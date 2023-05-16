@@ -6,6 +6,7 @@ import SignUpTeacher from "./components/Teacher/Profile/SignUpTeacher";
 import SignUpStudent from "./components/Student/Profile/SignUpStudent";
 import ForgotPassword from "./components/ForgotPassword";
 import TeacherBody from "./components/Teacher/Body/TeacherBody";
+import AssignmentBody from "./components/StudentsAndTeachers/body/assigBody";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/TeacherSignUp" element={<SignUpTeacher />} />
         <Route path="/StudentSignUp" element={<SignUpStudent />} />
         <Route path='/Teacher/*' element={<TeacherBody />} />
+        <Route path="/Assignment/*" element={<AssignmentBody />} />
         <Route path="ForgotPassword" element={<ForgotPassword />} />
         <Route path="OTPVerification" element={<OTP />} />
       </Routes>
