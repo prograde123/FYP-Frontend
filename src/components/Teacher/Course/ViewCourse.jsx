@@ -92,21 +92,21 @@ const ViewCourse = () => {
           </Box>
         </Box>
         <Box sx={{
-          backgroundColor: theme.palette.success.background
+          backgroundColor: theme.palette.secondary.main, borderRadius:10
           , display: 'flex', flexDirection: 'row',
           justifyContent: 'space-around', 
         }}>
           <Box>
-            <Typography variant='h6'><b>Starting Date </b> <br />  {Sdate}</Typography>
+            <Typography variant='h6'sx={{color:'white'}}><b>Starting Date </b> <br />  {Sdate}</Typography>
             <br />
-            <Typography variant='h6'
+            <Typography variant='h6' sx={{color:'white'}}
               ><b>Ending Date</b>  <br />  {Ldate}</Typography>
           </Box>
 
           <Box>
-            <Typography variant='h6'
+            <Typography variant='h6' sx={{color:'white'}}
               ><b>Language </b> <br />  {language}</Typography><br/>
-              <Typography variant='h6'
+              <Typography variant='h6' sx={{color:'white'}}
               > <b>CreditHours</b>  <br />  {creditHours}</Typography>
           </Box>
         </Box>
