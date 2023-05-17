@@ -1,7 +1,7 @@
 import http from "./axios";
 
 
-export const Register = async (fullName, email, password, role, phoneNum,profilePic,cv,userName) => {
+export const Register = async (fullName, email, password, role, phoneNum,profilePic='/',cv='/',userName) => {
     var userid ;
     await http.post("/users/signup",{
         fullName, email, password, role, phoneNum, profilePic
