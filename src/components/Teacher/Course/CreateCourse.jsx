@@ -64,14 +64,38 @@ function CreateCourse() {
     }, () => {
       console.log("success!!")
       getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-        // uploadToDatabase(downloadURL)
+       addCourse(downloadURL)
         console.log(downloadURL)
       })
     })
   }
 
+  async function addCourse(downloadURL) {
+    try {
+      const url = "http://localhost:5000/course/addCourse";
+      const course = {
+        teacher: teacher,
+        courseCode: initialValues.courseCode,
+        name: initialValues.title,
+        description: initialValues.description,
+        creditHours: initialValues.creditHours,
+        language: initialValues.language,
+        startingDate: initialValues.starting,
+        endingDate: initialValues.ending,
+        image: downloadURL,
+        courseContent: [],
+        students: [],
+        requests: [],
+        assignments: [],
+      };
+      const response = await axios.post(url, course);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center',width:'100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Box>
         <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginTop: 1 }}>Create New Course</Typography>
       </Box>
@@ -99,7 +123,7 @@ function CreateCourse() {
               onChange={handleChange}
               onBlur={handleBlur}
             />{errors.title && touched.title ? (
-              <p style={{ color: 'red', marginLeft: 4, marginBottom: 0,marginTop:0 }}>{errors.title}</p>
+              <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.title}</p>
             ) : null}
             <br />
             <TextField sx={{ marginTop: 3, width: '100%' }}

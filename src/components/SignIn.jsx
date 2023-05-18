@@ -15,20 +15,26 @@ import EmailIcon from '@mui/icons-material/Email';
 import { Link } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import { login } from '../../Axios/axiosall';
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
     const theme = useTheme()
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
+    const navigate = useNavigate()
 
-
-
-    //axios function request here below the states
-
-
+    async function loginUser() {
+        const success = await login(email, pass)
+        console.log(success)
+        if (success === true) {
+            return navigate("/Teacher/Dashboard");
+        }
+        else {
+            alert("invalid email or password")
+        }
+    }
 
     return (
         <Box sx={{ flexDirection: 'row', display: 'flex', height: '100vh' }}>
@@ -101,7 +107,7 @@ function SignIn() {
                         </Box>
                     </Box>
                     <Box sx={{ marginTop: 5 }}>
-                        <Button onClick={()=> login(email,pass)}
+                        <Button onClick={()=> loginUser()}
                         variant="contained" color="secondary" endIcon={<LoginIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
                             Sign In
                         </Button>

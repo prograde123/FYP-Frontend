@@ -31,21 +31,6 @@ const SignUp = () => {
     const [pic,setPic] = React.useState('')
     const [cv,setCv] = React.useState('/')
     
-// axios function
-
-    async function addUser() {
-        try {
-          const url = ""; //paste the link here of local host
-          const user = {
-            //attributes and states here
-
-          };
-          const response = await axios.post(url, user);
-        } catch (e) {
-          console.log(e);
-        }
-      }
-
     return (
         <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '100vh'}}>
             <Box bgcolor={theme.palette.secondary.main} sx={{ borderBottomRightRadius: 16, borderTopRightRadius: 16, width: '60%' }} >
