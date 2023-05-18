@@ -49,15 +49,20 @@ export const login = async(email,password)=>{
       email, password
       })
     .then( async  (response)=>{
-      console.log(response);//response data
+      console.log(response.data);//response data
       console.log(response.data.role);//response data
       console.log(response.data.token);
-      userid = response.data._id
-      role = response.data.role
-      console.log(response.data._id)
-      console.log(response.status);//Status code
-      console.log(response.statusText);//OK for 200
-      console.log(response.headers);//Header
+      const userData = {
+        userid : response.data._id,
+        role: response.data.role,
+        email:response.data.email ,
+        token:response.data.token,
+        fullName:response.data.fullName,
+        //jo fields required hain user ki or woh yahan likh lena
+      }
+      
+      localStorage.setItem('User', JSON.stringify(userData));
+      
         if(role === 'Student'){
           //as a student login
         }
