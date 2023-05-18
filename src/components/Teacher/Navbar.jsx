@@ -71,6 +71,11 @@ export default function Navbar() {
   const updateOpen =useAppStore((state)=>state.updateOpen)
   const dopen =useAppStore((state)=>state.dopen)
 
+  function logout() {
+    localStorage.removeItem("User", JSON.stringify([]));
+    return navigate('/SignIn')
+  }
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -109,7 +114,7 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={() => navigate('/Teacher/Profile')} >My Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
+      <MenuItem onClick={()=>{logout()}}>Log out</MenuItem>
     </Menu>
   );
 
