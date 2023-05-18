@@ -2,21 +2,22 @@ import http from "./axios";
 
 
 export const Register = async (fullName, email, password, role, phoneNum,profilePic='/',cv='/',userName) => {
-    var userid ;
+    var userID ;
     await http.post("/users/signup",{
         fullName, email, password, role, phoneNum, profilePic
         })
       .then( async  (response)=>{
         console.log(response);//response data
         console.log(response.data);//response data
-        userid = response.data._id
-        console.log(response.data._id)
+        userID = response.data._id
+        console.log( userID )
+
         console.log(response.status);//Status code
         console.log(response.statusText);//OK for 200
         console.log(response.headers);//Header
           if(role === 'Student'){
             await http.post("/users/signupStudent",{
-              userid,userName
+              userID,userName
               })
             .then((response)=>{
               console.log(response.data);//response data
@@ -26,7 +27,7 @@ export const Register = async (fullName, email, password, role, phoneNum,profile
           }
           else{
             await http.post("/users/signupTeacher",{
-              userid,cv
+              userID,cv
             })
             .then((response)=>{
               console.log(response.data);
