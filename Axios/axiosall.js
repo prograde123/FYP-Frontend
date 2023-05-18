@@ -43,37 +43,26 @@ export const Register = async (fullName, email, password, role, phoneNum,profile
         
 }
 
-export const login = async(email,password)=>{
-  var userid ;
+export const login = async (email, password) => {
+  var userid;
   var role;
-  await http.post("/users/signin",{
-      email, password
-      })
-    .then( async  (response)=>{
-      console.log(response.data);//response data
-      console.log(response.data.role);//response data
-      console.log(response.data.token);
+  try {
+  const response = await http.post("/users/signin", {email,password})
       const userData = {
-        userid : response.data._id,
+        userid: response.data._id,
         role: response.data.role,
-        email:response.data.email ,
-        token:response.data.token,
-        fullName:response.data.fullName,
-        //jo fields required hain user ki or woh yahan likh lena
+        email: response.data.email,
+        token: response.data.token,
+        fullName: response.data.fullName,
+      };
+      if (response.data.success === false) {
+        return false
+      } else {
+        localStorage.setItem("User", JSON.stringify(userData));
+        return true
       }
-      
-      localStorage.setItem('User', JSON.stringify(userData));
-      
-        if(role === 'Student'){
-          //as a student login
-        }
-        else{
-          //as a teacher login
-        }
-
-      })
-    .catch( (error) => {
-        console.log(error.response.data);
-      });
-      
-}
+    } catch(e) {
+      console.log(e)
+      return false
+    }
+};
