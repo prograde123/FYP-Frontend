@@ -30,24 +30,9 @@ const SignUp = () => {
     const [phone, setPhone] = React.useState('+92')
     const [pic,setPic] = React.useState('')
     const [cv,setCv] = React.useState('/')
-    
-// axios function
-
-    async function addUser() {
-        try {
-          const url = ""; //paste the link here of local host
-          const user = {
-            //attributes and states here
-
-          };
-          const response = await axios.post(url, user);
-        } catch (e) {
-          console.log(e);
-        }
-      }
 
     return (
-        <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '100vh'}}>
+        <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '200vh'}}>
             <Box bgcolor={theme.palette.secondary.main} sx={{ borderBottomRightRadius: 16, borderTopRightRadius: 16, width: '60%' }} >
                 <Typography variant='h4' sx={{ color: theme.palette.primary.background, marginLeft: 3, marginTop: 4, fontWeight: 'bold' }}><img src={LogoImage} height={30} /> <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 3, justifyContent: 'center' }}>
@@ -57,7 +42,7 @@ const SignUp = () => {
                     <Typography variant='h5' sx={{ color: theme.palette.primary.background }}>Sign In Now ! </Typography>
                 </Box>
                 <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center'}}>
-                    <img style={{ maxWidth: '100%', height: '60vh' }} src={SignupImage} />
+                    <img style={{ maxWidth: '100%', height: '100vh' }} src={SignupImage} />
                 </Box>
             </Box>
             <Box sx={{ width: '80%' }}>

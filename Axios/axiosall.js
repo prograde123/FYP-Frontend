@@ -48,17 +48,11 @@ export const login = async (email, password) => {
   var role;
   try {
   const response = await http.post("/users/signin", {email,password})
-      const userData = {
-        userid: response.data._id,
-        role: response.data.role,
-        email: response.data.email,
-        token: response.data.token,
-        fullName: response.data.fullName,
-      };
+  console.log(response.data.teacher)
       if (response.data.success === false) {
         return false
       } else {
-        localStorage.setItem("User", JSON.stringify(userData));
+        localStorage.setItem("User", JSON.stringify(response.data.teacher));
         return true
       }
     } catch(e) {

@@ -16,10 +16,12 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import dayjs, { Dayjs } from 'dayjs';
+import { useEffect } from "react";
 
 function CreateCourse() {
   const theme = useTheme()
   const [image, setImage] = React.useState(null);
+  const [user, setUser] = React.useState('')
 
   const initialValues = {
     courseCode: "",
@@ -46,11 +48,42 @@ function CreateCourse() {
       validateOnChange: true,
       validateOnBlur: false,
       onSubmit: (values, action) => {
-        console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
+        console.log(values);
         action.resetForm();
       },
     });
   console.log(errors);
+
+  async function addCourse(downloadURL) {
+    try {
+      const url = "http://localhost:5000/course/addCourse";
+      const course = {
+        teacher: user._id,
+        courseCode: initialValues.courseCode,
+        name: initialValues.title,
+        description: initialValues.description,
+        creditHours: initialValues.creditHours,
+        language: initialValues.language,
+        startingDate: initialValues.starting,
+        endingDate: initialValues.ending,
+        image: downloadURL,
+      };
+      const response = await axios.post(url, course);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  function getUser() {
+    const user = localStorage.getItem("User");
+    const p = JSON.parse(user);
+    console.log(p)
+    setUser(JSON.parse(user));
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const handleClick = () => {
     if (image === null) return;
@@ -64,14 +97,14 @@ function CreateCourse() {
     }, () => {
       console.log("success!!")
       getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-        // uploadToDatabase(downloadURL)
+        addCourse(downloadURL)
         console.log(downloadURL)
       })
     })
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center',width:'100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Box>
         <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginTop: 1 }}>Create New Course</Typography>
       </Box>
@@ -99,7 +132,7 @@ function CreateCourse() {
               onChange={handleChange}
               onBlur={handleBlur}
             />{errors.title && touched.title ? (
-              <p style={{ color: 'red', marginLeft: 4, marginBottom: 0,marginTop:0 }}>{errors.title}</p>
+              <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.title}</p>
             ) : null}
             <br />
             <TextField sx={{ marginTop: 3, width: '100%' }}
@@ -185,6 +218,7 @@ function CreateCourse() {
                 Drag and Drop Files
                 <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
               </Button></Button></Typography>
+
             </Box>
             {image === null ? (
               <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}></p>
