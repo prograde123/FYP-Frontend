@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
-import  Box from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import LogoImage from '../assets/logo.png'
 import SignInImage from '../assets/Saly.png'
 import CircleImage from '../assets/circle.png'
@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import { login } from '../../Axios/axiosall';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function SignIn() {
     const theme = useTheme()
@@ -23,6 +24,7 @@ function SignIn() {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
+    const [user, setUser] = React.useState('')
     const navigate = useNavigate()
 
     async function loginUser() {
@@ -35,6 +37,17 @@ function SignIn() {
             alert("invalid email or password")
         }
     }
+
+    function getUser() {
+        const user = localStorage.getItem("User");
+        const p = JSON.parse(user);
+        console.log(p)
+        setUser(JSON.parse(user));
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
     return (
         <Box sx={{ flexDirection: 'row', display: 'flex', height: '100vh' }}>
@@ -107,8 +120,8 @@ function SignIn() {
                         </Box>
                     </Box>
                     <Box sx={{ marginTop: 5 }}>
-                        <Button onClick={()=> loginUser()}
-                        variant="contained" color="secondary" endIcon={<LoginIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
+                        <Button onClick={() => loginUser()}
+                            variant="contained" color="secondary" endIcon={<LoginIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
                             Sign In
                         </Button>
                     </Box>
