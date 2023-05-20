@@ -14,6 +14,7 @@ import CreateCourseContent from '../Course/AddCourseContent'
 import ViewCourse from '../Course/ViewCourse'
 import AddAssignment from '../Assignment/AddAssignment';
 import ViewSubmittedAssigList from '../Assignment/ViewSubmittedAssigList'
+import CourseDetails from "../Course/CourseDetails";
 
 export default function TeacherBody() {
     const theme = useTheme()
@@ -34,7 +35,8 @@ export default function TeacherBody() {
                             <Route path="StudentRequests" element={<ViewEnrollmentRequest />}></Route>
                             <Route path="StudentList" element={<ViewStudentsList />}></Route>
                             <Route path="AddCourseContent" element={<CreateCourseContent/>}></Route>
-                            <Route path="CourseDetails" element={<ViewCourse/>}></Route>
+                            {/* <Route path="CourseDetails/:id" element={<ViewCourse/>}></Route> */}
+                            <Route path="CourseDetails/:id" element={<CourseDetails/>}></Route>
                             <Route path="Profile" element={<ViewProfile />}></Route>
                             <Route path="AddAssignment" element={<AddAssignment />}></Route>
                             <Route path="ViewSubmittedAssigList" element={<ViewSubmittedAssigList />}> </Route>

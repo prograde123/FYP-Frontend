@@ -279,9 +279,6 @@ function Dashboard() {
               </Card>
             </Stack>
           </Grid>
-
-
-
           <Grid item xs={7}>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: 2 }}>Current Activity</Typography>
@@ -321,7 +318,6 @@ function Dashboard() {
               </Card>
             </Stack>
           </Grid>
-
         </Grid>
 
 
@@ -332,7 +328,7 @@ function Dashboard() {
 
             </Box>
             <Stack spacing={2} >
-              <Card sx={{ minWidth: "49%", height: "63vh" }}>
+              <Card sx={{ minWidth: "49%", height: "67vh" }}>
                 <Box sx={{ marginTop: 3, marginLeft: 3 }}></Box>
                 <Chart
                   type="pie"
@@ -358,7 +354,7 @@ function Dashboard() {
               <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: 2 }}>Courses Activity</Typography>
             </Box>
             <Stack spacing={2} >
-              <Card sx={{ minWidth: "49%", height: "63vh", }}>
+              <Card sx={{ minWidth: "49%", height: "67vh", }}>
                 <Chart
                   options={bar.options}
                   series={bar.series}

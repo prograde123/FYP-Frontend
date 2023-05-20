@@ -169,7 +169,7 @@ export default function Sidebar() {
                 </ListItemButton>
               </List>
             </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
+            {/* <Collapse in={sopen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
                 <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/AddCourseContent')}>
                   <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
@@ -188,7 +188,7 @@ export default function Sidebar() {
                   <ListItemText primary="Course Contents" />
                 </ListItemButton>
               </List>
-            </Collapse>
+            </Collapse> */}
             <Collapse in={sopen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
                 <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/StudentList')}>
