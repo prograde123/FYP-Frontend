@@ -2,37 +2,38 @@ import React from 'react';
 import { Button, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useTheme } from '@emotion/react';
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import Select from '@mui/material/Select';
-// import MenuItem from '@mui/material/MenuItem';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import FormControl from '@mui/material/FormControl';
-// import SignInImage from '../assets/Saly.png'
-// import Background from '../assets/bg-1.jpg'
-// import Course from '../assets/python.jpg'
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { ColorLens } from '@mui/icons-material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Navigate, useNavigate  } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-const ViewCourse = () => {
+const ViewCourse = ({ courses }) => {
   const theme = useTheme()
-  const navigate = useNavigate()
-  //UseEffect
-  const [Code, setCode] = React.useState('CS -201')
-  const [Cname, setCname] = React.useState('Introduction To Python')
-  const [Description, setCDescription] = React.useState('This course provides an introduction to programming and the Python language.  Students are introduced to core programming concepts like data structures, conditionals, loops, variables, and functions.  This course includes an overview of the various tools available for writing and running Python, and gets students coding quickly.  It also provides hands-on coding exercises using commonly used data structures')
-  const [Cphoto, setCphoto] = React.useState("https://www.svgrepo.com/download/240334/coding-programming-language.svg")
-  const [creditHours, setcreditHours] = React.useState(3)
-  const [language, setLanguage] = React.useState('python')
-  const [Sdate, setSdate] = React.useState('20-3-2023')
-  const [Ldate, setLdate] = React.useState('20-6-2023')
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const [Code, setCode] = React.useState('')
+  const [Cname, setCname] = React.useState('')
+  const [Description, setCDescription] = React.useState('')
+  const [Cphoto, setCphoto] = React.useState("")
+  const [creditHours, setcreditHours] = React.useState()
+  const [language, setLanguage] = React.useState('')
+  const [Sdate, setSdate] = React.useState('')
+  const [Ldate, setLdate] = React.useState('')
+  useEffect(() => {
+    const course = location.state.course
+    setCode(course.courseCode)
+    setCname(course.name)
+    setCDescription(course.description)
+    setCphoto(course.image)
+    setcreditHours(course.creditHours)
+    setLanguage(course.language)
+    setSdate(course.startingDate)
+    setLdate(course.endingDate)
+  })
   return (
     <>
       <Box>
-
         <Box sx={{
           display: 'flex', flexDirection: 'row',
         }}
@@ -72,14 +73,13 @@ const ViewCourse = () => {
 
               </Button>
 
-
               <Button
                 variant="contained" color="secondary" endIcon={< ArrowForwardIosIcon />}
                 sx={{
                   width: '37%', height: '10%',
                   padding: 1, fontSize: 16, marginLeft: '5%',
                   fontWeight: 'bold', paddingRight: '3%'
-                }} onClick={()=> navigate('/Assignment/ViewUploadedAssigList')}>
+                }} onClick={() => navigate('/Assignment/ViewUploadedAssigList')}>
                 View Course Assignments
               </Button>
 
@@ -92,32 +92,26 @@ const ViewCourse = () => {
           </Box>
         </Box>
         <Box sx={{
-          backgroundColor: theme.palette.secondary.main, borderRadius:10
+          backgroundColor: theme.palette.secondary.main, borderRadius: 10
           , display: 'flex', flexDirection: 'row',
-          justifyContent: 'space-around', 
+          justifyContent: 'space-around',
         }}>
           <Box>
-            <Typography variant='h6'sx={{color:'white'}}><b>Starting Date </b> <br />  {Sdate}</Typography>
+            <Typography variant='h6' sx={{ color: 'white' }}><b>Starting Date </b> <br />  {Sdate}</Typography>
             <br />
-            <Typography variant='h6' sx={{color:'white'}}
-              ><b>Ending Date</b>  <br />  {Ldate}</Typography>
+            <Typography variant='h6' sx={{ color: 'white' }}
+            ><b>Ending Date</b>  <br />  {Ldate}</Typography>
           </Box>
 
           <Box>
-            <Typography variant='h6' sx={{color:'white'}}
-              ><b>Language </b> <br />  {language}</Typography><br/>
-              <Typography variant='h6' sx={{color:'white'}}
-              > <b>CreditHours</b>  <br />  {creditHours}</Typography>
+            <Typography variant='h6' sx={{ color: 'white' }}
+            ><b>Language </b> <br />  {language}</Typography><br />
+            <Typography variant='h6' sx={{ color: 'white' }}
+            > <b>CreditHours</b>  <br />  {creditHours}</Typography>
           </Box>
         </Box>
       </Box>
-
-
-
-
     </>
   );
-
-
 }
 export default ViewCourse;

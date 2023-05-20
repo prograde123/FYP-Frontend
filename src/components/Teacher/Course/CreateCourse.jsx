@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect } from "react";
+import axios from "axios";
 
 function CreateCourse() {
   const theme = useTheme()
@@ -29,11 +30,11 @@ function CreateCourse() {
     creditHours: "",
     description: "",
     language: "",
-    starting: dayjs(Date.now()),
-    ending: dayjs(Date()),
+    starting: "",
+    ending: "",
   };
-  console.log(initialValues.starting)
-  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched, setFieldValue } =
     useFormik({
       initialValues,
       validationSchema: Yup.object({
@@ -52,23 +53,26 @@ function CreateCourse() {
         action.resetForm();
       },
     });
-  console.log(errors);
+  //console.log(initialValues.courseCode)
+  //console.log(errors);
+  //console.log(initialValues.starting)
 
   async function addCourse(downloadURL) {
     try {
       const url = "http://localhost:5000/course/addCourse";
       const course = {
         teacher: user._id,
-        courseCode: initialValues.courseCode,
-        name: initialValues.title,
-        description: initialValues.description,
-        creditHours: initialValues.creditHours,
-        language: initialValues.language,
-        startingDate: initialValues.starting,
-        endingDate: initialValues.ending,
+        courseCode: values.courseCode,
+        name: values.title,
+        description: values.description,
+        creditHours: values.creditHours,
+        language: values.language,
+        startingDate: values.starting,
+        endingDate: values.ending,
         image: downloadURL,
       };
       const response = await axios.post(url, course);
+      console.log("course added")
     } catch (e) {
       console.log(e);
     }
@@ -93,9 +97,9 @@ function CreateCourse() {
       let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       console.log(progress)
     }, (error) => {
-      console.log("error :(")
+      console.log("error")
     }, () => {
-      console.log("success!!")
+      console.log("success!")
       getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
         addCourse(downloadURL)
         console.log(downloadURL)
@@ -110,7 +114,7 @@ function CreateCourse() {
       </Box>
       <Box>
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', border: 1, borderColor: theme.palette.secondary.main, borderRadius: 10, width: '100%', paddingLeft: 16, paddingRight: 16 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', border: 1, borderColor: theme.palette.secondary.main, borderRadius: 10, paddingLeft: 5, paddingRight: 5 }}>
             <TextField sx={{ marginTop: 5, width: '100%' }}
               id="outlined-multiline-flexible"
               label="Course Code"
@@ -175,13 +179,13 @@ function CreateCourse() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               >
-                <MenuItem value={10}>Java</MenuItem>
-                <MenuItem value={20}>C++</MenuItem>
-                <MenuItem value={30}>C# (sharp)</MenuItem>
-                <MenuItem value={40}>C Language</MenuItem>
-                <MenuItem value={50}>Assembly (MASM)</MenuItem>
-                <MenuItem value={60}>Assembly (MIPS)</MenuItem>
-                <MenuItem value={70}>Python</MenuItem>
+                <MenuItem value={"Java"}>Java</MenuItem>
+                <MenuItem value={"C++"}>C++</MenuItem>
+                <MenuItem value={"C Sharp"}>C# (sharp)</MenuItem>
+                <MenuItem value={"C Language"}>C Language</MenuItem>
+                <MenuItem value={"Masm"}>Assembly (MASM)</MenuItem>
+                <MenuItem value={"Mips"}>Assembly (MIPS)</MenuItem>
+                <MenuItem value={"Python"}>Python</MenuItem>
               </Select>
             </FormControl>
             {errors.language && touched.language ? (
@@ -190,25 +194,39 @@ function CreateCourse() {
             <br />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker']} sx={{ width: '100%', marginTop: 0 }}>
-                <DatePicker
-                  name='starting'
-                  value={values.starting}
-                  onChange={values.starting.handleChange}
-                  onBlur={handleBlur}
-                  label="Starting Date" />
-                {errors.starting && touched.starting ? (
-                  <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.starting}</p>
-                ) : null}
+                <Box>
+                  <Box>
+                    <DatePicker
+                      name='starting'
+                      id="starting"
+                      value={values.starting}
+                      onChange={(value) => setFieldValue("starting", value, true)}
+                      onBlur={handleBlur}
+                      label="Starting Date" />
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    {errors.starting && touched.starting ? (
+                      <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.starting}</p>
+                    ) : null}
+                  </Box>
+                </Box>
                 <br />
-                <DatePicker
-                  name='ending'
-                  value={values.ending}
-                  onChange={values.ending.handleChange}
-                  onBlur={handleBlur}
-                  label="Ending Date" />
-                {errors.ending && touched.ending ? (
-                  <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.ending}</p>
-                ) : null}
+                <Box>
+                  <Box>
+                    <DatePicker
+                      name='ending'
+                      id='ending'
+                      value={values.ending}
+                      onChange={(value) => setFieldValue("ending", value, true)}
+                      onBlur={handleBlur}
+                      label="Ending Date" />
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    {errors.ending && touched.ending ? (
+                      <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.ending}</p>
+                    ) : null}
+                  </Box>
+                </Box>
               </DemoContainer>
             </LocalizationProvider>
             <br />
@@ -218,11 +236,9 @@ function CreateCourse() {
                 Drag and Drop Files
                 <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
               </Button></Button></Typography>
-
+              {image === null ? (<p style={{ color: 'red',fontWeight:'normal', marginTop: 0, marginLeft: 4, marginBottom: 0,display:'flex', flexDirection:'row', justifyContent: 'center' }}>Image is required!</p>) : null}
             </Box>
-            {image === null ? (
-              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}></p>
-            ) : null}
+
             <Box sx={{ width: '100%', marginBottom: 5, marginTop: 4 }}>
               <Button type='submit' onClick={() => { handleClick() }}
                 variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
