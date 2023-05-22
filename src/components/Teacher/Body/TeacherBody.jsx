@@ -31,12 +31,11 @@ export default function TeacherBody() {
                             <Route path="Dashboard" element={<Dashboard />}></Route>
                             <Route path="CreateCourse" element={<CreateCourse />}></Route>
                             <Route path="CoursesList" element={<ViewCoursesList />}></Route>
-                            <Route path="ContentList" element={<ViewCourseContent />}></Route>
+                            <Route path="CourseDetails/:id" element={<CourseDetails/>}></Route>
                             <Route path="StudentRequests" element={<ViewEnrollmentRequest />}></Route>
                             <Route path="StudentList" element={<ViewStudentsList />}></Route>
-                            <Route path="AddCourseContent" element={<CreateCourseContent/>}></Route>
-                            {/* <Route path="CourseDetails/:id" element={<ViewCourse/>}></Route> */}
-                            <Route path="CourseDetails/:id" element={<CourseDetails/>}></Route>
+                            <Route path="AddCourseContent/:id" element={<CreateCourseContent/>}></Route>
+                            <Route path="ContentList/:id" element={<ViewCourseContent />}></Route>
                             <Route path="Profile" element={<ViewProfile />}></Route>
                             <Route path="AddAssignment" element={<AddAssignment />}></Route>
                             <Route path="ViewSubmittedAssigList" element={<ViewSubmittedAssigList />}> </Route>

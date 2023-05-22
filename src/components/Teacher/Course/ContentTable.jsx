@@ -6,7 +6,6 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from '@emotion/react';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchBar from '@mkyy/mui-search-bar';
 import DownloadIcon from '@mui/icons-material/Download';
 import {
@@ -20,7 +19,10 @@ import {
 } from '@mui/x-data-grid-generator';
 import { useNavigate } from 'react-router-dom';
 import { Paper } from '@mui/material';
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import http from "../../../../Axios/axios";
 
 const initialRows = [
   {
@@ -31,17 +33,7 @@ const initialRows = [
     size: "720KB",
     dateCreated: randomCreatedDate(),
   },
-  {
-    id: randomId(),
-    imageUrl: 'https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png',
-    lecture: "Lecture 02",
-    title: "Functions",
-    size: "620KB",
-    dateCreated: randomCreatedDate(),
-  },
- 
 ];
-
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -82,15 +74,14 @@ EditToolbar.propTypes = {
   setRows: PropTypes.func.isRequired,
 };
 
-export default function Contents() {
+export default function Contents({ courses }) {
   const theme = useTheme();
   const navigate = useNavigate()
-  const [rows, setRows] = React.useState(initialRows);
+  const location = useLocation();
+  const course = location.state.course
+  const [content, setContent] = useState([]);
+  const [rows, setRows] = React.useState(content);
   const [rowModesModel, setRowModesModel] = React.useState({});
-
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
 
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
@@ -98,17 +89,42 @@ export default function Contents() {
     return updatedRow;
   };
 
+  async function getContents() {
+    try {
+      const response = await http.get('/course/viewCourseContentList/' + course._id)
+      setContent(response.data.courses)
+      console.log(response.data.courses)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function deleteCourseContent(mid) {
+    try {
+      const response = await http.delete('/course/deleteCourseContent/' + course._id + '/' +mid)
+      const newContents = rows.filter(item => item._mid !== mid);
+      console.log(response.data)
+      setContent(newContents)
+      getContents();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getContents();
+  }, []);
+
+
   const columns = [
+
+
+    { field: 'course.courseContent.title', valueGetter: params => params.row.course.courseContent.title, headerName: 'Title', width: 200, },
+    { field: 'lecNo', headerName: 'Lecture No', width: 200 },
+    { field: 'fileType', headerName: 'Material', width: 200 },
     {
-        field: 'imageUrl', headerName: 'File', renderCell: (params) => (
-          <img src={params.row.imageUrl} style={{ width: 50, borderRadius: '50%' }} />
-        )
-      },
-    { field: 'lecture', headerName: 'Lecture', width: 200},
-    { field: 'title', headerName: 'Title', width: 200},
-    { field: 'size', headerName: 'Size', width: 200},
-    {
-      field: 'dateCreated',
+      field: 'uploadedDate',
       headerName: 'Date Uploaded',
       type: 'date',
       width: 200,
@@ -122,12 +138,6 @@ export default function Contents() {
       getActions: ({ id }) => {
 
         return [
-            <GridActionsCellItem
-            icon={<DownloadIcon />}
-            label="View"
-            className="textPrimary"
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
-          />,
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
@@ -138,7 +148,7 @@ export default function Contents() {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={handleDeleteClick(id)}
+            onClick={()=>deleteCourseContent(mid)}
 
             sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.secondary.main }}
           />,
@@ -174,6 +184,7 @@ export default function Contents() {
         columns={columns}
         rowModesModel={rowModesModel}
         processRowUpdate={processRowUpdate}
+        getRowId={(row) => row._id}
         slots={{
           toolbar: EditToolbar,
         }}
@@ -188,8 +199,8 @@ export default function Contents() {
         options={{
           search: true
         }}
-        // checkboxSelection
-        // disableRowSelectionOnClick
+      // checkboxSelection
+      // disableRowSelectionOnClick
       />
     </Box>
   );

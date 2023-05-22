@@ -8,20 +8,89 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import axios from "axios";
+import http from "../../../../Axios/axios";
+import { useLocation } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+import { storage } from '../../../firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-
-const CreateCourseContent = () => {
+const CreateCourseContent = ({ courses }) => {
   const theme = useTheme()
-  const [lecNo, setLecNo] = React.useState(null)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [lecNo, setLecNo] = React.useState("")
   const [title, setTitle] = React.useState('')
-  const [description, setDescription] = React.useState('')
   const [fileType, setFileType] = React.useState('')
-  const [file, setFile] = React.useState('')
+  const [file, setFile] = React.useState(null);
+
+  const initialValues = {
+    lecNo: "",
+    title: "",
+    fileType: "",
+  };
+
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched, setFieldValue } =
+    useFormik({
+      initialValues,
+      validationSchema: Yup.object({
+        lecNo: Yup.number().nullable(true).required("Lecture number are required!"),
+        title: Yup.string().min(3).max(25).required("Please Enter the content title!"),
+        fileType: Yup.string().ensure().required("File Type is required required!"),
+      }),
+      validateOnChange: true,
+      validateOnBlur: false,
+      onSubmit: (values, action) => {
+        console.log(values);
+        action.resetForm();
+      },
+    });
+
+  const course = location.state.course
+  //console.log(course)
+  async function addContent(downloadURL) {
+    try {
+      const url = "/course/addCourseContent/" + course._id;
+      const content = {
+        lecNo: values.lecNo,
+        title: values.title,
+        fileType: values.fileType,
+        file: downloadURL
+      };
+      const response = await http.put(url, content);
+      console.log("content added")
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const handleClick = () => {
+    if (file === null || values.lecNo === '' || values.title=== '' || values.fileType ==='') return;
+    const imgRef = ref(storage, `courseImages/${file.name}`)
+    const uploadTask = uploadBytesResumable(imgRef, file)
+    uploadTask.on('state_changed', (snapshot) => {
+      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      console.log(progress)
+    }, (error) => {
+      console.log("error")
+    }, () => {
+      console.log("success!")
+      getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+        addContent(downloadURL)
+        console.log(downloadURL)
+      })
+    })
+  }
 
   return (
     <>
       <Box component='main' sx={{
-        display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' 
+        display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%',
       }}>
         <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 3 }}>Add Course Content</Typography>
 
@@ -36,102 +105,81 @@ const CreateCourseContent = () => {
             marginLeft: 'auto',
             padding: '3%'
           }} >
-          <FormControl
-            sx={{
-              width: '100%',
-              marginBottom: 3,
-            }}
-          >
-            <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Lec No</InputLabel>
-            <OutlinedInput
+          <form onSubmit={handleSubmit}>
+            <TextField sx={{ marginTop: 3, width: '100%', marginBottom: 1 }}
               id="outlined-adornment-name"
               type="number"
-              inputProps={{ inputProps: { min: 1, max: 32 } }}
               color="secondary"
               label="Lec No"
-
-              value={lecNo}
-              onChange={(e) => setLecNo(e.target.value)}
+              name='lecNo'
+              value={values.lecNo}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
-          </FormControl>
-          <FormControl sx={{ width: '100%', marginBottom: 3 }}>
-            <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Title</InputLabel>
-            <OutlinedInput
-
+            {errors.lecNo && touched.lecNo ? (
+              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.lecNo}</p>
+            ) : null}
+            
+            <TextField sx={{ marginTop: 3, width: '100%', marginBottom: 1 }}
               id="outlined-adornment-name"
               color='secondary'
               label="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              name='title'
+              value={values.title}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
-          </FormControl>
-          <FormControl sx={{ width: '100%', marginBottom: 3 }}>
-            <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Description</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-name"
-              color='secondary'
-              label="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label" color='secondary'>File Type</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              color='secondary'
-              id="demo-simple-select"
-              value={fileType}
-              label="File Type"
-              onChange={(e) => setFileType(e.target.value)}
-            >
-              <MenuItem value={"Lecture Notes"} color='secondary' >Lecture Notes</MenuItem>
-              <MenuItem value={"Helping Material"} color='secondary' >Other Helping Material</MenuItem>
-              <MenuItem value={"Coding File"} color='secondary' >Coding file</MenuItem>
-            </Select>
-          </FormControl>
-          <Box sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold' }} >
-            <Typography variant='caption'
-              sx={{ fontWeight: 'bold' }}>Upload File<Button variant="outlined" component="label"
-                color='secondary' sx={{
-                  width: '100%', padding: 2,
-                  borderStyle: 'dashed', borderRadius: 6
-                }}>
-                <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                  {<UploadFileIcon
-                    sx={{ marginRight: 1 }}
-                  />}
+            {errors.title && touched.title ? (
+              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.title}</p>
+            ) : null}
+            
+            <FormControl sx={{ marginTop: 3,marginBottom: 1  }} fullWidth>
+              <InputLabel id="demo-simple-select-label" color='secondary'>File Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                color='secondary'
+                id="demo-simple-select"
+                name='fileType'
+                value={values.fileType}
+                 onChange={handleChange}
+                onBlur={handleBlur}
+                label="File Type"
+                
+              >
+                <MenuItem value={"Lecture Notes"} color='secondary' >Lecture Notes</MenuItem>
+                <MenuItem value={"Helping Material"} color='secondary' >Other Helping Material</MenuItem>
+                <MenuItem value={"Coding File"} color='secondary' >Coding file</MenuItem>
+              </Select>
+            </FormControl>
+            {errors.fileType && touched.fileType ? (
+              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.fileType}</p>
+            ) : null}
+            
+            <Box sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold' }} >
+              <Typography variant='caption'
+                sx={{ fontWeight: 'bold' }}>Upload File<Button variant="outlined" component="label"
+                  color='secondary' sx={{
+                    width: '100%', padding: 2,
+                    borderStyle: 'dashed', borderRadius: 6
+                  }}>
+                  <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                    {<UploadFileIcon sx={{ marginRight: 1 }} />}
+                    <br />Choose files<br />or Drag and Drop Files
+                    <input  name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/*" multiple type="file" />
+                  </Button></Button></Typography>
+                  {file === null ? (<p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>Lecture File is required!</p>) : null}
+            </Box>
+            <Box sx={{ width: '100%', marginTop: 4 }}>
+              <Button type='submit' onClick={() => { handleClick() }}
+                variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
+                Add Course Content
+              </Button>
+            </Box>
+          </form>
 
-                  <br />
-                  Choose files
-                  <br />
-                  or Drag and Drop Files
-                  <input hidden accept="file/*" multiple type="file" />
-                </Button></Button></Typography>
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-            <Button //margin left not working
-              variant="text" color="secondary"
-              sx={{
-                width: '25%', height: '10%',
-                padding: 1, marginRight: '3%',
-                marginleft: "5%", fontSize: 16,
-                fontWeight: 'bold', border: 1, borderColor: theme.palette.secondary.main
-              }}>
-              Cancel
-            </Button>
-
-            <Button
-              variant="contained" color="secondary"
-              sx={{
-                width: '25%', height: '10%',
-                padding: 1, fontSize: 16,
-                fontWeight: 'bold'
-              }}>
-              Add
-            </Button>
-
-          </Box>
         </Box>
 
       </Box>
