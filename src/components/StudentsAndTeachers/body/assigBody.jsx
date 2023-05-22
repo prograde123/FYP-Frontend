@@ -20,7 +20,7 @@ export default function AssignmentBody() {
                         <Route path='/'>
                             {/* assig Routes */}
                             <Route path="ViewUploadedAssig" element={<ViewUploadedAssig />}></Route>
-                            <Route path="ViewUploadedAssigList" element={<ViewUploadedAssigList /> }></Route>
+                            <Route path="ViewUploadedAssigList/:id" element={<ViewUploadedAssigList /> }></Route>
 
 
                             <Route path="ViewUploadedAssig/Pdf" element={<PDFViewer />}></Route>

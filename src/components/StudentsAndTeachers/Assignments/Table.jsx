@@ -9,7 +9,7 @@ import { useTheme } from '@emotion/react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchBar from '@mkyy/mui-search-bar';
 import DownloadIcon from '@mui/icons-material/Download';
-
+import http from '../../../../Axios/axios';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -21,25 +21,27 @@ import {
 } from '@mui/x-data-grid-generator';
 import { useNavigate } from 'react-router-dom';
 import { Paper } from '@mui/material';
+import { useEffect } from 'react';
+import { Assignment } from '@mui/icons-material';
 
 
 const initialRows = [
   {
     id: randomId(),
     imageUrl: 'https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png',
-    AssigName: "Assignment 01",
+    assigNumber: "Assignment 01",
 
     size: "720KB",
-    dateCreated: randomCreatedDate(),
+    uploadDate: randomCreatedDate(),
     dueDate: randomCreatedDate()
   },
   {
     id: randomId(),
     imageUrl: 'https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png',
-    AssigName: "Assignment 02",
+    assigNumber: "Assignment 02",
 
     size: "620KB",
-    dateCreated: randomCreatedDate(),
+    uploadDate: randomCreatedDate(),
     dueDate: randomCreatedDate()
   },
  
@@ -51,8 +53,9 @@ function EditToolbar(props) {
   const navigate = useNavigate()
   const theme = useTheme();
   const [row, setRow] = React.useState(initialRows);
+  const [courseID , setcourseID] = React.useState(null)
   const [searched, setSearched] = React.useState("");
-
+  
   const requestSearch = (searchedVal) => {
     const filteredRows = initialRows.filter((row) => {
       return row.title.toLowerCase().includes(searchedVal.toLowerCase());
@@ -88,9 +91,12 @@ EditToolbar.propTypes = {
 export default function Contents() {
   const theme = useTheme();
   const navigate = useNavigate()
-  const [rows, setRows] = React.useState(initialRows);
+  
   const [rowModesModel, setRowModesModel] = React.useState({});
+  const [list,setList]=React.useState([]);
+  const [rows, setRows] = React.useState(list);
 
+  
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
   };
@@ -100,33 +106,53 @@ export default function Contents() {
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
+  useEffect(() => {
+    const cid = location.pathname.split('/').pop();
+    
+    http.get(`/assignment/viewAssigList/${cid}`)
+    .then((response)=>{
+      console.log(response.data);//response data
+      setList(response.data)
+      
+    }).catch( (error) => {
+      console.log(error.response.data);
+    });
+  } ,[])
 
   const columns = [
     {
         field: 'imageUrl', headerName: 'File', renderCell: (params) => (
-          <img src={params.row.imageUrl} style={{ width: 50, borderRadius: '50%' }} />
+          <img src='https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png' 
+          style={{ width: 50,height: 50, border: "1px solid purple", borderRadius: '50%' }} 
+        /*  onClick={() => {
+            navigate(" " + id, {
+              state: { Assignment: Assignment.find(c =>  c._id === id) },
+            });
+          }} */
+          
+          />
         )
       },
-    { field: 'AssigName', headerName: 'Assignment Name', width: 200},
+    { field: 'assignmentNumber', headerName: 'Assignment Number', width: 200},
 
     { field: 'size', headerName: 'Size', width: 200},
     {
-      field: 'dateCreated',
+      field: 'uploadDate',
       headerName: 'Date Uploaded',
-      type: 'date',
-      width: 200,
+      
+      width: 150,
     },
     {
         field: 'dueDate',
         headerName: 'Due Date',
-        type: 'date',
-        width: 200,
+        
+        width: 150,
       },
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 230,
+      width: 160,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 

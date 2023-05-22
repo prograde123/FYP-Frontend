@@ -37,7 +37,7 @@ export default function TeacherBody() {
                             <Route path="AddCourseContent/:id" element={<CreateCourseContent/>}></Route>
                             <Route path="ContentList/:id" element={<ViewCourseContent />}></Route>
                             <Route path="Profile" element={<ViewProfile />}></Route>
-                            <Route path="AddAssignment" element={<AddAssignment />}></Route>
+                            <Route path="AddAssignment/:id" element={<AddAssignment />}></Route>
                             <Route path="ViewSubmittedAssigList" element={<ViewSubmittedAssigList />}> </Route>
                         </Route>
                     </Routes>
