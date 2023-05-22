@@ -90,7 +90,8 @@ function CreateCourse() {
   }, []);
 
   const handleClick = () => {
-    if (image === null) return;
+    if (image === null || values.courseCode === '' || values.title === '' || values.creditHours === '' || values.description === '' || values.language === '' || values.starting === '' || values.ending === '') 
+    return;
     const imgRef = ref(storage, `courseImages/${image.name}`)
     const uploadTask = uploadBytesResumable(imgRef, image)
     uploadTask.on('state_changed', (snapshot) => {
@@ -135,6 +136,7 @@ function CreateCourse() {
               value={values.title}
               onChange={handleChange}
               onBlur={handleBlur}
+
             />{errors.title && touched.title ? (
               <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.title}</p>
             ) : null}
@@ -236,7 +238,7 @@ function CreateCourse() {
                 Drag and Drop Files
                 <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
               </Button></Button></Typography>
-              {image === null ? (<p style={{ color: 'red',fontWeight:'normal', marginTop: 0, marginLeft: 4, marginBottom: 0,display:'flex', flexDirection:'row', justifyContent: 'center' }}>Image is required!</p>) : null}
+              {image === null ? (<p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>Image is required!</p>) : null}
             </Box>
 
             <Box sx={{ width: '100%', marginBottom: 5, marginTop: 4 }}>

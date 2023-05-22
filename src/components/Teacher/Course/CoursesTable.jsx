@@ -9,11 +9,11 @@ import { useTheme } from '@emotion/react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchBar from '@mkyy/mui-search-bar';
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { DataGrid, GridToolbarContainer, GridActionsCellItem } from '@mui/x-data-grid';
 import { randomCreatedDate, randomId } from '@mui/x-data-grid-generator';
 import { useNavigate } from 'react-router-dom';
 import { Paper } from '@mui/material';
+import http from "../../../../Axios/axios";
 
 const initialRows = [
   {
@@ -74,22 +74,44 @@ export default function CoursesListTable() {
   const [rows, setRows] = React.useState(courses);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
-
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setCourses(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
   async function getCourses() {
     try {
-      const response = await axios.get('http://localhost:5000/course/coursesList')
+      const response = await http.get('/course/coursesList')
       setCourses(response.data.courses)
       console.log(response.data.courses)
     } catch (e) {
+      console.log(e);
+    }
+  }
+  
+  async function deleteCourse(id){
+    try{
+      const response = await http.delete('/course/deleteCourse/'+ id)
+      const newCourses = rows.filter(item => item._id !== id);  
+      console.log(response.data)
+      setCourses(newCourses)
+      getCourses();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function updateCourse(id){
+    try{
+      const response = await http.patch('/course/updateCourse/'+ id)
+      const newCourses = rows.filter(item => item._id !== id);  
+      console.log(response.data)
+      setCourses(newCourses)
+      
+    }
+    catch (e) {
       console.log(e);
     }
   }
@@ -109,7 +131,7 @@ useEffect(() => {
       )
     },
     { field: 'name', headerName: 'Course Name', width: 230, },
-    { field: 'teacher.user.id', headerName: 'Instructor', width: 150, },
+    { field: 'teacher.user.fullName',valueGetter: params => params.row.teacher.user.fullName, headerName: 'Instructor', width: 150, },
     { field: 'language', headerName: 'Language', width: 150, },
     {
       field: 'startingDate',
@@ -148,7 +170,7 @@ useEffect(() => {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={handleDeleteClick(id)}
+            onClick={()=>deleteCourse(id)}
             sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.secondary.main }}
           />,
         ];
