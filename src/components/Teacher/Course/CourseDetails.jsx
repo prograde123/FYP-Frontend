@@ -8,6 +8,11 @@ import Stack from '@mui/material/Stack';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
+import LanguageIcon from '@mui/icons-material/Language';
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+
 
 function CourseDetails({ courses }) {
     const theme = useTheme()
@@ -25,6 +30,7 @@ function CourseDetails({ courses }) {
     const [instructor, setInstructor] = React.useState('')
 
     const course = location.state.course
+    const id = location.pathname.split('/').pop();
     useEffect(() => {
 
         setCode(course.courseCode)
@@ -41,13 +47,13 @@ function CourseDetails({ courses }) {
     return (
         <>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: 2 }}>
-                <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2 }}>Course Details</Typography>
+                <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 1,marginTop:1 }}>Course Details</Typography>
             </Box>
-            <Box >
+            <Box sx={{ backgroundColor: 'white', padding: 3, border: '2px solid purple', borderRadius: 12 }}>
                 <Grid container spacing={2} sx={{ marginBottom: 4, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Grid item={true} xs={4}>
-                        <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: 2, color: theme.palette.secondary.main, }}>Course Code: {Code}</Typography>
-                        <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: 2, color: theme.palette.secondary.main, }}>Course: {Cname}</Typography>
+                        <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: 2, color: theme.palette.secondary.main, }}><span style={{color:theme.palette.primary.main}}>Course Code:</span> {Code}</Typography>
+                        <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: 2, color: theme.palette.secondary.main, }}><span style={{color:theme.palette.primary.main}}>Course Name:</span> {Cname}</Typography>
                     </Grid>
                     <Grid item={true} xs={8}>
                         <Stack spacing={1} direction="row">
@@ -79,7 +85,7 @@ function CourseDetails({ courses }) {
                                 <CardContent>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <img height={25} width={50} src='https://cdn-icons-png.flaticon.com/512/2799/2799142.png' />
-                                        <Typography>Students Enrolled</Typography>
+                                        <Typography>Enrolled Students</Typography>
                                     </Box>
                                 </CardContent>
                             </Card>
@@ -91,15 +97,16 @@ function CourseDetails({ courses }) {
                                     </Box>
                                 </CardContent>
                             </Card>
-                            <Card onClick={() => navigate('/Teacher/AddAssignment')} sx={{ minWidth: "9%", height: 100, borderRadius: 4, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', backgroundColor: theme.palette.secondary.main, color: theme.palette.primary.background }}>
+                            <Card onClick={() => navigate(`/Teacher/AddAssignment/${id}`)} sx={{ minWidth: "9%", height: 100, borderRadius: 4, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', backgroundColor: theme.palette.secondary.main, color: theme.palette.primary.background }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <img height={25} width={50} src='https://cdn-icons-png.flaticon.com/512/2038/2038022.png' />
-                                        <Typography>Create Assignment</Typography>
+                                        <Typography>Create new Assignment</Typography>
                                     </Box>
                                 </CardContent>
                             </Card>
-                            <Card onClick={() => navigate('/Assignment/ViewUploadedAssigList')} sx={{ minWidth: "9%", height: 100, borderRadius: 4, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', backgroundColor: theme.palette.secondary.main, color: theme.palette.primary.background }}>
+                            
+                            <Card onClick={() => navigate(`/Teacher/ViewUploadedAssigList/${id}`)} sx={{ minWidth: "9%", height: 100, borderRadius: 4, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', backgroundColor: theme.palette.secondary.main, color: theme.palette.primary.background }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <img height={25} width={50} src='https://img.freepik.com/free-icon/calendar_318-932889.jpg?w=2000' />
@@ -125,40 +132,76 @@ function CourseDetails({ courses }) {
                     <Grid container spacing={2}  >
                         <Grid item={true} xs={12}>
                             <Stack spacing={2} >
-                                <Card sx={{ minWidth: "49%", height: "58vh", border: "2px solid purple", borderRadius: 12 }}>
-                                    <CardContent>
-                                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', color: theme.palette.secondary.main }}>
-                                            <Box sx={{ marginTop: 5, }}>
-                                                <img height={300} width={300} src={Cphoto} style={{ border: "2px solid purple", borderRadius: 12 }} />
+                                <Box sx={{ minWidth: "49%", height: "51vh" }}>
+
+                                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', color: theme.palette.secondary.main }}>
+                                        <Box sx={{ marginTop: 2, }}>
+                                            <img height={300} width={300} src={Cphoto} style={{ border: "2px solid purple", borderRadius: 12 }} />
+                                        </Box>
+                                        <Box sx={{ width: "70%", marginTop: 2, marginLeft: 4, marginRight: 2, display: 'flex', flexDirection: 'column', color: theme.palette.primary.main }}>
+                                            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                                <AlignHorizontalLeftIcon sx={{ marginRight: 2, marginTop: 1 }} />
+                                                <Typography gutterBottom variant="h5" sx={{ fontWeight: 'bold', marginBottom: 3, borderBottom: 1, width: 140 }}>
+                                                    Description
+                                                </Typography>
                                             </Box>
-                                            <Box sx={{ width: "70%", marginTop: 5, marginLeft: 4, marginRight: 2, display: 'flex', flexDirection: 'column', color: theme.palette.primary.main }}>
-                                                <Typography gutterBottom variant="body" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
+                                            <Box>
+                                                <Typography gutterBottom variant="body" sx={{ marginLeft: 5,marginRight:5, fontWeight: 'bold', marginBottom: 3, color: theme.palette.secondary.main }}>
                                                     {Description}
                                                 </Typography>
-                                                <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-                                                    Instructor: {instructor}
+                                            </Box>
+                                            <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
+                                                <AccountBoxIcon sx={{ marginRight: 2, marginTop: 1 }} />
+                                                <Typography gutterBottom variant="h5" sx={{ fontWeight: 'bold', marginBottom: 3, borderBottom: 1, width: 140 }}>
+                                                    Instructor
                                                 </Typography>
-                                                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-around", color: theme.palette.secondary.main }}>
-                                                    <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-                                                        Credit Hours: {creditHours}
-                                                    </Typography>
-                                                    <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-                                                        Language: {language}
-                                                    </Typography>
+                                            </Box>
+                                            <Box>
+                                                <Typography gutterBottom variant="body" sx={{ fontWeight: 'bold', marginBottom: 3, marginLeft: 5, color: theme.palette.secondary.main }}>
+                                                    {instructor}
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", color: theme.palette.secondary.main,marginTop:2 }}>
+                                                <Box sx={{ display: 'flex', flexDirection: 'row', }}>
+                                                    <Box sx={{ display: 'flex', flexDirection: 'row', marginRight: 3, color: theme.palette.primary.main }}>
+                                                        <HourglassBottomIcon sx={{ marginRight: 2, marginTop: 1 }} />
+                                                        <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3, borderBottom: 1, width: 140, }}>
+                                                            Credit Hours:
+                                                        </Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3, color: theme.palette.secondary.main }}>
+                                                            {creditHours}
+                                                        </Typography>
+                                                    </Box>
                                                 </Box>
-                                                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-around", color: theme.palette.secondary.main }}>
-                                                    <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-                                                        Started At: {Sdate}
-                                                    </Typography>
-                                                    <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-                                                        Ending At: {Ldate}
-                                                    </Typography>
+                                                <Box sx={{ display: 'flex', flexDirection: 'row', }}>
+                                                    <Box sx={{ display: 'flex', flexDirection: 'row', marginRight: 3, color: theme.palette.primary.main }}>
+                                                        <LanguageIcon sx={{ marginRight: 2, marginTop: 1 }} />
+                                                        <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3, borderBottom: 1, width: 140, }}>
+                                                            Language:
+                                                        </Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3, color: theme.palette.secondary.main }}>
+                                                            {language}
+                                                        </Typography>
+                                                    </Box>
                                                 </Box>
                                             </Box>
-
+                                            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", color: theme.palette.secondary.main }}>
+                                                <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
+                                                    <span style={{color:theme.palette.primary.main}}>Started At:</span> {Sdate}
+                                                </Typography>
+                                                <Typography gutterBottom variant="h6" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
+                                                <span style={{color:theme.palette.primary.main}}>Ending At:</span> {Ldate}
+                                                </Typography>
+                                            </Box>
                                         </Box>
-                                    </CardContent>
-                                </Card>
+
+                                    </Box>
+
+                                </Box>
                             </Stack>
                         </Grid>
 

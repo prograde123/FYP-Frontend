@@ -109,7 +109,7 @@ export default function Students() {
             cellClassName: 'actions',
             getActions: () => {
                 return [
-                    <Button sx={{ borderRadius: 6, FontColor: 'purple' }} variant="outlined" color="secondary" startIcon={<FileDownloadDoneIcon />}>Enrolled</Button>
+                    <Button sx={{color:"#03ac13" ,padding:1,borderRadius:6, borderColor:'#03ac13', ":hover":{border:'4px solid #03ac13'}}} variant="outlined"  startIcon={<FileDownloadDoneIcon sx={{color:'#03ac13'}}/>}>Enrolled</Button>
                 ];
             },
         },
@@ -121,7 +121,7 @@ export default function Students() {
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 return [
-                    <Button sx={{ borderRadius: 6 }} variant="contained" color="secondary" onClick={handleDeleteClick(id)} startIcon={<DeleteIcon />}>Remove</Button>
+                    <Button sx={{ backgroundColor: "red",padding:1,borderRadius:6, ":hover":{backgroundColor:"red", border:'4px solid red'}}} variant="contained"  onClick={handleDeleteClick(id)} startIcon={<DeleteIcon sx={{color:'white'}} />}>Remove</Button>
                 ];
             },
         },

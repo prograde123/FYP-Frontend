@@ -111,7 +111,7 @@ export default function Requests() {
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 return [
-                    <Button sx={{borderRadius:6}}  variant="outlined" color="secondary"  startIcon={<PersonAddIcon />}>Accept</Button>
+                    <Button sx={{color:"#03ac13" ,padding:1,borderRadius:6, ":hover":{border:'4px solid #03ac13'}}}  variant="outlined"  startIcon={<PersonAddIcon sx={{color:'#03ac13'}}/>}>Accept</Button>
                 ];
             },
         },
@@ -123,7 +123,7 @@ export default function Requests() {
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 return [
-                    <Button sx={{borderRadius:6}} variant="contained" color="secondary" onClick={handleDeleteClick(id)}  startIcon={<DeleteIcon />}>Decline</Button>
+                    <Button  sx={{ backgroundColor: "red",padding:1,borderRadius:6, ":hover":{backgroundColor:"red", border:'4px solid red'}}} variant="contained" onClick={handleDeleteClick(id)}  startIcon={<DeleteIcon sx={{color:'white'}} />}>Decline</Button>
                 ];
             },
         },
