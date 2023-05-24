@@ -39,3 +39,22 @@ export const delAssignment = async ( assignmentid, courseid ) => {
 };
 
 
+export const EditAssignment = 
+  async (assigId,assignmentNumber,description,uploadDate,dueDate,totalMarks,assignmentFile,format) =>{
+      try{
+          const response = await http.patch('/assignment/editAssignment' , {
+            assigId,assignmentNumber,description,uploadDate,dueDate,totalMarks,assignmentFile,format
+          })
+          if (response.data.success === false) {
+            return false
+          } else {
+            return true
+          }
+          console.log(response)
+          console.log(response.data)
+      }
+      catch(error) {
+        console.log(error.response.data);
+      }
+}
+

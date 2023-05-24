@@ -33,13 +33,17 @@ const ViewUploadedAssig = ()=> {
     },[])
     console.log(assig.assignmentNumber)
     const handleDeleteClick = (id) => () => {
-    
-        delAssignment(id,cid)
-        navigate(`Teacher/ViewUploadedAssigList/${cid}`);
-    
-            ///Teacher/CoursesList
-       // setRows(rows.filter((row) => row.id !== id));
+        delAssignment(id, cid)
+          .then(() => {
+            const url = `/Teacher/ViewUploadedAssigList/${cid}`;
+            navigate(url);
+          })
+          .catch((error) => {
+            // Handle error if needed
+            console.error(error);
+          });
       };
+      
     //useeffect m usestate ayegi
     //1 use state to check role and render screen acc to it
     const theme = useTheme()
@@ -85,7 +89,12 @@ const ViewUploadedAssig = ()=> {
                 sx={{ width: '10%', height:'10%',
                 padding: 1, fontSize: 16, 
                 fontWeight: 'bold',marginLeft:'38%' }}
-                onClick={() => navigate(`Teacher/EditAssignment/${cid}/${assig._id}`)}
+                onClick={() => navigate(`/Teacher/AddAssignment/${cid}`
+                , {
+                    // state: { course: courses.find(c =>  c._id === id) },
+                    state: { assig: assig },
+                  })
+            }
                 >
                 Edit
             </Button>
