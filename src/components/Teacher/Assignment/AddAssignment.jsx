@@ -21,6 +21,7 @@ import { storage } from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AddAssig } from '../../../../Axios/assigAxios';
 import { useNavigate } from 'react-router-dom';
+import { EditAssignment } from '../../../../Axios/assigAxios';
 import TeacherBody from '../Body/TeacherBody';
 
 
@@ -28,20 +29,36 @@ import TeacherBody from '../Body/TeacherBody';
 
 const AddAssignment = () => {
   const theme = useTheme()
+  const assignment = useLocation().state?.assig
+  console.log(assignment)
   const location = useLocation();
   const [fileURL,setfileURL] =React.useState('')
   const [courseID , setcourseID] = React.useState(null)
   const [file, setFile] = React.useState(null)
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (assignment) {
+      setFile(assignment.assignmentFile);
+    } else {
+      setFile(null);
+    }
+  }, [assignment]);
 
-  const initialValues = {
+  const initialValues = assignment === undefined ? {
     assigNo:"",
     description:"",
     uploadDate:"",
     dueDate:"",
     marks:"",
     format:""
+  } : {
+    assigNo : assignment.assignmentNumber,
+    description : assignment.description,
+    uploadDate : dayjs( assignment.uploadDate),
+    dueDate : dayjs(assignment.dueDate),
+    marks : assignment.totalMarks,
+    format : assignment.format
   }
   const { values, handleBlur, handleChange, handleSubmit, errors, touched, setFieldValue } =
   useFormik({
@@ -71,14 +88,27 @@ const AddAssignment = () => {
   const addData=(downloadURL)=>{
     console.log(downloadURL)
    // console.log('file Url: ' , fileURL)
-    const success = AddAssig(values.assigNo,values.description,values.uploadDate,values.dueDate,values.marks,downloadURL,values.format,courseID)
-    console.log("returend value is  " , success)
-    if(success){
-      return navigate(`/Teacher/ViewUploadedAssigList/${courseID}`)
+    if(assignment == undefined){
+      const success = AddAssig(values.assigNo,values.description,values.uploadDate,values.dueDate,values.marks,downloadURL,values.format,courseID)
+      console.log("returend value is  " , success)
+      if(success){
+        return navigate(`/Teacher/ViewUploadedAssigList/${courseID}`)
+      }
+      else{
+        alert("Assignment upload failed")
+
+      }
     }
     else{
-      alert("Assignment upload failed")
-
+        const success = EditAssignment(assignment._id,values.assigNo,values.description,values.uploadDate,values.dueDate,values.totalMarks,downloadURL,values.format)
+        if(success){
+          console.log(courseID)
+          return navigate(`/Teacher/ViewUploadedAssigList/${courseID}`)
+        }
+        else{
+          alert("Assignment upload failed")
+  
+        }
     }
   }
   const handleClick = () => {
@@ -105,7 +135,8 @@ const AddAssignment = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Box>
-        <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginTop: 1 }}>Add Assignment</Typography>
+        <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginTop: 1 }}>
+          {assignment  == undefined ? "Add Assignment" : "Edit Assignment"}</Typography>
       </Box>
       <Box>
         <form onSubmit={handleSubmit}>
@@ -228,7 +259,7 @@ const AddAssignment = () => {
             <Box sx={{ width: '100%', marginBottom: 5, marginTop: 4 }}>
               <Button type='submit' onClick={() => { handleClick() }} 
                 variant="contained" color="secondary"  sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
-                Add Assignment
+                {assignment == undefined ? 'Add Assignment' : 'Edit Assignment'}
               </Button>
             </Box>
           </Box>

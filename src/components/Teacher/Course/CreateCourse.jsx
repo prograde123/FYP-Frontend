@@ -25,10 +25,19 @@ function CreateCourse() {
   const course = useLocation().state?.course
   const theme = useTheme()
   const navigate = useNavigate()
-  const [image, setImage] = React.useState(course === undefined ? null : course.image);
+  const [image, setImage] = React.useState(null);
   const [user, setUser] = React.useState('')
   const [imageError, setImageError] = React.useState('')
-  console.log(course)
+
+  useEffect(()=>{
+    if (course) {
+      setImage(course.image);
+    } else {
+      setImage(null)
+    }
+  } , [course])
+
+
   const initialValues = course === undefined ? {
     courseCode: "",
     title: "",

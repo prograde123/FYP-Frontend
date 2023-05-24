@@ -2,13 +2,14 @@ import http from "./axios";
 
 
 export const Register = async (fullName, email, password, role, phoneNum,profilePic='/',cv='/',userName) => {
-    var userID ;
+    var userID
     await http.post("/users/signup",{
         fullName, email, password, role, phoneNum, profilePic
         })
       .then( async  (response)=>{
         console.log(response);//response data
         console.log(response.data);//response data
+        
         userID = response.data._id
         console.log( userID )
 
@@ -20,9 +21,15 @@ export const Register = async (fullName, email, password, role, phoneNum,profile
               userID,userName
               })
             .then((response)=>{
-              console.log(response.data);//response data
+              console.log(response.data);
+              //console.log(response.data.success)
+              if (response.status != 200) {
+                return false
+              } else {
+                return true
+              }
             }).catch( (error) => {
-              console.log(error.response.data);
+              console.log(error);
             });
           }
           else{
@@ -31,14 +38,20 @@ export const Register = async (fullName, email, password, role, phoneNum,profile
             })
             .then((response)=>{
               console.log(response.data);
+              //console.log(response.data.success)
+              if (response.status != 200) {
+                return false
+              } else {
+                return true
+              }
             }).catch((error)=>{
-              console.log(error.response.data);
+              console.log(error);
             });
           }
 
         })
       .catch( (error) => {
-          console.log(error.response.data);
+          console.log(error);
         });
         
 }

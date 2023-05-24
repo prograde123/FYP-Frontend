@@ -50,12 +50,14 @@ const initialRows = [
 
 
 function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
+  const { setRows, setRowModesModel ,courseID } = props;
   const navigate = useNavigate()
   const theme = useTheme();
   const [row, setRow] = React.useState(initialRows);
-  const [courseID , setcourseID] = React.useState(null)
+
   const [searched, setSearched] = React.useState("");
+  
+ 
   
   
   const requestSearch = (searchedVal) => {
@@ -71,7 +73,7 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/AddAssignment') }} startIcon={<AddIcon />}>
+      <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => { navigate(`/Teacher/AddAssignment/${courseID}`) }} startIcon={<AddIcon />}>
         Add Assignment
       </Button>
       <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, border: 1, borderColor: theme.palette.secondary.main }}>
@@ -88,6 +90,7 @@ function EditToolbar(props) {
 EditToolbar.propTypes = {
   setRowModesModel: PropTypes.func.isRequired,
   setRows: PropTypes.func.isRequired,
+  
 };
 
 export default function Contents() {
@@ -104,10 +107,11 @@ export default function Contents() {
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    //setCourses(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
   async function getAssignments() {
-     const cid = location.pathname.split('/').pop();
+     var cid = location.pathname.split('/').pop();
       setcourseID(cid)
 
     try {
@@ -126,6 +130,7 @@ export default function Contents() {
   const handleDeleteClick = (id) => () => {
     
     delAssignment(id,courseID)
+    getAssignments()
 
    // setRows(rows.filter((row) => row.id !== id));
   };
@@ -145,18 +150,18 @@ export default function Contents() {
       },
     { field: 'assignmentNumber', headerName: 'Assignment Number', width: 200},
 
-    { field: 'size', headerName: 'Size', width: 200},
+    { field: 'format', headerName: 'Format', width: 200},
     {
       field: 'uploadDate',
       headerName: 'Date Uploaded',
       
-      width: 150,
+      width: 200,
     },
     {
         field: 'dueDate',
         headerName: 'Due Date',
         
-        width: 150,
+        width: 200,
       },
     {
       field: 'actions',
@@ -171,23 +176,31 @@ export default function Contents() {
             icon={<VisibilityIcon />}
             label="View"
             className="textPrimary"
+            
             onClick={()=>navigate(`/Teacher/ViewUploadedAssig/${courseID}/${id}`)}
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
+            sx={{ backgroundColor: '#ffa500', padding:1, ":hover":{backgroundColor:"#ffa500", border:'4px solid #ffa500'}}}
           />,
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
             className="textPrimary"
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
+            onClick={() => {
+              navigate(`/Teacher/AddAssignment/${courseID}`, {
+                // state: { course: courses.find(c =>  c._id === id) },
+                state: { assig: rows.find(row =>  row._id === id) },
+              });
+            }} 
+            sx={{ backgroundColor: '#03ac13', padding:1, ":hover":{backgroundColor:"#03ac13", border:'4px solid #03ac13'}}}
 
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon />}
+            icon={<DeleteIcon sx={{color:'white'}}/>}
             label="Delete"
             onClick={handleDeleteClick(id)}
 
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.secondary.main }}
-          />,
+            sx={{ backgroundColor: "red",padding:1, ":hover":{backgroundColor:"red", border:'4px solid red'}}}       
+           />,
+          
         ];
       },
     },
@@ -223,7 +236,7 @@ export default function Contents() {
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          toolbar: { setRows, setRowModesModel ,courseID },
         }}
         initialState={{
           pagination: {

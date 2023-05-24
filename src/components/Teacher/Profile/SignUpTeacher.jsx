@@ -5,13 +5,16 @@ import SignupImage from '../../../assets/signup.png'
 import LogoImage from '../../../assets/logo.png'
 import GoogleImage from '../../../assets/google.png'
 import FbImage from '../../../assets/fb.png'
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
+import {FormHelperText} from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import { storage } from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
@@ -25,13 +28,60 @@ const SignUp = () => {
     const theme = useTheme()
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const navigate = useNavigate()
     
     const [name, setName] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
-    const [phone, setPhone] = React.useState('+92')
+    const [Cpass, setCPass] = React.useState('')
+    const [phone, setPhone] = React.useState('')
     const [pic,setPic] = React.useState('')
     const [file, setFile] = React.useState(null)
+    const [nameError,setNameError]  = React.useState('')
+    const [emailError,setEmailError]  = React.useState('')
+    const [passError, setPassError] = React.useState('')
+    const [phoneError, setPhoneError] = React.useState('')
+
+
+    const ValidateName = (name,setError) => {
+        const namePattern = /^[A-Za-z\s]+$/
+        if(!namePattern.test(name)) {
+            setError('Invalid Name')
+            return false
+        }
+        setError('')
+        return true
+    }
+    const ValidateEmail = () => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if(!emailPattern.test(email)) {
+            setEmailError('Email Error')
+            return false
+        }
+        setEmailError('')
+        return true
+    }
+
+    const ValidatePhone = () => {
+        const phonePattern = /^03[0-4]\d{8}$/
+        if(!phonePattern.test(phone)) {
+            setPhoneError('Invalid Phone Number')
+            console.log(phone)
+            return false
+        }
+        setPhoneError('')
+        console.log(phone)
+        return true
+    }
+
+    const validatePasswords = () => {
+        if (pass != Cpass) {
+          setPassError('Passwords do not match');
+          return false;
+        }
+        setPassError('');
+        return true;
+      };
 
     const handleClick = () => {
         if (file === null) return;
@@ -52,7 +102,19 @@ const SignUp = () => {
       }
 
       const registerTeacher = (cvURL) => {
-        Register(name,email,pass,"Teacher",phone,pic,cvURL,'')
+        const isNameValid = ValidateName(name,setNameError)
+        const isEmailValid = ValidateEmail()
+        const isPhoneValid = ValidatePhone()
+        const isPassValid = validatePasswords()
+        if(isNameValid && isEmailValid && isPhoneValid && isPassValid && cvURL != ''){
+           const response =  Register(name,email,pass,"Teacher",phone,pic,cvURL,'')
+           if(response){
+                navigate('/SignIn')
+           }
+           else{
+            alert('Error Occured')
+           }
+        }
       }
 
     return (
@@ -100,6 +162,11 @@ const SignUp = () => {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
+                            <FormHelperText>
+                                    <Typography variant="body2" color="error">
+                                        {nameError}
+                                    </Typography>
+                            </FormHelperText>
                         </FormControl>
                         <FormControl sx={{ width: '100%', marginTop: 4 }}  >
                             <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Email</InputLabel>
@@ -121,6 +188,9 @@ const SignUp = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
+                            <Typography variant="body2" color="error">
+                                        {emailError}
+                                    </Typography>
                         </FormControl>
                         <FormControl sx={{ width: '100%', marginTop: 4 }} variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Password</InputLabel>
@@ -144,6 +214,7 @@ const SignUp = () => {
                                 value={pass}
                                 onChange={(e) => setPass(e.target.value)}
                             />
+                            
                         </FormControl>
                         <FormControl sx={{ width: '100%', marginTop: 4 }} variant="outlined" >
                             <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Confirm Password</InputLabel>
@@ -164,10 +235,40 @@ const SignUp = () => {
                                     </InputAdornment>
                                 }
                                 label="Confirm Password"
+                                value={Cpass}
+                                onChange={(e) => setCPass(e.target.value)}
                             />
+                            <FormHelperText>
+                                    <Typography variant="body2" color="error">
+                                        {passError}
+                                    </Typography>
+                            </FormHelperText>
                         </FormControl>
-                        <MuiTelInput value={phone} onChange={(val) => setPhone(val)} sx={{ marginTop: 4 }} variant="outlined" color='secondary'>
-                        </MuiTelInput>
+                        <FormControl sx={{ width: '100%', marginTop: 4 }}  >
+                            <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Phone</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-email"
+                                color='secondary'
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <Button
+                                            aria-label="toggle email visibility"
+                                            edge="end"
+                                            color='secondary'
+                                        >
+                                            {<PhoneEnabledIcon />}
+                                        </Button>
+                                    </InputAdornment>
+                                }
+                                label="Phone"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
+                            <Typography variant="body2" color="error">
+                                        {phoneError}
+                                    </Typography>
+                        </FormControl>
+                  
                         <Box sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold' }} >
                             <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                 Click to browse or <br />
