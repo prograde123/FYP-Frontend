@@ -21,6 +21,7 @@ import { storage } from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AddAssig } from '../../../../Axios/assigAxios';
 import { useNavigate } from 'react-router-dom';
+import TeacherBody from '../Body/TeacherBody';
 
 
 
@@ -73,7 +74,7 @@ const AddAssignment = () => {
     const success = AddAssig(values.assigNo,values.description,values.uploadDate,values.dueDate,values.marks,downloadURL,values.format,courseID)
     console.log("returend value is  " , success)
     if(success){
-      return navigate(`/Assignment/ViewUploadedAssigList/${courseID}`)
+      return navigate(`/Teacher/ViewUploadedAssigList/${courseID}`)
     }
     else{
       alert("Assignment upload failed")

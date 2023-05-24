@@ -10,6 +10,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
+import { storage } from '../../../firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
@@ -29,7 +31,29 @@ const SignUp = () => {
     const [pass, setPass] = React.useState('')
     const [phone, setPhone] = React.useState('+92')
     const [pic,setPic] = React.useState('')
-    const [cv,setCv] = React.useState('/')
+    const [file, setFile] = React.useState(null)
+
+    const handleClick = () => {
+        if (file === null) return;
+        const cvRef = ref(storage, `CV/${file.name}`)
+        const uploadTask = uploadBytesResumable(cvRef, file)
+        uploadTask.on('state_changed', (snapshot) => {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log(progress)
+        }, (error) => {
+          console.log("error")
+        }, () => {
+          console.log("success!")
+          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+            registerTeacher(downloadURL)
+            
+          })
+        })
+      }
+
+      const registerTeacher = (cvURL) => {
+        Register(name,email,pass,"Teacher",phone,pic,cvURL,'')
+      }
 
     return (
         <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '200vh'}}>
@@ -142,25 +166,28 @@ const SignUp = () => {
                                 label="Confirm Password"
                             />
                         </FormControl>
-                        <MuiTelInput value={phone} onChange={(e) => setPhone(e.target.value)} sx={{ marginTop: 4 }} variant="outlined" color='secondary'>
+                        <MuiTelInput value={phone} onChange={(val) => setPhone(val)} sx={{ marginTop: 4 }} variant="outlined" color='secondary'>
                         </MuiTelInput>
                         <Box sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold' }} >
-                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload CV*  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                 Click to browse or <br />
                                 Drag and Drop Files
                                 <input hidden accept="file/*" multiple type="file" />
                             </Button></Button></Typography>
                         </Box>
-                        <Box sx={{ marginTop: 2, marginBottom: 4, fontWeight: 'bold' }} >
-                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile Picture* (Optional)  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                                Click to browse or <br />
-                                Drag and Drop Files
-                                <input hidden accept="file/*" multiple type="file" />
-                            </Button></Button></Typography>
-                        </Box>
+                        <Box sx={{ marginTop: 1, fontWeight: 'bold', width: '100%' }} >
+              <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload CV* <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                Click to browse or <br />
+                Drag and Drop Files
+                <input name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/cvt/*" multiple type="file" />
+              </Button></Button></Typography>
+              {file === null ? (<p style={{ color: 'red',fontWeight:'normal', marginTop: 0, marginLeft: 4, marginBottom: 0,display:'flex', flexDirection:'row', justifyContent: 'center' }}>File is required!</p>) : null}
+            </Box>
                     </Box>
                     <Box >
-                        <Button onClick={()=> Register(name,email,pass,"Teacher",phone,pic,cv,'')}
+                        <Button
+                         type='submit' onClick={() => { handleClick() }}
+                         
                         variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
                             Sign Up
                         </Button>
@@ -175,3 +202,4 @@ const SignUp = () => {
 }
 
 export default SignUp;
+

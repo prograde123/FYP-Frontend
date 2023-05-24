@@ -11,10 +11,13 @@ import Navbar from "../Navbar";
 import { useTheme } from "@emotion/react";
 import ViewProfile from "../Profile/ViewProfileTeacher";
 import CreateCourseContent from '../Course/AddCourseContent'
-import ViewCourse from '../Course/ViewCourse'
-import AddAssignment from '../Assignment/AddAssignment';
-import ViewSubmittedAssigList from '../Assignment/ViewSubmittedAssigList'
 import CourseDetails from "../Course/CourseDetails";
+
+import AddAssignment from '../Assignment/AddAssignment'
+import ViewSubmittedAssigList from '../Assignment/ViewSubmittedAssigList'
+import ViewUploadedAssigList from "../../StudentsAndTeachers/Assignments/ViewUploadedAssigList";
+import ViewUploadedAssig from "../../StudentsAndTeachers/Assignments/ViewUploadedAssignment";
+import PDFViewer from "../../StudentsAndTeachers/Assignments/pdf";
 
 export default function TeacherBody() {
     const theme = useTheme()
@@ -39,6 +42,10 @@ export default function TeacherBody() {
                             <Route path="Profile" element={<ViewProfile />}></Route>
                             <Route path="AddAssignment/:id" element={<AddAssignment />}></Route>
                             <Route path="ViewSubmittedAssigList" element={<ViewSubmittedAssigList />}> </Route>
+                            <Route path="ViewUploadedAssig/:cid/:aid" element={<ViewUploadedAssig />}></Route> 
+                            <Route path="ViewUploadedAssigList/:id" element={<ViewUploadedAssigList /> }></Route>
+                            
+                            <Route path="ViewUploadedAssig/Pdf" element={<PDFViewer />}></Route>
                         </Route>
                     </Routes>
                 </Box>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useTheme } from '@emotion/react';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,7 +10,6 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import axios from "axios";
 import http from "../../../../Axios/axios";
 import { useLocation } from "react-router-dom";
 import TextField from '@mui/material/TextField';
@@ -24,11 +22,11 @@ const CreateCourseContent = ({ courses }) => {
   const theme = useTheme()
   const navigate = useNavigate();
   const location = useLocation();
-  const [lecNo, setLecNo] = React.useState("")
-  const [title, setTitle] = React.useState('')
-  const [fileType, setFileType] = React.useState('')
+  const course = location.state.course
   const [file, setFile] = React.useState(null);
+  const [fileError, setFileError] = React.useState('')
 
+ console.log(course.courseContent)
   const initialValues = {
     lecNo: "",
     title: "",
@@ -51,7 +49,7 @@ const CreateCourseContent = ({ courses }) => {
       },
     });
 
-  const course = location.state.course
+  
   //console.log(course)
   async function addContent(downloadURL) {
     try {
@@ -64,13 +62,27 @@ const CreateCourseContent = ({ courses }) => {
       };
       const response = await http.put(url, content);
       console.log("content added")
+      return  navigate("/Teacher/ContentList/" + course._id, {
+        state: { course: course },
+    })
     } catch (e) {
       console.log(e);
     }
   }
 
+  useEffect(() => {
+    if(file === null)
+    return;
+    setFileError('')
+  }, [file]);
+
   const handleClick = () => {
-    if (file === null || values.lecNo === '' || values.title=== '' || values.fileType ==='') return;
+    if(file === null){
+      setFileError("File is required!")
+      return;
+    }
+    if ( values.lecNo === '' || values.title=== '' || values.fileType ==='') 
+    return;
     const imgRef = ref(storage, `courseImages/${file.name}`)
     const uploadTask = uploadBytesResumable(imgRef, file)
     uploadTask.on('state_changed', (snapshot) => {
@@ -170,8 +182,8 @@ const CreateCourseContent = ({ courses }) => {
                     <br />Choose files<br />or Drag and Drop Files
                     <input  name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/*" multiple type="file" />
                   </Button></Button></Typography>
-                  {file === null ? (<p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>Lecture File is required!</p>) : null}
-            </Box>
+                  <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row' }}>{fileError}</p>
+                  </Box>
             <Box sx={{ width: '100%', marginTop: 4 }}>
               <Button type='submit' onClick={() => { handleClick() }}
                 variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>

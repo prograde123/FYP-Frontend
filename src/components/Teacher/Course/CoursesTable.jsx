@@ -81,8 +81,10 @@ export default function CoursesListTable() {
   };
 
   async function getCourses() {
+    const user = JSON.parse(localStorage.getItem('User'))
+    console.log(user)
     try {
-      const response = await http.get('/course/coursesList')
+      const response = await http.get('/course/coursesList/' + user._id)
       setCourses(response.data.courses)
       console.log(response.data.courses)
     } catch (e) {
@@ -93,9 +95,6 @@ export default function CoursesListTable() {
   async function deleteCourse(id){
     try{
       const response = await http.delete('/course/deleteCourse/'+ id)
-      const newCourses = rows.filter(item => item._id !== id);  
-      console.log(response.data)
-      setCourses(newCourses)
       getCourses();
     }
     catch (e) {
@@ -153,25 +152,30 @@ useEffect(() => {
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
-            icon={<VisibilityIcon />}
+            icon={<VisibilityIcon sx={{color:'white'}}/>}
             label="View"
             onClick={() => {
               navigate("/Teacher/CourseDetails/" + id, {
                 state: { course: courses.find(c =>  c._id === id) },
               });
             }} 
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.secondary.main }}
+            sx={{ backgroundColor: '#ffa500', padding:1, ":hover":{backgroundColor:"#ffa500", border:'4px solid #ffa500'}}}
           />,
           <GridActionsCellItem
-            icon={<EditIcon />}
+            icon={<EditIcon sx={{color:'white'}}/>}
             label="Edit"
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.secondary.main }}
+            sx={{ backgroundColor: '#03ac13', padding:1, ":hover":{backgroundColor:"#03ac13", border:'4px solid #03ac13'}}}
+            onClick={() => {
+              navigate("/Teacher/CreateCourse", {
+                state: { course: courses.find(c =>  c._id === id) },
+              });
+            }} 
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon />}
+            icon={<DeleteIcon sx={{color:'white'}}/>}
             label="Delete"
             onClick={()=>deleteCourse(id)}
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.secondary.main }}
+            sx={{ backgroundColor: "red",padding:1, ":hover":{backgroundColor:"red", border:'4px solid red'}}}
           />,
         ];
       },

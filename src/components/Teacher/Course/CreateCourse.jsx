@@ -17,14 +17,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect } from "react";
-import axios from "axios";
+import { useLocation } from 'react-router-dom';
+import http from "../../../../Axios/axios";
+import { useNavigate } from "react-router-dom";
 
 function CreateCourse() {
+  const course = useLocation().state?.course
   const theme = useTheme()
-  const [image, setImage] = React.useState(null);
+  const navigate = useNavigate()
+  const [image, setImage] = React.useState(course === undefined ? null : course.image);
   const [user, setUser] = React.useState('')
-
-  const initialValues = {
+  const [imageError, setImageError] = React.useState('')
+  console.log(course)
+  const initialValues = course === undefined ? {
     courseCode: "",
     title: "",
     creditHours: "",
@@ -32,17 +37,25 @@ function CreateCourse() {
     language: "",
     starting: "",
     ending: "",
-  };
+  } : {
+    courseCode: course.courseCode,
+    title: course.name,
+    creditHours: course.creditHours,
+    description: course.description,
+    language: course.language,
+    starting: dayjs(course.startingDate),
+    ending: dayjs(course.endingDate),
+  }
 
   const { values, handleBlur, handleChange, handleSubmit, errors, touched, setFieldValue } =
     useFormik({
       initialValues,
       validationSchema: Yup.object({
         courseCode: Yup.string().min(4).max(6).required("Please Enter the course Code"),
-        title: Yup.string().min(2).max(25).required("Please Enter the course title"),
+        title: Yup.string().min(3).max(25).required("Please Enter the course title"),
         creditHours: Yup.number().nullable(true).required("Credit Hours are required!"),
         language: Yup.string().ensure().required("Language is required required!"),
-        description: Yup.string().min(2).max(55).required("Please Enter the course Description"),
+        description: Yup.string().min(5).max(100).required("Please Enter the course Description"),
         starting: Yup.date().required("Starting Date is required"),
         ending: Yup.date().required("Ending Date is required"),
       }),
@@ -53,14 +66,10 @@ function CreateCourse() {
         action.resetForm();
       },
     });
-  //console.log(initialValues.courseCode)
-  //console.log(errors);
-  //console.log(initialValues.starting)
 
   async function addCourse(downloadURL) {
     try {
-      const url = "http://localhost:5000/course/addCourse";
-      const course = {
+      const newCourse = {
         teacher: user._id,
         courseCode: values.courseCode,
         name: values.title,
@@ -71,8 +80,18 @@ function CreateCourse() {
         endingDate: values.ending,
         image: downloadURL,
       };
-      const response = await axios.post(url, course);
-      console.log("course added")
+      if (course === undefined)
+      {
+      const url = "/course/addCourse";
+        const response = await http.post(url, newCourse);
+        console.log("course added", response)
+        return navigate("/Teacher/CoursesList");
+      } else {
+      const url = "/course/updateCourse/" + course._id;
+        const response = await http.patch(url, newCourse);
+        console.log("course updated", response)
+        return navigate("/Teacher/CoursesList");
+      }
     } catch (e) {
       console.log(e);
     }
@@ -89,9 +108,19 @@ function CreateCourse() {
     getUser();
   }, []);
 
-  const handleClick = () => {
-    if (image === null || values.courseCode === '' || values.title === '' || values.creditHours === '' || values.description === '' || values.language === '' || values.starting === '' || values.ending === '') 
+  useEffect(() => {
+    if(image === null)
     return;
+    setImageError('')
+  }, [image]);
+
+  const handleClick = () => {
+    if(image === null){
+      setImageError("Image is required!")
+      return;
+    }
+    if (values.courseCode === '' || values.title === '' || values.creditHours === '' || values.description === '' || values.language === '' || values.starting === '' || values.ending === '')
+      return;
     const imgRef = ref(storage, `courseImages/${image.name}`)
     const uploadTask = uploadBytesResumable(imgRef, image)
     uploadTask.on('state_changed', (snapshot) => {
@@ -238,13 +267,13 @@ function CreateCourse() {
                 Drag and Drop Files
                 <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
               </Button></Button></Typography>
-              {image === null ? (<p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>Image is required!</p>) : null}
+             <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{imageError}</p>
             </Box>
 
             <Box sx={{ width: '100%', marginBottom: 5, marginTop: 4 }}>
               <Button type='submit' onClick={() => { handleClick() }}
                 variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
-                Create Course
+                {course === undefined ? 'Create Course' : 'Update Course'}
               </Button>
             </Box>
           </Box>

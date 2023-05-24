@@ -10,6 +10,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchBar from '@mkyy/mui-search-bar';
 import DownloadIcon from '@mui/icons-material/Download';
 import http from '../../../../Axios/axios';
+import { delAssignment } from '../../../../Axios/assigAxios';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -56,6 +57,7 @@ function EditToolbar(props) {
   const [courseID , setcourseID] = React.useState(null)
   const [searched, setSearched] = React.useState("");
   
+  
   const requestSearch = (searchedVal) => {
     const filteredRows = initialRows.filter((row) => {
       return row.title.toLowerCase().includes(searchedVal.toLowerCase());
@@ -93,32 +95,40 @@ export default function Contents() {
   const navigate = useNavigate()
   
   const [rowModesModel, setRowModesModel] = React.useState({});
-  const [list,setList]=React.useState([]);
-  const [rows, setRows] = React.useState(list);
+  const [courseID , setcourseID] = React.useState(null)
+  const [rows, setRows] = React.useState([]);
 
   
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
+ 
 
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
+  async function getAssignments() {
+     const cid = location.pathname.split('/').pop();
+      setcourseID(cid)
+
+    try {
+      const response = await http.get(`/assignment/viewAssigList/${cid}`)
+      console.log(response)
+      setRows(response.data.assignments)
+      console.log(response.data.assignments)
+    } catch(e) {
+      console.log(e)
+    }
+  }
   useEffect(() => {
-    const cid = location.pathname.split('/').pop();
-    
-    http.get(`/assignment/viewAssigList/${cid}`)
-    .then((response)=>{
-      console.log(response.data);//response data
-      setList(response.data)
-      
-    }).catch( (error) => {
-      console.log(error.response.data);
-    });
+    getAssignments()
   } ,[])
 
+  const handleDeleteClick = (id) => () => {
+    
+    delAssignment(id,courseID)
+
+   // setRows(rows.filter((row) => row.id !== id));
+  };
   const columns = [
     {
         field: 'imageUrl', headerName: 'File', renderCell: (params) => (
@@ -161,7 +171,7 @@ export default function Contents() {
             icon={<VisibilityIcon />}
             label="View"
             className="textPrimary"
-            onClick={()=>navigate('/Assignment/ViewUploadedAssig')}
+            onClick={()=>navigate(`/Teacher/ViewUploadedAssig/${courseID}/${id}`)}
             sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
           />,
           <GridActionsCellItem
@@ -208,6 +218,7 @@ export default function Contents() {
         columns={columns}
         rowModesModel={rowModesModel}
         processRowUpdate={processRowUpdate}
+        getRowId={(row) => row._id}
         slots={{
           toolbar: EditToolbar,
         }}
