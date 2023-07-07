@@ -37,6 +37,7 @@ const SignUp = () => {
     const [phone, setPhone] = React.useState('')
     const [pic,setPic] = React.useState('')
     const [file, setFile] = React.useState(null)
+    const [fileError,setFileError] = React.useState('')
     const [nameError,setNameError]  = React.useState('')
     const [emailError,setEmailError]  = React.useState('')
     const [passError, setPassError] = React.useState('')
@@ -45,7 +46,7 @@ const SignUp = () => {
 
     const ValidateName = (name,setError) => {
         const namePattern = /^[A-Za-z\s]+$/
-        if(!namePattern.test(name)) {
+        if(!namePattern.test(name) || name == '') {
             setError('Invalid Name')
             return false
         }
@@ -54,7 +55,7 @@ const SignUp = () => {
     }
     const ValidateEmail = () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if(!emailPattern.test(email)) {
+        if(!emailPattern.test(email) || email == '') {
             setEmailError('Email Error')
             return false
         }
@@ -64,7 +65,7 @@ const SignUp = () => {
 
     const ValidatePhone = () => {
         const phonePattern = /^03[0-4]\d{8}$/
-        if(!phonePattern.test(phone)) {
+        if(!phonePattern.test(phone) || phone == '') {
             setPhoneError('Invalid Phone Number')
             console.log(phone)
             return false
@@ -75,7 +76,7 @@ const SignUp = () => {
     }
 
     const validatePasswords = () => {
-        if (pass != Cpass) {
+        if (pass != Cpass || pass == '' || Cpass == '') {
           setPassError('Passwords do not match');
           return false;
         }
@@ -83,7 +84,25 @@ const SignUp = () => {
         return true;
       };
 
+    const validateFile = () => {
+        if(file == null || file == ''){
+            setFileError('File is required')
+            return false;
+        }
+        setFileError('')
+        return true;
+    }
     const handleClick = () => {
+        const isNameValid = ValidateName(name,setNameError)
+        const isEmailValid = ValidateEmail()
+        const isPhoneValid = ValidatePhone()
+        const isPassValid = validatePasswords()
+        const isValidFile = validateFile()
+        if(isNameValid && isEmailValid && isPhoneValid && isPassValid && isValidFile){
+            addFile()
+        }
+    }
+    const addFile = () => {
         if (file === null) return;
         const cvRef = ref(storage, `CV/${file.name}`)
         const uploadTask = uploadBytesResumable(cvRef, file)
@@ -128,7 +147,7 @@ const SignUp = () => {
                     <Typography variant='h5' sx={{ color: theme.palette.primary.background }}>Sign In Now ! </Typography>
                 </Box>
                 <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center'}}>
-                    <img style={{ maxWidth: '100%', height: '100vh' }} src={SignupImage} />
+                    <img style={{ maxWidth: '100%', height: '100vh' }} src='https://www.paradisosolutions.com/wp-content/uploads/2020/03/4-2-300x300.png' />
                 </Box>
             </Box>
             <Box sx={{ width: '80%' }}>
@@ -282,14 +301,14 @@ const SignUp = () => {
                 Drag and Drop Files
                 <input name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/cvt/*" multiple type="file" />
               </Button></Button></Typography>
-              {file === null ? (<p style={{ color: 'red',fontWeight:'normal', marginTop: 0, marginLeft: 4, marginBottom: 0,display:'flex', flexDirection:'row', justifyContent: 'center' }}>File is required!</p>) : null}
+              {(<p style={{ color: 'red',fontWeight:'normal', marginTop: 0, marginLeft: 4, marginBottom: 0,display:'flex', flexDirection:'row', justifyContent: 'center' }}>{fileError}</p>) }
             </Box>
                     </Box>
                     <Box >
                         <Button
                          type='submit' onClick={() => { handleClick() }}
                          
-                        variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
+                        variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', marginTop: '2%' }}>
                             Sign Up
                         </Button>
                     </Box>

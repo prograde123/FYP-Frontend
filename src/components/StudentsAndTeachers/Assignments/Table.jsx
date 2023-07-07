@@ -155,13 +155,13 @@ export default function Contents() {
       field: 'uploadDate',
       headerName: 'Date Uploaded',
       
-      width: 200,
+      width: 220,
     },
     {
         field: 'dueDate',
         headerName: 'Due Date',
         
-        width: 200,
+        width: 220,
       },
     {
       field: 'actions',
@@ -173,7 +173,7 @@ export default function Contents() {
 
         return [
             <GridActionsCellItem
-            icon={<VisibilityIcon />}
+            icon={<VisibilityIcon sx={{color:'white'}} />}
             label="View"
             className="textPrimary"
             
@@ -181,7 +181,7 @@ export default function Contents() {
             sx={{ backgroundColor: '#ffa500', padding:1, ":hover":{backgroundColor:"#ffa500", border:'4px solid #ffa500'}}}
           />,
           <GridActionsCellItem
-            icon={<EditIcon />}
+            icon={<EditIcon sx={{color:'white'}}/>}
             label="Edit"
             className="textPrimary"
             onClick={() => {
@@ -207,24 +207,13 @@ export default function Contents() {
   ];
 
   return (
-    <Box
-      sx={{
-        marginBottom: 4,
-        
-        padding: 1,
-        '& .actions': {
-          color: theme.palette.secondary.main,
-        },
-        '& .textPrimary': {
-          color: theme.palette.secondary.main,
-        },
-      }}
-    >
+    <Box sx={{ height: '100vh', width: "100%" }}>
       <DataGrid
         sx={{
           backgroundColor: theme.palette.primary.background, boxShadow: 12, border: 2, borderColor: theme.palette.secondary.main, '& .MuiDataGrid-cell:hover': {
             color: theme.palette.secondary.main,
-          }, marginTop: 3, borderRadius: 6, height:'70vh'
+
+          }, marginTop: 3, borderRadius: 6,
         }}
         rows={rows}
         rowHeight={70}

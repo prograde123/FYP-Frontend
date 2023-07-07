@@ -128,7 +128,7 @@ function CreateCourse() {
       setImageError("Image is required!")
       return;
     }
-    if (values.courseCode === '' || values.title === '' || values.creditHours === '' || values.description === '' || values.language === '' || values.starting === '' || values.ending === '')
+    if (image === null || values.courseCode === '' || values.title === '' || values.creditHours === '' || values.description === '' || values.language === '' || values.starting === '' || values.ending === '')
       return;
     const imgRef = ref(storage, `courseImages/${image.name}`)
     const uploadTask = uploadBytesResumable(imgRef, image)
