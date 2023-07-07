@@ -35,6 +35,7 @@ const AddAssignment = () => {
   const [fileURL,setfileURL] =React.useState('')
   const [courseID , setcourseID] = React.useState(null)
   const [file, setFile] = React.useState(null)
+  const [fileError,setFileError] = React.useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -85,6 +86,8 @@ const AddAssignment = () => {
     const id = location.pathname.split('/').pop();
     setcourseID(id)
   })
+
+
   const addData=(downloadURL)=>{
     console.log(downloadURL)
    // console.log('file Url: ' , fileURL)
@@ -111,8 +114,20 @@ const AddAssignment = () => {
         }
     }
   }
+
+  useEffect(() => {
+    if(file === null)
+    return;
+    setFileError('')
+  }, [file]);
+
   const handleClick = () => {
-    if (file === null) return;
+    if(file === null){
+      setFileError("File is required!")
+      return;
+    }
+    if ( values.assigNo === '' || values.description=== '' || values.uploadDate ==='' ||values.dueDate==='' || values.marks === ''|| values.format === "") 
+    return;
     const fileRef = ref(storage, `Assignments/${file.name}`)
     const uploadTask = uploadBytesResumable(fileRef, file)
     uploadTask.on('state_changed', (snapshot) => {
@@ -153,8 +168,7 @@ const AddAssignment = () => {
             />{errors.assigNo && touched.assigNo ? (
               <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.assigNo}</p>
             ) : null}
-            <br />
-            <TextField sx={{ marginTop: 3, width: '100%' }}
+            <TextField sx={{ marginTop: 5, width: '100%' }}
               id="outlined-multiline-flexible"
               label="Descripiton"
               color='secondary'
@@ -165,8 +179,7 @@ const AddAssignment = () => {
             />{errors.description && touched.description ? (
               <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.description}</p>
             ) : null}
-            <br />
-            <TextField sx={{ marginTop: 3, width: '100%' }}
+            <TextField sx={{ marginTop: 5, width: '100%' }}
               id="outlined-number"
               label=" Marks"
               type="number"
@@ -181,9 +194,7 @@ const AddAssignment = () => {
             />{errors.marks && touched.marks ? (
               <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.marks}</p>
             ) : null}
-            <br />
-           
-            
+            <br/>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker']} sx={{ width: '100%', marginTop: 0 }}>
                 <Box>
@@ -221,8 +232,8 @@ const AddAssignment = () => {
                 </Box>
               </DemoContainer>
             </LocalizationProvider>
-            <br />
-            <FormControl sx={{ marginTop: 3, width: '100%' }}>
+           
+            <FormControl sx={{ marginTop: 5, width: '100%' }}>
               <InputLabel >Select Format</InputLabel>
               <Select
                 id="outlined-multiline-flexible"
@@ -245,15 +256,14 @@ const AddAssignment = () => {
             {errors.format && touched.format ? (
               <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.format}</p>
             ) : null}
-            <br />
             
-            <Box sx={{ marginTop: 1, fontWeight: 'bold', width: '100%' }} >
+            <Box sx={{ marginTop: 5, fontWeight: 'bold', width: '100%' }} >
               <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Assignment <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                 Click to browse or <br />
                 Drag and Drop Files
                 <input name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/assignment/*" multiple type="file" />
               </Button></Button></Typography>
-              {file === null ? (<p style={{ color: 'red',fontWeight:'normal', marginTop: 0, marginLeft: 4, marginBottom: 0,display:'flex', flexDirection:'row', justifyContent: 'center' }}>File is required!</p>) : null}
+              <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent:'center' }}>{fileError}</p>
             </Box>
 
             <Box sx={{ width: '100%', marginBottom: 5, marginTop: 4 }}>
