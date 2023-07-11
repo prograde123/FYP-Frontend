@@ -7,6 +7,8 @@ import { useTheme } from "@emotion/react";
 import DrawerAppBar from "../Navbar";
 import StartPage from "../StartPage";
 import Footer from "../Footer";
+import CourseCard from "../Course/CourseCard";
+import Courses from "../Course/Courses";
 
 export default function StudentBody() {
     const theme = useTheme()
@@ -14,15 +16,16 @@ export default function StudentBody() {
         <>
         
             <DrawerAppBar />
-            <Box height={50} />
-            <Box sx={{ display: 'flex', }}>
+            <Box/>
+            <Box>
                 
-                <Box component='main' sx={{ flexGrow: 1 }}>
+                <Box component='main' >
                     <Routes>
                         <Route path='/'>
                             {/* */}
                            <Route path = "Landing" element= {<StartPage />} />
-                            
+                           <Route path="CourseCard" element={<CourseCard />}></Route>
+                            <Route path="Courses" element={<Courses />}></Route>
                         </Route>
                     </Routes>
                 </Box>
