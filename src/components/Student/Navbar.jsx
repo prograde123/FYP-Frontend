@@ -88,12 +88,12 @@ export default function DrawerAppBar() {
          
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: newtheme.palette.primary.main}}>
+              <Button  key={item} sx={{ color: newtheme.palette.primary.main,fontWeight:'bold',marginRight:4,":hover": { borderBottom: '4px solid #ff2712' }}}>
                 {item}
               </Button>
             ))}
             <IconButton color="inherit" sx={{ ml: 1, color: newtheme.palette.primary.main }}>
-               <AccountCircle />
+               <AccountCircle fontSize='large' />
             </IconButton>
           </Box>
         </Toolbar>
