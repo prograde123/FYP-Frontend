@@ -7,6 +7,8 @@ import SignUpStudent from "./components/Student/Profile/SignUpStudent";
 import ForgotPassword from "./components/ForgotPassword";
 import TeacherBody from "./components/Teacher/Body/TeacherBody";
 import { useEffect } from "react";
+import StudentBody from "./components/Student/Body/StudentBody";
+
 
 function Auth() {
   const navigate = useNavigate()
@@ -31,6 +33,7 @@ function App() {
         <Route path='/Teacher/*' element={<TeacherBody />} />
         <Route path="ForgotPassword" element={<ForgotPassword />} />
         <Route path="OTPVerification" element={<OTP />} />
+        <Route path="/Student/*" element={<StudentBody />} />
       </Routes>
     </>
   )
