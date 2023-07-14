@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,32 +9,41 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+import Fade from '@mui/material/Fade';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 
 import { useTheme } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import newtheme from '../../Themenew'
+import Modal from '@mui/material/Modal';
+import { Link } from '@mui/material';
+import Backdrop from '@mui/material/Backdrop';
 
 const drawerWidth = 200;
 
-const navItems = ['Home', 'Courses', 'About', 'Contact', 'Profile'];
+const navItems = ['Home', 'Courses', 'About', 'Contact',];
 
 export default function DrawerAppBar() {
   
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const [isProfileOpen, setProfileOpen] = useState(false);
+
+  
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  
+  const handleProfileOpen = () => setProfileOpen(true);
+  
+  const handleProfileClose = () => setProfileOpen(false);
+  
+    
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -45,18 +55,14 @@ export default function DrawerAppBar() {
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-              {item === 'Profile' && (
-        <IconButton color={newtheme.palette.primary.main} >
-          <AccountCircle />
-        </IconButton>
-      )}
+              
             </ListItemButton>
           </ListItem>
         ))}
        
          
       </List>
+      
       
     </Box>
   );
@@ -88,39 +94,125 @@ export default function DrawerAppBar() {
          
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button  key={item} sx={{ color: newtheme.palette.primary.main,fontWeight:'bold',marginRight:4,":hover": { borderBottom: '4px solid #ff2712' }}}>
-                { item }
+              <Button key={item} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                {item}
               </Button>
             ))}
-            <IconButton color="inherit" sx={{ ml: 1, color: newtheme.palette.primary.main }} >
-               <AccountCircle fontSize='large' />
-            </IconButton>
+            <Button
+             
+              onClick={handleProfileOpen}
+              sx={{ fontWeight: 'bold',':hover':{backgroundColor:newtheme.palette.secondary.footer}, border: 2,borderRadius:10, paddingLeft: 4, paddingRight: 4,paddingTop:2,paddingBottom:2,
+               backgroundColor:newtheme.palette.secondary.background,color:newtheme.palette.primary.background }}
+            >
+              Profile
+            </Button>
+            <Modal
+                open={isProfileOpen}
+                onClose={handleProfileClose}
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                  backdrop: {
+                    timeout: 500,
+                  },
+                }}
+              >
+  <Fade in={isProfileOpen}>
+    <Box
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: '30%', 
+        transform: 'translate(-50%, -50%)',
+        bgcolor: newtheme.palette.secondary.main,
+        boxShadow: 24,
+        p: 4,
+        border: '2px',
+        borderRadius: '5%',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: '7%',
+        paddingBottom: '7%',
+        justifyContent: 'space-around',
+      }}
+    >
+      <Typography id="transition-modal-description" sx={{}}>
+        <Box
+          sx={{
+            bgcolor: newtheme.palette.secondary.background,
+            border: 1,
+            borderColor: newtheme.palette.secondary.background,
+            borderRadius: 5
+            ,':hover':{backgroundColor:newtheme.palette.secondary.footer}
+          }}
+        >
+          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ textAlign: 'center',
+             color: newtheme.palette.primary.background, paddingLeft: 4, paddingRight: 4,paddingTop:2,paddingBottom:2, }}>
+              SignUp as a Teacher
+            </Typography>
+          </Link>
+        </Box>
+        <br />
+        <Box sx={{  bgcolor: newtheme.palette.secondary.background,
+            border: 1,
+            borderColor: newtheme.palette.secondary.background,
+            borderRadius: 5
+            ,':hover':{backgroundColor:newtheme.palette.secondary.footer}}}>
+          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+          <Typography variant="h6" sx={{textAlign: 'center', 
+          color: newtheme.palette.primary.background, paddingLeft: 4, paddingRight: 4,paddingTop:2,paddingBottom:2,}}>
+              SignUp as a Student
+            </Typography>
+          </Link>
+        </Box>
+        <br />
+        <Box sx={{ bgcolor: newtheme.palette.secondary.background,
+            border: 1,
+            borderColor: newtheme.palette.secondary.background,
+            borderRadius: 5,':hover':{backgroundColor:newtheme.palette.secondary.footer} }}>
+          <Link href="#" sx={{ textDecoration: 'none' , textAlign: 'center'}}>
+            <Typography variant="h6" sx={{textAlign: 'center', 
+            color: newtheme.palette.primary.background, paddingLeft: 4, paddingRight: 4,paddingTop:2,paddingBottom:2,}}>
+              SignIn
+            </Typography>
+            
+          </Link>
+        </Box>
+      </Typography>
+    </Box>
+  </Fade>
+</Modal>
+
           </Box>
         </Toolbar>
       </AppBar>
-      
+
       <Box component="nav">
         <Drawer
-       
+
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, 
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            
+
           }}
         >
           {drawer}
-         
+
         </Drawer>
-        
+
       </Box>
-      
-      
+
+
     </Box>
     </ThemeProvider>
   );
