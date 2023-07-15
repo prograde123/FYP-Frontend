@@ -181,7 +181,7 @@ function StartPage() {
             marginTop: '2%',
 
             opacity: isVisible2 ? 1 : 0,
-            transform: isVisible2 ? 'translateX(0)' : 'translateX(100%)',
+            transform: isVisible2 ? 'translateX(0)' : 'translateX(-100%)',
             transition: 'opacity 0.4s ease-in-out, transform 0.4s ease-in-out',
           }}
         >

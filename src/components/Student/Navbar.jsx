@@ -48,24 +48,47 @@ export default function DrawerAppBar() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-
+        
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-
+              <Link href="#" sx={{ textDecoration: 'none', color: 'black' }}>
+                {item}
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
-
-
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <Button
+              onClick={handleProfileOpen}
+              sx={{
+                fontWeight: 'bold',
+                ':hover': {
+                  backgroundColor: newtheme.palette.secondary.footer,
+                },
+                border: 2,
+                borderRadius: 10,
+                paddingLeft: 4,
+                paddingRight: 4,
+                paddingTop: 2,
+                paddingBottom: 2,
+                backgroundColor: newtheme.palette.secondary.background,
+                color: newtheme.palette.primary.background,
+              }}
+            >
+              Sign Up
+            </Button>
+          </ListItemButton>
+        </ListItem>
       </List>
-
-
     </Box>
   );
+  
+  
 
 
 
@@ -102,99 +125,124 @@ export default function DrawerAppBar() {
                   fontWeight: 'bold', ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, borderRadius: 10, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2,
                   backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background
                 }}
-              >
+                >
                 Sign Up
               </Button>
               <Modal
-                open={isProfileOpen}
-                onClose={handleProfileClose}
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                  backdrop: {
-                    timeout: 500,
-                  },
-                }}
-              >
-                <Fade in={isProfileOpen}>
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      width: '30%',
-                      transform: 'translate(-50%, -50%)',
-                      bgcolor: newtheme.palette.secondary.main,
-                      boxShadow: 24,
-                      p: 4,
-                      border: '2px',
-                      borderRadius: '5%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      paddingTop: '7%',
-                      paddingBottom: '7%',
-                      justifyContent: 'space-around',
-                    }}
-                  >
-                    <Typography id="transition-modal-description" sx={{}}>
-                      <Box
-                        sx={{
-                          bgcolor: newtheme.palette.secondary.background,
-                          border: 1,
-                          borderColor: newtheme.palette.secondary.background,
-                          borderRadius: 5
-                          , ':hover': { backgroundColor: newtheme.palette.secondary.footer }
-                        }}
-                      >
-                        <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                          <Typography variant="h6" sx={{
-                            textAlign: 'center',
-                            color: newtheme.palette.primary.background, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2,
-                          }}>
-                            SignUp as a Teacher
-                          </Typography>
-                        </Link>
-                      </Box>
-                      <br />
-                      <Box sx={{
-                        bgcolor: newtheme.palette.secondary.background,
-                        border: 1,
-                        borderColor: newtheme.palette.secondary.background,
-                        borderRadius: 5
-                        , ':hover': { backgroundColor: newtheme.palette.secondary.footer }
-                      }}>
-                        <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                          <Typography variant="h6" sx={{
-                            textAlign: 'center',
-                            color: newtheme.palette.primary.background, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2,
-                          }}>
-                            SignUp as a Student
-                          </Typography>
-                        </Link>
-                      </Box>
-                      <br />
-                      <Box sx={{
-                        bgcolor: newtheme.palette.secondary.background,
-                        border: 1,
-                        borderColor: newtheme.palette.secondary.background,
-                        borderRadius: 5, ':hover': { backgroundColor: newtheme.palette.secondary.footer }
-                      }}>
-                        <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                          <Typography variant="h6" sx={{
-                            textAlign: 'center',
-                            color: newtheme.palette.primary.background, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2,
-                          }}>
-                            SignIn
-                          </Typography>
+  open={isProfileOpen}
+  onClose={handleProfileClose}
+  aria-labelledby="transition-modal-title"
+  aria-describedby="transition-modal-description"
+  closeAfterTransition
+  slots={{ backdrop: Backdrop }}
+  slotProps={{
+    backdrop: {
+      timeout: 500,
+    },
+  }}
+>
+  <Fade in={isProfileOpen}>
+    <Box
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: '90%',
+        maxWidth: '400px',
+        transform: 'translate(-50%, -50%)',
+        bgcolor: newtheme.palette.secondary.main,
+        boxShadow: 24,
+        p: 4,
+        borderRadius: '5%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+      }}
+    >
+      <Typography id="transition-modal-description" sx={{}}>
+        {/* Content of the modal */}
+        <Box
+          sx={{
+            bgcolor: newtheme.palette.secondary.background,
+            border: 1,
+            borderColor: newtheme.palette.secondary.background,
+            borderRadius: 5,
+            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
+          }}
+        >
+          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+                color: newtheme.palette.primary.background,
+                paddingLeft: 4,
+                paddingRight: 4,
+                paddingTop: 2,
+                paddingBottom: 2,
+              }}
+            >
+              SignUp as a Teacher
+            </Typography>
+          </Link>
+        </Box>
+        <br />
+        <Box
+          sx={{
+            bgcolor: newtheme.palette.secondary.background,
+            border: 1,
+            borderColor: newtheme.palette.secondary.background,
+            borderRadius: 5,
+            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
+          }}
+        >
+          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+                color: newtheme.palette.primary.background,
+                paddingLeft: 4,
+                paddingRight: 4,
+                paddingTop: 2,
+                paddingBottom: 2,
+              }}
+            >
+              SignUp as a Student
+            </Typography>
+          </Link>
+        </Box>
+        <br />
+        <Box
+          sx={{
+            bgcolor: newtheme.palette.secondary.background,
+            border: 1,
+            borderColor: newtheme.palette.secondary.background,
+            borderRadius: 5,
+            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
+          }}
+        >
+          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+                color: newtheme.palette.primary.background,
+                paddingLeft: 4,
+                paddingRight: 4,
+                paddingTop: 2,
+                paddingBottom: 2,
+              }}
+            >
+              SignIn
+            </Typography>
+          </Link>
+        </Box>
+      </Typography>
+    </Box>
+  </Fade>
+</Modal>
 
-                        </Link>
-                      </Box>
-                    </Typography>
-                  </Box>
-                </Fade>
-              </Modal>
             </Box>
           </Toolbar>
         </AppBar>
