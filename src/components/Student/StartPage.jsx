@@ -12,11 +12,15 @@ import csharpImage from '../../assets/csharp.jpg';
 import pythonImage from '../../assets/python.png';
 import asmImage from '../../assets/asm.png';
 import newtheme from '../../Themenew'
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { CardActionArea } from '@mui/material';
 import Link from "@mui/material/Link";
 import GroupsIcon from '@mui/icons-material/Groups';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { keyframes } from '@mui/system';
 import CourseCard from '../Student/Course/CourseCard'
+import Grid from '@mui/material/Unstable_Grid2';
 
 function StartPage() {
   // const newtheme = useTheme()
@@ -115,7 +119,7 @@ function StartPage() {
         flexDirection: 'row',
       }}
       >
-        <Box sx={{ padding: '3%' }}> <Typography variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3 }}>
+        <Box sx={{ padding: '3%' }}> <Typography variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3, fontStyle: 'oblique' }}>
           The future depends on what you do today.</Typography>
 
           <Typography variant='p' >
@@ -124,18 +128,18 @@ function StartPage() {
 
           <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 4 }}>
             <GroupsIcon fontSize="large" style={{ color: newtheme.palette.secondary.background, marginRight: '1%' }} />
-            <Typography variant='h6' sx={{fontWeight:'bold'}} >
+            <Typography variant='h6' sx={{ fontWeight: 'bold' }} >
               Over 2k Students
             </Typography>
             <LibraryBooksIcon fontSize="large" style={{ marginLeft: '7%', color: newtheme.palette.secondary.background, marginRight: '1%' }} />
-            <Typography variant='h6' sx={{fontWeight:'bold'}} >
+            <Typography variant='h6' sx={{ fontWeight: 'bold' }} >
 
               20+ Courses
             </Typography>
 
           </ Box>
-          <Box sx={{marginTop:7}}>
-            <Button sx={{':hover':{backgroundColor:newtheme.palette.secondary.footer}, border: 2,borderRadius:10, paddingLeft: 4, paddingRight: 4,paddingTop:2,paddingBottom:2, backgroundColor:newtheme.palette.secondary.background,color:newtheme.palette.primary.background }}>
+          <Box sx={{ marginTop: 7 }}>
+            <Button sx={{ ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, borderRadius: 10, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2, backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background }}>
               Join Now!
             </Button>
           </Box>
@@ -145,9 +149,11 @@ function StartPage() {
           opacity: isVisible3 ? 1 : 0,
           transform: isVisible3 ? 'translateX(0)' : 'translateX(100%)',
           transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
-        }}>  <img src={startImage} height='490' style={{ marginLeft: 4,marginRight:5,borderRadius:15,marginBottom:6 }} />
+        }}>  <img src={startImage} height='490' style={{ borderRadius: 15, marginBottom: 2 }} />
         </Box>
       </Box>
+
+      
       <Box sx={{
         backgroundColor: newtheme.palette.primary.background,
         paddingTop: '2%',
@@ -156,15 +162,15 @@ function StartPage() {
         <Box >
           <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background }}>
             Our Top Courses</Typography>
-
         </Box>
-
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1%' }}>
         <Typography variant='h3' sx={{ fontWeight: 'bold' }}>
           Learn Best Things
         </Typography>
       </Box>
+
+
       <Box sx={{ overflow: 'hidden' }}>
         <Box ref={boxRef2}
           sx={{
@@ -180,24 +186,24 @@ function StartPage() {
           }}
         >
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center' }}>
-            <img src={cppImage} height={'100%'} style={{ width: '70%' }} />
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#ecf8ec', borderRadius: 12 }}>
+            <img src='https://cdn.pixabay.com/photo/2017/03/30/17/43/c-2189150_1280.png' height={'60%'} width={210} style={{ marginTop: 16 }} />
             <Link href='#' sx={{
-              textDecoration: 'none', marginTop: '6%'
+              textDecoration: 'none'
               , color: newtheme.palette.secondary.background, '&:hover': {
                 color: newtheme.palette.secondary.footer,
-              },
-              marginBottom: "5%"
+              }, marginBottom: 2
+
             }}>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '5%' }}>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '5%', color: 'black' }}>
                 Cpp
               </Typography>
             </Link>
-            <Typography >4 Courses</Typography>
+            <Typography variant='h6' sx={{ color: '#6ebe6e', fontWeight: 'bolder' }} >4 Courses</Typography>
           </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center' }}>
-            <img src={javaImage} height={'100%'} style={{ width: '67%' }} />
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#ffd1ce', borderRadius: 12 }}>
+            <img src='https://cdn-icons-png.flaticon.com/512/3664/3664988.png' height={'60%'} width={190} style={{ marginTop: 16 }} />
             <Link href='#' sx={{
               textDecoration: 'none', marginTop: '6%'
               , color: newtheme.palette.secondary.background, '&:hover': {
@@ -205,13 +211,13 @@ function StartPage() {
               },
               marginBottom: "3%"
             }}>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center' }}>Java</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center', color: 'black' }}>Java</Typography>
             </Link>
-            <Typography variant='p' sx={{ textAlign: 'center' }}>8 Courses</Typography>
+            <Typography variant='h6' sx={{ color: '#ff2712', fontWeight: 'bolder' }}>8 Courses</Typography>
           </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center' }}>
-            <img src={cImage} height={'100%'} style={{ width: '70%' }} />
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#eef6fa', borderRadius: 12 }}>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Eo_circle_blue_white_letter-c.svg/1200px-Eo_circle_blue_white_letter-c.svg.png' height={'60%'} width={'60%'} style={{ marginTop: 16 }} />
             <Link href='#' sx={{
               textDecoration: 'none', marginTop: '6%'
               , color: newtheme.palette.secondary.background, '&:hover': {
@@ -219,13 +225,13 @@ function StartPage() {
               },
               marginBottom: "3%"
             }}>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '7%' }}>C</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center', color: 'black' }}>C</Typography>
             </Link>
-            <Typography variant='p' >9 Courses</Typography>
+            <Typography variant='h6' sx={{ color: '#43ade3', fontWeight: 'bolder' }}>9 Courses</Typography>
           </Box>
         </Box>
       </Box>
-      <Box
+      <Box 
         ref={boxRef2}
         sx={{
           display: 'flex',
@@ -237,9 +243,8 @@ function StartPage() {
           transition: 'opacity 0.4s ease-in-out, transform 0.4s ease-in-out',
         }}
       >
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center' }}>
-          <img src={csharpImage} height={'100%'} style={{ width: '70%' }} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '21%', alignItems: 'center', backgroundColor: '#feecf4', borderRadius: 12 }}>
+          <img height={'60%'} width={190} style={{ marginTop: 16 }} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Eo_circle_pink_letter-p.svg/768px-Eo_circle_pink_letter-p.svg.png" />
           <Link href='#' sx={{
             textDecoration: 'none', marginTop: '6%'
             , color: newtheme.palette.secondary.background, '&:hover': {
@@ -247,15 +252,29 @@ function StartPage() {
             },
             marginBottom: "3%"
           }}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '5%' }}>
+            <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center', color: 'black' }}>Python</Typography>
+          </Link>
+          <Typography variant='h6' sx={{ color: '#e05193', fontWeight: 'bolder' }}>14 Courses</Typography>
+        </Box>
+
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#fffceb', borderRadius: 12 }}>
+          <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Eo_circle_yellow_letter-c.svg/800px-Eo_circle_yellow_letter-c.svg.png' height={'60%'} width={190} style={{ marginTop: 16 }} />
+          <Link href='#' sx={{
+            textDecoration: 'none', marginTop: '6%'
+            , color: newtheme.palette.secondary.background, '&:hover': {
+              color: newtheme.palette.secondary.footer,
+            },
+            marginBottom: "3%"
+          }}>
+            <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center', color: 'black' }}>
               CSharp
             </Typography>
           </Link>
-          <Typography >12 Courses</Typography>
+          <Typography variant='h6' sx={{ color: '#f2c900', fontWeight: 'bolder' }}>12 Courses</Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '21%', alignItems: 'center' }}>
-          <img src={pythonImage} height={'100%'} style={{ width: '100%' }} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#eaf9f9', borderRadius: 12 }}>
+          <img src='https://png.pngtree.com/png-vector/20190409/ourmid/pngtree-asm-file-document-icon-png-image_923237.jpg' height={'60%'} width={190} style={{ marginTop: 16, borderRadius: 200 }} />
           <Link href='#' sx={{
             textDecoration: 'none', marginTop: '6%'
             , color: newtheme.palette.secondary.background, '&:hover': {
@@ -263,23 +282,9 @@ function StartPage() {
             },
             marginBottom: "3%"
           }}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '5%' }}>python</Typography>
+            <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center', color: 'black' }}>Masm/Nasm</Typography>
           </Link>
-          <Typography variant='p' >14 Courses</Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center' }}>
-          <img src={asmImage} height={'100%'} style={{ width: '78%' }} />
-          <Link href='#' sx={{
-            textDecoration: 'none', marginTop: '6%'
-            , color: newtheme.palette.secondary.background, '&:hover': {
-              color: newtheme.palette.secondary.footer,
-            },
-            marginBottom: "3%"
-          }}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '5%' }}>Masm/Nasm</Typography>
-          </Link>
-          <Typography variant='p' >15 Courses</Typography>
+          <Typography variant='h6' sx={{ color: '#4cacab', fontWeight: 'bolder' }}>15 Courses</Typography>
         </Box>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 7, alignItems: 'center', marginBottom: 5 }}>
@@ -299,33 +304,139 @@ function StartPage() {
       </Box>
 
 
-      <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, marginBottom: 4 }}>
-        <Box >
-          <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background }}>
-            Pick Course as per your Area of Interest</Typography>
+
+
+      <Box sx={{ backgroundColor: '#f7ece3' }}>
+        <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, marginBottom: 4 }}>
+          <Box >
+            <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 10 }}>
+              Pick Course as per your Area of Interest</Typography>
+          </Box>
+          <Typography variant="h3" sx={{ fontWeight: 'bold' }}>Most Famous Online Courses</Typography>
         </Box>
-        <Typography variant="h3" sx={{ fontWeight: 'bold' }}>Most Famous Online Courses</Typography>
+        <Box className="courseMain_container">
+          {courses.map((course) => {
+            return <CourseCard course={course}></CourseCard>
+          })}
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 7, alignItems: 'center', marginBottom: 7 }}>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: newtheme.palette.primary.background,
+              '&:hover': {
+                backgroundColor: newtheme.palette.secondary.footer,
+                color: newtheme.palette.primary.background,
+                border: '2px solid #2a3290'
+              }, marginBottom: 10,
+              paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2, fontSize: 16, fontWeight: 'bold', borderRadius: 10, color: newtheme.palette.secondary.background, border: '2px solid #ff2712'
+            }} >
+            View More
+          </Button>
+        </Box>
       </Box>
-      <Box className="courseMain_container">
-        {courses.map((course) => {
-          return <CourseCard course={course}></CourseCard>
-        })}
+
+
+
+      <Box>
+        <Grid container spacing={2}>
+          <Grid lg={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Box sx={{ fontWeight: 'bold', margin: 4 }}>
+              <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#93e9c1', color: 'white', borderRadius: 10 }}>
+                <CardActionArea sx={{ display: 'flex', flexDirection: 'row', }}>
+                  <Box>
+                    <CardContent sx={{ marginTop: 6, marginLeft: 4 }}>
+                      <Typography sx={{ fontWeight: 'bolder', color: 'black' }} gutterBottom variant="h2" component="div">
+                        Apply Your Courses Today
+                      </Typography>
+                      <Typography sx={{ color: 'red', marginBottom: 6, marginRight: 16 }} variant="h6" color="text.secondary">
+                        Join in Your Favorite Courses Today and get quick feedback of your Coding assignments!
+                      </Typography>
+                    </CardContent>
+                  </Box>
+                  <Box sx={{ marginRight: 4 }}>
+                    <Button sx={{ color: 'black', backgroundColor: '#feb227', paddingTop: 2, paddingBottom: 2, paddingLeft: 6, paddingRight: 6, borderRadius: 4, ":hover": { backgroundColor: "#feb227", color: 'black' } }}>Apply Now</Button>
+                  </Box>
+                </CardActionArea>
+              </Card>
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 7, alignItems: 'center', marginBottom: 7 }}>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: newtheme.palette.primary.background,
-            '&:hover': {
-              backgroundColor: newtheme.palette.secondary.footer,
-              color: newtheme.palette.primary.background,
-              border: '2px solid #2a3290'
-            },
-            paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2, fontSize: 16, fontWeight: 'bold', borderRadius: 10, color: newtheme.palette.secondary.background, border: '2px solid #ff2712'
-          }} >
-          View More
-        </Button>
+
+
+
+      <Box>
+        <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
+            <Box >
+              <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, }}>
+                Why Ours</Typography>
+            </Box>
+            <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
+              Our Best Achievements</Typography>
+          </Box>
+          <Grid md={12} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', margin: 4 }}>
+              <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white', borderTopLeftRadius: 30, borderBottomLeftRadius: 30 }}>
+                <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
+
+                  <CardContent sx={{ marginTop: 8 }}>
+                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
+                      56
+                    </Typography>
+                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
+                      Happy Clients
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white' }}>
+                <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
+
+                  <CardContent sx={{ marginTop: 8 }}>
+                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
+                      87
+                    </Typography>
+                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
+                      Projects Done
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white' }}>
+                <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
+
+                  <CardContent sx={{ marginTop: 8 }}>
+                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
+                      16
+                    </Typography>
+                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
+                      Awards Winning
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card sx={{ minWidth: 345, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white', borderTopRightRadius: 30, borderBottomRightRadius: 30 }}>
+                <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
+
+                  <CardContent sx={{ marginTop: 8 }}>
+                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
+                      7
+                    </Typography>
+                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
+                      Years Experience
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
+
+
 
       <Box ref={boxRef}
         sx={{
@@ -427,6 +538,8 @@ function StartPage() {
           </Box>
         </Box>
       </Box>
+
+
     </ThemeProvider>
   )
 }
