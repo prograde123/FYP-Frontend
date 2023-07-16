@@ -183,6 +183,9 @@ function StartPage() {
       </Box>
 
 
+
+
+{/* Languages section */}
       <Box sx={{ overflow: 'hidden' }}>
         <Box ref={boxRef2}
           sx={{
@@ -317,7 +320,7 @@ function StartPage() {
 
 
 
-
+{/* courses section */}
       <Box sx={{ backgroundColor: '#f7ece3' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, marginBottom: 4 }} >
           <Box >
@@ -349,7 +352,7 @@ function StartPage() {
       </Box>
 
 
-
+{/* Apply for courses section */}
       <Box>
         <Grid container spacing={2}>
 
@@ -378,6 +381,7 @@ function StartPage() {
       </Box>
 
 
+{/* About us section */}
       <Box sx={{ backgroundColor: '#e8faff' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
           <Box >
@@ -388,7 +392,7 @@ function StartPage() {
             About Us</Typography>
         </Box>
         <Grid container spacing={2}>
-          <Grid md={7} sx={{ marginTop: 2,marginBottom:6 }}>
+          <Grid md={7} sx={{ marginBottom:6 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} data-aos="zoom-in">
               <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', textAlign: 'center', margin: 4 }}>
                 <Card sx={{ maxWidth: 345, marginBottom: 4, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
@@ -475,6 +479,8 @@ function StartPage() {
       </Box>
 
 
+
+{/* Achievements/stats count section */}
       <Box>
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
@@ -547,6 +553,10 @@ function StartPage() {
 
 
 
+
+
+
+{/* Remove this section */}
       <Box ref={boxRef}
         sx={{
           backgroundColor: newtheme.palette.secondary.cardBg,
