@@ -13,7 +13,7 @@ import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import http from "../../../../Axios/axios";
 import { useLocation } from "react-router-dom";
 import TextField from '@mui/material/TextField';
-import { storage } from '../../../firebase';
+import  storage  from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useFormik } from "formik";
 import * as Yup from "yup";
