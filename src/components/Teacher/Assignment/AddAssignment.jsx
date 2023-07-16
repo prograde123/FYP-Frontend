@@ -17,7 +17,7 @@ import dayjs from 'dayjs';
 import * as Yup from "yup";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { storage } from '../../../firebase';
+import  storage  from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AddAssig } from '../../../../Axios/assigAxios';
 import { useNavigate } from 'react-router-dom';

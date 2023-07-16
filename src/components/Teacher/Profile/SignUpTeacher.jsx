@@ -12,7 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import {FormHelperText} from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import { storage } from '../../../firebase';
+import storage  from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import Visibility from '@mui/icons-material/Visibility';

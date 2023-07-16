@@ -11,7 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { storage } from '../../../firebase';
+import  storage  from '../../../firebase';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from "formik";
 import * as Yup from "yup";

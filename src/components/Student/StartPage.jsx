@@ -9,6 +9,7 @@ import javaImage from '../../assets/java.jpg';
 import cppImage from '../../assets/cpp.png';
 import cImage from '../../assets/clang.png';
 import csharpImage from '../../assets/csharp.jpg';
+import ImageCarousel from './Crousel';
 import python from '../../assets/pythonn.png';
 import asmImage from '../../assets/asm.png';
 import newtheme from '../../Themenew'
@@ -62,58 +63,9 @@ function StartPage() {
     teacher: "Faisal"
   }];
 
-  const boxRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const boxRef2 = useRef(null);
-  const [isVisible2, setIsVisible2] = useState(false);
-  const boxRef3 = useRef(null);
-  const [isVisible3, setIsVisible3] = useState(false);
+  
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible3(true);
-    }, 100);
-
-    
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: [0, 0.5],
-    };
-
-
-    const handleIntersection = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      });
-    };
-    const handleIntersection2 = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setIsVisible2(true);
-        }
-      });
-
-
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, options);
-    observer.observe(boxRef.current);
-
-    const observer2 = new IntersectionObserver(handleIntersection2, options);
-    observer2.observe(boxRef2.current);
-
-
-    return () => {
-      clearTimeout(timer);
-      observer.unobserve(boxRef.current);
-      observer2.unobserve(boxRef2.current);
-
-    };
-  }, []);
-
+ 
 
   const animation = keyframes`
    0% { transform: translateX(-100%); opacity: 0; }
@@ -121,47 +73,55 @@ function StartPage() {
   `;
   return (
     <ThemeProvider theme={newtheme}>
-      <Box data-aos="fade-down" sx={{
+       <Box
+      data-aos="fade-down"
+      sx={{
         backgroundColor: newtheme.palette.secondary.main,
         paddingTop: '10%',
         paddingLeft: '2%',
         display: 'flex',
         flexDirection: 'row',
+        
       }}
+    >
+      <Box
+        sx={{
+          padding: '3%',
+          width: '50%',
+          
+        }}
       >
-        <Box sx={{ padding: '3%' }}> <Typography variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3, fontStyle: 'oblique' }}>
-          The future depends on what you do today.</Typography>
+        <Typography variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3, fontStyle: 'oblique' }}>
+          The future depends on what you do today.
+        </Typography>
 
-          <Typography variant='p' >
-            ProGrade provides grading code-based assignments by providing an automated grading system. The application
-            will provide other useful features such as plagiarism checking, code compiler and course management.</Typography>
+        <Typography variant='p'>
+          ProGrade provides grading code-based assignments by providing an automated grading system. The application
+          will provide other useful features such as plagiarism checking, code compiler, and course management.
+        </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 4 }}>
-            <GroupsIcon fontSize="large" style={{ color: newtheme.palette.secondary.background, marginRight: '1%' }} />
-            <Typography variant='h6' sx={{ fontWeight: 'bold' }} >
-              Over 2k Students
-            </Typography>
-            <LibraryBooksIcon fontSize="large" style={{ marginLeft: '7%', color: newtheme.palette.secondary.background, marginRight: '1%' }} />
-            <Typography variant='h6' sx={{ fontWeight: 'bold' }} >
+        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 4 }}>
+          <GroupsIcon fontSize="large" style={{ color: newtheme.palette.secondary.background, marginRight: '1%' }} />
+          <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+            Over 2k Students
+          </Typography>
+          <LibraryBooksIcon fontSize="large" style={{ marginLeft: '7%', color: newtheme.palette.secondary.background, marginRight: '1%' }} />
+          <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+            20+ Courses
+          </Typography>
+        </Box>
 
-              20+ Courses
-            </Typography>
-
-          </ Box>
-          <Box sx={{ marginTop: 7 }}>
-            <Button sx={{ ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, borderRadius: 10, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2, backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background }}>
-              Join Now!
-            </Button>
-          </Box>
-        </ Box>
-
-        <Box ref={boxRef3} sx={{
-          opacity: isVisible3 ? 1 : 0,
-          transform: isVisible3 ? 'translateX(0)' : 'translateX(100%)',
-          transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
-        }}>  <img src={startImage} height='490' style={{ borderRadius: 15, marginBottom: 2 }} />
+        <Box sx={{ marginTop: 7 }}>
+          <Button sx={{ ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, borderRadius: 10, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2, backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background }}>
+            Join Now!
+          </Button>
         </Box>
       </Box>
+
+      <Box width="50%" display="flex" justifyContent="center" alignItems="center" >
+        <ImageCarousel />
+      </Box>
+    </Box>
 
 
       <Box sx={{
@@ -187,7 +147,7 @@ function StartPage() {
 
 {/* Languages section */}
       <Box sx={{ overflow: 'hidden' }}>
-        <Box ref={boxRef2}
+        <Box 
           sx={{
             paddingTop: '1%',
             display: 'flex',
@@ -195,9 +155,7 @@ function StartPage() {
             justifyContent: 'space-evenly',
             marginTop: '2%',
 
-            opacity: isVisible2 ? 1 : 0,
-            transform: isVisible2 ? 'translateX(0)' : 'translateX(-100%)',
-            transition: 'opacity 0.4s ease-in-out, transform 0.4s ease-in-out',
+            
           }}
         >
 
@@ -247,15 +205,13 @@ function StartPage() {
         </Box>
       </Box>
       <Box
-        ref={boxRef2}
+        
         sx={{
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           marginTop: '5%',
-          opacity: isVisible2 ? 1 : 0,
-          transform: isVisible2 ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'opacity 0.4s ease-in-out, transform 0.4s ease-in-out',
+          
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '21%', alignItems: 'center', backgroundColor: '#feecf4', borderRadius: 12 }}>
@@ -556,107 +512,6 @@ function StartPage() {
 
 
 
-{/* Remove this section */}
-      <Box ref={boxRef}
-        sx={{
-          backgroundColor: newtheme.palette.secondary.cardBg,
-          padding: '4%',
-          opacity: isVisible ? 1 : 0,
-          transition: 'opacity 1s ease-in-out',
-        }}>
-        <Typography variant='h4' sx={{ textAlign: 'center', fontWeight: 'bold', paddingBottom: '3%' }}>About Us</Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between'
-          }}>
-          <Box
-            sx={{
-              backgroundColor: newtheme.palette.secondary.card1,
-              padding: '2%',
-              justifyContent: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-              margin: '1%',
-              borderRadius: '5%',
-              transition: '0.3s',
-              '&:hover': {
-                backgroundColor: newtheme.palette.secondary.main,
-                boxShadow: '0 0 5px rgba(0, 0, 0, 0.5)',
-              },
-            }}
-          >
-            <LibraryBooksIcon sx={{ fontSize: '4rem', color: newtheme.palette.secondary.background, marginBottom: '7.5%' }} />
-            <Typography variant="h5" sx={{
-              fontWeight: 'bold', textAlign: "center"
-            }}>Grading Criteria</Typography>
-            <Typography sx={{
-              textAlign: "center", padding: '3%', marginTop: '2%'
-            }} >
-              Dictum varius duis at consectetur lorem donec massa sapien faucibus morbi tempus.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: newtheme.palette.secondary.card2,
-              padding: '2%',
-              justifyContent: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-              margin: '1%',
-              borderRadius: '5%',
-              transition: '0.3s',
-              '&:hover': {
-                backgroundColor: newtheme.palette.secondary.main,
-                boxShadow: '0 0 5px rgba(0, 0, 0, 0.5)',
-              },
-            }}
-          >
-            <LibraryBooksIcon sx={{ fontSize: '4rem', color: newtheme.palette.secondary.background, marginBottom: '7.5%' }} />
-            <Typography variant="h5" sx={{
-              fontWeight: 'bold',
-            }}>Automatic Feedback</Typography>
-            <Typography sx={{
-              padding: '3%', marginTop: '2%'
-            }}>
-              Dictum varius duis at consectetur lorem donec massa sapien faucibus morbi tempus.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: newtheme.palette.secondary.card3,
-              padding: '2%',
-              justifyContent: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-              margin: '1%',
-              borderRadius: '5%',
-              transition: '0.3s',
-              '&:hover': {
-                backgroundColor: newtheme.palette.secondary.main, // Change the background color on hover
-                boxShadow: '0 0 5px rgba(0, 0, 0, 0.5)', // Add shadow on hover
-              },
-            }}
-          ><LibraryBooksIcon sx={{ fontSize: '4rem', color: newtheme.palette.secondary.background, marginBottom: '7.5%' }} />
-            <Typography variant="h5" sx={{
-              fontWeight: 'bold',
-            }}>TestCases Automation</Typography>
-            <Typography sx={{
-              padding: '3%', marginTop: '2%'
-            }}>
-              Dictum varius duis at consectetur lorem donec massa sapien faucibus morbi tempus.
-            </Typography>
-
-          </Box>
-        </Box>
-      </Box>
 
 
     </ThemeProvider>
