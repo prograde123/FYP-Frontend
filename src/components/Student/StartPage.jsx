@@ -9,7 +9,7 @@ import javaImage from '../../assets/java.jpg';
 import cppImage from '../../assets/cpp.png';
 import cImage from '../../assets/clang.png';
 import csharpImage from '../../assets/csharp.jpg';
-import pythonImage from '../../assets/python.png';
+import python from '../../assets/pythonn.png';
 import asmImage from '../../assets/asm.png';
 import newtheme from '../../Themenew'
 import Card from '@mui/material/Card';
@@ -21,6 +21,15 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { keyframes } from '@mui/system';
 import CourseCard from '../Student/Course/CourseCard'
 import Grid from '@mui/material/Unstable_Grid2';
+import ViewInArIcon from '@mui/icons-material/ViewInAr';
+import FitbitIcon from '@mui/icons-material/Fitbit';
+import MoodIcon from '@mui/icons-material/Mood';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import LanguageIcon from '@mui/icons-material/Language';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import GradeIcon from '@mui/icons-material/Grade';
+import Aos from 'aos';
+import 'aos/dist/aos.css'
 
 function StartPage() {
   // const newtheme = useTheme()
@@ -65,6 +74,7 @@ function StartPage() {
       setIsVisible3(true);
     }, 100);
 
+    
     const options = {
       root: null,
       rootMargin: '0px',
@@ -111,7 +121,7 @@ function StartPage() {
   `;
   return (
     <ThemeProvider theme={newtheme}>
-      <Box sx={{
+      <Box data-aos="fade-down" sx={{
         backgroundColor: newtheme.palette.secondary.main,
         paddingTop: '10%',
         paddingLeft: '2%',
@@ -153,7 +163,7 @@ function StartPage() {
         </Box>
       </Box>
 
-      
+
       <Box sx={{
         backgroundColor: newtheme.palette.primary.background,
         paddingTop: '2%',
@@ -164,6 +174,8 @@ function StartPage() {
             Our Top Courses</Typography>
         </Box>
       </Box>
+
+
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1%' }}>
         <Typography variant='h3' sx={{ fontWeight: 'bold' }}>
           Learn Best Things
@@ -231,7 +243,7 @@ function StartPage() {
           </Box>
         </Box>
       </Box>
-      <Box 
+      <Box
         ref={boxRef2}
         sx={{
           display: 'flex',
@@ -244,7 +256,7 @@ function StartPage() {
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '21%', alignItems: 'center', backgroundColor: '#feecf4', borderRadius: 12 }}>
-          <img height={'60%'} width={190} style={{ marginTop: 16 }} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Eo_circle_pink_letter-p.svg/768px-Eo_circle_pink_letter-p.svg.png" />
+          <img height={'60%'} width={190} style={{ marginTop: 16, borderRadius: 200 }} src={python} />
           <Link href='#' sx={{
             textDecoration: 'none', marginTop: '6%'
             , color: newtheme.palette.secondary.background, '&:hover': {
@@ -258,7 +270,7 @@ function StartPage() {
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#fffceb', borderRadius: 12 }}>
-          <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Eo_circle_yellow_letter-c.svg/800px-Eo_circle_yellow_letter-c.svg.png' height={'60%'} width={190} style={{ marginTop: 16 }} />
+          <img src='https://i.redd.it/free-c-logos-to-use-in-your-projects-tutorials-guides-blog-v0-7anluzn3jmea1.png?width=512&format=png&auto=webp&s=f98b03158e581fc8aed0c49f0dc28d9414258fe7' height={'60%'} width={190} style={{ marginTop: 16, borderRadius: 200 }} />
           <Link href='#' sx={{
             textDecoration: 'none', marginTop: '6%'
             , color: newtheme.palette.secondary.background, '&:hover': {
@@ -307,14 +319,14 @@ function StartPage() {
 
 
       <Box sx={{ backgroundColor: '#f7ece3' }}>
-        <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, marginBottom: 4 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, marginBottom: 4 }} >
           <Box >
-            <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 10 }}>
+            <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 10 }} data-aos="fade-right">
               Pick Course as per your Area of Interest</Typography>
           </Box>
           <Typography variant="h3" sx={{ fontWeight: 'bold' }}>Most Famous Online Courses</Typography>
         </Box>
-        <Box className="courseMain_container">
+        <Box className="courseMain_container" data-aos="fade-down">
           {courses.map((course) => {
             return <CourseCard course={course}></CourseCard>
           })}
@@ -340,7 +352,8 @@ function StartPage() {
 
       <Box>
         <Grid container spacing={2}>
-          <Grid lg={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+
+          <Grid lg={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} data-aos="fade-right">
             <Box sx={{ fontWeight: 'bold', margin: 4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#93e9c1', color: 'white', borderRadius: 10 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', }}>
@@ -365,28 +378,124 @@ function StartPage() {
       </Box>
 
 
+      <Box sx={{ backgroundColor: '#e8faff' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
+          <Box >
+            <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 5 }}>
+              Our Services</Typography>
+          </Box>
+          <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+            About Us</Typography>
+        </Box>
+        <Grid container spacing={2}>
+          <Grid md={7} sx={{ marginTop: 2,marginBottom:6 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} data-aos="zoom-in">
+              <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', textAlign: 'center', margin: 4 }}>
+                <Card sx={{ maxWidth: 345, marginBottom: 4, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
+                  <CardActionArea>
+                    <Box sx={{ marginTop: 4, }}>
+                      <GradeIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}} />
+                    </Box>
+                    <CardContent>
+                      <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
+                        Automatic Grading
+                      </Typography>
+                      <Typography sx={{ color: 'white', marginBottom: 4 }} variant="h6" color="text.secondary">
+                        Grading based on automated TestCases
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+
+                <Card sx={{ maxWidth: 345, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
+                  <CardActionArea>
+                    <Box sx={{ marginTop: 4, }}>
+                      <FeedbackIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}} />
+                    </Box>
+                    <CardContent>
+                      <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
+                        Quick Feedback
+                      </Typography>
+                      <Typography sx={{ color: 'white', marginBottom: 4 }} variant="h6" color="text.secondary">
+                        Feedback will be given after the execution of TestCases
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Box>
+              <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', textAlign: 'center', }}>
+                <Card sx={{ maxWidth: 345, marginBottom: 4, marginTop: 8, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
+                  <CardActionArea>
+                    <Box sx={{ marginTop: 4, }}>
+                      <FitbitIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}} />
+                    </Box>
+                    <CardContent>
+                      <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
+                      TestCases
+                      </Typography>
+                      <Typography sx={{ color: 'white', marginBottom: 4 }} variant="h6" color="text.secondary">
+                        System will generate Automated TestCases on your Assignments
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+                <Card sx={{ maxWidth: 345, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
+                  <CardActionArea>
+                    <Box sx={{ marginTop: 4, }}>
+                      <LanguageIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}}/>
+                    </Box>
+                    <CardContent>
+                      <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
+                        5+ Languages
+                      </Typography>
+                      <Typography sx={{ color: 'white', marginBottom: 4 }} variant="h6" color="text.secondary">
+                        Our System will support upto 6 languages
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Box>
+            </Box>
+
+          </Grid>
+          <Grid md={5} sx={{ marginTop: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Box>
+              <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', alignContent: 'center' }} data-aos="fade-up">
+                <Typography sx={{ color: 'red' }}>-Our Services</Typography>
+                <Typography variant='h3' sx={{ marginTop: 3, marginBottom: 3, fontWeight:'bold' }}>Why Choose Us?</Typography>
+                <Typography variant='h6' sx={{ color: 'black', marginRight: 6 }}>The technological revolution is changing aspect of our lives, and the fabric of society itself. it's also changing the way we learn and what we learn. Factual knowledge is less prized when everything you ever need to know can be found on your phone. There's no imperative to be an expert at doing everything when you can.</Typography>
+              </Box>
+              <Box sx={{ marginTop: 5 }}>
+                <Button sx={{ color: 'black', backgroundColor: '#feb227', paddingTop: 2, paddingBottom: 2, paddingLeft: 8, paddingRight: 8, borderRadius: 4, ":hover": { backgroundColor: "#feb227", color: 'black' } }}>Contact Us</Button>
+              </Box>
+            </Box>
+          </Grid>
+
+        </Grid>
+      </Box>
+
 
       <Box>
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
             <Box >
-              <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, }}>
+              <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 5 }}>
                 Why Ours</Typography>
             </Box>
-            <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
               Our Best Achievements</Typography>
           </Box>
-          <Grid md={12} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          <Grid sm={12} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
             <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', margin: 4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white', borderTopLeftRadius: 30, borderBottomLeftRadius: 30 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
                   <CardContent sx={{ marginTop: 8 }}>
-                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
-                      56
+                    <Typography sx={{ fontWeight: 'bolder', color: 'black' }} gutterBottom variant="h2" component="div">
+                      766
                     </Typography>
-                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
-                      Happy Clients
+                    <Typography sx={{ color: 'red', marginBottom: 6, fontWeight: 'bolder', }} variant="h5" color="text.secondary">
+                      Enrolled Students
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -395,11 +504,11 @@ function StartPage() {
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
                   <CardContent sx={{ marginTop: 8 }}>
-                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
+                    <Typography sx={{ fontWeight: 'bolder', color: 'black' }} gutterBottom variant="h2" component="div">
                       87
                     </Typography>
-                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
-                      Projects Done
+                    <Typography sx={{ color: 'red', marginBottom: 4, fontWeight: 'bolder', }} variant="h5" color="text.secondary">
+                      Instructors
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -408,11 +517,11 @@ function StartPage() {
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
                   <CardContent sx={{ marginTop: 8 }}>
-                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
+                    <Typography sx={{ fontWeight: 'bolder', color: 'black' }} gutterBottom variant="h2" component="div">
                       16
                     </Typography>
-                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
-                      Awards Winning
+                    <Typography sx={{ color: 'red', marginBottom: 4, fontWeight: 'bolder', }} variant="h5" color="text.secondary">
+                      Total Courses
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -421,11 +530,11 @@ function StartPage() {
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
                   <CardContent sx={{ marginTop: 8 }}>
-                    <Typography sx={{ fontWeight: 'bold', color: 'black' }} gutterBottom variant="h1" component="div">
-                      7
+                    <Typography sx={{ fontWeight: 'bolder', color: 'black' }} gutterBottom variant="h2" component="div">
+                      100
                     </Typography>
-                    <Typography sx={{ color: 'red', marginBottom: 4 }} variant="h4" color="text.secondary">
-                      Years Experience
+                    <Typography sx={{ color: 'red', marginBottom: 4, fontWeight: 'bolder', }} variant="h5" color="text.secondary">
+                      Assignments
                     </Typography>
                   </CardContent>
                 </CardActionArea>
