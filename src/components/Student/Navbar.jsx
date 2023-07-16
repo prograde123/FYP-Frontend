@@ -112,7 +112,7 @@ export default function DrawerAppBar() {
             </IconButton>
             <Typography variant="h4" component="div" sx={{ flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center' }}>
                <img style={{marginRight:10}} height={65} width={60} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
-              <span style={{ color: 'black', fontWeight: 'bolder',fontStyle:'oblique' }}>ProGrade</span>
+              <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder',fontStyle:'oblique' }}>Pro<span style={{color: newtheme.palette.secondary.background}}>Grade</span></span>
             </Typography>
 
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
