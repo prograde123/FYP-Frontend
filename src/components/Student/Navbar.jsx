@@ -11,23 +11,26 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Fade from '@mui/material/Fade';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
 import { useTheme } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import newtheme from '../../Themenew'
 import Modal from '@mui/material/Modal';
 import { Link } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
+import Aos from 'aos';
+import 'aos/dist/aos.css'
 
 const drawerWidth = 200;
 
 const navItems = ['Home', 'Courses', 'About', 'Contact',];
 
 export default function DrawerAppBar() {
+  React.useEffect(()=>{
+    Aos.init({duration:2500});
+  },[])
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -97,7 +100,7 @@ export default function DrawerAppBar() {
       <Box sx={{ display: 'flex', color: 'red' }}>
         <CssBaseline />
         <AppBar component="nav" sx={{ backgroundColor: newtheme.palette.primary.background, padding: '1%', }} >
-          <Toolbar>
+          <Toolbar data-aos="fade-right">
             <IconButton
               color='theme.palette.primary.background'
               aria-label="open drawer"
@@ -114,7 +117,7 @@ export default function DrawerAppBar() {
 
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
               {navItems.map((item) => (
-                <Button key={item} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button data-aos="fade" key={item} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   {item}
                 </Button>
               ))}
