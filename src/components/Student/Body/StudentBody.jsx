@@ -4,9 +4,7 @@ import { Box } from "@mui/material";
 
 import { useTheme } from "@emotion/react";
 
-import DrawerAppBar from "../Navbar";
-import StartPage from "../StartPage";
-import Footer from "../Footer";
+import Footer from "../../LandingPage/Footer";
 import CourseCard from "../Course/CourseCard";
 import Courses from "../Course/Courses";
 
@@ -14,8 +12,7 @@ export default function StudentBody() {
     const theme = useTheme()
     return (
         <>
-        
-            <DrawerAppBar />
+
             <Box/>
             <Box>
                 
@@ -23,7 +20,6 @@ export default function StudentBody() {
                     <Routes>
                         <Route path='/'>
                             {/* */}
-                           <Route path = "Landing" element= {<StartPage />} />
                            <Route path="CourseCard" element={<CourseCard />}></Route>
                             <Route path="Courses" element={<Courses />}></Route>
                         </Route>
