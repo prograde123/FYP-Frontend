@@ -11,6 +11,7 @@ import { createTheme } from "@mui/material";
       main: '#f0f0f0', 
       background:'#ff2712',//red
       footer:'#2a3290',//blue
+      icon:'#fecf03',//yellow
       cardBg:'#93e9c1',
       card1:'#fffceb',
       card2:'#fff3ed',

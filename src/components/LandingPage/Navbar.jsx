@@ -22,12 +22,14 @@ import { Link } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Aos from 'aos';
 import 'aos/dist/aos.css'
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 200;
 
 const navItems = ['Home', 'Courses', 'About', 'Contact',];
 
 export default function DrawerAppBar() {
+  const navigate = useNavigate();
   React.useEffect(()=>{
     Aos.init({duration:2500});
   },[])
@@ -100,7 +102,7 @@ export default function DrawerAppBar() {
       <Box sx={{ display: 'flex', color: 'red' }}>
         <CssBaseline />
         <AppBar component="nav" sx={{ backgroundColor: newtheme.palette.primary.background, padding: '1%', }} >
-          <Toolbar data-aos="fade-right">
+          <Toolbar >
             <IconButton
               color='theme.palette.primary.background'
               aria-label="open drawer"
@@ -110,18 +112,27 @@ export default function DrawerAppBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center' }}>
+            <Typography variant="h4" component="div" sx={{ flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center' }} data-aos="fade-right">
                <img style={{marginRight:10}} height={65} width={60} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
               <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder',fontStyle:'oblique' }}>Pro<span style={{color: newtheme.palette.secondary.background}}>Grade</span></span>
             </Typography>
 
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {navItems.map((item) => (
-                <Button data-aos="fade" key={item} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
-                  {item}
+              
+                <Button onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                  Home
                 </Button>
-              ))}
-              <Button
+                <Button onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                  Courses
+                </Button>
+                <Button onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                  About
+                </Button>
+                <Button onClick={()=>{navigate('/ContactUs')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                  Contact Us
+                </Button>
+             
+              <Button data-aos="fade-left" 
 
                 onClick={handleProfileOpen}
                 sx={{

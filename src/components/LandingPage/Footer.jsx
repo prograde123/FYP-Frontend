@@ -35,7 +35,7 @@ export default function Footer() {
       <Container maxWidth="lg">
         <Grid container spacing={5}>
           <Grid item xs={8} sm={4} data-aos="fade-right">
-            <Typography variant="h4" sx={{fontWeight:'bold'}}  gutterBottom>
+            <Typography variant="h4" sx={{fontWeight:'bold',color: newtheme.palette.primary.background}}  gutterBottom>
               ProGrade
             </Typography>
             <Typography variant="body2">
@@ -44,7 +44,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={4} sm={2} data-aos="fade-up">
-            <Typography variant="h5"sx={{fontWeight:'bold'}} gutterBottom>
+            <Typography variant="h5"sx={{fontWeight:'bold',color: newtheme.palette.secondary.icon}} gutterBottom>
               Catogeries
             </Typography>
             
@@ -81,7 +81,7 @@ export default function Footer() {
             
           </Grid>
           <Grid item xs={4} sm={2} data-aos="fade-up">
-            <Typography variant="h5"sx={{fontWeight:'bold'}} gutterBottom>
+            <Typography variant="h5"sx={{fontWeight:'bold',color: newtheme.palette.secondary.icon}} gutterBottom>
               Support
             </Typography>
             
@@ -98,7 +98,7 @@ export default function Footer() {
             
           </Grid>
           <Grid item xs={12} sm={4} data-aos="fade-left">
-            <Typography variant="h5"  sx={{fontWeight:'bold'}} gutterBottom>
+            <Typography variant="h5"  sx={{fontWeight:'bold',color: newtheme.palette.secondary.icon}} gutterBottom>
               Get in Touch
             </Typography>
             <FormControl sx={{ width: '100%', marginTop: 4 }}  >
@@ -128,7 +128,7 @@ export default function Footer() {
                         />
                     </FormControl>
                     <Box sx={{padding:'10%'}}>
-            <Link href="https://www.facebook.com/"  sx={{color: newtheme.palette.primary.background ,'&:hover': {
+            <Link href="https://www.facebook.com/"  sx={{color: newtheme.palette.secondary.icon ,'&:hover': {
                 color:newtheme.palette.secondary.background ,
               }}}>
               <Facebook />
@@ -136,14 +136,14 @@ export default function Footer() {
             <Link
               href="https://www.instagram.com/"
               
-              sx={{ pl: 1, pr: 1 ,marginLeft:'8%' ,color: newtheme.palette.primary.background ,'&:hover': {
+              sx={{ pl: 1, pr: 1 ,marginLeft:'8%' ,color: newtheme.palette.secondary.icon ,'&:hover': {
                 color:newtheme.palette.secondary.background ,
               }}}
             >
               <Instagram />
             </Link>
             <Link href="https://www.twitter.com/" sx={{ pl: 1, pr: 1 ,marginLeft:'8%',
-            color: newtheme.palette.primary.background ,'&:hover': {
+            color:newtheme.palette.secondary.icon ,'&:hover': {
               color:newtheme.palette.secondary.background ,
             }}}>
               <Twitter />
