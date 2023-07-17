@@ -13,8 +13,15 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
+import Aos from 'aos';
+import 'aos/dist/aos.css'
+
 export default function Footer() {
   const [email, setEmail] = React.useState('')
+  React.useEffect(()=>{
+    Aos.init({duration:2500});
+  },[])
+
   return (
     <ThemeProvider theme={newtheme}>
     <Box
@@ -27,7 +34,7 @@ export default function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={5}>
-          <Grid item xs={8} sm={4}>
+          <Grid item xs={8} sm={4} data-aos="fade-right">
             <Typography variant="h4" sx={{fontWeight:'bold'}}  gutterBottom>
               ProGrade
             </Typography>
@@ -36,7 +43,7 @@ export default function Footer() {
               users.
             </Typography>
           </Grid>
-          <Grid item xs={4} sm={2} >
+          <Grid item xs={4} sm={2} data-aos="fade-up">
             <Typography variant="h5"sx={{fontWeight:'bold'}} gutterBottom>
               Catogeries
             </Typography>
@@ -73,7 +80,7 @@ export default function Footer() {
             </Link>
             
           </Grid>
-          <Grid item xs={4} sm={2} >
+          <Grid item xs={4} sm={2} data-aos="fade-up">
             <Typography variant="h5"sx={{fontWeight:'bold'}} gutterBottom>
               Support
             </Typography>
@@ -90,7 +97,7 @@ export default function Footer() {
             </Link>
             
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} data-aos="fade-left">
             <Typography variant="h5"  sx={{fontWeight:'bold'}} gutterBottom>
               Get in Touch
             </Typography>

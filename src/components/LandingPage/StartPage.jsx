@@ -1,17 +1,10 @@
-import DrawerAppBar from "./Navbar";
 import React, { useRef, useEffect, useState } from 'react';
 import { Box, Button } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import { useTheme } from "@emotion/react";
 import { ThemeProvider } from '@mui/material/styles';
-import startImage from '../../assets/start.jpg';
-import javaImage from '../../assets/java.jpg';
-import cppImage from '../../assets/cpp.png';
-import cImage from '../../assets/clang.png';
-import csharpImage from '../../assets/csharp.jpg';
 import ImageCarousel from './Crousel';
 import python from '../../assets/pythonn.png';
-import asmImage from '../../assets/asm.png';
 import newtheme from '../../Themenew'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -21,16 +14,15 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { keyframes } from '@mui/system';
 import CourseCard from '../Student/Course/CourseCard'
-import Grid from '@mui/material/Unstable_Grid2';
-import ViewInArIcon from '@mui/icons-material/ViewInAr';
+import Grid from '@mui/material/Grid';
 import FitbitIcon from '@mui/icons-material/Fitbit';
-import MoodIcon from '@mui/icons-material/Mood';
-import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import LanguageIcon from '@mui/icons-material/Language';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import GradeIcon from '@mui/icons-material/Grade';
 import Aos from 'aos';
 import 'aos/dist/aos.css'
+import DrawerAppBar from "./Navbar";
+import Footer from './Footer';
 
 function StartPage() {
   // const newtheme = useTheme()
@@ -63,65 +55,64 @@ function StartPage() {
     teacher: "Faisal"
   }];
 
-  
-
- 
-
   const animation = keyframes`
    0% { transform: translateX(-100%); opacity: 0; }
    100% { transform: translateX(0); opacity: 1; }
   `;
   return (
     <ThemeProvider theme={newtheme}>
-       <Box
-      data-aos="fade-down"
-      sx={{
-        backgroundColor: newtheme.palette.secondary.main,
-        paddingTop: '10%',
-        paddingLeft: '2%',
-        display: 'flex',
-        flexDirection: 'row',
-        
-      }}
-    >
+      <Box>
+        <DrawerAppBar />
+      </Box>
       <Box
+        data-aos="fade-down"
         sx={{
-          padding: '3%',
-          width: '50%',
-          
+          backgroundColor: newtheme.palette.secondary.main,
+          paddingTop: '10%',
+          paddingLeft: '2%',
+          display: 'flex',
+          flexDirection: 'row',
+
         }}
       >
-        <Typography variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3, fontStyle: 'oblique' }}>
-          The future depends on what you do today.
-        </Typography>
+        <Box
+          sx={{
+            padding: '3%',
+            width: '50%',
 
-        <Typography variant='p'>
-          ProGrade provides grading code-based assignments by providing an automated grading system. The application
-          will provide other useful features such as plagiarism checking, code compiler, and course management.
-        </Typography>
+          }}
+        >
+          <Typography variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3, fontStyle: 'oblique' }}>
+            The future depends on what you do today.
+          </Typography>
 
-        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 4 }}>
-          <GroupsIcon fontSize="large" style={{ color: newtheme.palette.secondary.background, marginRight: '1%' }} />
-          <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-            Over 2k Students
+          <Typography variant='p'>
+            ProGrade provides grading code-based assignments by providing an automated grading system. The application
+            will provide other useful features such as plagiarism checking, code compiler, and course management.
           </Typography>
-          <LibraryBooksIcon fontSize="large" style={{ marginLeft: '7%', color: newtheme.palette.secondary.background, marginRight: '1%' }} />
-          <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-            20+ Courses
-          </Typography>
+
+          <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 4 }}>
+            <GroupsIcon fontSize="large" style={{ color: newtheme.palette.secondary.background, marginRight: '1%' }} />
+            <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+              Over 2k Students
+            </Typography>
+            <LibraryBooksIcon fontSize="large" style={{ marginLeft: '7%', color: newtheme.palette.secondary.background, marginRight: '1%' }} />
+            <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+              20+ Courses
+            </Typography>
+          </Box>
+
+          <Box sx={{ marginTop: 7 }}>
+            <Button sx={{ ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, borderRadius: 10, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2, backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background }}>
+              Join Now!
+            </Button>
+          </Box>
         </Box>
 
-        <Box sx={{ marginTop: 7 }}>
-          <Button sx={{ ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, borderRadius: 10, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2, backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background }}>
-            Join Now!
-          </Button>
+        <Box width="50%" display="flex" justifyContent="center" alignItems="center" >
+          <ImageCarousel />
         </Box>
       </Box>
-
-      <Box width="50%" display="flex" justifyContent="center" alignItems="center" >
-        <ImageCarousel />
-      </Box>
-    </Box>
 
 
       <Box sx={{
@@ -145,22 +136,19 @@ function StartPage() {
 
 
 
-{/* Languages section */}
-      <Box sx={{ overflow: 'hidden' }}>
-        <Box 
+      {/* Languages section */}
+      <Box sx={{ overflow: 'hidden' }} data-aos="fade-left">
+        <Box
           sx={{
             paddingTop: '1%',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-evenly',
             marginTop: '2%',
-
-            
           }}
         >
-
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#ecf8ec', borderRadius: 12 }}>
-            <img src='https://cdn.pixabay.com/photo/2017/03/30/17/43/c-2189150_1280.png' height={'60%'} width={210} style={{ marginTop: 16 }} />
+            <img src='https://cdn.pixabay.com/photo/2017/03/30/17/43/c-2189150_1280.png' height={'60%'} width={'70%'} style={{ marginTop: 16 }} />
             <Link href='#' sx={{
               textDecoration: 'none'
               , color: newtheme.palette.secondary.background, '&:hover': {
@@ -176,7 +164,7 @@ function StartPage() {
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#ffd1ce', borderRadius: 12 }}>
-            <img src='https://cdn-icons-png.flaticon.com/512/3664/3664988.png' height={'60%'} width={190} style={{ marginTop: 16 }} />
+            <img src='https://cdn-icons-png.flaticon.com/512/3664/3664988.png' height={'60%'} width={'60%'} style={{ marginTop: 16 }} />
             <Link href='#' sx={{
               textDecoration: 'none', marginTop: '6%'
               , color: newtheme.palette.secondary.background, '&:hover': {
@@ -204,18 +192,19 @@ function StartPage() {
           </Box>
         </Box>
       </Box>
-      <Box
-        
+
+
+      <Box data-aos="fade-right"
         sx={{
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           marginTop: '5%',
-          
+
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '21%', alignItems: 'center', backgroundColor: '#feecf4', borderRadius: 12 }}>
-          <img height={'60%'} width={190} style={{ marginTop: 16, borderRadius: 200 }} src={python} />
+          <img height={'60%'} width={'60%'} style={{ marginTop: 16, borderRadius: 200 }} src={python} />
           <Link href='#' sx={{
             textDecoration: 'none', marginTop: '6%'
             , color: newtheme.palette.secondary.background, '&:hover': {
@@ -229,7 +218,7 @@ function StartPage() {
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#fffceb', borderRadius: 12 }}>
-          <img src='https://i.redd.it/free-c-logos-to-use-in-your-projects-tutorials-guides-blog-v0-7anluzn3jmea1.png?width=512&format=png&auto=webp&s=f98b03158e581fc8aed0c49f0dc28d9414258fe7' height={'60%'} width={190} style={{ marginTop: 16, borderRadius: 200 }} />
+          <img src='https://i.redd.it/free-c-logos-to-use-in-your-projects-tutorials-guides-blog-v0-7anluzn3jmea1.png?width=512&format=png&auto=webp&s=f98b03158e581fc8aed0c49f0dc28d9414258fe7' height={'60%'} width={'60%'} style={{ marginTop: 16, borderRadius: 200 }} />
           <Link href='#' sx={{
             textDecoration: 'none', marginTop: '6%'
             , color: newtheme.palette.secondary.background, '&:hover': {
@@ -245,7 +234,7 @@ function StartPage() {
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '20%', alignItems: 'center', backgroundColor: '#eaf9f9', borderRadius: 12 }}>
-          <img src='https://png.pngtree.com/png-vector/20190409/ourmid/pngtree-asm-file-document-icon-png-image_923237.jpg' height={'60%'} width={190} style={{ marginTop: 16, borderRadius: 200 }} />
+          <img src='https://png.pngtree.com/png-vector/20190409/ourmid/pngtree-asm-file-document-icon-png-image_923237.jpg' height={'60%'} width={'60%'} style={{ marginTop: 16, borderRadius: 200 }} />
           <Link href='#' sx={{
             textDecoration: 'none', marginTop: '6%'
             , color: newtheme.palette.secondary.background, '&:hover': {
@@ -276,7 +265,7 @@ function StartPage() {
 
 
 
-{/* courses section */}
+      {/* courses section */}
       <Box sx={{ backgroundColor: '#f7ece3' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, marginBottom: 4 }} >
           <Box >
@@ -308,7 +297,7 @@ function StartPage() {
       </Box>
 
 
-{/* Apply for courses section */}
+      {/* Apply for courses section */}
       <Box>
         <Grid container spacing={2}>
 
@@ -337,7 +326,7 @@ function StartPage() {
       </Box>
 
 
-{/* About us section */}
+      {/* About us section */}
       <Box sx={{ backgroundColor: '#e8faff' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
           <Box >
@@ -348,13 +337,13 @@ function StartPage() {
             About Us</Typography>
         </Box>
         <Grid container spacing={2}>
-          <Grid md={7} sx={{ marginBottom:6 }}>
+          <Grid md={7} sx={{ marginBottom: 6 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} data-aos="zoom-in">
               <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', textAlign: 'center', margin: 4 }}>
                 <Card sx={{ maxWidth: 345, marginBottom: 4, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
                   <CardActionArea>
                     <Box sx={{ marginTop: 4, }}>
-                      <GradeIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}} />
+                      <GradeIcon fontSize="large" style={{ border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227', fontSize: 80 }} />
                     </Box>
                     <CardContent>
                       <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
@@ -370,7 +359,7 @@ function StartPage() {
                 <Card sx={{ maxWidth: 345, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
                   <CardActionArea>
                     <Box sx={{ marginTop: 4, }}>
-                      <FeedbackIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}} />
+                      <FeedbackIcon fontSize="large" style={{ border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227', fontSize: 80 }} />
                     </Box>
                     <CardContent>
                       <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
@@ -387,11 +376,11 @@ function StartPage() {
                 <Card sx={{ maxWidth: 345, marginBottom: 4, marginTop: 8, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
                   <CardActionArea>
                     <Box sx={{ marginTop: 4, }}>
-                      <FitbitIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}} />
+                      <FitbitIcon fontSize="large" style={{ border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227', fontSize: 80 }} />
                     </Box>
                     <CardContent>
                       <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
-                      TestCases
+                        TestCases
                       </Typography>
                       <Typography sx={{ color: 'white', marginBottom: 4 }} variant="h6" color="text.secondary">
                         System will generate Automated TestCases on your Assignments
@@ -402,7 +391,7 @@ function StartPage() {
                 <Card sx={{ maxWidth: 345, backgroundColor: newtheme.palette.secondary.footer, color: 'white', borderRadius: 10 }}>
                   <CardActionArea>
                     <Box sx={{ marginTop: 4, }}>
-                      <LanguageIcon fontSize="large" style={{border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227',fontSize:80}}/>
+                      <LanguageIcon fontSize="large" style={{ border: '2px solid #feb227', padding: 15, borderRadius: 45, color: '#feb227', fontSize: 80 }} />
                     </Box>
                     <CardContent>
                       <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h4" component="div">
@@ -420,12 +409,12 @@ function StartPage() {
           </Grid>
           <Grid md={5} sx={{ marginTop: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <Box>
-              <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', alignContent: 'center' }} data-aos="fade-up">
+              <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', alignContent: 'center', marginLeft:3 }} data-aos="fade-up">
                 <Typography sx={{ color: 'red' }}>-Our Services</Typography>
-                <Typography variant='h3' sx={{ marginTop: 3, marginBottom: 3, fontWeight:'bold' }}>Why Choose Us?</Typography>
+                <Typography variant='h3' sx={{ marginTop: 3, marginBottom: 3, fontWeight: 'bold' }}>Why Choose Us?</Typography>
                 <Typography variant='h6' sx={{ color: 'black', marginRight: 6 }}>The technological revolution is changing aspect of our lives, and the fabric of society itself. it's also changing the way we learn and what we learn. Factual knowledge is less prized when everything you ever need to know can be found on your phone. There's no imperative to be an expert at doing everything when you can.</Typography>
               </Box>
-              <Box sx={{ marginTop: 5 }}>
+              <Box sx={{ marginTop: 5, marginLeft:3, marginBottom:3 }} data-aos="fade-up">
                 <Button sx={{ color: 'black', backgroundColor: '#feb227', paddingTop: 2, paddingBottom: 2, paddingLeft: 8, paddingRight: 8, borderRadius: 4, ":hover": { backgroundColor: "#feb227", color: 'black' } }}>Contact Us</Button>
               </Box>
             </Box>
@@ -436,7 +425,7 @@ function StartPage() {
 
 
 
-{/* Achievements/stats count section */}
+      {/* Achievements/stats count section */}
       <Box>
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
@@ -507,13 +496,9 @@ function StartPage() {
         </Grid>
       </Box>
 
-
-
-
-
-
-
-
+      <Box>
+        <Footer />
+      </Box>
     </ThemeProvider>
   )
 }

@@ -3,12 +3,12 @@ import { createTheme } from "@mui/material";
  const newtheme = createTheme({
   palette: {
     primary: {
-      main: '#000000',
-      background: '#FFFFFF'
+      main: '#000000', //black
+      background: '#FFFFFF' //white
       
     },
     secondary: {
-      main: '#f0f0f0',
+      main: '#f0f0f0', 
       background:'#ff2712',//red
       footer:'#2a3290',//blue
       cardBg:'#93e9c1',
