@@ -54,6 +54,9 @@ function StartPage() {
     lectures: 15,
     teacher: "Faisal"
   }];
+  React.useEffect(() => {
+    Aos.init({ duration: 2500 });
+  }, [])
 
   const animation = keyframes`
    0% { transform: translateX(-100%); opacity: 0; }
@@ -192,8 +195,6 @@ function StartPage() {
           </Box>
         </Box>
       </Box>
-
-
       <Box data-aos="fade-right"
         sx={{
           display: 'flex',
@@ -297,11 +298,11 @@ function StartPage() {
       </Box>
 
 
-      {/* Apply for courses section */}
+      {/* Apply for courses today section */}
       <Box>
         <Grid container spacing={2}>
 
-          <Grid lg={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} data-aos="fade-right">
+          <Grid lg={12} md={12} sm={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} data-aos="fade-right">
             <Box sx={{ fontWeight: 'bold', margin: 4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#93e9c1', color: 'white', borderRadius: 10 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', }}>
@@ -409,12 +410,12 @@ function StartPage() {
           </Grid>
           <Grid md={5} sx={{ marginTop: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <Box>
-              <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', alignContent: 'center', marginLeft:3 }} data-aos="fade-up">
+              <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'column', alignContent: 'center', marginLeft: 3 }} data-aos="fade-up">
                 <Typography sx={{ color: 'red' }}>-Our Services</Typography>
                 <Typography variant='h3' sx={{ marginTop: 3, marginBottom: 3, fontWeight: 'bold' }}>Why Choose Us?</Typography>
                 <Typography variant='h6' sx={{ color: 'black', marginRight: 6 }}>The technological revolution is changing aspect of our lives, and the fabric of society itself. it's also changing the way we learn and what we learn. Factual knowledge is less prized when everything you ever need to know can be found on your phone. There's no imperative to be an expert at doing everything when you can.</Typography>
               </Box>
-              <Box sx={{ marginTop: 5, marginLeft:3, marginBottom:3 }} data-aos="fade-up">
+              <Box sx={{ marginTop: 5, marginLeft: 3, marginBottom: 3 }} data-aos="fade-up">
                 <Button sx={{ color: 'black', backgroundColor: '#feb227', paddingTop: 2, paddingBottom: 2, paddingLeft: 8, paddingRight: 8, borderRadius: 4, ":hover": { backgroundColor: "#feb227", color: 'black' } }}>Contact Us</Button>
               </Box>
             </Box>
@@ -427,8 +428,9 @@ function StartPage() {
 
       {/* Achievements/stats count section */}
       <Box>
-        <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <Box sx={{ animation: `${animation} 1s ease-in-out 3`, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
+        <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} data-aos="fade-left">
+          <Grid sm={12} lg={5} md={6} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Box >
               <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 5 }}>
                 Why Ours</Typography>
@@ -436,11 +438,13 @@ function StartPage() {
             <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
               Our Best Achievements</Typography>
           </Box>
-          <Grid sm={12} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', margin: 4 }}>
+          </Grid>
+        </Grid>
+        <Grid container sx={{ display: 'flex', flexDirection: 'row', justifyContent:'center'}}>
+          <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4,marginBottom:4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white', borderTopLeftRadius: 30, borderBottomLeftRadius: 30 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
-
                   <CardContent sx={{ marginTop: 8 }}>
                     <Typography sx={{ fontWeight: 'bolder', color: 'black' }} gutterBottom variant="h2" component="div">
                       766
@@ -451,9 +455,12 @@ function StartPage() {
                   </CardContent>
                 </CardActionArea>
               </Card>
+            </Box>
+          </Grid>
+          <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4,marginBottom:4  }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white' }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
-
                   <CardContent sx={{ marginTop: 8 }}>
                     <Typography sx={{ fontWeight: 'bolder', color: 'black' }} gutterBottom variant="h2" component="div">
                       87
@@ -464,6 +471,10 @@ function StartPage() {
                   </CardContent>
                 </CardActionArea>
               </Card>
+            </Box>
+          </Grid>
+          <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center',marginTop: 4,marginBottom:4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white' }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
@@ -477,6 +488,10 @@ function StartPage() {
                   </CardContent>
                 </CardActionArea>
               </Card>
+            </Box>
+          </Grid>
+          <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4,marginBottom:4  }}>
               <Card sx={{ minWidth: 345, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white', borderTopRightRadius: 30, borderBottomRightRadius: 30 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
@@ -490,16 +505,18 @@ function StartPage() {
                   </CardContent>
                 </CardActionArea>
               </Card>
-
             </Box>
           </Grid>
         </Grid>
+
+
+
       </Box>
 
       <Box>
         <Footer />
       </Box>
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }
 export default StartPage
