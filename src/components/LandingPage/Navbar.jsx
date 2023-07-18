@@ -184,7 +184,7 @@ export default function DrawerAppBar() {
             ':hover': { backgroundColor: newtheme.palette.secondary.footer },
           }}
         >
-          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+          <Link onClick={()=>{navigate('/TeacherSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
             <Typography
               variant="h6"
               sx={{
@@ -210,7 +210,7 @@ export default function DrawerAppBar() {
             ':hover': { backgroundColor: newtheme.palette.secondary.footer },
           }}
         >
-          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+          <Link onClick={()=>{navigate('/StudentSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
             <Typography
               variant="h6"
               sx={{
@@ -236,7 +236,7 @@ export default function DrawerAppBar() {
             ':hover': { backgroundColor: newtheme.palette.secondary.footer },
           }}
         >
-          <Link href="#" sx={{ textDecoration: 'none', textAlign: 'center' }}>
+          <Link onClick={()=>{navigate('/SignIn')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
             <Typography
               variant="h6"
               sx={{
