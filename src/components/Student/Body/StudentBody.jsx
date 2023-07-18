@@ -1,32 +1,29 @@
-import { Routes, Route } from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Box from '@mui/material/Box';
 
-import { Box } from "@mui/material";
+import Footer from '../../LandingPage/Footer';
+import Courses from '../Course/Courses';
+import CourseCard from '../Course/CourseCard';
+import ViewCourse from '../Course/ViewCourse';
+import Navbar2 from '../Navbar2';
 
-import { useTheme } from "@emotion/react";
+const StudentBody = () => {
+  return (
+    <>
+      <Box>
+        <Navbar2 />
+        <Box component="main">
+          <Routes>
+            <Route path="/" element={<CourseCard />} />
+            <Route path="/Courses" element={<Courses />} />
+            <Route path="/ViewCourse" element={<ViewCourse />} />
+          </Routes>
+        </Box>
+      </Box>
+      <Footer />
+    </>
+  );
+};
 
-import Footer from "../../LandingPage/Footer";
-import CourseCard from "../Course/CourseCard";
-import Courses from "../Course/Courses";
-
-export default function StudentBody() {
-    const theme = useTheme()
-    return (
-        <>
-
-            <Box/>
-            <Box>
-                
-                <Box component='main' >
-                    <Routes>
-                        <Route path='/'>
-                            {/* */}
-                           <Route path="CourseCard" element={<CourseCard />}></Route>
-                            <Route path="Courses" element={<Courses />}></Route>
-                        </Route>
-                    </Routes>
-                </Box>
-            </Box>
-            <Footer />
-        </>
-    )
-}
+export default StudentBody;
