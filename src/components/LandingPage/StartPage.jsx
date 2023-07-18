@@ -22,6 +22,7 @@ import GradeIcon from '@mui/icons-material/Grade';
 import Aos from 'aos';
 import 'aos/dist/aos.css'
 import DrawerAppBar from "./Navbar";
+import '../../App.css'
 import Footer from './Footer';
 
 function StartPage() {
