@@ -55,7 +55,7 @@ const Navbar = () => {
   }, [scrollPosition]);
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: isSolid ? '#000000' : 'transparent', boxShadow: 'none', padding:'1%'}}>
+    <AppBar position="fixed" sx={{ backgroundColor: isSolid ? '#fffff' : 'transparent', boxShadow: 'none', padding:'1%'}}>
       <Toolbar>
       <Typography variant="h4" component="div" sx={{ flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center' }}>
                

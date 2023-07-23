@@ -143,119 +143,119 @@ export default function DrawerAppBar() {
                 Sign Up
               </Button>
               <Modal
-  open={isProfileOpen}
-  onClose={handleProfileClose}
-  aria-labelledby="transition-modal-title"
-  aria-describedby="transition-modal-description"
-  closeAfterTransition
-  slots={{ backdrop: Backdrop }}
-  slotProps={{
-    backdrop: {
-      timeout: 500,
-    },
-  }}
->
-  <Fade in={isProfileOpen}>
-    <Box
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        width: '90%',
-        maxWidth: '400px',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: newtheme.palette.secondary.main,
-        boxShadow: 24,
-        p: 4,
-        borderRadius: '5%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-      }}
-    >
-      <Typography id="transition-modal-description" sx={{}}>
-        {/* Content of the modal */}
-        <Box
-          sx={{
-            bgcolor: newtheme.palette.secondary.background,
-            border: 1,
-            borderColor: newtheme.palette.secondary.background,
-            borderRadius: 5,
-            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
-          }}
-        >
-          <Link onClick={()=>{navigate('/TeacherSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: 'center',
-                color: newtheme.palette.primary.background,
-                paddingLeft: 4,
-                paddingRight: 4,
-                paddingTop: 2,
-                paddingBottom: 2,
-              }}
-            >
-              SignUp as a Teacher
-            </Typography>
-          </Link>
-        </Box>
-        <br />
-        <Box
-          sx={{
-            bgcolor: newtheme.palette.secondary.background,
-            border: 1,
-            borderColor: newtheme.palette.secondary.background,
-            borderRadius: 5,
-            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
-          }}
-        >
-          <Link onClick={()=>{navigate('/StudentSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: 'center',
-                color: newtheme.palette.primary.background,
-                paddingLeft: 4,
-                paddingRight: 4,
-                paddingTop: 2,
-                paddingBottom: 2,
-              }}
-            >
-              SignUp as a Student
-            </Typography>
-          </Link>
-        </Box>
-        <br />
-        <Box
-          sx={{
-            bgcolor: newtheme.palette.secondary.background,
-            border: 1,
-            borderColor: newtheme.palette.secondary.background,
-            borderRadius: 5,
-            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
-          }}
-        >
-          <Link onClick={()=>{navigate('/SignIn')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: 'center',
-                color: newtheme.palette.primary.background,
-                paddingLeft: 4,
-                paddingRight: 4,
-                paddingTop: 2,
-                paddingBottom: 2,
-              }}
-            >
-              SignIn
-            </Typography>
-          </Link>
-        </Box>
-      </Typography>
-    </Box>
-  </Fade>
-</Modal>
+                open={isProfileOpen}
+                onClose={handleProfileClose}
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                  backdrop: {
+                    timeout: 500,
+                  },
+                }}
+              >
+            <Fade in={isProfileOpen}>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  width: '90%',
+                  maxWidth: '400px',
+                  transform: 'translate(-50%, -50%)',
+                  bgcolor: newtheme.palette.secondary.main,
+                  boxShadow: 24,
+                  p: 4,
+                  borderRadius: '5%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                }}
+              >
+                <Typography id="transition-modal-description" sx={{}}>
+                  {/* Content of the modal */}
+                  <Box
+                    sx={{
+                      bgcolor: newtheme.palette.secondary.background,
+                      border: 1,
+                      borderColor: newtheme.palette.secondary.background,
+                      borderRadius: 5,
+                      ':hover': { backgroundColor: newtheme.palette.secondary.footer },
+                    }}
+                  >
+                    <Link onClick={()=>{navigate('/TeacherSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          textAlign: 'center',
+                          color: newtheme.palette.primary.background,
+                          paddingLeft: 4,
+                          paddingRight: 4,
+                          paddingTop: 2,
+                          paddingBottom: 2,
+                        }}
+                      >
+                        SignUp as a Teacher
+                      </Typography>
+                    </Link>
+                  </Box>
+                  <br />
+                  <Box
+                    sx={{
+                      bgcolor: newtheme.palette.secondary.background,
+                      border: 1,
+                      borderColor: newtheme.palette.secondary.background,
+                      borderRadius: 5,
+                      ':hover': { backgroundColor: newtheme.palette.secondary.footer },
+                    }}
+                  >
+                    <Link onClick={()=>{navigate('/StudentSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          textAlign: 'center',
+                          color: newtheme.palette.primary.background,
+                          paddingLeft: 4,
+                          paddingRight: 4,
+                          paddingTop: 2,
+                          paddingBottom: 2,
+                        }}
+                      >
+                        SignUp as a Student
+                      </Typography>
+                    </Link>
+                  </Box>
+                  <br />
+                  <Box
+                    sx={{
+                      bgcolor: newtheme.palette.secondary.background,
+                      border: 1,
+                      borderColor: newtheme.palette.secondary.background,
+                      borderRadius: 5,
+                      ':hover': { backgroundColor: newtheme.palette.secondary.footer },
+                    }}
+                  >
+                    <Link onClick={()=>{navigate('/SignIn')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          textAlign: 'center',
+                          color: newtheme.palette.primary.background,
+                          paddingLeft: 4,
+                          paddingRight: 4,
+                          paddingTop: 2,
+                          paddingBottom: 2,
+                        }}
+                      >
+                        SignIn
+                      </Typography>
+                    </Link>
+                  </Box>
+                </Typography>
+              </Box>
+            </Fade>
+          </Modal>
 
             </Box>
           </Toolbar>
