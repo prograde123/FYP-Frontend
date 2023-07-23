@@ -6,13 +6,13 @@ import Footer from '../../LandingPage/Footer';
 import Courses from '../Course/Courses';
 import CourseCard from '../Course/CourseCard';
 import ViewCourse from '../Course/ViewCourse';
-import Navbar2 from '../Navbar2';
+import Navbar from '../../LandingPage/Navbar'
 
 const StudentBody = () => {
   return (
     <>
       <Box>
-        <Navbar2 />
+        <Navbar/>
         <Box component="main">
           <Routes>
             <Route path="/" element={<CourseCard />} />
