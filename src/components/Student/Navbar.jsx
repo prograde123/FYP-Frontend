@@ -119,17 +119,17 @@ export default function DrawerAppBar() {
 
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
               
-                <Button className="fontlink" onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button className="fontlink" onClick={()=>{navigate('/Home')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Home
                 </Button>
                 <Button className="fontlink" onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Courses
                 </Button>
                 <Button className="fontlink" onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
-                  About
+                  Assignments
                 </Button>
                 <Button className="fontlink" onClick={()=>{navigate('/ContactUs')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
-                  Contact Us
+                  Reports
                 </Button>
              
               <Button data-aos="fade-left" className="fontlink"

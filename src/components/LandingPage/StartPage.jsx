@@ -13,7 +13,7 @@ import Link from "@mui/material/Link";
 import GroupsIcon from '@mui/icons-material/Groups';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { keyframes } from '@mui/system';
-import CourseCard from '../Student/Course/CourseCard'
+import CourseCard from '../LandingPage/CourseCard'
 import Grid from '@mui/material/Grid';
 import FitbitIcon from '@mui/icons-material/Fitbit';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -71,26 +71,24 @@ function StartPage() {
       <Box
         data-aos="fade-down"
         sx={{
-          backgroundColor: newtheme.palette.secondary.main,
-          paddingTop: '10%',
-          paddingLeft: '2%',
+
+          paddingTop: '4%',
           display: 'flex',
           flexDirection: 'row',
-
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             padding: '3%',
             width: '50%',
 
           }}
         >
-          <Typography variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3, fontStyle: 'oblique' }}>
+          <Typography className="fontlink" variant='h3' sx={{ fontWeight: 'bold', marginBottom: 3}}>
             The future depends on what you do today.
           </Typography>
 
-          <Typography variant='p'>
+          <Typography  className="fontlink" variant='p'>
             ProGrade provides grading code-based assignments by providing an automated grading system. The application
             will provide other useful features such as plagiarism checking, code compiler, and course management.
           </Typography>
@@ -111,10 +109,20 @@ function StartPage() {
               Join Now!
             </Button>
           </Box>
-        </Box>
+        </Box> */}
 
-        <Box width="50%" display="flex" justifyContent="center" alignItems="center" >
-          <ImageCarousel />
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
+          <Box width="100%" sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+            <ImageCarousel sx={{ width: '100%' }}></ImageCarousel>
+            <Box sx={{ display: 'flex', flexDirection: 'column',position: 'absolute', marginTop: 25 }}>
+              <Typography variant='h3' sx={{display:'flex', flexDirection:'row', justifyContent:'center'}} >SELF EDUCATION RESOURCES AND INFOS</Typography>
+              <Typography variant='h6' sx={{display:'flex', flexDirection:'row', justifyContent:'center', marginTop:2}} >Technology is Bringng a massive wave of evolution on learning things on different ways.</Typography>
+              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+              <Button variant='outlined' sx={{paddingLeft:5,paddingRight:5,paddingTop:2,paddingBottom:2, marginTop:4, borderRadius:10,':hover': { backgroundColor: newtheme.palette.primary.background, color: newtheme.palette.primary.main, border:'2px solid white'}}}>Ready to Get Started?</Button>
+              
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Box>
 
@@ -268,7 +276,7 @@ function StartPage() {
 
 
       {/* courses section */}
-      <Box sx={{ backgroundColor: '#f7ece3' }}>
+      <Box sx={{ backgroundColor: '#fbe5e5' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, marginBottom: 4 }} >
           <Box >
             <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 10 }} data-aos="fade-right">
@@ -430,20 +438,20 @@ function StartPage() {
       {/* Achievements/stats count section */}
       <Box>
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} data-aos="fade-left">
-          <Grid sm={12} lg={5} md={6} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Box >
-              <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 5 }}>
-                Why Ours</Typography>
+          <Grid sm={12} lg={5} md={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Box >
+                <Typography variant='h6' sx={{ fontWeight: 'bold', color: newtheme.palette.secondary.background, marginTop: 5 }}>
+                  Why Ours</Typography>
+              </Box>
+              <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+                Our Best Achievements</Typography>
             </Box>
-            <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-              Our Best Achievements</Typography>
-          </Box>
           </Grid>
         </Grid>
-        <Grid container sx={{ display: 'flex', flexDirection: 'row', justifyContent:'center'}}>
+        <Grid container sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4,marginBottom:4 }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4, marginBottom: 4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white', borderTopLeftRadius: 30, borderBottomLeftRadius: 30 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
                   <CardContent sx={{ marginTop: 8 }}>
@@ -459,7 +467,7 @@ function StartPage() {
             </Box>
           </Grid>
           <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4,marginBottom:4  }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4, marginBottom: 4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white' }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
                   <CardContent sx={{ marginTop: 8 }}>
@@ -475,7 +483,7 @@ function StartPage() {
             </Box>
           </Grid>
           <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center',marginTop: 4,marginBottom:4 }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4, marginBottom: 4 }}>
               <Card sx={{ minWidth: 345, marginRight: 1, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white' }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
@@ -492,7 +500,7 @@ function StartPage() {
             </Box>
           </Grid>
           <Grid sm={6} lg={3} md={4} sx={{ marginTop: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4,marginBottom:4  }}>
+            <Box sx={{ fontWeight: 'bold', display: 'flex', flexDirection: 'row', textAlign: 'center', marginTop: 4, marginBottom: 4 }}>
               <Card sx={{ minWidth: 345, marginBottom: 4, backgroundColor: '#fbe5e5', color: 'white', borderTopRightRadius: 30, borderBottomRightRadius: 30 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }} data-aos="fade-up">
 
