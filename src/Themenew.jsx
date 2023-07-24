@@ -4,12 +4,13 @@ import { createTheme } from "@mui/material";
   palette: {
     primary: {
       main: '#000000', //black
-      background: '#FFFFFF' //white
+      background: '#FFFFFF' ,//white
+      back:'#eff0f3' //light grey for background
       
     },
     secondary: {
       main: '#f0f0f0', 
-      background:'#ff2712',//red
+      background:'#d90700',//red
       footer:'#2a3290',//blue
       icon:'#fecf03',//yellow
       cardBg:'#93e9c1',

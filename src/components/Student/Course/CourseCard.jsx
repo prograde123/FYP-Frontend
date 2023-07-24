@@ -1,80 +1,146 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { Button, Typography } from '@mui/material';
-import { CardActionArea, CardActions } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import '../../../App.css'
-import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import SchoolIcon from '@mui/icons-material/School';
+import React, { useState } from "react";
+import { Box, IconButton } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { ThemeProvider } from "@mui/material/styles";
+import newtheme from "../../../Themenew";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import DescriptionIcon from "@mui/icons-material/Description";
+import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
+import PersonIcon from "@mui/icons-material/Person";
+import LanguageIcon from "@mui/icons-material/Language";
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 
-function CourseCard({ course }) {
-    return (
-        <Box sx={{ marginBottom: 0, }}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Card sx={{ maxWidth: 440, boxShadow: 'box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px', borderRadius: 9, marginTop: 2, marginLeft: 5, ":hover": { backgroundColor: "#ff2712", color: 'white' } }}>
-                        <CardActionArea className="container" sx={{ marginTop: 4, paddingLeft: 3, paddingRight: 3, }}>
-                            <CardMedia sx={{ borderRadius: 8 }}>
-                                <div>
-                                    <img src={course.image} alt="Avatar" className="image" width='100%' />
-                                    <div className="middle">
-                                        <div className="text">Computer Science</div>
-                                    </div>
-                                </div>
-                            </CardMedia>
+function CourseCard({course}) {
+  return (
+    <ThemeProvider theme={newtheme}>
+      <Box sx={{marginLeft:4}}>
+        <Grid container spacing={5}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={6}
+            lg={6}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                minWidth: 380,
+                backgroundColor: "white",
+                marginBottom: 5,
+                ":hover": {
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                },
+                borderRadius: 6,
+              }}
+            >
+              <img
+                src={course.image}
+                alt="5 Terre"
+                style={{ borderRadius: 16 }}
+                width={"100%"}
+              />
+              <Box
+                sx={{
+                  textAlign: "start",
+                  paddingLeft: 3,
+                }}
+              >
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <LanguageIcon
+                    fontSize="small"
+                    sx={{
+                      marginBottom: 2,
+                      marginTop: 2.2,
+                      marginRight: 1,
+                      color: newtheme.palette.secondary.background,
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      marginBottom: 2,
+                      marginTop: 2,
+                      color: newtheme.palette.secondary.footer,
+                    }}
+                  >
+                    JAVA Course
+                  </Typography>
+                  <Typography
+                    sx={{
+                      marginBottom: 2,
+                      marginTop: 1,
+                      color: newtheme.palette.primary.background,
+                      backgroundColor:newtheme.palette.secondary.footer,
+                      padding:1,
+                      borderRadius:8,
+                      marginLeft:10,
+                      display:'flex',
+                      textAlign:'center'
+                    }}
+                  >
+                  <PersonIcon fontSize='small' sx={{marginRight:1}}/>{course.student} Enrolled
+                  </Typography>
+                </Box>
 
-                            <CardContent sx={{ ":hover": { backgroundColor: "#ff2712", color: 'white' } }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                                    <PeopleAltIcon sx={{ marginRight: 2, color: '#fecf03' }}></PeopleAltIcon>
-                                    <Typography sx={{ marginBottom: 2, fontWeight: 'bold', color: '#fecf03', fontSize: 19 }} >
-                                        {course.student} Students
-                                    </Typography>
-                                </Box>
-                                <Typography sx={{ fontWeight: 'bold', fontSize: 30 }} gutterBottom variant="h5">
-                                    {course.name}
-                                </Typography>
-                                <Typography className='cut-off-text' variant="body2" >
-                                    {course.description}
-                                </Typography>
-                                <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 3, marginBottom: 3 }}>
-                                    <Box sx={{ display: 'flex', flexDirection: 'row', marginRight: 4 }}>
-                                        <AccessTimeFilledIcon sx={{marginRight: 1,}} />
-                                        <Typography sx={{fontWeight:'bold'}}>{course.credits} Credits</Typography>
-                                    </Box>
-                                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                                        <LibraryBooksIcon sx={{marginRight: 1}} />
-                                        <Typography sx={{fontWeight:'bold'}}>{course.lectures} Lectures</Typography>
-                                    </Box>
-                                </Box>
-                                <Box sx={{ display: "flex", flexDirection: 'row',justifyContent:'space-between' }} >
-                                    <Box sx={{ display: 'flex', flexDirection: 'row',marginTop:1 }}>
-                                        <SchoolIcon sx={{marginRight: 1}}/>
-                                        <Typography sx={{fontWeight:'bold'}}>Prof. {course.teacher}</Typography>
-                                    </Box>
-                                    <Box>
-                                        <Button sx={{ ":hover": { backgroundColor: "white", color: 'red' }, backgroundColor: '#2a3290', color: 'white', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5, paddingBottom: 2, paddingTop: 2, borderRadius: 6 }} variant='outlined' size="small" color="primary">
-                                            Enroll Now!
-                                        </Button>
-                                    </Box>
-                                </Box>
-                            </CardContent>
-
-
-                        </CardActionArea>
-                        <CardActions>
-
-                        </CardActions>
-                    </Card>
-                </Grid>
-            </Grid>
-
-        </Box>
-    );
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bolder", marginBottom: 4 }}
+                >
+                 {course.name}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  textAlign: "start",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 5,
+                  marginRight: 4,
+                  paddingLeft: 1.5,
+                  marginLeft: 1,
+                }}
+              >
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <DescriptionIcon
+                    fontSize="small"
+                    sx={{
+                      marginBottom: 2,
+                      marginRight: 1,
+                      color: newtheme.palette.secondary.background,
+                    }}
+                  />
+                  <Typography sx={{ marginBottom: 2, fontSize: 16 }}>
+                    {course.lectures} Lectures
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <QueryBuilderIcon
+                    fontSize="small"
+                    sx={{
+                      marginBottom: 2,
+                      marginRight: 1,
+                      color: newtheme.palette.secondary.background,
+                    }}
+                  />
+                  <Typography sx={{ marginBottom: 2, fontSize: 16 }}>
+                    {course.credits} Credits
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </ThemeProvider>
+  );
 }
 
 export default CourseCard;

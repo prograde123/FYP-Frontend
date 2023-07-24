@@ -2,8 +2,8 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { Paper, Box } from '@material-ui/core';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import startImage from '../../assets/start.jpg';
-import startImage2 from '../../assets/start2.jpg';
+import startImage from '../../assets/2.png';
+import startImage2 from '../../assets/3.jpg';
 import startImage3 from '../../assets/start3.jpg';
 import startImage4 from '../../assets/start4.jpg';
 const ImageCarousel = () => {
@@ -21,6 +21,8 @@ const ImageCarousel = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: 'linear-gradient((0,0,0,0.3),(0,0,0,0.9))',
+      opacity: 0.5
     };
 
     const imageStyles = {
@@ -36,13 +38,13 @@ const ImageCarousel = () => {
   };
 
   return (
-    
-        <Carousel autoPlay={true} interval={2000} infiniteLoop={true}>
-          {images.map((image, index) => (
-            <Item key={index} image={image} />
-          ))}
-        </Carousel>
-      
+
+    <Carousel autoPlay={true} interval={2000} infiniteLoop={true}>
+      {images.map((image, index) => (
+        <Item key={index} image={image} />
+      ))}
+    </Carousel>
+
   );
 };
 
