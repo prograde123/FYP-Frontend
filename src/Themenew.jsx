@@ -5,7 +5,7 @@ import { createTheme } from "@mui/material";
     primary: {
       main: '#000000', //black
       background: '#FFFFFF' ,//white
-      back:'#eff0f3' //light grey for background
+      back:'#FFFFFF' //light grey for background
       
     },
     secondary: {
