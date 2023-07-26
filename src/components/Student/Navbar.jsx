@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,17 +9,20 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import Fade from '@mui/material/Fade';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useTheme } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
+import {Menu, MenuItem} from '@mui/material';
 import newtheme from '../../Themenew'
-import Modal from '@mui/material/Modal';
 import { Link } from '@mui/material';
-import Backdrop from '@mui/material/Backdrop';
+
+import PersonIcon from '@mui/icons-material/Person';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+
 import Aos from 'aos';
 import 'aos/dist/aos.css'
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +41,31 @@ export default function DrawerAppBar() {
 
   const [isProfileOpen, setProfileOpen] = useState(false);
 
+  const [anchorElCourses, setAnchorElCourses] = useState(null);
+  const [anchorElAssignments, setAnchorElAssignments] = useState(null);
+  const [anchorE2profile,setAnchorE2profile] = useState(null);
+  const handleMenuOpenCourses = (event) => {
+    setAnchorElCourses(event.currentTarget);
+  };
 
+  const handleMenuCloseCourses = () => {
+    setAnchorElCourses(null);
+  };
+
+  const handleMenuOpenAssignments = (event) => {
+    setAnchorElAssignments(event.currentTarget);
+  };
+
+  const handleMenuCloseAssignments = () => {
+    setAnchorElAssignments(null);
+  };
+  const handleMenuOpenProfile = (event) => {
+    setAnchorE2profile(event.currentTarget);
+  };
+
+  const handleMenuCloseProfile = () => {
+    setAnchorE2profile(null);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -119,143 +146,125 @@ export default function DrawerAppBar() {
 
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
               
-                <Button className="fontlink" onClick={()=>{navigate('/Home')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button className="fontlink" onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Home
                 </Button>
-                <Button className="fontlink" onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
-                  Courses
+                <Button
+          
+                    aria-haspopup="true"
+                    onMouseEnter={handleMenuOpenCourses}
+                    
+                    data-aos="fade-left"
+                    sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712'}}}
+                    >
+                    Courses
                 </Button>
-                <Button className="fontlink" onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
-                  Assignments
+                <Menu
+                anchorEl={anchorElCourses}
+                open={Boolean(anchorElCourses)}
+                onClose={handleMenuCloseCourses}
+                
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                MenuListProps={{onMouseLeave: handleMenuCloseCourses}}
+                
+                sx={{ zIndex: 1200 }} 
+                >
+                        <MenuItem onClick={handleMenuCloseCourses}>All Courses</MenuItem>
+                        <MenuItem onClick={handleMenuCloseCourses}>java</MenuItem>
+                        <MenuItem onClick={handleMenuCloseCourses}>C++</MenuItem>
+                        <MenuItem onClick={handleMenuCloseCourses}>Python</MenuItem>
+                        <MenuItem onClick={handleMenuCloseCourses}>C#</MenuItem>
+                        <MenuItem onClick={handleMenuCloseCourses}>Nasm/Masm</MenuItem>
+                        <MenuItem onClick={handleMenuCloseCourses}>C</MenuItem>
+                </Menu>
+                
+                <Button
+                
+                aria-haspopup="true"
+                onMouseEnter={handleMenuOpenAssignments}
+                
+                data-aos="fade-left"
+                sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712'}}}
+                >
+                Assignments
                 </Button>
+                <Menu
+                anchorEl={anchorElAssignments}
+                open={Boolean(anchorElAssignments)}
+                onClose={handleMenuCloseAssignments}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                
+                elevation={0}
+                sx={{ zIndex: 1200 }} 
+                
+                MenuListProps={{onMouseLeave: handleMenuCloseAssignments}}
+                >
+                        <MenuItem
+                        onClick={handleMenuCloseAssignments}>All Assignments</MenuItem>
+                        <MenuItem onClick={handleMenuCloseAssignments}
+                        >Java</MenuItem>
+                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        >C++</MenuItem>
+                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        >Python</MenuItem>
+                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        >C#</MenuItem>
+                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        >Nasm/Masm</MenuItem>
+                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        >C</MenuItem>
+                        
+                </Menu>
                 <Button className="fontlink" onClick={()=>{navigate('/ContactUs')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Reports
                 </Button>
-             
-              <Button data-aos="fade-left" className="fontlink"
-
-                onClick={handleProfileOpen}
-                sx={{
-                  fontWeight: 'bold', ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, borderRadius: 10, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2,
-                  backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background
-                }}
+                <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}} data-aos="fade-left">
+                        <NotificationsActiveIcon />
+                </IconButton>
+                 <IconButton sx={{color:newtheme.palette.primary.main}}
+                data-aos="fade-left"
                 >
-                Sign Up
-              </Button>
-              <Modal
-  open={isProfileOpen}
-  onClose={handleProfileClose}
-  aria-labelledby="transition-modal-title"
-  aria-describedby="transition-modal-description"
-  closeAfterTransition
-  slots={{ backdrop: Backdrop }}
-  slotProps={{
-    backdrop: {
-      timeout: 500,
-    },
-  }}
->
-  <Fade in={isProfileOpen}>
-    <Box
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        width: '90%',
-        maxWidth: '400px',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: newtheme.palette.secondary.main,
-        boxShadow: 24,
-        p: 4,
-        borderRadius: '5%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-      }}
-    >
-      <Typography id="transition-modal-description" sx={{}}>
-        {/* Content of the modal */}
-        <Box
-          sx={{
-            bgcolor: newtheme.palette.secondary.background,
-            border: 1,
-            borderColor: newtheme.palette.secondary.background,
-            borderRadius: 5,
-            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
-          }}
-        >
-          <Link onClick={()=>{navigate('/TeacherSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: 'center',
-                color: newtheme.palette.primary.background,
-                paddingLeft: 4,
-                paddingRight: 4,
-                paddingTop: 2,
-                paddingBottom: 2,
-              }}
-            >
-              SignUp as a Teacher
-            </Typography>
-          </Link>
-        </Box>
-        <br />
-        <Box
-          sx={{
-            bgcolor: newtheme.palette.secondary.background,
-            border: 1,
-            borderColor: newtheme.palette.secondary.background,
-            borderRadius: 5,
-            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
-          }}
-        >
-          <Link onClick={()=>{navigate('/StudentSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: 'center',
-                color: newtheme.palette.primary.background,
-                paddingLeft: 4,
-                paddingRight: 4,
-                paddingTop: 2,
-                paddingBottom: 2,
-              }}
-            >
-              SignUp as a Student
-            </Typography>
-          </Link>
-        </Box>
-        <br />
-        <Box
-          sx={{
-            bgcolor: newtheme.palette.secondary.background,
-            border: 1,
-            borderColor: newtheme.palette.secondary.background,
-            borderRadius: 5,
-            ':hover': { backgroundColor: newtheme.palette.secondary.footer },
-          }}
-        >
-          <Link onClick={()=>{navigate('/SignIn')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: 'center',
-                color: newtheme.palette.primary.background,
-                paddingLeft: 4,
-                paddingRight: 4,
-                paddingTop: 2,
-                paddingBottom: 2,
-              }}
-            >
-              SignIn
-            </Typography>
-          </Link>
-        </Box>
-      </Typography>
-    </Box>
-  </Fade>
-</Modal>
+                        <PersonIcon onClick={handleMenuOpenProfile} />
+                </IconButton>
+                <Menu
+                anchorE2={anchorE2profile}
+                open={Boolean(anchorE2profile)}
+                onClose={handleMenuCloseProfile}
+
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                
+                elevation={0}
+                sx={{ zIndex: 1500 , marginTop:'3%' }} 
+                onMouseEnter={handleMenuOpenProfile}
+                
+               
+                MenuListProps={{onMouseLeave: handleMenuCloseProfile}}
+                >
+                  <MenuItem>My profile</MenuItem>
+                  <MenuItem>Logout</MenuItem>
+                </Menu>
+
 
             </Box>
           </Toolbar>

@@ -15,9 +15,12 @@ import CourseDetails from "../Course/CourseDetails";
 
 import AddAssignment from '../Assignment/AddAssignment'
 import ViewSubmittedAssigList from '../Assignment/ViewSubmittedAssigList'
-import ViewUploadedAssigList from "../../StudentsAndTeachers/Assignments/ViewUploadedAssigList";
-import ViewUploadedAssig from "../../StudentsAndTeachers/Assignments/ViewUploadedAssignment";
-import PDFViewer from "../../StudentsAndTeachers/Assignments/pdf";
+
+import ViewUploadedAssigList from '../Assignment/ViewUploadedAssigList'
+
+import ViewUploadedAssig from '../Assignment/ViewUploadedAssigList'
+
+import PDFViewer from '../Assignment/pdf'
 
 export default function TeacherBody() {
     const theme = useTheme()
