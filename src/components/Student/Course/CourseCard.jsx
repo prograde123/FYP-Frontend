@@ -33,6 +33,7 @@ function CourseCard({course}) {
                 minWidth: 380,
                 backgroundColor: "white",
                 marginBottom: 5,
+                boxShadow:'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',
                 ":hover": {
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",

@@ -295,15 +295,7 @@ const SignUp = () => {
                                 <input hidden accept="file/*" multiple type="file" />
                             </Button></Button></Typography>
                         </Box>
-                        <Box sx={{ marginTop: 1, fontWeight: 'bold', width: '100%' }} >
-              <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload CV* <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                Click to browse or <br />
-                Drag and Drop Files
-                <input name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/cvt/*" multiple type="file" />
-              </Button></Button></Typography>
-              {(<p style={{ color: 'red',fontWeight:'normal', marginTop: 0, marginLeft: 4, marginBottom: 0,display:'flex', flexDirection:'row', justifyContent: 'center' }}>{fileError}</p>) }
-            </Box>
-                    </Box>
+                        </Box>
                     <Box >
                         <Button
                          type='submit' onClick={() => { handleClick() }}

@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography';
 import CourseContent from './CourseData/CourseContent';
 import About from './CourseData/AboutCourse';
 import Assignments from './CourseData/Assignments';
+import Compiler from './CourseData/Compiler/Compile';
 import Members from './CourseData/members';
-import Compiler from './CourseData/Compiler';
 import Instructor from './CourseData/Instructor';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -255,7 +255,7 @@ const buttons = [
                       {renderSelectedContent()}
                     </Box>
                   </Grid>
-           </Box>;
+           </Box>
 
 
     </Box>

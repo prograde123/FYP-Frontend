@@ -149,7 +149,7 @@ function Homepage() {
           <Typography data-aos="fade-right" sx={{ marginRight: 16, fontWeight: 16, marginTop: 4 }}>
             Totally Enrolled in 8 Courses
           </Typography>
-          <Autocomplete data-aos="fade-left"
+          <Autocomplete 
             id="filter-demo"
             options={filter}
             getOptionLabel={(option) => option.title}
