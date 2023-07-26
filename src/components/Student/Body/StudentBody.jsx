@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Footer from '../../LandingPage/Footer';
 import CourseCard from '../../LandingPage/CourseCard';
 import ViewCourse from '../Course/ViewCourse';
-import Navbar from '../../Student/Navbar'
+import DrawerAppBar from '../Navbar'
 import Homepage from '../Home/Homepage';
 import newtheme from "../../../Themenew";
 import { ThemeProvider } from "@mui/material/styles";
@@ -15,7 +15,7 @@ const StudentBody = () => {
     <>
     <ThemeProvider theme={newtheme}>
     <Box sx={{backgroundColor: newtheme.palette.primary.back}}>
-        <Navbar/>
+        <DrawerAppBar/>
         <Box component="main">
           <Routes>
             <Route path="/" element={<CourseCard />} />
