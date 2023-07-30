@@ -1,10 +1,8 @@
 import { useState } from "react";
 import Editor from "@monaco-editor/react";
 import CompilerHeader from "./CompilerHeader";
-import Axios from "axios";
 import { Button, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import newtheme from "../../../../../Themenew";
 import { ThemeProvider } from "@mui/material/styles";
 import Aos from "aos";
@@ -14,15 +12,15 @@ import Grid from "@mui/material/Grid";
 import CodeIcon from "@mui/icons-material/Code";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BounceLoader from "react-spinners/BounceLoader";
-
-// import spinner from './spinner.svg';
+import http from "../../../../../../Axios/axios";
+import axios from "axios";
 
 function Compile() {
   // State variable to set users source code
   const [userCode, setUserCode] = useState(``);
 
   // State variable to set editors default language
-  const [userLang, setUserLang] = useState("python");
+  const [userLang, setUserLang] = useState("python3");
 
   // State variable to set editors default theme
   const [userTheme, setUserTheme] = useState("vs-dark");
@@ -44,25 +42,64 @@ function Compile() {
     fontSize: fontSize,
   };
 
-  // Function to call the compile endpoint
-  function compile() {
-    setLoading(true);
-    if (userCode === ``) {
-      return;
-    }
-
-    // Post request to compile endpoint
-    Axios.post(`http://localhost:8000/compile`, {
-      code: userCode,
-      language: userLang,
-      input: userInput,
-    })
-      .then((res) => {
-        setUserOutput(res.data.output);
-      })
-      .then(() => {
+  async function compile() {
+    try {
+      setLoading(true);
+      if (userCode === ``) {
+        setUserOutput("Please enter code first");
+        setLoading(false)
+      } else if (userLang === "c") {
+        const response = await axios({
+          method: "POST",
+          url: "https://online-code-compiler.p.rapidapi.com/v1/",
+          headers: {
+            "content-type": "application/json",
+            "X-RapidAPI-Key":
+              "9b06c702d6msh4deecd15437647ap1031bajsn4173b410ec45",
+            "X-RapidAPI-Host": "online-code-compiler.p.rapidapi.com",
+          },
+          data: {
+            language: userLang,
+            version: "latest",
+            code: userCode,
+            input: userInput,
+          },
+        });
+        console.log(response.data);
+        setUserOutput(response.data.output);
         setLoading(false);
-      });
+      } else if (
+        userLang === "java" ||
+        userLang === "c_cpp" ||
+        userLang === "typescript" ||
+        userLang === "python" ||
+        userLang === "csharp"
+      ) {
+        const response = await axios({
+          method: "POST",
+          url: "https://code-compiler10.p.rapidapi.com/",
+          headers: {
+            "content-type": "application/json",
+            "x-compile": "rapidapi",
+            "Content-Type": "application/json",
+            "X-RapidAPI-Key":
+              "9b06c702d6msh4deecd15437647ap1031bajsn4173b410ec45",
+            "X-RapidAPI-Host": "code-compiler10.p.rapidapi.com",
+          },
+          data: {
+            langEnum: [userLang],
+            lang: userLang,
+            code: userCode,
+            input: userInput,
+          },
+        });
+        console.log(response.data);
+        setUserOutput(response.data.output);
+        setLoading(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   // Function to clear the output screen
@@ -145,6 +182,7 @@ function Compile() {
                   }}
                 >
                   <Button
+                    onClick={() => compile()}
                     startIcon={
                       <CodeIcon
                         style={{ color: newtheme.palette.primary.main }}
@@ -160,7 +198,6 @@ function Compile() {
                         backgroundColor: newtheme.palette.secondary.background,
                       },
                     }}
-                    onClick={() => compile()}
                   >
                     Run Code
                   </Button>

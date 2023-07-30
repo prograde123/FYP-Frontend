@@ -95,7 +95,8 @@ function CreateCourse() {
         const response = await http.post(url, newCourse);
         console.log("course added", response)
         return navigate("/Teacher/CoursesList");
-      } else {
+      } 
+      else {
       const url = "/course/updateCourse/" + course._id;
         const response = await http.patch(url, newCourse);
         console.log("course updated", response)

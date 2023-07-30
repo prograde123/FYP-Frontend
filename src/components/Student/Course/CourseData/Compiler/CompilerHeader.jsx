@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ShareIcon from "@mui/icons-material/Share";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import UploadIcon from '@mui/icons-material/Upload';
 
 const CompilerHeader = ({
   userLang,
@@ -22,13 +23,13 @@ const CompilerHeader = ({
   setFontSize,
 }) => {
   const languages = [
-    { value: "c", label: "C" },
-    { value: "cpp", label: "C++" },
+    { value: "c_cpp", label: "C++" },
     { value: "python", label: "Python" },
     { value: "java", label: "Java" },
     { value: "csharp", label: "C Sharp" },
-    { value: "assembly", label: "NASM" },
-    { value: "javascript", label: "JavaScript" },
+    { value: "typescript", label: "Typescript" },
+    { value: "c", label: "C" },
+
   ];
   const themes = [
     { value: "vs-dark", label: "Dark" },
@@ -70,7 +71,7 @@ const CompilerHeader = ({
                 fontWeight: "bolder",
               }}
             >
-              Code Compiler
+              Compiler
             </h2>
             <Select
               options={languages}
@@ -112,6 +113,20 @@ const CompilerHeader = ({
             >
               Submit
             </Button>
+            {/* <Button
+              startIcon={<UploadIcon />}
+              sx={{
+                backgroundColor: newtheme.palette.primary.background,
+                borderRadius: 3,
+                padding: 1,
+                ":hover": {
+                  color: newtheme.palette.primary.background,
+                  backgroundColor: newtheme.palette.secondary.background,
+                },
+              }}
+            >
+              Upload
+            </Button> */}
             <label
               style={{
                 color: newtheme.palette.primary.background,
