@@ -4,6 +4,9 @@ import Box from '@mui/material/Box';
 import LogoImage from '../assets/logo.png'
 import SignInImage from '../assets/Saly.png'
 import CircleImage from '../assets/circle.png'
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+
 import { useTheme } from '@emotion/react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -12,11 +15,18 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
-import { Link } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import { login } from '../../Axios/axiosall';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Backdrop from '@mui/material/Backdrop';
+import { Link } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
+import { ImFacebook } from 'react-icons/im';
+import { CircleGrid } from "react-awesome-shapes";
+import GoogleImage from '../../src/assets/google.png'
+import FbImage from '../../src/assets/fb.png'
+
 
 function SignIn() {
     const theme = useTheme()
@@ -48,89 +58,199 @@ function SignIn() {
     useEffect(() => {
         getUser();
     }, []);
+    const [isProfileOpen, setProfileOpen] = React.useState(false);
+    const handleProfileOpen = () => setProfileOpen(true);
+    const handleProfileClose = () => setProfileOpen(false);
+
 
     return (
-        <Box sx={{ flexDirection: 'row', display: 'flex', height: '100vh' }}>
-            <Box bgcolor={theme.palette.secondary.main} sx={{ borderBottomRightRadius: 16, borderTopRightRadius: 16, width: '60%' }} >
-                <Typography variant='h4' sx={{ color: theme.palette.primary.background, marginLeft: 3, marginTop: 4, fontWeight: 'bold' }}><img src={LogoImage} height={30} /> <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 3, justifyContent: 'center' }}>
-                    <Typography variant='h4' sx={{ color: theme.palette.primary.background, fontWeight: 'bold' }}>Welcome to <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                    <Typography variant='h5' sx={{ color: theme.palette.primary.background }}>Sign In Now ! </Typography>
-                </Box>
-                <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
-                    <img style={{ maxWidth: '100%', maxHeight: '60vh' }} src={SignInImage} />
-                </Box>
-            </Box>
-            <Box sx={{ width: '80%' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <img src={CircleImage} height='150vh' />
-                </Box>
-
-                <Box sx={{ marginLeft: 10, marginRight: 10 }}>
-                    <Typography variant='h4' sx={{ fontWeight: 'bold', marginBottom: 1 }}>Sign In </Typography>
-                    <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-                        <FormControl sx={{ width: '100%', marginTop: 4 }}>
-                            <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Email</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-email"
-                                color='secondary'
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Button
-                                            aria-label="toggle email visibility"
-                                            edge="end"
-                                            color='secondary'
-                                        >
-                                            {<EmailIcon />}
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                                label="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </FormControl>
-                        
-                        <FormControl sx={{ width: '100%', marginTop: 4 }} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Password</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                color='secondary'
-                                type={showPassword ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Button
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            edge="end"
-                                            color='secondary'
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                                label="Password"
-                                value={pass}
-                                onChange={(e) => setPass(e.target.value)}
-                            />
-                        </FormControl>
-                        <Box sx={{ display: 'flex', flexDirection: "row", justifyContent: 'flex-end', marginTop: 1 }}>
-                            <Typography color='secondary'><Link to='/ForgotPassword' style={{ textDecoration: 'none' }}>Forgot Password?</Link></Typography>
+        <Box sx={{ flexDirection: 'row', display: 'flex', height: '100vh', backgroundColor:theme.palette.secondary.main }}>
+            <Box sx={{backgroundColor:theme.palette.primary.background ,width: '80%',borderBottomRightRadius: 29, borderTopRightRadius: 29, display:'flex', flexDirection:'row', justifyContent:'center' }}>
+                <Box sx={{ marginLeft: 10, marginRight: 10}}>
+                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginTop:2}}>
+                        <p style={{fontWeight: 'bolder', fontSize:27,color:theme.palette.secondary.main }}>PROGRADE</p>
+                        <p onClick={handleProfileOpen} style={{cursor:'pointer',color:theme.palette.secondary.main,paddingLeft:16,paddingRight:16,borderRadius:12,fontWeight: 'bolder',fontSize:15, border:'1px solid grey', display:'flex', flexDirection:'row', alignItems:'center' }}>Sign Up</p>
+                        <Modal
+                            open={isProfileOpen}
+                            onClose={handleProfileClose}
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            closeAfterTransition
+                            slots={{ backdrop: Backdrop }}
+                            slotProps={{
+                            backdrop: {
+                                timeout: 500,
+                            },
+                            }}>
+                            <Fade in={isProfileOpen}>
+                            <Box
+                                sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                width: '90%',
+                                maxWidth: '400px',
+                                transform: 'translate(-50%, -50%)',
+                                backgroundColor: theme.palette.primary.background,
+                                boxShadow: 24,
+                                p: 4,
+                                borderRadius: '5%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-around',
+                                }}
+                            >
+                                <Typography id="transition-modal-description" sx={{}}>
+                                {/* Content of the modal */}
+                                <Box
+                                    sx={{
+                                    bgcolor: theme.palette.secondary.main,
+                                    border: 1,
+                                    borderColor: theme.palette.secondary.main,
+                                    borderRadius: 5,
+                                    ':hover': { backgroundColor: theme.palette.secondary.main, cursor:'pointer', opacity:0.9 },
+                                    }}
+                                >
+                                    <Box onClick={()=>{navigate('/TeacherSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                        textAlign: 'center',
+                                        color: theme.palette.primary.background,
+                                        paddingLeft: 4,
+                                        paddingRight: 4,
+                                        paddingTop: 2,
+                                        paddingBottom: 2,
+                                        }}
+                                    >
+                                        SignUp as a Teacher
+                                    </Typography>
+                                    </Box>
+                                </Box>
+                                <br />
+                                <Box
+                                    sx={{
+                                    bgcolor: theme.palette.secondary.main,
+                                    border: 1,
+                                    borderColor: theme.palette.secondary.main,
+                                    borderRadius: 5,
+                                    ':hover': { backgroundColor: theme.palette.secondary.main,cursor:'pointer',opacity:0.9   },
+                                    }}
+                                >
+                                    <Box onClick={()=>{navigate('/StudentSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                        textAlign: 'center',
+                                        color: theme.palette.primary.background,
+                                        paddingLeft: 4,
+                                        paddingRight: 4,
+                                        paddingTop: 2,
+                                        paddingBottom: 2,
+                                        }}
+                                    >
+                                        SignUp as a Student
+                                    </Typography>
+                                    </Box>
+                                </Box>
+                                </Typography>
+                              </Box>
+                            </Fade>
+                        </Modal>
+                    </Box>
+                    <Box sx={{display:'flex', flexDirection:'row',justifyContent:'center'}}>
+                        <Box sx={{ marginLeft: 10, marginRight: 10,width:'65%',marginTop:1, display:'flex', flexDirection:'column',}}>
+                            <p style={{fontWeight: 'bolder', marginBottom: 1,display:'flex', flexDirection:'row', fontSize:27 }}>Log In to Your ProGrade Account!</p>
+                            <p style={{ marginBottom: 1,display:'flex', flexDirection:'row', fontSize:15, color:'grey' }}>Discover a supportive community of online instructors. Get instant access to all course creation resources.</p>
+                            <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
+                                <FormControl sx={{ width: '100%', marginTop: 4 }}>
+                                    <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Email</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-email"
+                                        color='secondary'
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle email visibility"
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {<EmailIcon />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </FormControl>
+                                
+                                <FormControl sx={{ width: '100%', marginTop: 4 }} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Password</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-password"
+                                        color='secondary'
+                                        type={showPassword ? 'text' : 'password'}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Password"
+                                        value={pass}
+                                        onChange={(e) => setPass(e.target.value)}
+                                    />
+                                </FormControl>
+                                <Box sx={{ display: 'flex', flexDirection: "row", justifyContent: 'flex-end'}}>
+                                    <p color='secondary'><Link to='/ForgotPassword' style={{ textDecoration: 'none', color:theme.palette.secondary.main }}>Forgot Password ?</Link></p>
+                                </Box>
+                            </Box>
+                            <Box sx={{ marginTop: 1}}>
+                                <Button onClick={() => loginUser()}
+                                    variant="contained" color="secondary" endIcon={<LoginIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', borderRadius:2 }}>
+                                    Sign In
+                                </Button>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: 'column', width: '100%', alignContent: 'center'}}>
+                                <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+                                    <p variant='body1' sx={{ color: theme.palette.primary.main }} >- OR -</p>
+                                </Box>
+                                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',marginBottom:3  }}>
+                            <Button variant="outlined" color='secondary' sx={{padding:1, borderRadius:2}}> <img src={GoogleImage} height={28} style={{ marginRight: 5 }} />SignIn with Google</Button>
+                            <Button variant="outlined" color='secondary' sx={{padding:1, borderRadius:2}}> <img src={FbImage} height={28} style={{ marginRight: 5 }} />SignIn with Facebook</Button>
+                        </Box>
+                            </Box>
                         </Box>
                     </Box>
-                    <Box sx={{ marginTop: 5 }}>
-                        <Button onClick={() => loginUser()}
-                            variant="contained" color="secondary" endIcon={<LoginIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
-                            Sign In
-                        </Button>
-                    </Box>
-                    <Box sx={{ display: "flex", flexDirection: 'row', marginTop: 2, width: '100%', justifyContent: 'center' }}>
-                        <Typography variant='body1' sx={{ color: '#999999' }} >Don't have an account?<Link to="/TeacherSignUp" style={{ textDecoration: 'none' }}><span style={{ color: "#6614A5" }}>Sign Up</span></Link> </Typography>
-                    </Box>
                 </Box>
             </Box>
+            <Box bgcolor={theme.palette.secondary.main} sx={{  width: '58%' }} >
+                <Box sx={{ display: 'flex', flexDirection: 'row',justifyContent: 'flex-end' }}>
+                <CircleGrid
+                    color="#696969"
+                    size="140px"
+                    zIndex={1}/>
+                </Box>
+                <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
+                    <img style={{ maxWidth: '100%', height: '72vh' , marginBottom:30, marginTop:30}} src={SignInImage} />
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'row',justifyContent: 'flex-end' }}>
+                <CircleGrid
+                    
+                    color="#696969"
+                    size="140px"
+                    zIndex={1}
+                />
+                </Box>
+            </Box>
+            
         </Box>
     );
 }

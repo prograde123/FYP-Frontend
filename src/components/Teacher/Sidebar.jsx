@@ -1,350 +1,147 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import LoginIcon from '@mui/icons-material/Login';
-import ListItemText from '@mui/material/ListItemText';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
-import { useTheme } from '@emotion/react';
-import { useAppStore } from '../../appStore';
+import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import CreateIcon from '@mui/icons-material/Create';
-import PreviewIcon from '@mui/icons-material/Preview';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import GradingIcon from '@mui/icons-material/Grading';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import SummarizeIcon from '@mui/icons-material/Summarize';
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
-const drawerWidth = 260;
+import {
+  ProSidebar,
+  Menu,
+  MenuItem,
+  SubMenu,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarContent,
+} from "react-pro-sidebar";
+import {
+  FaUser,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaTachometerAlt,
+  FaGem,
+  FaList,
+  FaRegLaughWink,
+  FaHeart,
+} from "react-icons/fa";
+import {TbReportAnalytics} from "react-icons/tb";
+import {SiCoursera} from "react-icons/si";
+import {IoIosCreate} from "react-icons/io";
+import {LuView} from "react-icons/lu";
+import {PiStudent} from "react-icons/pi";
+import {RiCodeView} from "react-icons/ri";
+import {CgAdd} from "react-icons/cg";
+import {AiOutlineFundView} from "react-icons/ai";
+import {MdOutlineAssignment} from "react-icons/md";
+import {GiMoebiusStar} from "react-icons/gi";
+import {SlPeople} from "react-icons/sl";
+import {RxDashboard} from "react-icons/rx";
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-});
+import sidebarBg from "../../assets/bg1.jpg";
+import '../../style.scss'
 
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  }),
-);
-
-export default function Sidebar() {
-  const theme = useTheme();
+const Sidebar = ({
+  image,
+  collapsed,
+  toggled,
+  handleToggleSidebar,
+  handleCollapsedChange,
+}) => {
   const navigate = useNavigate()
-  const open = useAppStore((state) => state.dopen)
-  const [sopen, setOpen] = React.useState(false);
-  const[assOpen,setAssOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(!sopen);
-  };
-  const handle = () => {
-    setAssOpen(!assOpen);
-  };
-  
-
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={() => { setOpen(!open) }}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List sx={{ height: '100vh', backgroundColor: theme.palette.secondary.main }}>
-          <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
-            <ListItemButton onClick={() => navigate('/Teacher/Dashboard')}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
+    <ProSidebar style={{height: '100%'}}
+      image={sidebarBg}
+      collapsed={collapsed}
+      toggled={toggled}
+      onToggle={handleToggleSidebar}
+    >
+      {/* Header */}
+      <SidebarHeader>
+        <Menu iconShape="circle">
+          {collapsed ? (
+            <MenuItem
+              icon={<FaAngleDoubleRight size={18} />}
+              onClick={handleCollapsedChange}
+            ></MenuItem>
+          ) : (
+            <MenuItem
+              suffix={<FaAngleDoubleLeft />}
+              onClick={handleCollapsedChange}
             >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: theme.palette.primary.background
+              <div
+                style={{
+                  padding: "9px",
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  fontSize: 25,
+                  letterSpacing: "1px",
                 }}
               >
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
-            <ListItemButton onClick={handleClick}>
-              <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                <ContentPasteIcon />
-              </ListItemIcon>
-              <ListItemText primary="Courses" />
-              {sopen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={sopen} timeout="auto" unmountOnExit  >
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }} >
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/CreateCourse')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <CreateIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Create Course" />
-                </ListItemButton>
-
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/CoursesList')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <PreviewIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="All Courses" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/StudentRequests')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <PersonAddAltIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Enrolment Requests" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            {/* <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/AddCourseContent')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <AddBoxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Add Course Content" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/ContentList')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <GradingIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Course Contents" />
-                </ListItemButton>
-              </List>
-            </Collapse> */}
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/StudentList')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <PeopleAltIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Students" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Divider />
-          </ListItem>
-
-
-          {/* <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
-            <ListItemButton onClick={handle}>
-              <ListItemIcon sx={{ color: theme.palette.primary.background }}>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText primary="Assignments" />
-              {sopen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={sopen} timeout="auto" unmountOnExit  >
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }} >
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/CreateCourse')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <CreateIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Create Course" />
-                </ListItemButton>
-
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/CoursesList')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <PreviewIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="All Courses" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/StudentRequests')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <PersonAddAltIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Enrolment Requests" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/AddCourseContent')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <AddBoxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Add Course Content" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/ContentList')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <GradingIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Course Contents" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Collapse in={sopen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding sx={{ ":hover": { backgroundColor: theme.palette.primary.background, color: theme.palette.secondary.main, fontWeight: 'bold', borderRadius: 15 } }}>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/Teacher/StudentList')}>
-                  <ListItemIcon sx={{ color: theme.palette.primary.background, ":hover": { color: theme.palette.secondary.main } }}>
-                    <PeopleAltIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Students" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <Divider />
-          </ListItem> */}
-          <Divider />
-          <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: theme.palette.primary.background
-                }}
-              >
-                <SupervisedUserCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Students" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: theme.palette.primary.background
-                }}
-              >
-                <SummarizeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Reports" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <br />
-          {/* <ListItem disablePadding sx={{ display: 'block', color: theme.palette.primary.background }}>
-            <Divider />
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: theme.palette.primary.background
-                }}
-              >
-                <LoginIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sign Out" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem> */}
-        </List>
-
-      </Drawer>
-    </Box>
+                ProGrade
+              </div>
+            </MenuItem>
+          )}
+        </Menu>
+      </SidebarHeader>
+      {/* Content */}
+      <SidebarContent>
+        <Menu iconShape="circle">
+          <MenuItem style={{fontSize:17}} onClick={() => { navigate('/Teacher/Dashboard') }}
+            icon={<RxDashboard size={20} />}
+            suffix={<span className="badge red">NEW</span>}
+          >
+            Dashboard
+          </MenuItem>
+          {/* <MenuItem icon={<FaGem />}>Components </MenuItem> */}
+          <SubMenu style={{fontSize:17}}
+            suffix={<span className="badge yellow">3</span>}
+            title={"Courses"}
+            icon={<SiCoursera size={20} />}
+          >
+            <MenuItem style={{fontSize:16}} icon={<IoIosCreate size={20}/>} onClick={() => { navigate('/Teacher/CreateCourse') }}>Create Course</MenuItem>
+            <MenuItem style={{fontSize:16}} icon={<LuView size={20}/>} onClick={() => { navigate('/Teacher/CoursesList') }}>View All Courses</MenuItem>
+            <MenuItem style={{fontSize:16}} icon={<PiStudent size={20}/>} onClick={() => { navigate('/Teacher/StudentList') }}>Students</MenuItem>
+            <MenuItem style={{fontSize:16}} icon={<SlPeople size={20}/>} onClick={() => { navigate('/Teacher/StudentRequests') }}>Requests</MenuItem>
+          </SubMenu>
+          <SubMenu style={{fontSize:17}} title={"Assignments"} icon={<RiCodeView size={22}/>}>
+            <SubMenu style={{fontSize:16}} icon={<CgAdd size={20}/>} title={"Add Assignment"}>
+              <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 3.1 </MenuItem>
+              <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 3.2 </MenuItem>
+            </SubMenu>
+            <MenuItem style={{fontSize:16}} icon={<AiOutlineFundView size={20} />}>View All </MenuItem>
+            <SubMenu style={{fontSize:15}} icon={<MdOutlineAssignment size={20}/>} title={"Course Assignments"}>
+              <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>C++</MenuItem>
+              <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>Java</MenuItem>
+              <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>Python</MenuItem>
+              <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>C Sharp</MenuItem>
+              <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>Nasm/Masm</MenuItem>
+              <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>C</MenuItem>
+            </SubMenu>
+          </SubMenu>
+          
+          <SubMenu style={{fontSize:17}}
+            suffix={<span className="badge gray">3</span>}
+            title={"Grades"}
+            icon={<GiMoebiusStar size={22} />}
+          >
+            <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink size={20} />}>Submenu 1</MenuItem>
+            <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 2</MenuItem>
+            <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 3</MenuItem>
+          </SubMenu>
+          <MenuItem icon={<TbReportAnalytics size={20} />} style={{fontSize:17}}>Reports</MenuItem>
+          
+        </Menu>
+      </SidebarContent>
+      {/* Footer */}
+      <SidebarFooter style={{ textAlign: "center" }}>
+        <div className="sidebar-btn-wrapper" style={{ padding: "16px" }}>
+        <div
+            className="sidebar-btn"
+            style={{ cursor: 'pointer' }}
+          >
+            <FaUser size={20} style={{color:'white'}} />
+            <span style={{marginLeft:15, color:'white', fontSize:15}}>My Account</span>
+          </div>
+        </div>
+      </SidebarFooter>
+    </ProSidebar>
   );
-}
+};
+
+export default Sidebar;

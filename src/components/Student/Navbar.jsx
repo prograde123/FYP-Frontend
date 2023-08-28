@@ -120,9 +120,6 @@ export default function DrawerAppBar() {
     </Box>
   );
   
-  
-
-
 
   return (
     <ThemeProvider theme={newtheme}>

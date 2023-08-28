@@ -1,8 +1,20 @@
+
 body {
     margin: 0;
     overflow-x: hidden;
   }
   
+  ::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 22px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2a3290;
+  }
+
   Box:after {
     content: "";
     position: absolute;

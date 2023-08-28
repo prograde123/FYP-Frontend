@@ -9,7 +9,7 @@ function ViewEnrollmentRequest() {
   const theme = useTheme()
   return (
     <>
-      <Typography variant='h5' sx={{ fontWeight: 'bold' }}>Course Enrollement Request</Typography>
+      <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9 }}>Enrollement Requests</p>
       <Requests />
     </>
   );

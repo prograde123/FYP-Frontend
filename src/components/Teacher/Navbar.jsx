@@ -1,99 +1,83 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import MuiAppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import React from "react";
+import { MdOutlineNotificationsActive } from "react-icons/md";
+import { VscColorMode } from "react-icons/vsc";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import SearchIcon from "@mui/icons-material/Search";
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import Typography from "@mui/material/Typography";
+import { Box} from "@mui/material";
+import "../../style.scss";
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import { useTheme } from '@emotion/react';
-import { useAppStore } from '../../appStore';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import {
+  ProSidebar,
+  Menu,
+  MenuItem,
+  SubMenu,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarContent,
+} from "react-pro-sidebar";
 
-const AppBar = styled(MuiAppBar, {
-})(({theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-}));
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+function Navbar() {
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-  },
-}));
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(0),
+      width: "auto",
+    },
+  }));
 
-export default function Navbar() {
-  const theme = useTheme();
-  const navigate = useNavigate()
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const updateOpen =useAppStore((state)=>state.updateOpen)
-  const dopen =useAppStore((state)=>state.dopen)
+  const SearchIconWrapper = styled("div")(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
 
-  function logout() {
-    localStorage.removeItem("User", JSON.stringify([]));
-    return navigate('/SignIn')
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: "inherit",
+    "& .MuiInputBase-input": {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: "20ch",
+      },
+    },
+  }));
+
+  const [user, setUser] = React.useState();
+  function getUser() {
+    const user = localStorage.getItem("User");
+    setUser(JSON.parse(user));
   }
+  console.log(user)
 
+  useEffect(() => {
+    getUser();
+  }, []);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const menuId = 'primary-search-account-menu';
@@ -113,126 +97,119 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => navigate('/Teacher/Profile')} >My Profile</MenuItem>
-      <MenuItem onClick={()=>{logout()}}>Log out</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
     </Menu>
   );
 
   return (
-    <Box sx={{ display:'flex'}}>
-      <AppBar position="fixed" sx={{backgroundColor:theme.palette.secondary.main }}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={() =>updateOpen(!dopen)}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 4,
+      }}
+    >
+      <div>
+        <Search 
+          breakPoint="sm"
+          sx={{
+            border: "2px solid #dbdbdb",
+            ":hover": { backgroundColor: "#dbdbdb" },
+            borderRadius: 15,
+            display: "flex",
+            flexDirection: "row",
+            textAlign: "center",
+          }}
+        >
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            style={{ padding: 6 }}
+            placeholder="Search here"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
+      </div>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <Box sx={{display:'flex',flexDirection:'row', marginTop:-0.8}}>
+        <VscColorMode
+          size={25}
+          style={{
+            marginTop: 8,
+            marginRight: 20,
+            display: "flex",
+            flexDirection: "row",
+            textAlign: "center",
+            border: "2px solid	#E8E8E8",
+            padding: 6,
+            borderRadius: 6,
+            ":hover": { backgroundColor: "#F5F5F5" },
+            cursor:'pointer'
+          }}
+        />
+        <MdOutlineNotificationsActive
+          size={25}
+          style={{
+            marginTop: 8,
+            marginRight: 20,
+            display: "flex",
+            flexDirection: "row",
+            textAlign: "center",
+            border: "2px solid	#E8E8E8",
+            padding: 6,
+            borderRadius: 6,
+            ":hover": { backgroundColor: "#F5F5F5" },
+            cursor:'pointer'
+          }}
+        />
+        </Box>
+        <Box sx={{':hover':{backgroundColor:'	#F5F5F5', borderRadius:3}, display: "flex", flexDirection: "row", cursor:'pointer' }} aria-haspopup="true" aria-controls={menuId} onClick={handleProfileMenuOpen}>
+          <img onClick={()=>{handleProfileMenuOpen}}
+            style={{
+              borderRadius: 12,
+              marginRight: 13,
+              border: "2px solid grey",
+            }}
+            height={40}
+            width={40}
+            src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"
+          ></img>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", marginBottom: 0 }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h5"
-            noWrap
-            component="div"
-            sx={{fontWeight:'bold', display: { xs: 'none', sm: 'block' } }}
-          >
-           <span style={{ color: '#9F8C62',fontWeight:'bold' }}>Pro</span>Grade 
-          </Typography>
-          <Search >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
+            <Typography
+              style={{
+                marginRight: 13,
+                fontWeight: "bold",
+              }}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+              John Doe
+            </Typography>
+            <Typography sx={{ fontSize: 15 }}>Teacher</Typography>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
+          <MdOutlineKeyboardArrowDown
+            size={25}
+            style={{
+              marginTop: 8,
+              marginRight: 1,
+              marginLeft:10,
+              display: "flex",
+              flexDirection: "row",
+              textAlign: "center",
+              border: "2px solid	#E8E8E8",
+              padding: 3,
+              borderRadius: 6,
+              ":hover": { backgroundColor: "#E8E8E8" },
+              cursor:'pointer'
+            }}
+          />
+        </Box>
+      </div>
+    </div>
   );
 }
+
+export default Navbar;
