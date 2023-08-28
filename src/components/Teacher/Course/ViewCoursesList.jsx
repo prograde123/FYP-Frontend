@@ -7,7 +7,7 @@ function ViewCoursesList() {
   const theme = useTheme()
   return (
     <>
-      <Typography variant='h5' sx={{ fontWeight: 'bold' }}>Avaliable Courses List</Typography>
+      <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9 }}>Available Courses</p>
       <CoursesListTable />
     </>
   );

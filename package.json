@@ -43,10 +43,13 @@
     "pdfjs-dist": "^3.6.172",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
+    "react-awesome-shapes": "^0.1.12",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-icons": "^4.10.1",
     "react-material-ui-carousel": "^3.4.2",
     "react-pdf": "^6.2.2",
+    "react-pro-sidebar": "^0.7.1",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.10.0",
     "react-select": "^5.7.4",
@@ -61,6 +64,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
+    "sass": "^1.66.1",
     "vite": "^4.2.0"
   }
 }

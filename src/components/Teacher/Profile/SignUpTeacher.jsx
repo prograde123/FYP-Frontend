@@ -11,6 +11,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import {FormHelperText} from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
+import { CircleGrid } from "react-awesome-shapes";
 import FormControl from '@mui/material/FormControl';
 import storage  from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -53,6 +54,7 @@ const SignUp = () => {
         setError('')
         return true
     }
+
     const ValidateEmail = () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if(!emailPattern.test(email) || email == '') {
@@ -82,7 +84,7 @@ const SignUp = () => {
         }
         setPassError('');
         return true;
-      };
+    };
 
     const validateFile = () => {
         if(file == null || file == ''){
@@ -92,6 +94,7 @@ const SignUp = () => {
         setFileError('')
         return true;
     }
+
     const handleClick = () => {
         const isNameValid = ValidateName(name,setNameError)
         const isEmailValid = ValidateEmail()
@@ -102,6 +105,7 @@ const SignUp = () => {
             addFile()
         }
     }
+
     const addFile = () => {
         if (file === null) return;
         const cvRef = ref(storage, `CV/${file.name}`)
@@ -118,9 +122,9 @@ const SignUp = () => {
             
           })
         })
-      }
+    }
 
-      const registerTeacher = (cvURL) => {
+    const registerTeacher = (cvURL) => {
         const isNameValid = ValidateName(name,setNameError)
         const isEmailValid = ValidateEmail()
         const isPhoneValid = ValidatePhone()
@@ -134,179 +138,195 @@ const SignUp = () => {
             alert('Error Occured')
            }
         }
-      }
+    }
 
     return (
-        <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '200vh'}}>
-            <Box bgcolor={theme.palette.secondary.main} sx={{ borderBottomRightRadius: 16, borderTopRightRadius: 16, width: '60%' }} >
-                <Typography variant='h4' sx={{ color: theme.palette.primary.background, marginLeft: 3, marginTop: 4, fontWeight: 'bold' }}><img src={LogoImage} height={30} /> <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 3, justifyContent: 'center' }}>
-                    <Typography variant='h4' sx={{ color: theme.palette.primary.background, fontWeight: 'bold' }}>Welcome to <span style={{ color: '#9F8C62' }}>Pro</span>Grade </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                    <Typography variant='h5' sx={{ color: theme.palette.primary.background }}>Sign In Now ! </Typography>
-                </Box>
-                <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center'}}>
-                    <img style={{ maxWidth: '100%', height: '100vh' }} src='https://www.paradisosolutions.com/wp-content/uploads/2020/03/4-2-300x300.png' />
-                </Box>
+        <Box sx={{ flexDirection: 'row', display: 'flex', maxHeight: '200vh',backgroundColor:theme.palette.secondary.main }}>
+            <Box sx={{ backgroundColor:theme.palette.primary.background ,width: '80%',borderBottomRightRadius: 29, borderTopRightRadius: 29,}}>
+               <Box sx={{marginLeft: 10, marginRight: 10,flexDirection: 'column', display: 'flex'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginTop:0}}>
+                        <p style={{fontWeight: 'bolder', fontSize:27,color:theme.palette.secondary.main }}>PROGRADE</p>
+                        <p style={{pointer:'cursor',color:theme.palette.secondary.main,paddingLeft:16,paddingRight:16,borderRadius:12,fontWeight: 'bolder',fontSize:15, border:'1px solid grey', display:'flex', flexDirection:'row', alignItems:'center' }}> <Link to="/SignIn" style={{ textDecoration: 'none', color:theme.palette.secondary.main }}>Sign In</Link></p>
+                    </Box>
+                    <Box sx={{ marginLeft: 10, marginRight: 10,display:'flex', flexDirection:'column'}}>
+                        <Box sx={{display:'flex', flexDirection:'column',alignItems:'center'}}>
+                            <p style={{fontWeight: 'bolder', marginBottom: 0,fontSize:25, width:'90%' }}>Become a ProGrade Instructor Now!</p>
+                            <p style={{ fontSize:15, color:'grey',width:'90%'  }}>Discover a supportive community of online instructors.</p>
+                        </Box>      
+                        {/* all the textfields */}
+                       <Box sx={{display: 'flex', flexDirection: 'row', justifyContent:'center' }}>
+                            <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '90%', marginTop: 1 }}>
+                                <FormControl sx={{ width: '100%' }}>
+                                    <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Full Name</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-name"
+                                        color='secondary'
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle name visibility"
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {<Person2Icon />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Full Name"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                    <FormHelperText>
+                                            <Typography variant="body2" color="error">
+                                                {nameError}
+                                            </Typography>
+                                    </FormHelperText>
+                                </FormControl>
+                                <FormControl sx={{ width: '100%', marginTop: 2 }}  >
+                                    <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Email</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-email"
+                                        color='secondary'
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle email visibility"
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {<EmailIcon />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    <Typography variant="body2" color="error">
+                                                {emailError}
+                                            </Typography>
+                                </FormControl>
+                            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                                    <FormControl sx={{ width: '100%', marginTop: 2, marginRight:2 }} variant="outlined">
+                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Password</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-password"
+                                            color='secondary'
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <Button
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        edge="end"
+                                                        color='secondary'
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </Button>
+                                                </InputAdornment>
+                                            }
+                                            label="Password"
+                                            value={pass}
+                                            onChange={(e) => setPass(e.target.value)}
+                                        />
+                                        
+                                    </FormControl>
+                                    <FormControl sx={{ width: '100%', marginTop: 2 }} variant="outlined" >
+                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Confirm Password</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-password"
+                                            color='secondary'
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <Button
+                                                        aria-label="toggle confirm password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        edge="end"
+                                                        color='secondary'
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </Button>
+                                                </InputAdornment>
+                                            }
+                                            label="Confirm Password"
+                                            value={Cpass}
+                                            onChange={(e) => setCPass(e.target.value)}
+                                        />
+                                        <FormHelperText>
+                                                <Typography variant="body2" color="error">
+                                                    {passError}
+                                                </Typography>
+                                        </FormHelperText>
+                                    </FormControl>
+                            </Box>
+                                {/* <FormControl sx={{ width: '100%', marginTop: 4 }}  >
+                                    <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Phone</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-email"
+                                        color='secondary'
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle email visibility"
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {<PhoneEnabledIcon />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Phone"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                    />
+                                    <Typography variant="body2" color="error">
+                                                {phoneError}
+                                            </Typography>
+                                </FormControl> */}
+                        
+                                <Box sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }} >
+                                    <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Profile Picture <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 0.5, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                                        Click to browse or <br />
+                                        Drag and Drop Files
+                                        <input hidden accept="file/*" multiple type="file" />
+                                    </Button></Button></Typography>
+                                </Box>
+                            </Box>
+                       </Box>
+                   
+                        {/* submit button */}
+                        <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+                            <Button
+                                type='submit' onClick={() => { handleClick() }}
+                                variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '90%', padding: 2, fontSize: 16, fontWeight: 'bold', marginTop: 1,borderRadius:2 }}>
+                             Sign Up as a Teacher
+                            </Button>
+                        </Box>
+                    
+                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                            <p sx={{ fontWeight: 'bold',}}>- OR -</p>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center',marginBottom:3  }}>
+                          <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:'80%'}}>
+                          <Button variant="outlined" color='secondary' sx={{padding:1, borderRadius:2}}> <img src={GoogleImage} height={28} style={{ marginRight: 5 }} />Signup with Google</Button>
+                           <Button variant="outlined" color='secondary' sx={{padding:1, borderRadius:2}}> <img src={FbImage} height={28} style={{ marginRight: 5 }} />Signup with Facebook</Button>
+                          </Box>
+                        </Box>
+                    </Box>
+               </Box>
             </Box>
-            <Box sx={{ width: '80%' }}>
-                <Box sx={{ marginLeft: 10, marginRight: 10, marginTop: 4 }}>
-                    <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 3 }}>Create Account (Teacher) </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <Button variant="outlined" color='secondary'> <img src={GoogleImage} height={28} style={{ marginRight: 15 }} />Signup with Google</Button>
-                        <Button variant="outlined" color='secondary' > <img src={FbImage} height={28} style={{ marginRight: 15 }} />Signup with Facebook</Button>
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <Typography sx={{ fontWeight: 'bold', marginBottom: 2, marginTop:2 }}>- OR -</Typography>
-                    </Box>
-                    <Box component="form" sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-                        <FormControl sx={{ width: '100%' }}>
-                            <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Full Name</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-name"
-                                color='secondary'
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Button
-                                            aria-label="toggle name visibility"
-                                            edge="end"
-                                            color='secondary'
-                                        >
-                                            {<Person2Icon />}
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                                label="Full Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <FormHelperText>
-                                    <Typography variant="body2" color="error">
-                                        {nameError}
-                                    </Typography>
-                            </FormHelperText>
-                        </FormControl>
-                        <FormControl sx={{ width: '100%', marginTop: 4 }}  >
-                            <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Email</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-email"
-                                color='secondary'
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Button
-                                            aria-label="toggle email visibility"
-                                            edge="end"
-                                            color='secondary'
-                                        >
-                                            {<EmailIcon />}
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                                label="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <Typography variant="body2" color="error">
-                                        {emailError}
-                                    </Typography>
-                        </FormControl>
-                        <FormControl sx={{ width: '100%', marginTop: 4 }} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Password</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                color='secondary'
-                                type={showPassword ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Button
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            edge="end"
-                                            color='secondary'
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                                label="Password"
-                                value={pass}
-                                onChange={(e) => setPass(e.target.value)}
-                            />
-                            
-                        </FormControl>
-                        <FormControl sx={{ width: '100%', marginTop: 4 }} variant="outlined" >
-                            <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Confirm Password</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                color='secondary'
-                                type={showPassword ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Button
-                                            aria-label="toggle confirm password visibility"
-                                            onClick={handleClickShowPassword}
-                                            edge="end"
-                                            color='secondary'
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                                label="Confirm Password"
-                                value={Cpass}
-                                onChange={(e) => setCPass(e.target.value)}
-                            />
-                            <FormHelperText>
-                                    <Typography variant="body2" color="error">
-                                        {passError}
-                                    </Typography>
-                            </FormHelperText>
-                        </FormControl>
-                        <FormControl sx={{ width: '100%', marginTop: 4 }}  >
-                            <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Phone</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-email"
-                                color='secondary'
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <Button
-                                            aria-label="toggle email visibility"
-                                            edge="end"
-                                            color='secondary'
-                                        >
-                                            {<PhoneEnabledIcon />}
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                                label="Phone"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                            <Typography variant="body2" color="error">
-                                        {phoneError}
-                                    </Typography>
-                        </FormControl>
-                  
-                        <Box sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold' }} >
-                            <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Profile  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                                Click to browse or <br />
-                                Drag and Drop Files
-                                <input hidden accept="file/*" multiple type="file" />
-                            </Button></Button></Typography>
-                        </Box>
-                        </Box>
-                    <Box >
-                        <Button
-                         type='submit' onClick={() => { handleClick() }}
-                         
-                        variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', marginTop: '2%' }}>
-                            Sign Up
-                        </Button>
-                    </Box>
-                    <Box sx={{ display: "flex", flexDirection: 'row', marginTop: 1, width: '100%', justifyContent: 'center', marginBottom: 4 }}>
-                        <Typography variant='body1' sx={{ color: '#999999', marginBottom:4 }} >Already have an account?<Link style={{ textDecoration: 'none' }} to="/SignIn"><span style={{ color: "#6614A5" }}>Sign In</span></Link> </Typography>
-                    </Box>
+
+            {/* image side */}
+            <Box bgcolor={theme.palette.secondary.main} sx={{ width: '58%' }} >
+                <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center'}}>
+                    <img style={{ maxWidth: '100%', height: '72vh', marginBottom:30, marginTop:50 }} src='https://png.pngtree.com/png-vector/20220609/ourmid/pngtree-woman-working-at-computer-sitting-at-table-png-image_4840281.png' />
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'row',justifyContent: 'flex-end' }}>
+                    <CircleGrid
+                        color="#696969"
+                        size="120px"
+                        zIndex={1}/>
                 </Box>
             </Box>
         </Box>

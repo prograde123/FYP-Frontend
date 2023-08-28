@@ -9,6 +9,7 @@ import DrawerAppBar from '../Navbar'
 import Homepage from '../Home/Homepage';
 import newtheme from "../../../Themenew";
 import { ThemeProvider } from "@mui/material/styles";
+import ViewAllCourses from '../Course/ViewAllCourses';
 
 const StudentBody = () => {
   return (
@@ -21,6 +22,7 @@ const StudentBody = () => {
             <Route path="/" element={<CourseCard />} />
             <Route path="/Home" element={<Homepage />} />
             <Route path="/ViewCourse" element={<ViewCourse />} />
+            <Route path="/AllCourses" element={<ViewAllCourses/>} />
           </Routes>
         </Box>
         <Footer />

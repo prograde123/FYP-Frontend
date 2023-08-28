@@ -148,13 +148,13 @@ function CreateCourse() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%',}}>
       <Box>
-        <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginTop: 1 }}>Create New Course</Typography>
+        <p style={{ fontWeight: 'bold', marginBottom: 20, marginTop: 1, fontSize:25 }}>Create New Course</p>
       </Box>
       <Box>
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', border: 1, borderColor: theme.palette.secondary.main, borderRadius: 10, paddingLeft: 5, paddingRight: 5 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'  }}>
             <TextField sx={{ marginTop: 5, width: '100%' }}
               id="outlined-multiline-flexible"
               label="Course Code"
@@ -272,7 +272,7 @@ function CreateCourse() {
             </LocalizationProvider>
             <br />
             <Box sx={{ marginTop: 1, fontWeight: 'bold', width: '100%' }} >
-              <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Picture* <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 6 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+              <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Picture* <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 1, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                 Click to browse or <br />
                 Drag and Drop Files
                 <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
@@ -282,7 +282,7 @@ function CreateCourse() {
 
             <Box sx={{ width: '100%', marginBottom: 5, marginTop: 4 }}>
               <Button type='submit' onClick={() => { handleClick() }}
-                variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold' }}>
+                variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold',borderRadius: 2 }}>
                 {course === undefined ? 'Create Course' : 'Update Course'}
               </Button>
             </Box>

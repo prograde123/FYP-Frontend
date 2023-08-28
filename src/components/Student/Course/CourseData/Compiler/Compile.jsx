@@ -48,7 +48,7 @@ function Compile() {
       if (userCode === ``) {
         setUserOutput("Please enter code first");
         setLoading(false)
-      } else if (userLang === "c") {
+      } else if (userLang === "c" || userLang === "cpp" ) {
         const response = await axios({
           method: "POST",
           url: "https://online-code-compiler.p.rapidapi.com/v1/",
@@ -70,7 +70,6 @@ function Compile() {
         setLoading(false);
       } else if (
         userLang === "java" ||
-        userLang === "c_cpp" ||
         userLang === "typescript" ||
         userLang === "python" ||
         userLang === "csharp"

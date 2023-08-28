@@ -7,7 +7,7 @@ function ViewStudentsList() {
   const theme = useTheme()
   return (
     <>
-    <Typography variant='h5' sx={{ fontWeight: 'bold' }}>Enrolled Students</Typography>
+    <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9 }}>Enrolled Students</p>
     <Students />
   </>
   );

@@ -77,7 +77,7 @@ function Dashboard() {
   const theme = useTheme()
   return (
     <>
-      <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2 }}>Dashboard</Typography>
+      <p style={{ fontWeight: 'bold', marginBottom: 20, fontSize:25 }}>Dashboard</p>
       <Box >
         <Grid container spacing={2} sx={{ marginBottom: 4 }}>
           <Grid item xs={6}>

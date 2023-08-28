@@ -8,9 +8,10 @@ export const theme = createTheme({
       
     },
     secondary: {
-      main: '#6614A5',
+      main: '#2a3290',
       background:'#F8ECF1',
-      logo: '#9F8C62'
+      logo: '#9F8C62',
+      button:'#d90700'
     },
     //#6614A5'
     //logo: '#9F8C62'

@@ -23,7 +23,7 @@ const CompilerHeader = ({
   setFontSize,
 }) => {
   const languages = [
-    { value: "c_cpp", label: "C++" },
+    { value: "cpp", label: "C++" },
     { value: "python", label: "Python" },
     { value: "java", label: "Java" },
     { value: "csharp", label: "C Sharp" },
