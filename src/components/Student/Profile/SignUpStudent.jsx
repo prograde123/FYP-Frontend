@@ -15,7 +15,6 @@ import { CircleGrid } from "react-awesome-shapes";
 import FormControl from '@mui/material/FormControl';
 import storage  from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
@@ -32,17 +31,19 @@ const SignUpStudent = () => {
     const navigate = useNavigate()
     
     const [name, setName] = React.useState('')
+    const [Uname, setUName] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
     const [Cpass, setCPass] = React.useState('')
-    const [phone, setPhone] = React.useState('')
+   
     const [pic,setPic] = React.useState('')
     const [file, setFile] = React.useState(null)
     const [fileError,setFileError] = React.useState('')
     const [nameError,setNameError]  = React.useState('')
+    const [UnameError,setUNameError]  = React.useState('')
     const [emailError,setEmailError]  = React.useState('')
     const [passError, setPassError] = React.useState('')
-    const [phoneError, setPhoneError] = React.useState('')
+   
 
 
     const ValidateName = (name,setError) => {
@@ -52,6 +53,15 @@ const SignUpStudent = () => {
             return false
         }
         setError('')
+        return true
+    }
+    const ValidateUName = () => {
+        const UnamePattern = /^[A-Za-z0-9\s]+$/
+        if(!UnamePattern.test(Uname) || Uname == '') {
+            setUNameError('Invalid UserName')
+            return false
+        }
+        setUNameError('')
         return true
     }
 
@@ -65,17 +75,7 @@ const SignUpStudent = () => {
         return true
     }
 
-    const ValidatePhone = () => {
-        const phonePattern = /^03[0-4]\d{8}$/
-        if(!phonePattern.test(phone) || phone == '') {
-            setPhoneError('Invalid Phone Number')
-            console.log(phone)
-            return false
-        }
-        setPhoneError('')
-        console.log(phone)
-        return true
-    }
+   
 
     const validatePasswords = () => {
         if (pass != Cpass || pass == '' || Cpass == '') {
@@ -86,58 +86,35 @@ const SignUpStudent = () => {
         return true;
     };
 
-    const validateFile = () => {
-        if(file == null || file == ''){
-            setFileError('File is required')
-            return false;
-        }
-        setFileError('')
-        return true;
-    }
+   
 
     const handleClick = () => {
         const isNameValid = ValidateName(name,setNameError)
         const isEmailValid = ValidateEmail()
-        const isPhoneValid = ValidatePhone()
+       
         const isPassValid = validatePasswords()
-        const isValidFile = validateFile()
-        if(isNameValid && isEmailValid && isPhoneValid && isPassValid && isValidFile){
-            addFile()
+        const isUnameValid = ValidateUName()
+        
+        if(isNameValid && isEmailValid  && isPassValid && isUnameValid){
+            registerStudent()
+        }
+        else{
+            alert("Please enter required Fields")
         }
     }
 
-    const addFile = () => {
-        if (file === null) return;
-        const cvRef = ref(storage, `CV/${file.name}`)
-        const uploadTask = uploadBytesResumable(cvRef, file)
-        uploadTask.on('state_changed', (snapshot) => {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          console.log(progress)
-        }, (error) => {
-          console.log("error")
-        }, () => {
-          console.log("success!")
-          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-            registerTeacher(downloadURL)
-            
-          })
-        })
-    }
+   
 
-    const registerTeacher = (cvURL) => {
-        const isNameValid = ValidateName(name,setNameError)
-        const isEmailValid = ValidateEmail()
-        const isPhoneValid = ValidatePhone()
-        const isPassValid = validatePasswords()
-        if(isNameValid && isEmailValid && isPhoneValid && isPassValid && cvURL != ''){
-           const response =  Register(name,email,pass,"Teacher",phone,pic,cvURL,'')
+    const registerStudent = () => {
+
+           const response =  Register(name,email,pass,"Student",pic,null,Uname)
            if(response){
                 navigate('/SignIn')
            }
            else{
             alert('Error Occured')
            }
-        }
+        
     }
 
     return (
@@ -179,6 +156,32 @@ const SignUpStudent = () => {
                                     <FormHelperText>
                                             <Typography variant="body2" color="error">
                                                 {nameError}
+                                            </Typography>
+                                    </FormHelperText>
+                                </FormControl>
+                                <FormControl sx={{ width: '100%' }}>
+                                    <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Username</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-name"
+                                        color='secondary'
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle name visibility"
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {<Person2Icon />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Username"
+                                        value={Uname}
+                                        onChange={(e) => setUName(e.target.value)}
+                                    />
+                                    <FormHelperText>
+                                            <Typography variant="body2" color="error">
+                                                {UnameError}
                                             </Typography>
                                     </FormHelperText>
                                 </FormControl>
