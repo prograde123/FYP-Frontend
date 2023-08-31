@@ -38,14 +38,8 @@ function SignIn() {
     const navigate = useNavigate()
 
     async function loginUser() {
-        const success = await login(email, pass)
-        console.log(success)
-        if (success === true) {
-            return navigate("/Teacher/Dashboard");
-        }
-        else {
-            alert("invalid email or password")
-        }
+         await login(email, pass)
+        
     }
 
     function getUser() {

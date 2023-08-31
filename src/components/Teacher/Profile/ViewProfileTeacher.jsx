@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import CreateIcon from '@mui/icons-material/Create';
@@ -26,6 +26,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 import TextField from '@mui/material/TextField';
+import { getProfile } from '../../../../Axios/axiosall';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,6 +71,10 @@ function ViewProfile() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    getProfile()
+  })
 
   return (
     <Box>

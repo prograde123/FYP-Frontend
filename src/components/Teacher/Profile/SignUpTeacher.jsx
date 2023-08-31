@@ -15,7 +15,7 @@ import { CircleGrid } from "react-awesome-shapes";
 import FormControl from '@mui/material/FormControl';
 import storage  from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
@@ -35,14 +35,14 @@ const SignUp = () => {
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
     const [Cpass, setCPass] = React.useState('')
-    const [phone, setPhone] = React.useState('')
+   
     const [pic,setPic] = React.useState('')
     const [file, setFile] = React.useState(null)
     const [fileError,setFileError] = React.useState('')
     const [nameError,setNameError]  = React.useState('')
     const [emailError,setEmailError]  = React.useState('')
     const [passError, setPassError] = React.useState('')
-    const [phoneError, setPhoneError] = React.useState('')
+   
 
 
     const ValidateName = (name,setError) => {
@@ -65,17 +65,7 @@ const SignUp = () => {
         return true
     }
 
-    const ValidatePhone = () => {
-        const phonePattern = /^03[0-4]\d{8}$/
-        if(!phonePattern.test(phone) || phone == '') {
-            setPhoneError('Invalid Phone Number')
-            console.log(phone)
-            return false
-        }
-        setPhoneError('')
-        console.log(phone)
-        return true
-    }
+   
 
     const validatePasswords = () => {
         if (pass != Cpass || pass == '' || Cpass == '') {
@@ -98,39 +88,22 @@ const SignUp = () => {
     const handleClick = () => {
         const isNameValid = ValidateName(name,setNameError)
         const isEmailValid = ValidateEmail()
-        const isPhoneValid = ValidatePhone()
+       
         const isPassValid = validatePasswords()
-        const isValidFile = validateFile()
-        if(isNameValid && isEmailValid && isPhoneValid && isPassValid && isValidFile){
-            addFile()
+        if(isNameValid && isEmailValid && isPassValid ){
+            registerTeacher()
         }
     }
 
-    const addFile = () => {
-        if (file === null) return;
-        const cvRef = ref(storage, `CV/${file.name}`)
-        const uploadTask = uploadBytesResumable(cvRef, file)
-        uploadTask.on('state_changed', (snapshot) => {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          console.log(progress)
-        }, (error) => {
-          console.log("error")
-        }, () => {
-          console.log("success!")
-          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-            registerTeacher(downloadURL)
-            
-          })
-        })
-    }
+   
 
-    const registerTeacher = (cvURL) => {
+    const registerTeacher = () => {
         const isNameValid = ValidateName(name,setNameError)
         const isEmailValid = ValidateEmail()
-        const isPhoneValid = ValidatePhone()
+       
         const isPassValid = validatePasswords()
-        if(isNameValid && isEmailValid && isPhoneValid && isPassValid && cvURL != ''){
-           const response =  Register(name,email,pass,"Teacher",phone,pic,cvURL,'')
+        if(isNameValid && isEmailValid  && isPassValid ){
+           const response =  Register(name,email,pass,"Teacher",pic,'/123',null)
            if(response){
                 navigate('/SignIn')
            }

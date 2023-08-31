@@ -1,10 +1,11 @@
+import { SignalCellularNullRounded } from "@mui/icons-material";
 import http from "./axios";
 
 
-export const Register = async (fullName, email, password, role, phoneNum,profilePic='/',cv='/',userName) => {
+export const Register = async (fullName, email, password, role,profilePic='/',cv=null,userName = null) => {
     var userID
     await http.post("/users/signup",{
-        fullName, email, password, role, phoneNum, profilePic
+      fullName, email, password, role,profilePic
         })
       .then( async  (response)=>{
         console.log(response);//response data
@@ -57,19 +58,42 @@ export const Register = async (fullName, email, password, role, phoneNum,profile
 }
 
 export const login = async (email, password) => {
-  var userid;
-  var role;
+
   try {
   const response = await http.post("/users/signin", {email,password})
-  console.log(response.data.teacher)
-      if (response.data.success === false) {
-        return false
-      } else {
-        localStorage.setItem("User", JSON.stringify(response.data.teacher));
-        return true
-      }
-    } catch(e) {
-      console.log(e)
-      return false
+
+    console.log(response.data)
+    const student = response.data?.Student?.userID.role
+
+    if(response.status === 200 && response.data.teacher?.user.role == "Teacher") {
+      localStorage.setItem("User", JSON.stringify(response.data.teacher));
+      localStorage.setItem("token", response.data.token);
+      window.location.href = '/Teacher/Dashboard'
     }
+    else if(response.status === 200 && student == "Student"){
+      localStorage.setItem("User", JSON.stringify(response.data.Student));
+      localStorage.setItem("token", response.data.token);
+      window.location.href = '/Student/Home'
+    }
+    else{
+      alert("login error");
+    }
+
+      
+    } catch (error) {
+      alert(error.response.data.message); 
+  }
+};
+
+export const getProfile = async () => {
+
+  try {
+  const response = await http.get("/users/ViewProfile")
+
+    console.log(response.data)
+
+      
+    } catch (error) {
+      alert(error.response.data.message); 
+  }
 };
