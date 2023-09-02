@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 import CreateIcon from '@mui/icons-material/Create';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
@@ -27,7 +28,7 @@ import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 import TextField from '@mui/material/TextField';
 import { getProfile } from '../../../../Axios/axiosall';
-
+import profile from '../../../../src/assets/profile.png';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
  
@@ -64,6 +65,7 @@ function a11yProps(index) {
 
 function ViewProfile() {
   const theme = useTheme()
+  const navigate = useNavigate()
   const [value, setValue] = React.useState(0);
   const [isProfileOpen, setProfileOpen] = React.useState(false);
   const handleProfileOpen = () => setProfileOpen(true);
@@ -71,13 +73,33 @@ function ViewProfile() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+   const handlelogout = async () =>{
+      await localStorage.removeItem("User")
+      await localStorage.removeItem("token");
+      navigate('/SignIn')
+   }
+  const [profileData, setProfileData] = React.useState(null)
 
   useEffect(() => {
-    getProfile()
-  })
+    const fetchProfile = async () => {
+        const profile = await getProfile()
+        setProfileData(profile)
+        
+    }
+
+    fetchProfile()
+    
+  },[])
+
+  if(profileData){
+    console.log(profileData)
+  }
+  
 
   return (
-    <Box>
+    <>
+   { profileData && 
+   ( <Box>
       
       <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
         <p style={{fontSize:25, fontWeight:'bolder', marginTop:0}}>My Profile</p>
@@ -88,25 +110,31 @@ function ViewProfile() {
         {/* */}
           <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
           <Box sx={{boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
-             <Box sx={{backgroundColor:'#000019',height:'30vh', borderRadius:5,backgroundImage: "url('https://png.pngtree.com/background/20210710/original/pngtree-blue-technology-world-telecommunication-day-banner-background-picture-image_1057076.jpg')", width:'100%',
+             <Box sx={{backgroundColor:'#000019',height:'30vh', borderRadius:5,
+             backgroundImage: "url('https://png.pngtree.com/background/20210710/original/pngtree-blue-technology-world-telecommunication-day-banner-background-picture-image_1057076.jpg')", width:'100%',
                 backgroundRepeat: "no-repeat", }}>
-                <img style={{borderRadius:12, border:'5px solid white',position:'relative', top:140, marginLeft:30}} src='https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg' height={130}></img>
+                <img style={{borderRadius:12, border:'5px solid white',position:'relative', top:140, marginLeft:30}}
+                src={profileData.profilePic? profileData.profilePic:profile} height={130}></img>
              </Box>
              <Box sx={{backgroundColor:theme.palette.primary.background,height:'20vh', marginLeft:23,marginRight:5}}>
                 <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                     <Box>
-                        <Typography sx={{fontSize:22, fontWeight:'bolder', marginTop:1}}>John Doe</Typography>
+                        <Typography sx={{fontSize:22, fontWeight:'bolder', marginTop:1}}>{profileData ? profileData.fullName : ""}</Typography>
                         <Box sx={{display:'flex', flexDirection:'row', }}>
                           <RiRadioButtonLine size={17} style={{marginRight:5, color:'#4cbb17'}}/>
                           <Typography style={{fontSize:14, color:'#4cbb17'}}>Active Now</Typography>
                         </Box>
                     </Box>
-                    <p style={{fontSize:17, cursor:'pointer', padding:13, borderRadius:14, backgroundColor:theme.palette.secondary.button, color:theme.palette.primary.background}}>Log out</p>
+                    <Button onClick={handlelogout}
+                    >
+                    <p style={{fontSize:17, cursor:'pointer', padding:13, borderRadius:14,
+                     backgroundColor:theme.palette.secondary.button, color:theme.palette.primary.background}}>Log out</p>
+                     </Button>
                 </Box>
              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 <Box sx={{display:'flex', flexDirection:'row'}}>
                   
-                  <p style={{fontSize:16,color:'grey',marginTop:0}}><span style={{fontWeight:'bolder'}}>Role :</span> Teacher</p>
+                  <p style={{fontSize:16,color:'grey',marginTop:0}}><span style={{fontWeight:'bolder'}}>Role :</span> {profileData.role}</p>
                 </Box>
                 <Box sx={{display:'flex', flexDirection:'row'}}>
                 <p style={{marginTop:0}}><SiTraefikproxy size={20} style={{marginRight:6}}/></p>
@@ -183,8 +211,11 @@ function ViewProfile() {
                                 </Box>
                                 <br />
                                 <Box>
-                                    <Box onClick={()=>{navigate('/TeacherSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                                    <TextField sx={{width:'100%'}} id="secondary" label="Email" variant="outlined"/>
+                                    <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
+                                    <TextField 
+                                    sx={{width:'100%'}}
+                                     id="secondary" label="Email"
+                                      variant="outlined"/>
                                     </Box>
                                 </Box>
                                 <br />
@@ -213,18 +244,18 @@ function ViewProfile() {
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
                             <GoPerson size={22} style={{color:'black', marginRight:5}}/>
                             <p style={{marginTop:0, fontSize:18, marginRight:20}}>Full Name : </p>
-                            <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>John Doe</p>
+                            <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>{profileData.fullName}</p>
                           </Box>
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
                             <HiOutlineMail size={22} style={{color:'black', marginRight:5}}/>
                             <p style={{marginTop:0, fontSize:18, marginRight:20}}>Email Address : </p>
-                            <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>JohnDoe@gmail.com</p>
+                            <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>{profileData.email}</p>
                           </Box>
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2, justifyContent:'space-between'}}>
                             <Box sx={{display:'flex', flexDirection:'row'}}>
                               <CiStar size={27} style={{color:'black', marginRight:5}}/>
                               <p style={{marginTop:0, fontSize:18, marginRight:20}}>Role : </p>
-                              <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>Teacher</p>
+                              <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>{profileData.role}</p>
                             </Box>
                             <Box sx={{display:'flex', flexDirection:'row'}}>
                               <GrStatusGoodSmall size={22} style={{color:'black', marginRight:5}}/>
@@ -232,18 +263,7 @@ function ViewProfile() {
                               <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>Active</p>
                             </Box>
                           </Box>
-                          <Box sx={{display:'flex', flexDirection:'row', marginTop:2, justifyContent:'space-between'}}>
-                            <Box sx={{display:'flex', flexDirection:'row'}}>
-                              <GrLanguage size={22} style={{color:'black', marginRight:5}}/>
-                              <p style={{marginTop:0, fontSize:18, marginRight:20}}>Country : </p>
-                              <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>Pakistan</p>
-                            </Box>
-                            <Box sx={{display:'flex', flexDirection:'row'}}>
-                              <LiaLanguageSolid size={22} style={{color:'black', marginRight:5}}/>
-                              <p style={{marginTop:0, fontSize:18, marginRight:20}}>Language : </p>
-                              <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>English</p>
-                            </Box>
-                          </Box>
+                         
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
                             <TbRosetteNumber9 size={22} style={{color:'black', marginRight:5}}/>
                             <p style={{marginTop:0, fontSize:18, marginRight:20}}>Number of Current Courses : </p>
@@ -254,11 +274,7 @@ function ViewProfile() {
                             <p style={{marginTop:0, fontSize:18, marginRight:20}}>Skills : </p>
                             <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>C | C++ | Java | Python | CSharp | MASM-NASM</p>
                           </Box>
-                          <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
-                            <BsCalendarDate size={22} style={{color:'black', marginRight:5}}/>
-                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Joined At : </p>
-                            <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>21/08/2023</p>
-                          </Box>
+                          
                       </Box>
                     </Box>
                   </Grid>
@@ -325,7 +341,9 @@ function ViewProfile() {
         
 
      
-    </Box>
+    </Box>)
+  }
+  </>
   );
 }
 export default ViewProfile;

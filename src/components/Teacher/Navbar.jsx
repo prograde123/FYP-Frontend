@@ -66,7 +66,7 @@ function Navbar() {
     const user = localStorage.getItem("User");
     setUser(JSON.parse(user));
   }
-  console.log(user)
+ 
 
   useEffect(() => {
     getUser();

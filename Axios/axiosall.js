@@ -90,10 +90,11 @@ export const getProfile = async () => {
   try {
   const response = await http.get("/users/ViewProfile")
 
-    console.log(response.data)
+   return response.data
 
       
     } catch (error) {
       alert(error.response.data.message); 
+      return null
   }
 };
