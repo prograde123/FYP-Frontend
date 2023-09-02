@@ -134,6 +134,7 @@ const Sidebar = ({
         <div
             className="sidebar-btn"
             style={{ cursor: 'pointer' }}
+            onClick={()=>  navigate('/Teacher/Profile')}
           >
             <FaUser size={20} style={{color:'white'}} />
             <span style={{marginLeft:15, color:'white', fontSize:15}}>My Account</span>
