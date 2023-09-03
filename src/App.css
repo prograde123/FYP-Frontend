@@ -74,7 +74,7 @@ body {
   }
   
   .cut-off-text{
-    --max-lines:2;
+    --max-lines:1;
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
@@ -89,4 +89,8 @@ body {
     margin-bottom: 14px;
     background-color: #f7ece3;
   }
-  
+  .productMain_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }

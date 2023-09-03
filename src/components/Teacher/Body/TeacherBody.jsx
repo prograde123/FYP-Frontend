@@ -69,7 +69,7 @@ export default function TeacherBody() {
                 element={<CourseDetails />}
               ></Route>
               <Route
-                path="StudentRequests"
+                path="StudentRequests/:id"
                 element={<ViewEnrollmentRequest />}
               ></Route>
               <Route path="StudentList" element={<ViewStudentsList />}></Route>

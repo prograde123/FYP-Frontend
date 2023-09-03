@@ -33,6 +33,11 @@ const navItems = ['Home', 'Courses', 'About', 'Contact',];
 
 export default function DrawerAppBar() {
   const navigate = useNavigate();
+
+  function deleteAll() {
+    localStorage.removeItem("User", JSON.stringify([]));
+    return navigate('/SignIn')
+  }
   React.useEffect(()=>{
     Aos.init({duration:2500});
   },[])
@@ -141,9 +146,9 @@ export default function DrawerAppBar() {
               <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder',fontStyle:'oblique' }}>Pro<span style={{color: newtheme.palette.secondary.background}}>Grade</span></span>
             </Typography>
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}  data-aos="fade-left">
               
-                <Button className="fontlink" onClick={()=>{navigate('/')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Home
                 </Button>
                 <Button
@@ -151,7 +156,7 @@ export default function DrawerAppBar() {
                     aria-haspopup="true"
                     onMouseEnter={handleMenuOpenCourses}
                     
-                    data-aos="fade-left"
+                    
                     sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712'}}}
                     >
                     Courses
@@ -173,7 +178,7 @@ export default function DrawerAppBar() {
                 
                 sx={{ zIndex: 1200 }} 
                 >
-                        <MenuItem onClick={handleMenuCloseCourses}>All Courses</MenuItem>
+                        <MenuItem onClick={() => { navigate('/Student/AllCourses') }}>All Courses</MenuItem>
                         <MenuItem onClick={handleMenuCloseCourses}>java</MenuItem>
                         <MenuItem onClick={handleMenuCloseCourses}>C++</MenuItem>
                         <MenuItem onClick={handleMenuCloseCourses}>Python</MenuItem>
@@ -187,7 +192,6 @@ export default function DrawerAppBar() {
                 aria-haspopup="true"
                 onMouseEnter={handleMenuOpenAssignments}
                 
-                data-aos="fade-left"
                 sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712'}}}
                 >
                 Assignments
@@ -226,14 +230,14 @@ export default function DrawerAppBar() {
                         >C</MenuItem>
                         
                 </Menu>
-                <Button className="fontlink" onClick={()=>{navigate('/ContactUs')}} data-aos="fade-left"  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button className="fontlink" onClick={()=>{navigate('/ContactUs')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Reports
                 </Button>
-                <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}} data-aos="fade-left">
+                <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}}>
                         <NotificationsActiveIcon />
                 </IconButton>
                  <IconButton sx={{color:newtheme.palette.primary.main}}
-                data-aos="fade-left"
+                
                 >
                         <PersonIcon onClick={handleMenuOpenProfile} />
                 </IconButton>
@@ -259,7 +263,9 @@ export default function DrawerAppBar() {
                 MenuListProps={{onMouseLeave: handleMenuCloseProfile}}
                 >
                   <MenuItem>My profile</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem onClick={(e) => {
+              e.preventDefault()
+              deleteAll()}}>Logout</MenuItem>
                 </Menu>
 
 

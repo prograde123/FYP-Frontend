@@ -10,6 +10,9 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Aos from 'aos';
 import 'aos/dist/aos.css'
 import { useNavigate } from 'react-router-dom';
+import http from "../../../../Axios/axios";
+import { useLocation } from "react-router-dom";
+
 
 const filterOptions = createFilterOptions({
   matchFrom: "start",
@@ -105,6 +108,22 @@ function Homepage() {
   React.useEffect(()=>{
     Aos.init({duration:2500});
   },[])
+  const [myCourses, setMyCourses] = useState([]);
+
+  async function getCourses() {
+    const user = JSON.parse(localStorage.getItem('User'))
+    console.log(user)
+    try {
+      const response = await http.get('/course/studentCoursesList/' + user._id)
+      setMyCourses(response.data.courses)
+      console.log(response.data.courses)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  React.useEffect(() => {
+    getCourses();
+  }, []);
 
 
   return (
@@ -124,17 +143,17 @@ function Homepage() {
             alignItems: "center",
           }}
         >
-          <Typography data-aos="fade-down"
+          <p data-aos="fade-down"
             variant="h4"
-            sx={{
-              fontWeight: "bold",
-              fontStyle:'italic'
+            style={{
+              fontWeight: "bolder",
+              fontSize:34, margin:0
               // textDecoration: "double-underline",
               // color: newtheme.palette.secondary.footer,
             }}
           >
             My Courses
-          </Typography>
+          </p>
         </Box>
 
 
@@ -142,13 +161,15 @@ function Homepage() {
           sx={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
             marginTop: 10,
+            marginLeft:18,
+            marginRight:18
           }}
         >
-          <Typography data-aos="fade-right" sx={{ marginRight: 16, fontWeight: 16, marginTop: 4 }}>
+          <p data-aos="fade-right" style={{fontWeight: 'bold', fontSize:20, margin:0 }}>
             Totally Enrolled in 8 Courses
-          </Typography>
+          </p>
           <Autocomplete 
             id="filter-demo"
             options={filter}
@@ -160,16 +181,21 @@ function Homepage() {
         </Box>
 
 
-        <Box data-aos="fade-up"
+        <Box data-aos="fade-up" onClick={() => {
+          navigate("/Student/ViewCourse/" + id, {
+            state: { course: myCourses.find(c =>  c._id === id) },
+          });
+        }}
           sx={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "center",
             flexWrap:'wrap',
             marginTop: 7,
+            marginLeft:14,
+            marginRight:14
           }}
         >
-          {courses.map((course) => {
+          {myCourses.map((course) => {
             return <CourseCard course={course}></CourseCard>
           })}
         </Box>
