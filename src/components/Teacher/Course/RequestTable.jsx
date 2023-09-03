@@ -7,6 +7,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from '@emotion/react';
 import SearchBar from '@mkyy/mui-search-bar';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import http from "../../../../Axios/axios";
+import { useLocation } from "react-router-dom";
 import {
     DataGrid,
     GridToolbarContainer,
@@ -79,15 +81,44 @@ EditToolbar.propTypes = {
     setRows: PropTypes.func.isRequired,
 };
 
-export default function Requests() {
+export default function Requests({ courses }) {
     const theme = useTheme();
     const navigate = useNavigate()
-    const [rows, setRows] = React.useState(initialRows);
+    const location = useLocation();
+    const course = location.state.course
+    const [request, setRequest] = React.useState([]);
+    const [rows, setRows] = React.useState(request);
+    
     const [rowModesModel, setRowModesModel] = React.useState({});
+
+    
 
     const handleDeleteClick = (id) => () => {
         setRows(rows.filter((row) => row.id !== id));
     };
+
+    async function getRequests() {
+        try {
+          const response = await http.get('/course/viewRequests/'+ course._id)
+          setRequest(response.data.requests)
+          console.log(response.data)
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      async function acceptRequest(id) {
+        try {
+          const response = await http.put('/course/acceptRequest/'+ course._id + '/' + id )
+          getRequests()
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      React.useEffect(() => {
+        getRequests();
+      }, []);
 
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
@@ -101,7 +132,7 @@ export default function Requests() {
                 <img src={params.row.imageUrl} style={{ width: 50, borderRadius: '50%' }} />
             )
         },
-        { field: 'name', headerName: 'Name', width: 300 },
+        { field: 'userName', headerName: 'Name', width: 300 },
         { field: 'email', headerName: 'Email', width: 300 },
         {
             field: 'actions',
@@ -111,7 +142,7 @@ export default function Requests() {
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 return [
-                    <Button sx={{color:"#03ac13" ,padding:1,borderRadius:6, ":hover":{border:'4px solid #03ac13'}}}  variant="outlined"  startIcon={<PersonAddIcon sx={{color:'#03ac13'}}/>}>Accept</Button>
+                    <Button onClick={()=>{acceptRequest(id)}} sx={{color:"#03ac13" ,padding:1,borderRadius:6, ":hover":{border:'4px solid #03ac13'}}}  variant="outlined"  startIcon={<PersonAddIcon sx={{color:'#03ac13'}}/>}>Accept</Button>
                 ];
             },
         },
@@ -150,11 +181,12 @@ export default function Requests() {
                         color: theme.palette.secondary.main,
                     }, marginTop: 3, borderRadius: 2,height: '100vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
                 }}
-                rows={rows}
+                rows={request}
                 rowHeight={70}
                 columns={columns}
                 rowModesModel={rowModesModel}
                 processRowUpdate={processRowUpdate}
+                getRowId={(row) => row._id}
                 slots={{
                     toolbar: EditToolbar,
                 }}

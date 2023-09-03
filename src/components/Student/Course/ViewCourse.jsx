@@ -28,9 +28,40 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import FeedBack from './CourseData/FeedBack';
 import AddIcon from '@mui/icons-material/Add';
-function ViewCourse() {
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
+
+function ViewCourse({courses}) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [Code, setCode] = React.useState('')
+  const [Cname, setCname] = React.useState('')
+  const [Description, setCDescription] = React.useState('')
+  const [Cphoto, setCphoto] = React.useState("")
+  const [creditHours, setcreditHours] = React.useState()
+  const [language, setLanguage] = React.useState('')
+  const [Sdate, setSdate] = React.useState('')
+  const [Ldate, setLdate] = React.useState('')
+  const [instructor, setInstructor] = React.useState('')
   const [selectedTab, setSelectedTab] = useState('about');
+  const course = location.state.course
+ 
+  React.useEffect(() => {
+
+    // setCode(course.courseCode)
+    setCname(course.name)
+    // setCDescription(course.description)
+    setCphoto(course.image)
+    // setcreditHours(course.creditHours)
+    setLanguage(course.language)
+    setSdate(course.startingDate)
+    setLdate(course.endingDate)
+    setInstructor(course.teacher.user.fullName)
+    // console.log(course.teacher.user)
+})
   
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
@@ -146,14 +177,14 @@ const buttons = [
           <Box sx={{ height: '150px', width: '150px', margin: '0 auto' }}>
             <CardMedia
               component="img"
-              image={python} 
+              image={Cphoto} 
               alt="Course Image" 
               sx={{ objectFit: 'cover', height: '100%', width: '100%' }}
             />
           </Box>
             <CardContent><Box sx={{display:'flex',justifyContent:'center'}}>
               <Typography variant='h4' sx={{ fontWeight: 'bold'}}>
-                Introduction To Python
+                {Cname}
               </Typography>
               </Box>
               <Grid container spacing={2} sx={{ marginTop: '2%', marginLeft:'2%' }}>
@@ -163,7 +194,7 @@ const buttons = [
                   </Typography>
                   <Box sx={{paddingTop:'5%'}}>
                   <Typography variant="p" >
-                    Micheal john
+                    {instructor}
                   </Typography>
                   </Box>
                 </Grid>
@@ -174,7 +205,7 @@ const buttons = [
                   </Typography>
                   <Box sx={{paddingTop:'5%'}}>
                   <Typography variant="p" >
-                    Python
+                    {language}
                   </Typography>
                   </Box>
                 </Grid>
@@ -185,7 +216,7 @@ const buttons = [
                   </Typography>
                   <Box sx={{paddingTop:'5%'}}>
                   <Typography variant="p" >
-                   23-2-2023 to 18-6-2023
+                   {Sdate} to {Ldate}
                   </Typography>
                   </Box>
                 </Grid>
@@ -194,8 +225,8 @@ const buttons = [
                   fontWeight: 'bold', ':hover': { backgroundColor: newtheme.palette.secondary.footer }, border: 2, 
                   borderRadius: 4, paddingLeft: 3, paddingRight: 3, paddingTop: 2, paddingBottom: 2,
                   backgroundColor: newtheme.palette.secondary.background, color: newtheme.palette.primary.background
-                }}> <AddIcon sx={{marginRight:1}} />
-                    Join course 
+                }}> <TaskAltIcon sx={{marginRight:1}} />
+                    Enrolled
                   </Button>
                 </Grid>
               </Grid>

@@ -96,8 +96,8 @@ const Sidebar = ({
           >
             <MenuItem style={{fontSize:16}} icon={<IoIosCreate size={20}/>} onClick={() => { navigate('/Teacher/CreateCourse') }}>Create Course</MenuItem>
             <MenuItem style={{fontSize:16}} icon={<LuView size={20}/>} onClick={() => { navigate('/Teacher/CoursesList') }}>View All Courses</MenuItem>
-            <MenuItem style={{fontSize:16}} icon={<PiStudent size={20}/>} onClick={() => { navigate('/Teacher/StudentList') }}>Students</MenuItem>
-            <MenuItem style={{fontSize:16}} icon={<SlPeople size={20}/>} onClick={() => { navigate('/Teacher/StudentRequests') }}>Requests</MenuItem>
+            {/* <MenuItem style={{fontSize:16}} icon={<PiStudent size={20}/>} onClick={() => { navigate('/Teacher/StudentList') }}>Students</MenuItem>
+            <MenuItem style={{fontSize:16}} icon={<SlPeople size={20}/>} onClick={() => { navigate('/Teacher/StudentRequests') }}>Requests</MenuItem> */}
           </SubMenu>
           <SubMenu style={{fontSize:17}} title={"Assignments"} icon={<RiCodeView size={22}/>}>
             <SubMenu style={{fontSize:16}} icon={<CgAdd size={20}/>} title={"Add Assignment"}>

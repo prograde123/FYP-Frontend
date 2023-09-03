@@ -9,16 +9,27 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import PersonIcon from "@mui/icons-material/Person";
 import LanguageIcon from "@mui/icons-material/Language";
-import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import Diversity3OutlinedIcon from '@mui/icons-material/Diversity3Outlined';
-import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
+import { useNavigate } from 'react-router-dom';
 
-function CourseCard({course}) {
+function CourseCard({ course }) {
+  const navigate = useNavigate();
+
   return (
     <ThemeProvider theme={newtheme}>
-      <Box sx={{marginLeft:4}}>
-        <Grid container spacing={5} sx={{display:'flex', flexDirection:'row'}}>
+      <Box sx={{ marginLeft: 4, cursor: "pointer" }} onClick={() => {
+            navigate("/Student/ViewCourse/" + course._id, {
+              state: { course: course },
+            });
+          }}>
+        <Grid
+          container
+          spacing={5}
+          sx={{ display: "flex", flexDirection: "row" }}
+        >
           <Grid
             item
             xs={12}
@@ -32,35 +43,62 @@ function CourseCard({course}) {
           >
             <Box
               sx={{
-                maxWidth: 380,
+                maxWidth: 390,
                 backgroundColor: "white",
                 marginBottom: 5,
-                boxShadow:'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 ":hover": {
-                  boxShadow:
-                    "rgb(38, 57, 77) 0px 20px 30px -10px;",
+                  boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px;",
                 },
                 borderRadius: 6,
               }}
             >
-              <Box sx={{position:'relative', color:'white'}}>
-              <img
-                src={course.image}
-                alt="5 Terre"
-                style={{ borderRadius: 16, opacity:0.85 }}
-                width={"100%"}
-              />
-              <Box sx={{position:'absolute',top:8,left:16,backgroundColor:newtheme.palette.secondary.background, padding:1.3,borderRadius:8}}>
-                <HowToRegOutlinedIcon/>
-              </Box>
-              <Box sx={{position:'absolute',bottom:8,right:16,}}>
-              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom:1}}>
-                <Box sx={{display:'flex', flexDirection:'row',  backgroundColor:newtheme.palette.secondary.footer, padding:1.5, borderRadius:6}}>
-                  <Diversity3OutlinedIcon sx={{marginRight:1}}/>
-                  <Typography sx={{fontWeight:'bolder'}}>{course.student} Students</Typography>
+              <Box sx={{ position: "relative", color: "white" }}>
+                <img
+                  src={course.image}
+                  alt="5 Terre"
+                  style={{ borderRadius: 16, opacity: 0.85 }}
+                  width={390}
+                  height={260}
+                />
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 8,
+                    left: 16,
+                    backgroundColor: newtheme.palette.secondary.background,
+                    padding: 1.3,
+                    borderRadius: 8,
+                  }}
+                >
+                  <HowToRegOutlinedIcon />
                 </Box>
-              </Box>
-              </Box>
+                <Box sx={{ position: "absolute", bottom: 8, right: 16 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginBottom: 1,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        backgroundColor: newtheme.palette.secondary.footer,
+                        padding: 1.5,
+                        borderRadius: 6,
+                      }}
+                    >
+                      <Diversity3OutlinedIcon sx={{ marginRight: 1 }} />
+                      <Typography sx={{ fontWeight: "bolder" }}>
+                        {course.student} Students
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
               <Box
                 sx={{
@@ -82,11 +120,11 @@ function CourseCard({course}) {
                     sx={{
                       fontWeight: "bold",
                       marginBottom: 0.5,
-                      marginTop: 2,
+                      marginTop: 2.3,
                       color: newtheme.palette.secondary.footer,
                     }}
                   >
-                    JAVA Course
+                    {course.language} Course
                   </Typography>
                 </Box>
 
@@ -94,9 +132,11 @@ function CourseCard({course}) {
                   variant="h6"
                   sx={{ fontWeight: "bolder", marginBottom: 1 }}
                 >
-                 {course.name}
+                  {course.name}
                 </Typography>
-                <Typography className="cut-off-text" sx={{marginBottom:2}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta quasi ut voluptatibus aliquid expedita tenetur officiis sint, eligendi facilis provident saepe id, quae alias veritatis. Dolorum porro delectus nisi cupiditate!</Typography>
+                <Typography className="cut-off-text" sx={{ marginBottom: 2 }}>
+                  {course.description}
+                </Typography>
               </Box>
               <Box
                 sx={{
@@ -119,7 +159,13 @@ function CourseCard({course}) {
                       color: newtheme.palette.secondary.footer,
                     }}
                   />
-                  <Typography sx={{ fontSize: 16, fontWeight:'bolder', color: newtheme.palette.secondary.footer, }}>
+                  <Typography
+                    sx={{
+                      fontSize: 16,
+                      fontWeight: "bolder",
+                      color: newtheme.palette.secondary.footer,
+                    }}
+                  >
                     {course.lectures} Lectures
                   </Typography>
                 </Box>
@@ -132,7 +178,13 @@ function CourseCard({course}) {
                       color: newtheme.palette.secondary.footer,
                     }}
                   />
-                  <Typography sx={{ fontWeight:'bolder', color: newtheme.palette.secondary.footer, fontSize: 16 }}>
+                  <Typography
+                    sx={{
+                      fontWeight: "bolder",
+                      color: newtheme.palette.secondary.footer,
+                      fontSize: 16,
+                    }}
+                  >
                     {course.credits} Credits
                   </Typography>
                 </Box>

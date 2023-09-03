@@ -10,6 +10,7 @@ import Homepage from '../Home/Homepage';
 import newtheme from "../../../Themenew";
 import { ThemeProvider } from "@mui/material/styles";
 import ViewAllCourses from '../Course/ViewAllCourses';
+import EnrollCourseCard from '../Course/EnrollCourseCard';
 
 const StudentBody = () => {
   return (
@@ -21,8 +22,9 @@ const StudentBody = () => {
           <Routes>
             <Route path="/" element={<CourseCard />} />
             <Route path="/Home" element={<Homepage />} />
-            <Route path="/ViewCourse" element={<ViewCourse />} />
+            <Route path="/ViewCourse/:id" element={<ViewCourse />} />
             <Route path="/AllCourses" element={<ViewAllCourses/>} />
+            <Route path="/AllCoursesCard" element={<EnrollCourseCard/>} />
           </Routes>
         </Box>
         <Footer />

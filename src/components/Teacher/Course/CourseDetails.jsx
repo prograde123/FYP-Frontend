@@ -89,7 +89,11 @@ function CourseDetails({ courses }) {
                                     </Box>
                                 </CardContent>
                             </Card>
-                            <Card onClick={() => navigate('/Teacher/StudentRequests')} sx={{ minWidth: "9%", height: 100, borderRadius: 4, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', backgroundColor: theme.palette.secondary.main, color: theme.palette.primary.background }}>
+                            <Card onClick={() => {
+                                navigate("/Teacher/StudentRequests/" + course._id, {
+                                    state: { course: course },
+                                });
+                            }} sx={{ minWidth: "9%", height: 100, borderRadius: 4, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', backgroundColor: theme.palette.secondary.main, color: theme.palette.primary.background }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <img height={25} width={50} src='https://cdn-icons-png.flaticon.com/512/2003/2003257.png' />
