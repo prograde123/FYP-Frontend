@@ -9,8 +9,10 @@ import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import http from "../../../../../Axios/axios";
 
-export default function AddQuestion({ currentQuestion, totalQuestions, courseID }) {
+export default function AddQuestion({ currentQuestion, totalQuestions, assig, courseID }) {
+  
   const [questions, setQuestions] = useState([]);
   const [questionNumber, setQuestionNumber] = useState(currentQuestion);
   const [question, setQuestion] = useState('');
@@ -20,6 +22,7 @@ export default function AddQuestion({ currentQuestion, totalQuestions, courseID 
 
   const navigate = useNavigate();
   const theme = useTheme();
+
 
   const handleAddTestCase = () => {
     // Adding new test case
@@ -35,45 +38,48 @@ export default function AddQuestion({ currentQuestion, totalQuestions, courseID 
   const handleSold = (event) => {
     setIsTestcaseArray(event.target.checked);
       };
-  const handleClick = async () => {
-    if (testCases[0].input !== "" && testCases[0].output !== "" && question !== "") {
-      // new question object
-      const newQuestion = {
-        questionDescription: question,
-        questionTotalMarks: questionTotalMarks,
-        testCases: testCases,
-        isInputArray: isTestcaseArray,
-      };
+const handleClick = async () => {
+  if (testCases[0].input !== "" && testCases[0].output !== "" && question !== "") {
+    const newQuestion = {
+      questionDescription: question,
+      questionTotalMarks: questionTotalMarks,
+      testCases: testCases,
+      isInputArray: isTestcaseArray,
+    };
 
-      setQuestions([...questions, newQuestion]);
+    console.log("new question " , newQuestion);
 
-      setQuestion('');
-      setQuestionTotalMarks(0);
-      setIsTestcaseArray(false);
-      setTestCases([{ input: "", output: "" }]);
-      
-      console.log(questions);
-      
-      setQuestionNumber(questionNumber + 1);
+    questions.push(newQuestion);
 
-      if (questionNumber === totalQuestions) {
-        alert("Completed");
-        // Backend add assignment
+
+    console.log("questions", questions)
+
+    setQuestion('');
+    setQuestionTotalMarks(0);
+    setIsTestcaseArray(false);
+    setTestCases([{ input: "", output: "" }]);
+    
+    setQuestionNumber(questionNumber + 1);
+
+    if (questionNumber === totalQuestions - 1) {
+     
+      const respose  = await http.post("/assignment/addAssignment", { questions, assig });
+      if(respose.data.success){
+        alert("Assignment Created Successfully");
         navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
       }
-    } else {
-      alert("Please enter at least 1 test case, question, and total marks");
     }
-  };
+  } else {
+    alert("Please enter at least 1 test case, question, and total marks");
+  }
+};
 
-  useEffect(() => {
-    console.log("Updated Questions:", questions);
-  }, [questions]); 
+
 
   return (
     <Grid container spacing={2} sx={{ padding: "2%" }}>
         <Typography>
-            Q # {questionNumber}
+            Q # {questionNumber + 1}
         </Typography>
         <Grid item lg={12}>
             <TextField
@@ -140,6 +146,7 @@ export default function AddQuestion({ currentQuestion, totalQuestions, courseID 
       <Grid item lg={12} md={12} sm={12} xs={12}>
         <Button
           onClick={handleClick}
+          disabled = {questionNumber >= totalQuestions ? true : false}
           sx={{
             color: theme.palette.secondary.text,
             backgroundColor: theme.palette.secondary.main,
@@ -157,9 +164,10 @@ export default function AddQuestion({ currentQuestion, totalQuestions, courseID 
             paddingTop: 1,
             paddingBottom: 1,
             borderColor: theme.palette.secondary.Button,
+            
           }}
         >
-          {questionNumber === totalQuestions ? "Confirm" : "Next Question"}
+          {questionNumber === (totalQuestions - 1) ? "Confirm" : "Next Question"}
         </Button>
       </Grid>
     </Grid>
