@@ -35,7 +35,9 @@ const AddAssignment = () => {
   const [courseID , setcourseID] = React.useState(null)
   const [showAddQuestion, setShowAddQuestion] = React.useState(false);
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
-  
+  const [Assignment, setAssignment] = React.useState({ CourseID: "" ,assignmentNumber:  "",description:  "" ,
+  uploadDate: "",dueDate: "",totalMarks: "",format: "",noOfQuestions : ""});
+
   const [file,setFile] = React.useState(null)
   const [fileError,setFileError] = React.useState('')
   const navigate = useNavigate()
@@ -93,32 +95,7 @@ const AddAssignment = () => {
   })
 
 
-  const addData=(downloadURL)=>{
-    console.log(downloadURL)
-   // console.log('file Url: ' , fileURL)
-    if(assignment == undefined){
-      const success = AddAssig(values.assigNo,values.description,values.uploadDate,values.dueDate,values.marks,downloadURL,values.format,values.questions,courseID)
-      console.log("returend value is  " , success)
-      if(success){
-        return navigate(`/Teacher/ViewUploadedAssigList/${courseID}`)
-      }
-      else{
-        alert("Assignment upload failed")
-
-      }
-    }
-    else{
-        const success = EditAssignment(assignment._id,values.assigNo,values.description,values.uploadDate,values.dueDate,values.totalMarks,downloadURL,values.format)
-        if(success){
-          console.log(courseID)
-          return navigate(`/Teacher/ViewUploadedAssigList/${courseID}`)
-        }
-        else{
-          alert("Assignment upload failed")
-  
-        }
-    }
-  }
+ 
 
   useEffect(() => {
     if(file === null)
@@ -131,10 +108,23 @@ const AddAssignment = () => {
       alert("Please enter a valid number of questions");
     } else {
       if (!showAddQuestion) {
+        setAssignment(
+          {
+            CourseID : courseID,
+            assignmentNumber: values.assigNo,
+            description:values.description,
+            uploadDate:values.uploadDate.$d,
+            dueDate:values.dueDate.$d,
+            totalMarks:values.marks,
+            format:values.format,
+            noOfQuestions : values.questions
+
+
+          }
+        )
         setShowAddQuestion(true);
-          if (currentQuestion < values.questions ) {
-            setCurrentQuestion(currentQuestion + 1);
-            console.log(currentQuestion);
+          if (currentQuestion <= values.questions ) {
+            setCurrentQuestion(currentQuestion);
           } else {
             alert("You've seen all the questions!");
           }
@@ -161,6 +151,7 @@ const AddAssignment = () => {
       <AddQuestion 
         currentQuestion={currentQuestion} 
         totalQuestions={values.questions}
+        assig={Assignment}
         courseID={courseID}
        />
 )}

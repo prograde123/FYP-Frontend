@@ -19,7 +19,7 @@ import ViewSubmittedAssigList from "../Assignment/ViewSubmittedAssigList";
 
 import ViewUploadedAssigList from "../Assignment/ViewUploadedAssigList";
 
-import ViewUploadedAssig from "../Assignment/ViewUploadedAssigList";
+import ViewUploadedAssig from "../Assignment/ViewUploadedAssignment";
 
 import PDFViewer from "../Assignment/pdf";
 
