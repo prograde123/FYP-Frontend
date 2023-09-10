@@ -9,13 +9,14 @@ $icon-bg-color: rgba(255, 255, 255, 0.05);
 @import 'react-pro-sidebar/dist/scss/styles.scss';
 body {
   margin: 0;
-  height: 100vh;
+  height: 96vh;
   color: #353535;
   font-family: sans-serif;
 }
 
 #root {
   height: 100%;
+
 }
 
 .app {

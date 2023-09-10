@@ -45,14 +45,14 @@ const Sidebar = ({
 }) => {
   const navigate = useNavigate()
   return (
-    <ProSidebar style={{height: '100%'}}
-      image={sidebarBg}
+    <ProSidebar style={{marginLeft:8,marginTop:8,marginBottom:8, border:'6px solid #2a3290', borderRadius:20.5}}
+      // image={sidebarBg}
       collapsed={collapsed}
       toggled={toggled}
       onToggle={handleToggleSidebar}
     >
       {/* Header */}
-      <SidebarHeader>
+      <SidebarHeader style={{borderRadius:50}}>
         <Menu iconShape="circle">
           {collapsed ? (
             <MenuItem
@@ -129,8 +129,8 @@ const Sidebar = ({
         </Menu>
       </SidebarContent>
       {/* Footer */}
-      <SidebarFooter style={{ textAlign: "center" }}>
-        <div className="sidebar-btn-wrapper" style={{ padding: "16px" }}>
+      <SidebarFooter style={{ textAlign: "center",borderRadius:50 }}>
+        <div className="sidebar-btn-wrapper" style={{ padding: "16px" }} onClick={() => { navigate('/Teacher/Profile') }}>
         <div
             className="sidebar-btn"
             style={{ cursor: 'pointer' }}

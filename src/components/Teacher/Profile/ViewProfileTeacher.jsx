@@ -29,6 +29,17 @@ import Backdrop from '@mui/material/Backdrop';
 import TextField from '@mui/material/TextField';
 import { getProfile } from '../../../../Axios/axiosall';
 import profile from '../../../../src/assets/profile.png';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import {FormHelperText} from '@mui/material'
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import EmailIcon from '@mui/icons-material/Email';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import Person2Icon from '@mui/icons-material/Person2';
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
  
@@ -79,6 +90,15 @@ function ViewProfile() {
       navigate('/SignIn')
    }
   const [profileData, setProfileData] = React.useState(null)
+
+  const [name, setName] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [previousPass, setPreviousPass] = React.useState('')
+  const [pass, setPass] = React.useState('')
+  const [Cpass, setCPass] = React.useState('')
+
+  const [showPassword, setShowPassword] = React.useState(false);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -161,7 +181,7 @@ function ViewProfile() {
 {/* information */}
                 <Grid container gap={2}>
                   <Grid item xs={12} md={12} lg={6} >
-                    <Box sx={{height:'80vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
+                    <Box sx={{height:'70vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
                       <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginLeft:5, marginRight:5, marginTop:1}}>
                         <Box sx={{marginTop:1}}>
                           <p style={{fontWeight:'bolder', fontSize:25}}>About</p>
@@ -169,6 +189,7 @@ function ViewProfile() {
                         <Box sx={{marginTop:4}}>
                           <Button onClick={handleProfileOpen} sx={{":hover":{backgroundColor:"#4cbb17"},backgroundColor:"#4cbb17", color:theme.palette.primary.background, paddingRight:3, paddingLeft:3,paddingTop:1,paddingBottom:1, borderRadius:3}} startIcon={<CiEdit size={20}/>}>Edit</Button>
                         </Box>
+{/* modal for edit profile */}
                         <Modal
                             open={isProfileOpen}
                             onClose={handleProfileClose}
@@ -206,31 +227,71 @@ function ViewProfile() {
                                 </Box>
                                 <Box>
                                     <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                                    <TextField sx={{width:'100%'}} id="secondary" label="Full Name" variant="outlined"/>
+                                    <p style={{display:'flex',flexDirection:'row',marginBottom:10,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Full Name*</p>
+                                    <FormControl sx={{ width: '100%' }}>
+                                    <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Enter Full Name</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-name"
+                                        color='secondary'
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle name visibility"
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {<Person2Icon />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Enter Full Name"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                </FormControl>
                                     </Box>
                                 </Box>
                                 <br />
                                 <Box>
                                     <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                                    <TextField 
-                                    sx={{width:'100%'}}
-                                     id="secondary" label="Email"
-                                      variant="outlined"/>
+                                    <p style={{display:'flex',flexDirection:'row',marginBottom:10,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Email Address*</p>
+                                    <FormControl sx={{ width: '100%', }}  >
+                                    <InputLabel htmlFor="outlined-adornment-email" color='secondary'>Enter Email Address</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-email"
+                                        color='secondary'
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <Button
+                                                    aria-label="toggle email visibility"
+                                                    edge="end"
+                                                    color='secondary'
+                                                >
+                                                    {<EmailIcon />}
+                                                </Button>
+                                            </InputAdornment>
+                                        }
+                                        label="Enter Email Address"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                   
+                                      </FormControl>
                                     </Box>
                                 </Box>
                                 <br />
                                 <Box>
-                                    <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Profile Picture <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 0.5, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                                    <p style={{ fontWeight: 'bold', margin:0, }}>Profile Picture*<Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 0.5, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                         Click to browse or <br />
                                         Drag and Drop Files
                                         <input hidden accept="file/*" multiple type="file" />
-                                    </Button></Button></Typography>
+                                    </Button></Button></p>
                                 </Box>
                                 <br/>
                                 <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
                                   <Button
                                       type='submit'
-                                      variant="contained" color="secondary"  sx={{ width: '90%', padding: 2, fontSize: 16, fontWeight: 'bold', marginTop: 1,borderRadius:2 }}>
+                                      variant="contained" color="secondary"  sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', marginTop: 1,borderRadius:2 }}>
                                       Save Changes
                                   </Button>
                                 </Box>
@@ -282,7 +343,7 @@ function ViewProfile() {
 
 {/* Notifications */}
                   <Grid item xs={12} md={12} lg={5} >
-                    <Box sx={{height:'80vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
+                    <Box sx={{height:'70vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
                       <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginLeft:5, marginRight:5, marginTop:1}}>
                         <Box sx={{marginTop:1}}>
                         <p style={{fontWeight:'bolder', fontSize:25}}>Notifications</p>
@@ -303,31 +364,103 @@ function ViewProfile() {
                   <Grid item xs={12} md={12} lg={8} >
                     <Box sx={{height:'80vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
                       <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
-                        <Typography sx={{fontWeight:'bolder', fontSize:27, marginTop:8}}>Change Password</Typography>
+                        <Typography sx={{fontWeight:'bolder', fontSize:27, marginTop:2}}>Change Password</Typography>
                       </Box>
                       <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
                         <p style={{margin:0, fontSize:15, color:'grey'}}>Please Enter your previous password to change it to new password.</p>
                       </Box>
-                      <Box sx={{marginTop:5}}>
-                          <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                            <TextField sx={{width:'50%'}} id="secondary" label="Enter Previous Password" variant="outlined"/>
+                      <Box sx={{marginTop:3, display:'flex', flexDirection:'column', alignItems:'center', width:'100%'}}>
+                          <Box sx={{ textDecoration: 'none'}}>
+                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Confirm Password*</p>
+                          <FormControl sx={{ width: '100%', marginRight:2, marginTop:1 }} variant="outlined">
+                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Enter Previous Password</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-password"
+                                            color='secondary'
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <Button
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        edge="end"
+                                                        color='secondary'
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </Button>
+                                                </InputAdornment>
+                                            }
+                                            label="Enter Previous Password"
+                                            value={previousPass}
+                                            onChange={(e) => setPreviousPass(e.target.value)}
+                                        />
+                                        
+                          </FormControl>
                           </Box>
                                 
                           <br />
                                 
                           <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                            <TextField sx={{width:'50%'}} id="secondary" label="Enter New Password" variant="outlined"/>
+                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Confirm Password*</p>
+                          <FormControl sx={{ width: '100%', marginRight:2, marginTop:1 }} variant="outlined">
+                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Enter New Password</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-password"
+                                            color='secondary'
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <Button
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        edge="end"
+                                                        color='secondary'
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </Button>
+                                                </InputAdornment>
+                                            }
+                                            label="Enter New Password"
+                                            value={pass}
+                                            onChange={(e) => setPass(e.target.value)}
+                                        />
+                                        
+                          </FormControl>
                           </Box>
                                 
                           <br />
                           <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                            <TextField sx={{width:'50%'}} id="secondary" label="Confirm New Password" variant="outlined"/>
+                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Confirm Password*</p>
+                          <FormControl sx={{ width: '100%', marginRight:2, marginTop:1 }} variant="outlined">
+                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Confirm New Password</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-password"
+                                            color='secondary'
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <Button
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        edge="end"
+                                                        color='secondary'
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </Button>
+                                                </InputAdornment>
+                                            }
+                                            label="Confirm New Password"
+                                            value={Cpass}
+                                            onChange={(e) => setCPass(e.target.value)}
+                                        />
+                                        
+                          </FormControl>
                           </Box>
 
                           <br/>
-                          <Box sx={{ marginTop: 1, display:'flex', flexDirection:'row', justifyContent:'center'}}>
+                          <Box sx={{ marginTop: 1, display:'flex', flexDirection:'row', justifyContent:'center',width:'40%'}}>
                             <Button 
-                              variant="contained" color="secondary" sx={{ width: '50%', padding: 2, fontSize: 16, fontWeight: 'bold', borderRadius:2 }}>
+                              variant="contained" color="secondary" sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', borderRadius:2 }}>
                               Save New Password
                               </Button>
                           </Box>
