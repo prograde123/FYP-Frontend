@@ -7,7 +7,7 @@ function ViewCoursesList() {
   const theme = useTheme()
   return (
     <>
-      <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9 }}>Available Courses</p>
+      <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9,marginTop:0, display:'flex', flexDirection:'row', justifyContent:'center' }}>Available Courses</p>
       <CoursesListTable />
     </>
   );

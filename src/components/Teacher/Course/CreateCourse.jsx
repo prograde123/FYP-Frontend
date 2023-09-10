@@ -154,10 +154,11 @@ function CreateCourse() {
       </Box>
       <Box>
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'  }}>
-            <TextField sx={{ marginTop: 5, width: '100%' }}
+          <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'  }}>
+            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Course Code*</p>
+            <TextField sx={{  width: '100%', marginTop:2 }}
               id="outlined-multiline-flexible"
-              label="Course Code"
+              label="Enter Course Code"
               color='secondary'
               name='courseCode'
               value={values.courseCode}
@@ -167,9 +168,10 @@ function CreateCourse() {
               <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.courseCode}</p>
             ) : null}
             <br />
-            <TextField sx={{ marginTop: 3, width: '100%' }}
+            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Name*</p>
+            <TextField sx={{  width: '100%', marginTop:2 }}
               id="outlined-multiline-flexible"
-              label="Course Title"
+              label="Enter Course Name"
               color='secondary'
               name='title'
               value={values.title}
@@ -180,9 +182,10 @@ function CreateCourse() {
               <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.title}</p>
             ) : null}
             <br />
-            <TextField sx={{ marginTop: 3, width: '100%' }}
+            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Credit Hours*</p>
+            <TextField sx={{  width: '100%', marginTop:2 }}
               id="outlined-number"
-              label="Credit Hours"
+              label="Enter Credit Hours"
               type="number"
               color='secondary'
               name='creditHours'
@@ -196,9 +199,10 @@ function CreateCourse() {
               <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.creditHours}</p>
             ) : null}
             <br />
-            <TextField sx={{ marginTop: 3, width: '100%' }}
+            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Description*</p>
+            <TextField sx={{  width: '100%', marginTop:2 }}
               id="outlined-multiline-flexible"
-              label="Course Description"
+              label="Enter Course Description"
               color='secondary'
               multiline
               name='description'
@@ -209,7 +213,8 @@ function CreateCourse() {
               <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.description}</p>
             ) : null}
             <br />
-            <FormControl sx={{ marginTop: 3, width: '100%' }}>
+            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Language*</p>
+            <FormControl sx={{ marginTop: 2, width: '100%' }}>
               <InputLabel >Select Language</InputLabel>
               <Select
                 id="outlined-multiline-flexible"
@@ -236,14 +241,15 @@ function CreateCourse() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker']} sx={{ width: '100%', marginTop: 0 }}>
                 <Box>
-                  <Box>
+                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Starting Date*</p>
+                  <Box sx={{marginTop:2}}>
                     <DatePicker
                       name='starting'
                       id="starting"
                       value={values.starting}
                       onChange={(value) => setFieldValue("starting", value, true)}
                       onBlur={handleBlur}
-                      label="Starting Date" />
+                      label="Select Starting Date" />
                   </Box>
                   <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                     {errors.starting && touched.starting ? (
@@ -253,14 +259,15 @@ function CreateCourse() {
                 </Box>
                 <br />
                 <Box>
-                  <Box>
+                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Ending Date*</p>
+                  <Box sx={{marginTop:2}}>
                     <DatePicker
                       name='ending'
                       id='ending'
                       value={values.ending}
                       onChange={(value) => setFieldValue("ending", value, true)}
                       onBlur={handleBlur}
-                      label="Ending Date" />
+                      label="Select Ending Date" />
                   </Box>
                   <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                     {errors.ending && touched.ending ? (
@@ -271,12 +278,12 @@ function CreateCourse() {
               </DemoContainer>
             </LocalizationProvider>
             <br />
-            <Box sx={{ marginTop: 1, fontWeight: 'bold', width: '100%' }} >
-              <Typography variant='caption' sx={{ fontWeight: 'bold' }}>Upload Picture* <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 1, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+            <Box sx={{  fontWeight: 'bold', width: '100%',marginTop:1 }} >
+              <p style={{ fontWeight: 'bold',margin:0}}>Upload Picture* <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 1, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                 Click to browse or <br />
                 Drag and Drop Files
                 <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
-              </Button></Button></Typography>
+              </Button></Button></p>
              <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{imageError}</p>
             </Box>
 
