@@ -35,75 +35,6 @@ function Homepage() {
     },
   ];
 
-  const courses = [
-    {
-      student: 40,
-      name: "Programming Fundamentals",
-      image:
-        "https://websitedemos.net/online-coding-course-02/wp-content/uploads/sites/713/2020/10/online-programming-course-03.jpg",
-      description:
-        "Tortor nunc faucibus a pellentesque sit amet porttitor eget. Sit amet mauris commodoquis imperdiet massa tincidunt nunc. Quis blandit turpis cursus in hac habitasse.",
-      credits: 3,
-      lectures: 15,
-      teacher: "Faisal",
-    },
-    {
-      student: 40,
-      name: "Data Science",
-      image:
-        "https://websitedemos.net/online-coding-course-02/wp-content/uploads/sites/713/2020/10/online-programming-course-02.jpg",
-      description:
-        "Tortor nunc faucibus a pellentesque sit amet porttitor eget. Sit amet mauris commodoquis imperdiet massa tincidunt nunc. Quis blandit turpis cursus in hac habitasse.",
-      credits: 3,
-      lectures: 15,
-      teacher: "Faisal",
-    },
-    {
-      student: 40,
-      name: "Data Science",
-      image:
-        "https://websitedemos.net/online-coding-course-02/wp-content/uploads/sites/713/2020/10/online-programming-course-01.jpg",
-      description:
-        "Tortor nunc faucibus a pellentesque sit amet porttitor eget. Sit amet mauris commodoquis imperdiet massa tincidunt nunc. Quis blandit turpis cursus in hac habitasse.",
-      credits: 3,
-      lectures: 15,
-      teacher: "Faisal",
-    },
-    {
-      student: 40,
-      name: "Data Science",
-      image:
-      "https://websitedemos.net/online-coding-course-02/wp-content/uploads/sites/713/2020/10/online-programming-course-03.jpg",
-      description:
-        "Tortor nunc faucibus a pellentesque sit amet porttitor eget. Sit amet mauris commodoquis imperdiet massa tincidunt nunc. Quis blandit turpis cursus in hac habitasse.",
-      credits: 3,
-      lectures: 15,
-      teacher: "Faisal",
-    },
-    {
-      student: 40,
-      name: "Data Science",
-      image:
-      "https://websitedemos.net/online-coding-course-02/wp-content/uploads/sites/713/2020/10/online-programming-course-03.jpg",
-      description:
-        "Tortor nunc faucibus a pellentesque sit amet porttitor eget. Sit amet mauris commodoquis imperdiet massa tincidunt nunc. Quis blandit turpis cursus in hac habitasse.",
-      credits: 3,
-      lectures: 15,
-      teacher: "Faisal",
-    },
-    {
-      student: 40,
-      name: "Data Science",
-      image:
-        "https://websitedemos.net/online-coding-course-02/wp-content/uploads/sites/713/2020/10/online-programming-course-02.jpg",
-      description:
-        "Tortor nunc faucibus a pellentesque sit amet porttitor eget. Sit amet mauris commodoquis imperdiet massa tincidunt nunc. Quis blandit turpis cursus in hac habitasse.",
-      credits: 3,
-      lectures: 15,
-      teacher: "Faisal",
-    },
-  ];
-
   const navigate = useNavigate();
   React.useEffect(()=>{
     Aos.init({duration:2500});
@@ -148,38 +79,11 @@ function Homepage() {
             style={{
               fontWeight: "bolder",
               fontSize:34, margin:0
-              // textDecoration: "double-underline",
-              // color: newtheme.palette.secondary.footer,
             }}
           >
             My Courses
           </p>
         </Box>
-
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 10,
-            marginLeft:18,
-            marginRight:18
-          }}
-        >
-          <p data-aos="fade-right" style={{fontWeight: 'bold', fontSize:20, margin:0 }}>
-            Totally Enrolled in 8 Courses
-          </p>
-          <Autocomplete 
-            id="filter-demo"
-            options={filter}
-            getOptionLabel={(option) => option.title}
-            filterOptions={filterOptions}
-            sx={{ width: 300, marginLeft: 10 }}
-            renderInput={(params) => <TextField {...params} label="Sort By" />}
-          />
-        </Box>
-
 
         <Box data-aos="fade-up" onClick={() => {
           navigate("/Student/ViewCourse/" + id, {
@@ -190,9 +94,10 @@ function Homepage() {
             display: "flex",
             flexDirection: "row",
             flexWrap:'wrap',
+            justifyContent:'center',
             marginTop: 7,
-            marginLeft:14,
-            marginRight:14
+            marginLeft:4,
+            marginRight:4
           }}
         >
           {myCourses.map((course) => {
