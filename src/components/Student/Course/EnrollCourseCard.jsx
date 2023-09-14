@@ -27,6 +27,7 @@ import { useTheme } from "@emotion/react";
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
+import { ImStatsBars } from 'react-icons/im';
 
 function EnrollCourseCard({ card }) {
     
@@ -63,24 +64,26 @@ function EnrollCourseCard({ card }) {
               ":hover": {
                 boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px;",
               },
-              borderRadius: 6,
+              borderRadius: 2,
               border: "1px solid #f0f0f0",
             }}
           >
             <Box sx={{ position: "relative", color: "white" }}>
+              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
               <img
                 src={card.image}
                 alt="5 Terre"
-                style={{ borderRadius: 16, opacity: 0.6 }}
-                width={"100%"}
+                style={{ borderRadius: 6, opacity: 0.6, border:'1px solid grey', marginTop:20 }}
+                width={280}
                 height={200}
               />
 
+              </Box>
               <Box
                 sx={{
                   position: "absolute",
                   bottom: 8,
-                  left: 16,
+                  left: 33,
                   color: newtheme.palette.primary.main,
                 }}
               >
@@ -113,7 +116,7 @@ function EnrollCourseCard({ card }) {
                   <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <QueryBuilderIcon sx={{ marginRight: 1 }} />
                     <Typography sx={{ fontWeight: "bolder" }}>
-                      6 Months
+                      {card.creditHours} Credits
                     </Typography>
                   </Box>
                 </Box>
@@ -126,25 +129,26 @@ function EnrollCourseCard({ card }) {
               }}
             >
               <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Box sx={{display:'flex', flexDirection:'row',marginTop:2}}>
+                  <ImStatsBars fontSize='22' style={{color:'#ffd350',marginRight:7}}/>
+                  <p style={{margin:0, fontSize:15, marginRight:7}}>Beginner</p>
+                </Box>
                 <LanguageIcon
                   fontSize="small"
                   sx={{
-                    marginBottom: 2,
-                    marginTop: 2.2,
+                    marginBottom: 2.2,
+                    marginTop: 2,
                     marginRight: 1,
-                    color: newtheme.palette.secondary.footer,
+                    color:'#ffd350',
                   }}
                 />
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    marginBottom: 1,
-                    marginTop: 2,
-                    color: newtheme.palette.secondary.footer,
+                <p
+                  style={{
+                    fontSize:15,
                   }}
                 >
-                  {card.language} Language
-                </Typography>
+                  {card.language}
+                </p>
               </Box>
 
               <Typography
@@ -171,8 +175,8 @@ function EnrollCourseCard({ card }) {
                 paddingTop: 2,
                 paddingLeft: 1.5,
                 backgroundColor: "#f0f0f0",
-                borderBottomRightRadius: 16,
-                borderBottomLeftRadius: 16,
+                borderBottomRightRadius: 6,
+                borderBottomLeftRadius: 6,
               }}
             >
               <Box sx={{ display: "flex", flexDirection: "row" }}>

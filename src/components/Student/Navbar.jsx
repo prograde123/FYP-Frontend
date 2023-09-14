@@ -130,7 +130,7 @@ export default function DrawerAppBar() {
     <ThemeProvider theme={newtheme}>
       <Box sx={{ display: 'flex', color: 'red' }}>
         <CssBaseline />
-        <AppBar component="nav" sx={{ backgroundColor: newtheme.palette.primary.background, padding: '1%', }} >
+        <AppBar component="nav" sx={{ backgroundColor: newtheme.palette.primary.background, padding: '1%',boxShadow:'none' }} >
           <Toolbar >
             <IconButton
               color='theme.palette.primary.background'
@@ -141,12 +141,12 @@ export default function DrawerAppBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center' }} data-aos="fade-right">
+            <Typography component="div" sx={{ flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center',fontSize:30 }} data-aos="fade-right">
                <img style={{marginRight:10}} height={65} width={60} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
-              <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder',fontStyle:'oblique' }}>Pro<span style={{color: newtheme.palette.secondary.background}}>Grade</span></span>
+              <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder'}}>PRO<span style={{color: newtheme.palette.secondary.background}}>GRADE</span></span>
             </Typography>
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}  data-aos="fade-left">
+            <Box sx={{ display: { xs: 'none', sm: 'block', lg:'flex' }}}  data-aos="fade-left">
               
                 <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Home
@@ -239,7 +239,14 @@ export default function DrawerAppBar() {
                  <IconButton sx={{color:newtheme.palette.primary.main}}
                 
                 >
-                        <PersonIcon onClick={handleMenuOpenProfile} />
+                <img style={{
+              borderRadius: 20,
+              border: "2px solid grey",
+            }}
+            height={40}
+            width={40}
+            src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"
+          ></img>
                 </IconButton>
                 <Menu
                 anchorE2={anchorE2profile}
