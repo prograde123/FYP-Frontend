@@ -11,6 +11,8 @@ import newtheme from "../../../Themenew";
 import { ThemeProvider } from "@mui/material/styles";
 import ViewAllCourses from '../Course/ViewAllCourses';
 import EnrollCourseCard from '../Course/EnrollCourseCard';
+import Submit from '../Assignment/Components/SubmitQuestions';
+import Result from '../Assignment/Result';
 
 const StudentBody = () => {
   return (
@@ -18,13 +20,17 @@ const StudentBody = () => {
     <ThemeProvider theme={newtheme}>
     <Box sx={{backgroundColor: newtheme.palette.primary.back}}>
         <DrawerAppBar/>
-        <Box component="main">
+        <Box component="main" sx={{
+             mt:'7%'
+        }}>
           <Routes>
             <Route path="/" element={<CourseCard />} />
             <Route path="/Home" element={<Homepage />} />
             <Route path="/ViewCourse/:id" element={<ViewCourse />} />
             <Route path="/AllCourses" element={<ViewAllCourses/>} />
             <Route path="/AllCoursesCard" element={<EnrollCourseCard/>} />
+            <Route path="/SubmitAssignment/:aid" element= {<Submit />} />
+            <Route path='/Result/:aid' element={<Result />} />
           </Routes>
         </Box>
         <Footer />
