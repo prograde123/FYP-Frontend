@@ -113,7 +113,7 @@ function ViewAllCourses() {
 
   return (
     <ThemeProvider theme={newtheme}>
-      <Box sx={{ flexGrow: 1, marginTop: 18, marginBottom: 10 }}>
+      <Box sx={{ flexGrow: 1,  marginBottom: 10 }}>
         <Grid container>
           
 {/* SEARCH SECTION */}
