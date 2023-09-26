@@ -92,10 +92,7 @@ export default function TeacherBody() {
               >
                 {" "}
               </Route>
-              <Route
-                path="ViewUploadedAssig/:cid/:aid"
-                element={<ViewUploadedAssig />}
-              ></Route>
+
               <Route
                 path="ViewUploadedAssigList/:id"
                 element={<ViewUploadedAssigList />}

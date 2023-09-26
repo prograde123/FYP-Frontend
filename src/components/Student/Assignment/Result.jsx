@@ -10,12 +10,28 @@ const Result = () => {
   const [result, setResult] = useState([]);
   const theme = useTheme();
 
+  const [sumObtainedMarks , setObtainedMarks] =  useState(0);
+  const [sumTotalMarks,setSumTotalMarks] = useState(0);
+
   const getSubmission = async () => {
     try {
       const submissions = await http.get('/submit/getSubmissions', {
         params: { assignmentId: aid },
       });
       setResult(submissions.data.formattedResponse);
+
+
+
+    let sumO = 0
+    let sumT = 0
+      for (const submission of submissions.data.formattedResponse) {
+        sumO += submission.ObtainedMarks;
+        sumT += submission.TotalMarks;
+      }
+      setObtainedMarks(sumO)
+      setSumTotalMarks(sumT)
+      console.log(sumObtainedMarks)
+      console.log(sumTotalMarks)
     } catch (error) {
       console.error('Error fetching submissions:', error);
     }
@@ -24,8 +40,6 @@ const Result = () => {
   useEffect(() => {
     getSubmission();
   }, []);
-
-  console.log(result)
 
 
   return (
@@ -37,11 +51,30 @@ const Result = () => {
         p: 3
       }}
     >
+      {
+        result &&
+        result.length > 0 &&
+        (
+          <Box sx={{display:'flex' , justifyContent : 'flex-end'}}>
+            <Typography variant="h5"> TOTAL MARKS : {sumObtainedMarks}/{sumTotalMarks}</Typography>
+
+          </Box>
+        )
+
+      }
       {result &&
         result.length > 0 &&
         result.map((res, index) => (
           <div key={index}> 
+            <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent:'space-between'
+                    }}>
             <Typography variant="h5" sx={{textDecoration:'underline'}}> Question # {index + 1} {res.questionDescription}</Typography>
+            <Typography variant="h6"> {res.ObtainedMarks}/{res.TotalMarks}</Typography>
+
+            </Box>
             <ul>
               {res.testResults.map((testResult ,index ) => (
                 <>

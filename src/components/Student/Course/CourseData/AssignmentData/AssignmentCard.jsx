@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import python from '../../../../../assets/python.png'
+import { useNavigate } from 'react-router-dom';
 const Img = styled('img')({
   margin: 'auto',
   display: 'block',
@@ -12,7 +13,9 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-export default function AssignmentCard({Assignment}) {
+export default function AssignmentCard({Assignment , CourseId}) {
+
+  const nav = useNavigate()
   return (
     <>
     <Paper
@@ -31,11 +34,12 @@ export default function AssignmentCard({Assignment}) {
         backgroundColor: (theme) =>
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }}
+      onClick={() => nav(`/Assignment/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
     >
       <Grid container spacing={2} >
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src={Assignment.image} />
+            <Img alt="img" src={Assignment.image ? Assignment.image : python } />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container >
@@ -51,10 +55,10 @@ export default function AssignmentCard({Assignment}) {
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                Due {Assignment.dueDate} 
+                Due {Assignment.dueDate?.split('T')[0]} 
               </Typography>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                Uploaded on {Assignment.uploadDate} 
+                Uploaded on {Assignment.uploadDate?.split('T')[0]} 
               </Typography>
             </Grid>
           </Grid>
