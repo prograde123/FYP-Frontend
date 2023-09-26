@@ -30,7 +30,21 @@ import Backdrop from '@mui/material/Backdrop';
 import { ImStatsBars } from 'react-icons/im';
 
 function EnrollCourseCard({ card }) {
+  const theme = useTheme()
+  const [enrollmentRequested, setEnrollmentRequested] = useState(false);
+  const [courses, setCourses] = useState([]);
     
+    async function getCourses() {
+      const user = JSON.parse(localStorage.getItem('User'))
+      console.log(user)  
+      try {
+          const response = await http.get('/course/ViewAllAvailableCourses/' + user._id)
+          setCourses(response.data.courses)
+          console.log(response.data.courses)
+        } catch (e) {
+          console.log(e);
+        }
+      }
     async function sendRequest(id) {
         const user = JSON.parse(localStorage.getItem('User'))
         console.log(user)
@@ -39,12 +53,13 @@ function EnrollCourseCard({ card }) {
         } catch (e) {
           console.log(e);
         }
+        console.lg("hi")
+        setEnrollmentRequested(true);
+        getCourses();
     }
-    const theme = useTheme()
-    const [isProfileOpen, setProfileOpen] = React.useState(false);
-    const handleProfileOpen = () => setProfileOpen(true);
-    const handleProfileClose = () => setProfileOpen(false);
-
+    React.useEffect(() => {
+      getCourses();
+    }, []);
 
   return (
     <Box sx={{display:'flex', flexDirection:'row',justifyContent:'center', marginLeft:5,}}>
@@ -200,87 +215,34 @@ function EnrollCourseCard({ card }) {
                   50 Students
                 </Typography>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "row" }} onClick={() => {sendRequest()}} >
-                <Typography onClick={handleProfileOpen}
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Button
+                  onClick={() => {
+                    if (!enrollmentRequested) {
+                      sendRequest();
+                    }
+                  }}
                   sx={{
                     marginBottom: 2,
                     fontSize: 16,
                     fontWeight: "bolder",
                     color: newtheme.palette.secondary.background,
-                    cursor:'pointer',
+                    cursor: enrollmentRequested ? "default" : "pointer",
+                    padding: 0,
                   }}
-                  
+                  disabled={enrollmentRequested}
+                  endIcon={
+                    <KeyboardDoubleArrowRightOutlinedIcon
+                      fontSize="large" 
+                      sx={{
+                        marginRight: 1,
+                        color: newtheme.palette.secondary.background,
+                      }}
+                    />
+                  }
                 >
-                  Enroll Now
-                </Typography>
-                <KeyboardDoubleArrowRightOutlinedIcon
-                  fontSize="medium"
-                  sx={{
-                    marginBottom: 2,
-                    marginRight: 1,
-                    color: newtheme.palette.secondary.background,
-                  }}
-                />
-                 <Modal
-                            open={isProfileOpen}
-                            onClose={handleProfileClose}
-                            aria-labelledby="transition-modal-title"
-                            aria-describedby="transition-modal-description"
-                            closeAfterTransition
-                            slots={{ backdrop: Backdrop }}
-                            slotProps={{
-                            backdrop: {
-                                timeout: 500,
-                            },
-                            }}>
-                            <Fade in={isProfileOpen}>
-                            <Box
-                                sx={{
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                width: '90%',
-                                maxWidth: '400px',
-                                transform: 'translate(-50%, -50%)',
-                                backgroundColor: theme.palette.primary.background,
-                                boxShadow: 24,
-                                p: 4,
-                                borderRadius: '5%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-around',
-                                }}
-                            >
-                                <Typography id="transition-modal-description" sx={{}}>
-                                {/* Content of the modal */}
-                                <Box
-                                    sx={{
-                                    
-                                    border: 1,
-                                    borderColor: theme.palette.secondary.main,
-                                    borderRadius: 5,
-                                    }}
-                                >
-                                    <Box onClick={()=>{navigate('/TeacherSignUp')}} sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                                    <Typography
-                                        variant="h6"
-                                        sx={{
-                                        textAlign: 'center',
-                                        color: "black",
-                                        paddingLeft: 4,
-                                        paddingRight: 4,
-                                        paddingTop: 2,
-                                        paddingBottom: 2,
-                                        }}
-                                    >
-                                        Request has been sent Successfully!
-                                    </Typography>
-                                    </Box>
-                                </Box>
-                              </Typography>
-                              </Box>
-                      </Fade>
-                 </Modal>
+                  {enrollmentRequested ? "Requested" : "Enroll Now"}
+                </Button>
               </Box>
             </Box>
           </Box>

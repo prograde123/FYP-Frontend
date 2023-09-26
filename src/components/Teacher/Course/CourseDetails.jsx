@@ -55,7 +55,7 @@ function CourseDetails({ courses }) {
         <p
           style={{ fontWeight: "bold", marginBottom: 13, marginTop: 1, fontSize:25 }}
         >
-          Course Details
+          <span className='underline'>Course Details</span>
         </p>
       </Box>
       <Box>

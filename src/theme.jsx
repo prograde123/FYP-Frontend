@@ -15,6 +15,7 @@ export const theme = createTheme({
     },
     //#6614A5'
     //logo: '#9F8C62'
+    //blue color: 
     success:{
       main:'#F8ECF1',
       background:'#461465'

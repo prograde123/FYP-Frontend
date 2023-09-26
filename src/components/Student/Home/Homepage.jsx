@@ -81,7 +81,7 @@ function Homepage() {
               fontSize:34, margin:0
             }}
           >
-            My Courses
+            <span className='underline'>My Courses</span>
           </p>
         </Box>
 

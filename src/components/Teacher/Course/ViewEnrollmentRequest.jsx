@@ -9,8 +9,8 @@ function ViewEnrollmentRequest() {
   const theme = useTheme()
   return (
     <>
-      <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9 }}>Enrollement Requests</p>
-      <Requests />
+       <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9,marginTop:0, display:'flex', flexDirection:'row', justifyContent:'center' }}><span className='underline'>Enrollement Requests</span></p>
+       <Requests />
     </>
   );
 }

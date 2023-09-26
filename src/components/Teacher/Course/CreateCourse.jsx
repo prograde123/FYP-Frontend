@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import http from "../../../../Axios/axios";
 import { useNavigate } from "react-router-dom";
+import { FcAddImage } from 'react-icons/fc';
 
 function CreateCourse() {
   const course = useLocation().state?.course
@@ -61,10 +62,10 @@ function CreateCourse() {
       initialValues,
       validationSchema: Yup.object({
         courseCode: Yup.string().min(4).max(6).required("Please Enter the course Code"),
-        title: Yup.string().min(3).max(25).required("Please Enter the course title"),
-        creditHours: Yup.number().nullable(true).required("Credit Hours are required!"),
+        title: Yup.string().min(2).max(25).required("Please Enter the course title"),
+        creditHours: Yup.number().nullable(false).min(1).max(4).required("Credit Hours are required!"),
         language: Yup.string().ensure().required("Language is required required!"),
-        description: Yup.string().min(5).max(100).required("Please Enter the course Description"),
+        description: Yup.string().min(3).required("Please Enter the course Description"),
         starting: Yup.date().required("Starting Date is required"),
         ending: Yup.date().required("Ending Date is required"),
       }),
@@ -126,7 +127,7 @@ function CreateCourse() {
 
   const handleClick = () => {
     if(image === null){
-      setImageError("Image is required!")
+      setImageError("Course Image is required!")
       return;
     }
     if (image === null || values.courseCode === '' || values.title === '' || values.creditHours === '' || values.description === '' || values.language === '' || values.starting === '' || values.ending === '')
@@ -148,118 +149,138 @@ function CreateCourse() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%',}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center',width:'100%', marginBottom:4, backgroundColor:theme.palette.primary.background}}>
       <Box>
-        <p style={{ fontWeight: 'bold', marginBottom: 20, marginTop: 1, fontSize:25 }}>Create New Course</p>
+        <p style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 1, fontSize:25 }}><span className='underline'>Create Course</span> </p>
       </Box>
-      <Box>
+      <Box sx={{width:'95%'}}>
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'  }}>
-            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Course Code*</p>
-            <TextField sx={{  width: '100%', marginTop:2 }}
-              id="outlined-multiline-flexible"
-              label="Enter Course Code"
-              color='secondary'
-              name='courseCode'
-              value={values.courseCode}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />{errors.courseCode && touched.courseCode ? (
-              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.courseCode}</p>
-            ) : null}
-            <br />
-            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Name*</p>
-            <TextField sx={{  width: '100%', marginTop:2 }}
-              id="outlined-multiline-flexible"
-              label="Enter Course Name"
-              color='secondary'
-              name='title'
-              value={values.title}
-              onChange={handleChange}
-              onBlur={handleBlur}
-
-            />{errors.title && touched.title ? (
-              <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.title}</p>
-            ) : null}
-            <br />
-            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Credit Hours*</p>
-            <TextField sx={{  width: '100%', marginTop:2 }}
-              id="outlined-number"
-              label="Enter Credit Hours"
-              type="number"
-              color='secondary'
-              name='creditHours'
-              value={values.creditHours}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />{errors.creditHours && touched.creditHours ? (
-              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.creditHours}</p>
-            ) : null}
-            <br />
-            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Description*</p>
-            <TextField sx={{  width: '100%', marginTop:2 }}
-              id="outlined-multiline-flexible"
-              label="Enter Course Description"
-              color='secondary'
-              multiline
-              name='description'
-              value={values.description}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />{errors.description && touched.description ? (
-              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.description}</p>
-            ) : null}
-            <br />
-            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Language*</p>
-            <FormControl sx={{ marginTop: 2, width: '100%' }}>
-              <InputLabel >Select Language</InputLabel>
-              <Select
-                id="outlined-multiline-flexible"
-                label="Language"
-                color='secondary'
-                name='language'
-                value={values.language}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              >
-                <MenuItem value={"Java"}>Java</MenuItem>
-                <MenuItem value={"C++"}>C++</MenuItem>
-                <MenuItem value={"C Sharp"}>C# (sharp)</MenuItem>
-                <MenuItem value={"C Language"}>C Language</MenuItem>
-                <MenuItem value={"Masm"}>Assembly (MASM)</MenuItem>
-                <MenuItem value={"Mips"}>Assembly (MIPS)</MenuItem>
-                <MenuItem value={"Python"}>Python</MenuItem>
-              </Select>
-            </FormControl>
-            {errors.language && touched.language ? (
-              <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.language}</p>
-            ) : null}
-            <br />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['DatePicker']} sx={{ width: '100%', marginTop: 0 }}>
-                <Box>
-                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Starting Date*</p>
-                  <Box sx={{marginTop:2}}>
-                    <DatePicker
-                      name='starting'
-                      id="starting"
-                      value={values.starting}
-                      onChange={(value) => setFieldValue("starting", value, true)}
-                      onBlur={handleBlur}
-                      label="Select Starting Date" />
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                    {errors.starting && touched.starting ? (
-                      <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.starting}</p>
+          <Box sx={{ display: 'flex',marginTop:3, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px' }}>
+            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
+                    <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Course Code</p>
+                    <TextField sx={{  width: '100%', marginTop:2 }}
+                    id="outlined-multiline-flexible"
+                    label="Enter Course Code"
+                    color='secondary'
+                    name='courseCode'
+                    value={values.courseCode}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    />{errors.courseCode && touched.courseCode ? (
+                    <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.courseCode}</p>
                     ) : null}
-                  </Box>
+                    <br />
+                </Box>
+                <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
+                    <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Course Name</p>   
+                    <TextField sx={{  width: '100%', marginTop:2 }}
+                    id="outlined-multiline-flexible"
+                    label="Enter Course Name"
+                    color='secondary'
+                    name='title'
+                    value={values.title}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+
+                    />{errors.title && touched.title ? (
+                    <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.title}</p>
+                    ) : null}
+                    <br />
+                </Box>
+            </Box>
+            <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between'}}>
+                <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
+                    <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Credit Hours</p>
+                    <TextField sx={{  width: '100%', marginTop:2 }}
+                    id="outlined-number"
+                    label="Enter Credit Hours"
+                    type="number"
+                    color='secondary'
+                    name='creditHours'
+                    value={values.creditHours}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    />{errors.creditHours && touched.creditHours ? (
+                    <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.creditHours}</p>
+                    ) : null}
+                    <br />
+                </Box>
+                <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
+                    <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Language</p>
+                    <FormControl sx={{ marginTop: 2, width: '100%' }}>
+                    <InputLabel >Select Language</InputLabel>
+                    <Select
+                        id="outlined-multiline-flexible"
+                        label="Select Language"
+                        color='secondary'
+                        name='language'
+                        value={values.language}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    >
+                        <MenuItem value={"Java"}>Java</MenuItem>
+                        <MenuItem value={"C++"}>C++</MenuItem>
+                        <MenuItem value={"C Sharp"}>C# (sharp)</MenuItem>
+                        <MenuItem value={"C Language"}>C Language</MenuItem>
+                        <MenuItem value={"Masm"}>Assembly (MASM)</MenuItem>
+                        <MenuItem value={"Mips"}>Assembly (MIPS)</MenuItem>
+                        <MenuItem value={"Python"}>Python</MenuItem>
+                    </Select>
+                    </FormControl>
+                    {errors.language && touched.language ? (
+                    <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.language}</p>
+                    ) : null}
+                    <br />
+                </Box>
+            </Box>
+            <Box>
+              <Box sx={{display:'flex', flexDirection:'column',width:'100%'}}>
+                    <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:3,padding:0, textAlign:'start', fontWeight:'bold'}}>Course Outline</p>
+                    <TextField sx={{  width: '100%', marginTop:2 }}
+                    id="outlined-multiline-flexible"
+                    label="Enter Course Description / Outline"
+                    color='secondary'
+                    multiline
+                    rows={3}
+                    name='description'
+                    value={values.description}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    />{errors.description && touched.description ? (
+                    <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.description}</p>
+                    ) : null}
+                    <br />
+              </Box>
+            </Box>
+            <LocalizationProvider dateAdapter={AdapterDayjs} >
+              <DemoContainer components={['DatePicker']} sx={{ width: '100%', marginTop: 0 }}>
+                <Box sx={{display:'flex', flexDirection:'row',width:'100%'}}>
+                    <Box sx={{display:'flex',flexDirection:'column', width:'100%'}}>
+                        <p style={{display:'flex',flexDirection:'row',marginBottom:5,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Starting Date</p>
+                        <Box sx={{marginTop:2,width:'100%'}}>
+                            <DatePicker
+                            name='starting'
+                            id="starting"
+                            value={values.starting}
+                            onChange={(value) => setFieldValue("starting", value, true)}
+                            onBlur={handleBlur}
+                            label="Select Starting Date" 
+                            slotProps={{ textField: { fullWidth: true,error: false, } }}/>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'row'}}>
+                            {errors.starting && touched.starting ? (
+                            <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.starting}</p>
+                            ) : null}
+                        </Box>
+                    </Box>
                 </Box>
                 <br />
-                <Box>
-                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Ending Date*</p>
+                <Box sx={{display:'flex', flexDirection:'column', width:'100%'}}>
+                <p style={{display:'flex',flexDirection:'row',marginBottom:5,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Ending Date</p>
                   <Box sx={{marginTop:2}}>
                     <DatePicker
                       name='ending'
@@ -267,9 +288,10 @@ function CreateCourse() {
                       value={values.ending}
                       onChange={(value) => setFieldValue("ending", value, true)}
                       onBlur={handleBlur}
-                      label="Select Ending Date" />
+                      label="Select Ending Date"
+                      slotProps={{ textField: { fullWidth: true,error: false, }, }} />
                   </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'row',}}>
                     {errors.ending && touched.ending ? (
                       <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.ending}</p>
                     ) : null}
@@ -277,21 +299,26 @@ function CreateCourse() {
                 </Box>
               </DemoContainer>
             </LocalizationProvider>
+
             <br />
-            <Box sx={{  fontWeight: 'bold', width: '100%',marginTop:1 }} >
-              <p style={{ fontWeight: 'bold',margin:0}}>Upload Picture* <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 1, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                Click to browse or <br />
-                Drag and Drop Files
-                <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
-              </Button></Button></p>
-             <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{imageError}</p>
+            <Box sx={{display:'flex', flexDirection:'row',width:'100%', justifyContent:'space-between'}}>
+                <Box sx={{  fontWeight: 'bold', width: '100%',marginTop:1 }} >
+                    <p style={{marginTop:0,marginBottom:10}}>Upload Picture*</p>
+                    <p style={{ fontWeight: 'bold',margin:0}}><Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                        <FcAddImage fontSize={45} style={{marginRight:19}}/>Click to browse or <br />Drag and Drop Files
+                        <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
+                    </Button></Button></p>
+                    <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row' }}>{imageError}</p>
+                </Box>
             </Box>
 
-            <Box sx={{ width: '100%', marginBottom: 5, marginTop: 4 }}>
-              <Button type='submit' onClick={() => { handleClick() }}
-                variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold',borderRadius: 2 }}>
-                {course === undefined ? 'Create Course' : 'Update Course'}
-              </Button>
+            <Box sx={{display:'flex',flexDirection:'row',justifyContent:'center',  marginBottom: 3, marginTop: 4 }}>
+              <Box sx={{width:'55%'}}>
+                <Button type='submit' onClick={() => { handleClick() }}
+                    variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold',borderRadius: 2 }}>
+                    {course === undefined ? 'Create Course' : 'Update Course'}
+                </Button>
+              </Box>
             </Box>
           </Box>
         </form>

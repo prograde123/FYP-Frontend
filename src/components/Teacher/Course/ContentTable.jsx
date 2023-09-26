@@ -38,14 +38,14 @@ function EditToolbar(props, courses) {
 
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => {
+      <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2, padding:1.5,borderRadius:7  }} variant="contained" color="secondary" onClick={() => {
         navigate("/Teacher/AddCourseContent/" + course._id, {
           state: { course: course },
         });
       }} startIcon={<AddIcon />}>
-        Add Course Content
+        Add lectures
       </Button>
-      <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, border: 2, borderColor: theme.palette.secondary.main }}>
+      <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
         <SearchBar value={searched}
           onChange={(searchVal) => requestSearch(searchVal)}
           onCancelSearch={() => cancelSearch()}
@@ -103,8 +103,8 @@ export default function Contents({ courses }) {
 
   const columns = [
     {
-      field: 'image', headerName: 'Image', renderCell: (params) => (
-        <img src="https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png" style={{ width: 50, height: 50, border: "1px solid purple", borderRadius: '50%' }} />
+      field: 'image', headerName: 'Image', width:100, renderCell: (params) => (
+        <img src="https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png" style={{ width: 50, height: 50, borderRadius: '20%' }} />
       )
     },
     { field: 'title', headerName: 'Title', width: 200, },
@@ -119,15 +119,14 @@ export default function Contents({ courses }) {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 230,
+      width: 250,
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
-            icon={<EditIcon sx={{color:'white'}} />}
+            icon={<EditIcon sx={{color:'#03ac13',fontSize:25,":hover":{fontSize:30}}}/>}
             label="Edit"
             className="textPrimary"
-            sx={{ backgroundColor: '#03ac13', padding:1, ":hover":{backgroundColor:"#03ac13", border:'4px solid #03ac13'}}}
             onClick={() => {
               navigate("/Teacher/AddCourseContent/" + course._id, {
                 state: { course: courses},
@@ -135,10 +134,9 @@ export default function Contents({ courses }) {
             }} 
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon sx={{color:'white'}}/>}
+            icon={<DeleteIcon sx={{color:'red',fontSize:25,":hover":{fontSize:30}}}/>}
             label="Delete"
             onClick={() => deleteCourseContent(id)}
-            sx={{ backgroundColor: "red",padding:1, ":hover":{backgroundColor:"red", border:'4px solid red'}}}
           />,
         ];
       },
@@ -148,12 +146,9 @@ export default function Contents({ courses }) {
   return (
     <Box
       sx={{
-        marginBottom: 4,
+        marginBottom: 5,
         height: "100vh",
         width: '100%',
-        marginLeft: 2,
-        marginRight: 2,
-        padding: 1,
 
         '& .actions': {
           color: theme.palette.secondary.main,
@@ -164,11 +159,12 @@ export default function Contents({ courses }) {
       }}
     >
       <DataGrid
-        sx={{
-          backgroundColor: theme.palette.primary.background, boxShadow: 12, border: 2, borderColor: theme.palette.secondary.main, '& .MuiDataGrid-cell:hover': {
-            color: theme.palette.secondary.main,
-          }, marginTop: 3, borderRadius: 6
-        }}
+       sx={{
+        backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
+          color: theme.palette.secondary.main,
+
+        }, marginTop: 3, borderRadius: 2, height:'100vh', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
+      }}
         rows={content}
         rowHeight={70}
         columns={columns}
@@ -189,7 +185,7 @@ export default function Contents({ courses }) {
         options={{
           search: true
         }}
-      // checkboxSelection
+      //checkboxSelection
       // disableRowSelectionOnClick
       />
     </Box>

@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import newtheme from "../../../Themenew";
 import { ThemeProvider } from "@mui/material/styles";
-import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Aos from "aos";
 import Grid from "@mui/material/Grid";
@@ -13,15 +12,6 @@ import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import { styled } from "@mui/material/styles";
-import DescriptionIcon from "@mui/icons-material/Description";
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
-import PersonIcon from "@mui/icons-material/Person";
-import LanguageIcon from "@mui/icons-material/Language";
-import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
-import Diversity3OutlinedIcon from '@mui/icons-material/Diversity3Outlined';
-import { Paper } from '@mui/material';
 import http from "../../../../Axios/axios";
 import { useTheme } from '@emotion/react';
 import EnrollCourseCard from "./EnrollCourseCard";
@@ -74,7 +64,6 @@ const BpCheckedIcon = styled(BpIcon)({
   },
 });
 
-// Inspired by blueprintjs
 function BpCheckbox(props) {
   return (
     <Checkbox
@@ -97,8 +86,10 @@ function ViewAllCourses() {
     const [courses, setCourses] = useState([]);
     
     async function getCourses() {
-        try {
-          const response = await http.get('/course/ViewAllAvailableCourses')
+      const user = JSON.parse(localStorage.getItem('User'))
+      console.log(user)  
+      try {
+          const response = await http.get('/course/ViewAllAvailableCourses/' + user._id)
           setCourses(response.data.courses)
           console.log(response.data.courses)
         } catch (e) {
@@ -334,7 +325,7 @@ function ViewAllCourses() {
               <Box sx={{display:'flex',flexDirection:'row',
                 flexWrap: 'wrap', }}>
                   {courses.map((card) => {
-                  return <EnrollCourseCard card={card}></EnrollCourseCard>;
+                  return <EnrollCourseCard key={card._id} card={card}></EnrollCourseCard>;
                 })}
               </Box>
             </Box>
