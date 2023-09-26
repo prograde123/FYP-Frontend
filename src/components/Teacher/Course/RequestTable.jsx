@@ -58,19 +58,23 @@ function EditToolbar(props) {
     };
 
     return (
-        <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-            <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/CreateCourse') }} startIcon={<AddIcon />}>
-                Accept All
-            </Button>
-            <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/CreateCourse') }} startIcon={<AddIcon />}>
-                Delete All
-            </Button>
-            <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, border: 2, borderColor: theme.palette.secondary.main }}>
-                <SearchBar value={searched}
-                    onChange={(searchVal) => requestSearch(searchVal)}
-                    onCancelSearch={() => cancelSearch()}
-                />
-            </Paper>
+        <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', marginRight: 4, justifyContent:'space-between' }}>
+                <Box>
+                    <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2,padding:1.5,borderRadius:7, fontWeight:'bold'}} variant="outlined" color="secondary" onClick={() => { navigate('/Teacher/CreateCourse') }} startIcon={<AddIcon />}>
+                        Accept All
+                    </Button>
+                    <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2,padding:1.5,borderRadius:7, fontWeight:'bold'}} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/CreateCourse') }} startIcon={<AddIcon />}>
+                        Delete All
+                    </Button>
+                </Box>
+                <Box>
+                    <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
+                        <SearchBar value={searched}
+                            onChange={(searchVal) => requestSearch(searchVal)}
+                            onCancelSearch={() => cancelSearch()}
+                        />
+                    </Paper>
+                </Box>
         </GridToolbarContainer>
 
     );
@@ -163,7 +167,7 @@ export default function Requests({ courses }) {
     return (
         <Box
             sx={{
-                marginBottom: 10,
+                marginBottom: 5,
                 height: "100vh",
                 
                 padding: 1,

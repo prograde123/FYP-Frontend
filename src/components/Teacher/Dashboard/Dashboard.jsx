@@ -12,54 +12,107 @@ import feedback from "../../../assets/feedback.svg";
 import welcome from "../../../assets/welcome.svg";
 import { FcComboChart } from "react-icons/fc";
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import AntDesignGrid from './CourseOverviewTable'
 
 function Dashboard() {
   const theme = useTheme();
+  const navigate = useNavigate()
 
+  //donut chart
+  const [pieChart,setPieChart] =React.useState({
+    series: [40, 65, 50,80],
+            options: {
+              chart: {
+                width: 380,
+                type: 'donut',
+              },
+              plotOptions: {
+                pie: {
+                  startAngle: -90,
+                  endAngle: 270,
+                  expandOnClick: true,
+                  donut: {
+                    labels:{
+                      show: true,
+                      total: {
+                      show: true,
+                      label: 'Completed',
+                      fontWeight:'bold',
+                      formatter: () => '25%'
+                      }
+                    },
+                    size: '70%'
+                  }
+                  
+                }
+              },
+              dataLabels: {
+                enabled: false
+              },
+              fill: {
+                type: 'gradient',
+              },
+              labels: ["Completed","In Progress","Not Completed","Not Started"],
+              legend: {
+                position: 'bottom',
+                fontSize: '14px',
+                fontWeight: 'bold',
+            },
+            colors: ["#ff0000", "#c758d0", "#24e4ac", "#007ed6"],
+             
+              title: {
+                text: 'Course Progress',
+                align:'center',
+              },
+              responsive: [{
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200
+                  },
+                  
+                }
+              }]
+            },
+  })
+
+  //bar chart
   const [newChart, setNewChart] = React.useState({
     series: [{
-      data: [44, 55, 41, 64, 22, 43, 21,53, 32, 33, 52, 13]
-    }, {
-      data: [53, 32, 33, 52, 13, 44, 32,44, 55, 41, 64, 22]
+      data: [750, 400, 348, 670, 1040, 580, 690, 1100, 1200, 1380,550,800]
     }],
     options: {
       chart: {
         type: 'bar',
-        height: 430
+        height: 350,
+        labels: ["Students Enrolled"],
+      },
+      title: {
+        text: 'Students With Time Sent Monthywise',
+        align:'center'
       },
       plotOptions: {
         bar: {
+          borderRadius: 8,
           horizontal: true,
-          dataLabels: {
-            position: 'top',
-          },
         }
       },
       dataLabels: {
         enabled: true,
-        offsetX: -6,
-        style: {
-          fontSize: '10px',
-          colors: ['#fff']
-        }
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['#fff']
-      },
-      tooltip: {
-        shared: true,
-        intersect: false
       },
       xaxis: {
-        categories: ["January", "Febraury", "March", "April", "June", "July", "August","September","October","November","December"],
+        categories: ['January', 'Febraury', 'March', 'April', 'May', 'June', 'July',
+          'August', 'September', 'October',"November","December"
+        ],
       },
+      colors: ["#c758d0"]
     },
   
   });
 
+  //assignments created small chart
   const [currentHours, setCurrentHours] = React.useState({
     series: [
       {
@@ -70,7 +123,7 @@ function Dashboard() {
           },
           {
             x: "Feb",
-            y: [32, 41],
+            y: [12, 41],
           },
           {
             x: "Mar",
@@ -78,15 +131,15 @@ function Dashboard() {
           },
           {
             x: "Apr",
-            y: [30, 46],
+            y: [9, 46],
           },
           {
             x: "May",
-            y: [32, 51],
+            y: [12, 51],
           },
           {
             x: "Jun",
-            y: [45, 65],
+            y: [25, 65],
           },
           {
             x: "Jul",
@@ -161,7 +214,8 @@ function Dashboard() {
   
 
   return (
-    <>
+    <Box sx={{ backgroundColor:theme.palette.primary.background,}}>
+    
       <Grid
         container
         spacing={2}
@@ -182,6 +236,7 @@ function Dashboard() {
             borderRadius: 3,
             marginLeft: 2,
             marginRight: 2,
+            overflow:'hidden'
           }}
         >
           <Box sx={{}}>
@@ -211,17 +266,19 @@ function Dashboard() {
               </p>
               <p style={{ marginTop: 3 }}>Progress is excellent!</p>
               <Button
-                variant="outlined"
+                variant="contained"
                 color="secondary"
                 startIcon={<FcComboChart style={{ fontSize: "27" }} />}
+                onClick={() => { navigate('/Teacher/CoursesList') }}
                 sx={{
                   // backgroundColor: theme.palette.secondary.main,
-                  color: theme.palette.secondary.main,
+                  color: theme.palette.primary.background,
                   padding: 1.5,
                   borderRadius: 10,
                   ":hover": {
-                    backgroundColor: theme.palette.secondary.main,
-                    color: theme.palette.primary.background,
+                    backgroundColor: theme.palette.primary.background,
+                    color: theme.palette.secondary.main,
+                    border:1
                   },
                 }}
               >
@@ -250,8 +307,8 @@ function Dashboard() {
         >
           <Box>
             <Chart
-              width="98%"
-              height="100%"
+              width="175"
+              height="215"
               options={{
                 plotOptions: {
                   radialBar: {
@@ -288,8 +345,8 @@ function Dashboard() {
               options={currentHours.options}
               series={currentHours.series}
               type="rangeBar"
-              width="98%"
-              height="98%"
+              width="97%"
+              height="182"
             />
           </Box>
         </Grid>
@@ -510,9 +567,27 @@ function Dashboard() {
 
       <Grid container spacing={2} sx={{marginTop:1}}>
         <Grid item xs={12} md={6} lg={4}>
-          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2}}>
+          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,height:'60vh',overflow:'hidden',':hover':{overflowY:'scroll'},borderRadius:2}}>
+            <p style={{marginTop:5,fontWeight:'bolder'}}>Popular Courses</p>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
+            {/* <Box sx={{ flexGrow: 1, marginBottom:3 }}>
+              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <p style={{marginTop:10, marginBottom:10,fontSize:16}}>Good</p>
+                <p style={{marginTop:10, marginBottom:10,fontSize:16,fontWeight:'bold'}}>80%</p>
+              </Box>
+              <BorderLinearProgress variant="determinate" value={80} sx={{  [`& .${linearProgressClasses.bar}`]: {
+                borderRadius: 5,
+                backgroundColor: theme.palette.mode === 'light' ? '#525ce5' : '#308fe8',
+              }}}/>
+            </Box> */}
+          </Box>
+        </Grid>
+
+
+        <Grid item xs={12} md={6} lg={4}>
+          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,borderRadius:2,height:'60vh'}}>
             <p style={{marginTop:5,fontWeight:'bolder'}}>Students Overview</p>
-            <hr style={{borderTop: '0.1px solid #D3D3D3'}}></hr>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
             <Box sx={{ flexGrow: 1, marginBottom:3 }}>
               <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 <p style={{marginTop:10, marginBottom:10,fontSize:16}}>Good</p>
@@ -576,14 +651,33 @@ function Dashboard() {
           </Box>
         </Grid>
 
+
+        <Grid item xs={12} md={6} lg={4}>
+          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,height:'60vh',overflow:'hidden',borderRadius:2}}>
+            <p style={{marginTop:5,fontWeight:'bolder'}}>Famous Instructors</p>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
+            <Box sx={{ flexGrow: 1, marginBottom:3 }}>
+              {/* <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <p style={{marginTop:10, marginBottom:10,fontSize:16}}>Good</p>
+                <p style={{marginTop:10, marginBottom:10,fontSize:16,fontWeight:'bold'}}>80%</p>
+              </Box>
+              <BorderLinearProgress variant="determinate" value={80} sx={{  [`& .${linearProgressClasses.bar}`]: {
+                borderRadius: 5,
+                backgroundColor: theme.palette.mode === 'light' ? '#525ce5' : '#308fe8',
+              }}}/> */}
+            </Box>
+             
+            
+          </Box>
+        </Grid>
       </Grid>
 
 
 
 
 
-      <Grid container spacing={2} sx={{marginTop:3,}}>
-        <Grid item xs={12} md={8} lg={7} sx={{border:'2px solid #ecf2ff', marginLeft:2, borderRadius:3}}>
+      <Grid container spacing={1} sx={{marginTop:3,}}>
+        <Grid item xs={12} md={8} lg={6.8} sx={{border:'2px solid #ecf2ff', borderRadius:2,marginRight:2, boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
           <Box>
             <Chart
               options={newChart.options}
@@ -594,8 +688,32 @@ function Dashboard() {
             />
           </Box>
         </Grid>
+        <Grid item xs={12} md={8} lg={5} sx={{border:'2px solid #ecf2ff',  borderRadius:2,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
+          <Box sx={{}}>
+            <Chart
+              options={pieChart.options}
+              series={pieChart.series}
+              type="donut"
+              // width="98%"
+              // height="100%"
+            />
+          </Box>
+        </Grid>
       </Grid>
-    </>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12} lg={12}>
+          <Box sx={{height:'73vh',borderRadius:2,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',marginTop:3,marginBottom:2,padding:2, overflow:'hidden'}}>
+            <p style={{marginTop:5,fontWeight:'bolder'}}>Courses Overview</p>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
+            <Box sx={{ flexGrow: 1, marginBottom:3 }}>
+              <AntDesignGrid />
+            </Box>
+            
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 

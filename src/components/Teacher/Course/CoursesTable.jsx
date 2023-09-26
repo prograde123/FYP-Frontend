@@ -132,7 +132,7 @@ useEffect(() => {
     },
     { field: 'name', headerName: 'Course Name', width: 230 },
     { field: 'teacher.user.fullName',valueGetter: params => params.row.teacher.user.fullName, headerName: 'Instructor', width: 150, },
-    { field: 'language', headerName: 'Language', width: 150, },
+    { field: 'language', headerName: 'Language', width: 140, },
     {
       field: 'startingDate',
       headerName: 'Started At',
@@ -182,7 +182,7 @@ useEffect(() => {
   ];
 
   return (
-    <Box sx={{ marginBottom: 10,
+    <Box sx={{ marginBottom: 5,
       height: "100vh", width: "100%" }}>
       <DataGrid 
         sx={{

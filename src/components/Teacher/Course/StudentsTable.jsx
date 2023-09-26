@@ -6,7 +6,6 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from '@emotion/react';
 import SearchBar from '@mkyy/mui-search-bar';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import {
     DataGrid,
@@ -58,10 +57,10 @@ function EditToolbar(props) {
 
     return (
         <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-            <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/StudentRequests') }} startIcon={<AddIcon />}>
+            <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2, padding:1.5,borderRadius:7  }} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/StudentRequests') }} startIcon={<AddIcon />}>
                 Add Students
             </Button>
-            <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, border: 2, borderColor: theme.palette.secondary.main }}>
+            <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
                 <SearchBar value={searched}
                     onChange={(searchVal) => requestSearch(searchVal)}
                     onCancelSearch={() => cancelSearch()}
@@ -130,7 +129,7 @@ export default function Students() {
     return (
         <Box
             sx={{
-                marginBottom: 10,
+                marginBottom: 5,
                 display:'flex',
                 height:'100vh',
                 padding: 1,

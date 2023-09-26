@@ -10,7 +10,7 @@ function ViewCourseContent() {
   const theme = useTheme()
   return (
     <>
-      <Typography variant='h5' sx={{ fontWeight: 'bold' }}>Avaliable Course Contents</Typography>
+      <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9,marginTop:0, display:'flex', flexDirection:'row', justifyContent:'center' }}><span className='underline'>Course Contents</span></p>
       <Contents />
     </>
 
