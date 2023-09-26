@@ -6,6 +6,7 @@ import SignUpTeacher from "./components/Teacher/Profile/SignUpTeacher";
 import SignUpStudent from "./components/Student/Profile/SignUpStudent";
 import ForgotPassword from "./components/ForgotPassword";
 import TeacherBody from "./components/Teacher/Body/TeacherBody";
+import AssignmentBody from "./components/Assignment/Body/AssigBody";
 import { useEffect } from "react";
 import StudentBody from "./components/Student/Body/StudentBody";
 import StartPage from "./components/LandingPage/StartPage";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/StudentSignUp" element={<SignUpStudent />} />
         <Route path="/Teacher/*" element={<TeacherBody />} />
         <Route path="ForgotPassword" element={<ForgotPassword />} />
+        <Route path="/Assignment/*" element={<AssignmentBody />} />
         <Route path="OTPVerification" element={<OTP />} />
         <Route path="/Student/*" element={<StudentBody />} />
         <Route path="/ContactUs" element={<ContactUs />} />

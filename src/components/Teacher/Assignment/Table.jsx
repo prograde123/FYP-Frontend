@@ -177,7 +177,7 @@ export default function Contents() {
             label="View"
             className="textPrimary"
             
-            onClick={()=>navigate(`/Teacher/ViewUploadedAssig/${courseID}/${id}`)}
+            onClick={()=>navigate(`/ViewUploadedAssig/${courseID}/${id}`)}
             sx={{ backgroundColor: '#ffa500', padding:1, ":hover":{backgroundColor:"#ffa500", border:'4px solid #ffa500'}}}
           />,
           <GridActionsCellItem

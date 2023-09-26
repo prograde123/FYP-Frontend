@@ -6,9 +6,12 @@ import Grid from "@mui/material/Grid";
 import { useTheme } from "@emotion/react";
 import http from "../../../../../Axios/axios";
 import { useLocation } from "react-router-dom";
+import storage from "../../../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 import { useNavigate } from 'react-router-dom';
 import Stack from "@mui/material/Stack";
+import { useEffect } from "react";
 
 
 export default function Submit() {
@@ -18,10 +21,13 @@ export default function Submit() {
 
   const AssignmentID = window.location.pathname.split("/").pop()
 
+  
+
     
   const [index, setIndex] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
+  const [userID ,setUserId] = useState(null);
   const [questionDescription, setQuestionDescription] = useState(
     Questions[index].questionDescription
   );
@@ -31,6 +37,12 @@ export default function Submit() {
   const [nextClick, setNextClick] = useState(false);
   const theme = useTheme();
   const nav = useNavigate()
+
+  useEffect(() =>{
+    const userJSON = localStorage.getItem('User')
+    const user = JSON.parse(userJSON);
+    setUserId(user.userID._id)
+  },[])
 
   const handleClick = async () => {
   
@@ -66,11 +78,11 @@ export default function Submit() {
     if(fileInput.current.value == ''){
       const confirmUpload = window.confirm("No file selected. Do you want to continue without uploading a file?");
       if (confirmUpload) {
-        nav(`/Teacher/ViewUploadedAssig/${courseID}/${AssignmentID}`)
+        nav(`/Assignment/ViewUploadedAssig/${courseID}/${AssignmentID}`)
       }
     }
     else{
-      nav(`/Teacher/ViewUploadedAssig/${courseID}/${AssignmentID}`)
+      nav(`/Assignment/ViewUploadedAssig/${courseID}/${AssignmentID}`)
 
     }
     
@@ -89,8 +101,22 @@ export default function Submit() {
     if(selectedFiles.length > 0){
       const FileSplit = selectedFiles[0].name.split('.')
       const FileFormat = `.${FileSplit[FileSplit.length - 1]}`
+      
 
        if(FileFormat === format){
+        const fileRef = ref(storage, `Submission/${AssignmentID}/${userID}/Q${index + 1}${format}`)
+        const uploadTask = uploadBytesResumable(fileRef, selectedFiles[0])
+        uploadTask.on('state_changed', (snapshot) => {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log(progress)
+        }, (error) => {
+          console.log("error")
+        }, () => {
+          console.log("success!")
+          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+            //useState
+          })
+        })
         for (let i = 0; i < selectedFiles.length; i++) {
           formData.append('files', selectedFiles[i]);
         }

@@ -47,19 +47,19 @@ function ViewCourse({courses}) {
   const [Ldate, setLdate] = React.useState('')
   const [instructor, setInstructor] = React.useState('')
   const [selectedTab, setSelectedTab] = useState('about');
-  const course = location.state.course
+  const course = location.state?.course
  
   React.useEffect(() => {
 
     // setCode(course.courseCode)
-    setCname(course.name)
+    setCname(course?.name)
     // setCDescription(course.description)
-    setCphoto(course.image)
+    setCphoto(course?.image)
     // setcreditHours(course.creditHours)
-    setLanguage(course.language)
-    setSdate(course.startingDate)
-    setLdate(course.endingDate)
-    setInstructor(course.teacher.user.fullName)
+    setLanguage(course?.language)
+    setSdate(course?.startingDate)
+    setLdate(course?.endingDate)
+    setInstructor(course?.teacher.user.fullName)
     // console.log(course.teacher.user)
 })
   
