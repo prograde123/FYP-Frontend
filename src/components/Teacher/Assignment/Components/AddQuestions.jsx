@@ -43,28 +43,29 @@ const handleClick = async () => {
     const newQuestion = {
       questionDescription: question,
       questionTotalMarks: questionTotalMarks,
-      testCases: testCases,
+      testCases: testCases.map((testCase) => ({
+        input: isTestcaseArray ? parseInput(testCase.input) : testCase.input,
+        output: testCase.output,
+      })),
       isInputArray: isTestcaseArray,
     };
 
-    console.log("new question " , newQuestion);
+    console.log("new question ", newQuestion);
 
     questions.push(newQuestion);
 
-
-    console.log("questions", questions)
+    console.log("questions", questions);
 
     setQuestion('');
     setQuestionTotalMarks(0);
     setIsTestcaseArray(false);
     setTestCases([{ input: "", output: "" }]);
-    
+
     setQuestionNumber(questionNumber + 1);
 
     if (questionNumber === totalQuestions - 1) {
-     
-      const respose  = await http.post("/assignment/addAssignment", { questions, assig });
-      if(respose.data.success){
+      const response = await http.post("/assignment/addAssignment", { questions, assig });
+      if (response.data.success) {
         alert("Assignment Created Successfully");
         navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
       }
@@ -73,6 +74,23 @@ const handleClick = async () => {
     alert("Please enter at least 1 test case, question, and total marks");
   }
 };
+
+
+const parseInput = (input) => {
+  try {
+    const parsedInput = JSON.parse(input);
+    
+    
+    if (Array.isArray(parsedInput)) {
+      return parsedInput;
+    }
+  } catch (error) {
+    
+    return [input];
+  }
+};
+
+
 
 
 
