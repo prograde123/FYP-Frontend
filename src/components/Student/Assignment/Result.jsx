@@ -85,16 +85,16 @@ const Result = () => {
                         justifyContent:'space-evenly'
                     }}>
                     
-                        <li key={testResult._id}>
+                        {testResult.actualOutput ? <li key={testResult._id}>
                         <Typography variant="body1">
                             Your Output: {testResult.actualOutput}
                         </Typography>
-                        </li>
-                        <li key={testResult._id}>
+                        </li> : <></>}
+                        {testResult.errorOutput != "" && <li key={testResult._id}>
                         <Typography variant="body1">
-                            Error Output: {testResult.errorOutput ? testResult.errorOutput : 'No error'}
+                            Error Output: { testResult.errorOutput }
                         </Typography>
-                        </li>
+                        </li>}
                         <li key={testResult._id}>
                         <Typography variant="body1">
                             Passed: {testResult.passed ? 'Yes' : 'No'}
