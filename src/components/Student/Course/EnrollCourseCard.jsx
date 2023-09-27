@@ -53,9 +53,7 @@ function EnrollCourseCard({ card }) {
         } catch (e) {
           console.log(e);
         }
-        console.lg("hi")
         setEnrollmentRequested(true);
-        getCourses();
     }
     React.useEffect(() => {
       getCourses();
