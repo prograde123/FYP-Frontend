@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { TbEdit } from "react-icons/tb";
 
 import {
   ProSidebar,
@@ -94,7 +95,7 @@ const Sidebar = ({
             title={"Courses"}
             icon={<SiCoursera size={20} />}
           >
-            <MenuItem style={{fontSize:16}} icon={<IoIosCreate size={20}/>} onClick={() => { navigate('/Teacher/CreateCourse') }}>Create Course</MenuItem>
+            <MenuItem style={{fontSize:16}} icon={<TbEdit size={20}/>} onClick={() => { navigate('/Teacher/CreateCourse') }}>Create Course</MenuItem>
             <MenuItem style={{fontSize:16}} icon={<LuView size={20}/>} onClick={() => { navigate('/Teacher/CoursesList') }}>View All Courses</MenuItem>
             {/* <MenuItem style={{fontSize:16}} icon={<PiStudent size={20}/>} onClick={() => { navigate('/Teacher/StudentList') }}>Students</MenuItem>
             <MenuItem style={{fontSize:16}} icon={<SlPeople size={20}/>} onClick={() => { navigate('/Teacher/StudentRequests') }}>Requests</MenuItem> */}

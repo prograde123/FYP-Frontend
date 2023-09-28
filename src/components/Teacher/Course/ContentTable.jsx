@@ -9,6 +9,10 @@ import { useTheme } from '@emotion/react';
 import SearchBar from '@mkyy/mui-search-bar';
 import {DataGrid, GridToolbarContainer, GridActionsCellItem} from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
+import { TbEdit } from "react-icons/tb";
+import { LuView } from "react-icons/lu";
+import { VscNewFile } from "react-icons/vsc";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { Paper } from '@mui/material';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -42,7 +46,7 @@ function EditToolbar(props, courses) {
         navigate("/Teacher/AddCourseContent/" + course._id, {
           state: { course: course },
         });
-      }} startIcon={<AddIcon />}>
+      }} startIcon={<VscNewFile style={{fontSize:25, paddingLeft:5}} />}>
         Add lectures
       </Button>
       <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
@@ -124,7 +128,7 @@ export default function Contents({ courses }) {
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
-            icon={<EditIcon sx={{color:'#03ac13',fontSize:25,":hover":{fontSize:30}}}/>}
+            icon={<TbEdit style={{color:theme.palette.secondary.main, fontSize:25,":hover":{fontSize:30}}}/>}
             label="Edit"
             className="textPrimary"
             onClick={() => {
@@ -134,7 +138,7 @@ export default function Contents({ courses }) {
             }} 
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon sx={{color:'red',fontSize:25,":hover":{fontSize:30}}}/>}
+            icon={<RiDeleteBin5Line style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
             label="Delete"
             onClick={() => deleteCourseContent(id)}
           />,

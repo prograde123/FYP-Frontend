@@ -113,7 +113,7 @@ const CreateCourseContent = ({ courses }) => {
             <Box sx={{ display: 'flex',marginTop:3, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px' }}>
               <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
-                  <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:20,padding:0, textAlign:'start', fontWeight:'bold'}}>Lecture Number : </p>
+                  <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:20,padding:0, textAlign:'start', fontWeight:'bold'}}>Lecture Number</p>
                   <TextField sx={{ marginTop: 2}}
                     id="outlined-adornment-name"
                     type="number"
@@ -132,7 +132,7 @@ const CreateCourseContent = ({ courses }) => {
                   ) : null}
                 </Box>
                 <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
-                    <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:20,padding:0, textAlign:'start', fontWeight:'bold'}}>Lecture Title : </p>
+                    <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:20,padding:0, textAlign:'start', fontWeight:'bold'}}>Lecture Title</p>
                     <TextField sx={{ marginTop: 2,}}
                     id="outlined-adornment-name"
                     color='secondary'
@@ -147,7 +147,7 @@ const CreateCourseContent = ({ courses }) => {
                   ) : null}
                 </Box>
               </Box>
-              <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:13,padding:0, textAlign:'start', fontWeight:'bold'}}>Select File : </p>
+              <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:13,padding:0, textAlign:'start', fontWeight:'bold'}}>Select File</p>
               <FormControl sx={{ marginTop: 2,marginBottom: 1  }} fullWidth>
                 <InputLabel id="demo-simple-select-label" color='secondary'>File Type</InputLabel>
                 <Select
@@ -171,7 +171,7 @@ const CreateCourseContent = ({ courses }) => {
               ) : null}
               
               <Box sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }} >
-                <p style={{marginTop:0,marginBottom:10}}>Upload File :</p>
+                <p style={{marginTop:0,marginBottom:10}}>Upload File*</p>
                 <p style={{ fontWeight: 'bold',margin:0}}><Button variant="outlined" component="label"
                     color='secondary' sx={{
                       width: '100%', padding: 2,

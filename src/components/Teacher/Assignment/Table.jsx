@@ -11,6 +11,10 @@ import SearchBar from '@mkyy/mui-search-bar';
 import DownloadIcon from '@mui/icons-material/Download';
 import http from '../../../../Axios/axios'
 import { delAssignment } from '../../../../Axios/assigAxios';
+import { TbEdit } from "react-icons/tb";
+import { LuView } from "react-icons/lu";
+import { VscNewFile } from "react-icons/vsc";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -73,10 +77,10 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2 }} variant="contained" color="secondary" onClick={() => { navigate(`/Teacher/AddAssignment/${courseID}`) }} startIcon={<AddIcon />}>
+      <Button startIcon={<VscNewFile style={{fontSize:25}}/>} sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2, padding:1.5,borderRadius:7}} variant="contained" color="secondary" onClick={() => { navigate(`/Teacher/AddAssignment/${courseID}`) }}>
         Add Assignment
       </Button>
-      <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, border: 1, borderColor: theme.palette.secondary.main }}>
+      <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
         <SearchBar value={searched}
           onChange={(searchVal) => requestSearch(searchVal)}
           onCancelSearch={() => cancelSearch()}
@@ -138,7 +142,7 @@ export default function Contents() {
     {
         field: 'imageUrl', headerName: 'File', renderCell: (params) => (
           <img src='https://w7.pngwing.com/pngs/521/255/png-transparent-computer-icons-data-file-document-file-format-others-thumbnail.png' 
-          style={{ width: 50,height: 50, border: "1px solid purple", borderRadius: '50%' }} 
+          style={{ width: 50,height: 50, borderRadius: '20%' }} 
         /*  onClick={() => {
             navigate(" " + id, {
               state: { Assignment: Assignment.find(c =>  c._id === id) },
@@ -167,39 +171,32 @@ export default function Contents() {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 160,
+      width: 220,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
         return [
             <GridActionsCellItem
-            icon={<VisibilityIcon sx={{color:'white'}} />}
+            icon={<LuView style={{color:theme.palette.secondary.main, fontSize:25,":hover":{fontSize:30}}}/>}
             label="View"
-            className="textPrimary"
-            
             onClick={()=>navigate(`/ViewUploadedAssig/${courseID}/${id}`)}
-            sx={{ backgroundColor: '#ffa500', padding:1, ":hover":{backgroundColor:"#ffa500", border:'4px solid #ffa500'}}}
           />,
           <GridActionsCellItem
-            icon={<EditIcon sx={{color:'white'}}/>}
-            label="Edit"
-            className="textPrimary"
+          icon={<TbEdit style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
+          label="Edit"
             onClick={() => {
               navigate(`/Teacher/AddAssignment/${courseID}`, {
                 // state: { course: courses.find(c =>  c._id === id) },
                 state: { assig: rows.find(row =>  row._id === id) },
               });
             }} 
-            sx={{ backgroundColor: '#03ac13', padding:1, ":hover":{backgroundColor:"#03ac13", border:'4px solid #03ac13'}}}
-
+            
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon sx={{color:'white'}}/>}
-            label="Delete"
+          icon={<RiDeleteBin5Line style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
+          label="Delete"
             onClick={handleDeleteClick(id)}
-
-            sx={{ backgroundColor: "red",padding:1, ":hover":{backgroundColor:"red", border:'4px solid red'}}}       
-           />,
+            />,
           
         ];
       },
@@ -207,13 +204,14 @@ export default function Contents() {
   ];
 
   return (
-    <Box sx={{ height: '100vh', width: "100%" }}>
-      <DataGrid
+    <Box sx={{ marginBottom: 5,
+      height: "100vh", width: "100%" }}>
+      <DataGrid 
         sx={{
-          backgroundColor: theme.palette.primary.background, boxShadow: 12, border: 2, borderColor: theme.palette.secondary.main, '& .MuiDataGrid-cell:hover': {
+          backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
             color: theme.palette.secondary.main,
 
-          }, marginTop: 3, borderRadius: 6,
+          }, marginTop: 3, borderRadius: 2, height:'100vh', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
         }}
         rows={rows}
         rowHeight={70}

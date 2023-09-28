@@ -8,9 +8,9 @@ import Contents from './Table';
 function ViewUploadedAssigList() {
   const theme = useTheme()
   return (
-    <Box sx = {{marginLeft:'3%' }}>
-      <Typography variant='h5' sx={{ fontWeight: 'bold' }}>Avaliable Assignments</Typography>
-      <Contents   />
+    <Box sx={{backgroundColor:theme.palette.primary.background}}>
+    <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9,marginTop:0, display:'flex', flexDirection:'row', justifyContent:'center' }}><span className='underline'>Available Assignments</span></p>
+    <Contents   />
     </Box>
 
   );
