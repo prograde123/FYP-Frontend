@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Grid from "@mui/material/Grid";
 import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
@@ -14,7 +14,8 @@ import { FcComboChart } from "react-icons/fc";
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import AntDesignGrid from './CourseOverviewTable'
+import AntDesignGrid from './CourseOverviewTable';
+import profile from '../../../../src/assets/profile.png';
 
 function Dashboard() {
   const theme = useTheme();
@@ -203,7 +204,20 @@ function Dashboard() {
       },
     },
   });
+  const [profileData, setProfileData] = React.useState(null)
 
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+        const userJSON = await localStorage.getItem('User')
+        const user = JSON.parse(userJSON);
+        setProfileData(user)
+        
+    }
+
+    fetchProfile()
+    
+  },[])
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 8,
     borderRadius: 5,
@@ -254,10 +268,10 @@ function Dashboard() {
                 }}
                 height={40}
                 width={40}
-                src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"
+                src={profileData?.user?.profilePic ? profileData.user.profilePic : profile }
               />
               <p style={{ fontWeight: "bolder", fontSize: 22, marginTop: 7 }}>
-                Welcome, John Doe!
+                Welcome, {profileData ? profileData.user.fullName : 'User'}
               </p>
             </Box>
             <Box>

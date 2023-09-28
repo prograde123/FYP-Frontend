@@ -19,7 +19,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import {Menu, MenuItem} from '@mui/material';
 import newtheme from '../../Themenew'
 import { Link } from '@mui/material';
-
+import profile from '../../assets/profile.png'
 import PersonIcon from '@mui/icons-material/Person';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
@@ -38,8 +38,12 @@ export default function DrawerAppBar() {
     localStorage.removeItem("User", JSON.stringify([]));
     return navigate('/SignIn')
   }
+  const [profileData, setProfileData ] = React.useState(null)
   React.useEffect(()=>{
     Aos.init({duration:2500});
+    const  userJSON = localStorage.getItem("User")
+    const user = JSON.parse(userJSON)
+    setProfileData(user)
   },[])
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -230,7 +234,7 @@ export default function DrawerAppBar() {
                         >C</MenuItem>
                         
                 </Menu>
-                <Button className="fontlink" onClick={()=>{navigate('/ContactUs')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
                   Reports
                 </Button>
                 <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}}>
@@ -245,8 +249,10 @@ export default function DrawerAppBar() {
             }}
             height={40}
             width={40}
-            src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"
-          ></img>
+            src={
+              profileData?.userID?.profilePic ? profileData.userID.profilePic :
+              profile}
+            />
                 </IconButton>
                 <Menu
                 anchorE2={anchorE2profile}

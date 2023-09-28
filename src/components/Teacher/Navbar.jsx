@@ -8,6 +8,8 @@ import InputBase from "@mui/material/InputBase";
 import Typography from "@mui/material/Typography";
 import { Box} from "@mui/material";
 import "../../style.scss";
+import profile from "../../assets/profile.png"
+
 import IconButton from '@mui/material/IconButton';
 import { useEffect } from "react";
 import {
@@ -62,11 +64,15 @@ function Navbar() {
   }));
 
   const [user, setUser] = React.useState();
+  const [profileData, setProfileData] = React.useState(null)
   function getUser() {
     const user = localStorage.getItem("User");
     setUser(JSON.parse(user));
+    setProfileData(JSON.parse(user))
   }
- 
+
+
+
 
   useEffect(() => {
     getUser();
@@ -176,8 +182,8 @@ function Navbar() {
             }}
             height={40}
             width={40}
-            src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"
-          ></img>
+            src={profileData?.user.profilePic ? profileData.user.profilePic : profile }
+            />
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 0 }}
           >
@@ -187,7 +193,7 @@ function Navbar() {
                 fontWeight: "bold",
               }}
             >
-              John Doe
+              {profileData ? profileData.user.fullName : 'User'}
             </Typography>
             <Typography sx={{ fontSize: 15 }}>Teacher</Typography>
           </Box>

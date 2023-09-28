@@ -68,11 +68,13 @@ export const login = async (email, password) => {
     if(response.status === 200 && response.data.teacher?.user.role == "Teacher") {
       localStorage.setItem("User", JSON.stringify(response.data.teacher));
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("loggedIn" , true)
       window.location.href = '/Teacher/Dashboard'
     }
     else if(response.status === 200 && student == "Student"){
       localStorage.setItem("User", JSON.stringify(response.data.Student));
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("loggedIn" , true)
       window.location.href = '/Student/Home'
     }
     else{
