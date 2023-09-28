@@ -8,6 +8,10 @@ import { useTheme } from '@emotion/react';
 import SearchBar from '@mkyy/mui-search-bar';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import http from "../../../../Axios/axios";
+import { RiUserAddLine } from "react-icons/ri";
+import { LuView } from "react-icons/lu";
+import { VscNewFile } from "react-icons/vsc";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import {
     DataGrid,
@@ -131,34 +135,39 @@ export default function Requests({ courses }) {
     };
 
     const columns = [
-        {
-            field: 'imageUrl', headerName: 'Avatar', renderCell: (params) => (
-                <img src={params.row.imageUrl} style={{ width: 50, borderRadius: '50%' }} />
-            )
-        },
         { field: 'userName', headerName: 'Name', width: 300 },
-        { field: 'email', headerName: 'Email', width: 300 },
+        { field: 'email', headerName: 'Email Address', width: 300 },
         {
             field: 'actions',
             type: 'actions',
-            headerName: 'Accept',
+            headerName: 'Accept Request',
             width: 230,
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 return [
-                    <Button onClick={()=>{acceptRequest(id)}} sx={{color:"#03ac13" ,padding:1,borderRadius:6, ":hover":{border:'4px solid #03ac13'}}}  variant="outlined"  startIcon={<PersonAddIcon sx={{color:'#03ac13'}}/>}>Accept</Button>
+                    <GridActionsCellItem
+                        icon={<RiUserAddLine style={{color:theme.palette.secondary.main, fontSize:28}}/>}
+                        label="Edit"
+                        className="textPrimary"
+                        onClick={()=>{acceptRequest(id)}} 
+                    />
                 ];
             },
         },
         {
             field: 'action',
             type: 'actions',
-            headerName: 'Decline',
+            headerName: 'Decline Request',
             width: 230,
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 return [
-                    <Button  sx={{ backgroundColor: "red",padding:1,borderRadius:6, ":hover":{backgroundColor:"red", border:'4px solid red'}}} variant="contained" onClick={handleDeleteClick(id)}  startIcon={<DeleteIcon sx={{color:'white'}} />}>Decline</Button>
+                    <GridActionsCellItem
+                        icon={<RiDeleteBin5Line style={{color:theme.palette.secondary.main, fontSize:28}}/>}
+                        label="Edit"
+                        className="textPrimary"
+                        onClick={()=>{acceptRequest(id)}} 
+                    />    
                 ];
             },
         },
@@ -181,7 +190,7 @@ export default function Requests({ courses }) {
         >
             <DataGrid
                 sx={{
-                    backgroundColor: theme.palette.primary.background,'& .MuiDataGrid-cell:hover': {
+                    backgroundColor: theme.palette.primary.background,paddingX:4,'& .MuiDataGrid-cell:hover': {
                         color: theme.palette.secondary.main,
                     }, marginTop: 3, borderRadius: 2,height: '100vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
                 }}

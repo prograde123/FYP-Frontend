@@ -9,6 +9,10 @@ import { useEffect, useState } from "react";
 import { DataGrid, GridToolbarContainer, GridActionsCellItem } from '@mui/x-data-grid';
 import { randomCreatedDate, randomId } from '@mui/x-data-grid-generator';
 import { useNavigate } from 'react-router-dom';
+import { TbEdit } from "react-icons/tb";
+import { LuView } from "react-icons/lu";
+import { VscNewFile } from "react-icons/vsc";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { Paper } from '@mui/material';
 import http from "../../../../Axios/axios";
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
@@ -49,7 +53,7 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2, padding:1.5,borderRadius:7 }} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/CreateCourse') }} startIcon={<AddIcon />}>
+      <Button sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2, padding:1.5,borderRadius:7}} variant="contained" color="secondary" onClick={() => { navigate('/Teacher/CreateCourse') }} startIcon={<VscNewFile style={{fontSize:25}} />}>
         Create Course
       </Button>
       <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
@@ -153,7 +157,7 @@ useEffect(() => {
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
-            icon={<VisibilityOutlinedIcon sx={{color:'#ffa500', fontSize:25,":hover":{fontSize:30}}}/>}
+            icon={<LuView style={{color:theme.palette.secondary.main, fontSize:25,":hover":{fontSize:30}}}/>}
             label="View"
             onClick={() => {
               navigate("/Teacher/CourseDetails/" + id, {
@@ -163,7 +167,7 @@ useEffect(() => {
             
           />,
           <GridActionsCellItem
-            icon={<BorderColorOutlinedIcon sx={{color:'#03ac13',fontSize:25,":hover":{fontSize:30}}}/>}
+            icon={<TbEdit style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
             label="Edit"
            onClick={() => {
               navigate("/Teacher/CreateCourse", {
@@ -172,7 +176,7 @@ useEffect(() => {
             }} 
           />,
           <GridActionsCellItem
-            icon={<DeleteOutlinedIcon sx={{color:'red',fontSize:25,":hover":{fontSize:30}}}/>}
+            icon={<RiDeleteBin5Line style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
             label="Delete"
             onClick={()=>deleteCourse(id)}
           />,
