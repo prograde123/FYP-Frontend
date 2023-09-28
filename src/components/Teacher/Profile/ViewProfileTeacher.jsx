@@ -87,6 +87,7 @@ function ViewProfile() {
    const handlelogout = async () =>{
       await localStorage.removeItem("User")
       await localStorage.removeItem("token");
+       localStorage.removeItem("loggedIn")
       navigate('/SignIn')
    }
   const [profileData, setProfileData] = React.useState(null)

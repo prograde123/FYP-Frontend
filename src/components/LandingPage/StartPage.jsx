@@ -21,9 +21,10 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 import GradeIcon from '@mui/icons-material/Grade';
 import Aos from 'aos';
 import 'aos/dist/aos.css'
-import DrawerAppBar from "./Navbar";
+import StartPageBar from "./Navbar";
 import '../../App.css'
 import Footer from './Footer';
+import DrawerAppBar from '../Student/Navbar';
 
 function StartPage() {
   // const newtheme = useTheme()
@@ -57,16 +58,33 @@ function StartPage() {
   }];
   React.useEffect(() => {
     Aos.init({ duration: 2500 });
+    getUser()
   }, [])
 
   const animation = keyframes`
    0% { transform: translateX(-100%); opacity: 0; }
    100% { transform: translateX(0); opacity: 1; }
   `;
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+
+  const getUser = async() =>{
+    const checkLogin = await localStorage.getItem('loggedIn');
+    if(checkLogin) {
+      setIsLoggedIn(true)
+    }
+  }
+
+
   return (
     <ThemeProvider theme={newtheme}>
       <Box>
-        <DrawerAppBar />
+        {
+          isLoggedIn ? 
+          <DrawerAppBar /> :
+          <StartPageBar />
+          }
       </Box>
       <Box
         data-aos="fade-down"

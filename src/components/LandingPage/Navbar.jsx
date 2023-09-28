@@ -28,7 +28,7 @@ const drawerWidth = 200;
 
 const navItems = ['Home', 'Courses', 'About', 'Contact',];
 
-export default function DrawerAppBar() {
+export default function StartPageBar() {
   const navigate = useNavigate();
   React.useEffect(()=>{
     Aos.init({duration:2500});
