@@ -179,7 +179,7 @@ export default function Contents() {
             <GridActionsCellItem
             icon={<LuView style={{color:theme.palette.secondary.main, fontSize:25,":hover":{fontSize:30}}}/>}
             label="View"
-            onClick={()=>navigate(`/Assignment/ViewUploadedAssig/${courseID}/${id}`)}
+            onClick={()=>navigate(`/Teacher/ViewUploadedAssig/${courseID}/${id}`)}
           />,
           <GridActionsCellItem
           icon={<TbEdit style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}

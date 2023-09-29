@@ -20,7 +20,7 @@ import Backdrop from '@mui/material/Backdrop';
 
 
 
-const ViewUploadedAssig = ()=> {
+const ViewUploadedTeacherAssig = ()=> {
     
     const { cid, aid } = useParams();
     const navigate = useNavigate();
@@ -277,4 +277,4 @@ useEffect(() => {
      </>
     )
 }
-export default ViewUploadedAssig
+export default ViewUploadedTeacherAssig

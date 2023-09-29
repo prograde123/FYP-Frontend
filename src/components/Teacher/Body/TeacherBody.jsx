@@ -22,6 +22,7 @@ import ViewUploadedAssigList from "../Assignment/ViewUploadedAssigList";
 import ViewUploadedAssig from "../Assignment/ViewUploadedAssignment";
 
 import PDFViewer from "../Assignment/pdf";
+import ViewUploadedTeacherAssig from "../Assignment/ViewUploadedAssignment";
 
 export default function TeacherBody() {
   const theme = useTheme();
@@ -97,6 +98,11 @@ export default function TeacherBody() {
                 path="ViewUploadedAssigList/:id"
                 element={<ViewUploadedAssigList />}
               ></Route>
+
+              <Route
+                path="ViewUploadedAssig/:cid/:aid"
+                element= {<ViewUploadedTeacherAssig />}
+              />
 
               <Route
                 path="ViewUploadedAssig/Pdf"

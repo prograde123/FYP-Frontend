@@ -9,17 +9,17 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import http from '../../../Axios/axios';
+import http from '../../../../Axios/axios';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { delAssignment } from '../../../Axios/assigAxios';
+import { delAssignment } from '../../../../Axios/assigAxios';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
-import DrawerAppBar from '../Student/Navbar';
-import Sidebar from '../Teacher/Sidebar';
-import Navbar from '../Teacher/Navbar';
+import DrawerAppBar from '../Navbar';
+import Sidebar from '../../Teacher/Sidebar';
+import Navbar from '../../Teacher/Navbar';
 
 
 
@@ -142,63 +142,12 @@ useEffect(() => {
           display: "flex",
         }}
       >
-     {isTeacher ? 
-     <>
-       
-        
-        <Sidebar 
-            image={image}
-            collapsed={collapsed}
-            toggled={toggled}
-            handleToggleSidebar={handleToggleSidebar}
-            handleCollapsedChange={handleCollapsedChange}
-        />
-
-        
-
-        
-        
-        
-       </>
-         :   <DrawerAppBar/>
-         }
-     <Box component='main' sx={{mt:'4.5%',overflow: 'auto',flexGrow:1, p:3, 
+     <Box component='main' sx={{overflow: 'auto',flexGrow:1, p:3, 
     }}>
         <Box sx={{display:'flex', flexDirection:'row'}}>
            <Box> 
             <Typography variant='h4' sx={{fontWeight:'bold', padding:1, 
            paddingBottom:1,}}>Assignment : {assig.assignmentNumber}</Typography> </Box>
-          {
-          isTeacher && (
-            <>
-            <Button 
-               variant="contained" color="secondary" 
-                sx={{
-                paddingY: 1, fontSize: 16, 
-                paddingX:'3%',
-                fontWeight: 'bold',marginLeft:'38%' }}
-                onClick={() => navigate(`/Teacher/AddAssignment/${cid}`
-                , {
-                    // state: { course: courses.find(c =>  c._id === id) },
-                    state: { assig: assig },
-                  })
-            }
-                >
-                Edit
-            </Button>
-            <Button 
-               variant="contained" color="error" 
-                sx={{ 
-                paddingY: 1, fontSize: 16,
-                paddingX:'3%',
-                fontWeight: 'bold' ,marginLeft:'5%'}}
-                onClick={handleDeleteClick(assig._id)}
-                >
-                Delete
-            </Button>
-            </>
-          )
-            }
         </Box>
         <Box sx={{marginTop:'2%'}}>
             <Typography variant='p' sx={{ padding:2}}>{assig.description}</Typography>
@@ -298,7 +247,7 @@ useEffect(() => {
         </Box>
         <Box sx={{display:'flex', justifyContent:'center'}}>
         <Button
-                variant="contained" color="secondary" 
+                variant="contained" color="primary" 
                 sx={{
                   
                   padding: 2, fontSize: 16, marginLeft: '3%',marginTop:'3%',
