@@ -34,7 +34,7 @@ export default function AssignmentCard({Assignment , CourseId}) {
         backgroundColor: (theme) =>
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }}
-      onClick={() => nav(`/Assignment/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
+      onClick={() => nav(`/Student/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
     >
       <Grid container spacing={2} >
         <Grid item>
