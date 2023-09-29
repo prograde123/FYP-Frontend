@@ -13,6 +13,7 @@ import ViewAllCourses from '../Course/ViewAllCourses';
 import EnrollCourseCard from '../Course/EnrollCourseCard';
 import Submit from '../Assignment/Components/SubmitQuestions';
 import Result from '../Assignment/Result';
+import ViewUploadedAssig from '../Assignment/ViewUploadedAssignment';
 
 const StudentBody = () => {
   return (
@@ -29,6 +30,7 @@ const StudentBody = () => {
             <Route path="/ViewCourse/:id" element={<ViewCourse />} />
             <Route path="/AllCourses" element={<ViewAllCourses/>} />
             <Route path="/AllCoursesCard" element={<EnrollCourseCard/>} />
+            <Route path='/ViewUploadedAssig/:cid/:aid' element={<ViewUploadedAssig />} />
             <Route path="/SubmitAssignment/:aid" element= {<Submit />} />
             <Route path='/Result/:aid' element={<Result />} />
           </Routes>
