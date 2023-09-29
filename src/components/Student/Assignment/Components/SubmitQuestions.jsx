@@ -78,11 +78,11 @@ export default function Submit() {
     if(fileInput.current.value == ''){
       const confirmUpload = window.confirm("No file selected. Do you want to continue without uploading a file?");
       if (confirmUpload) {
-        nav(`/Assignment/ViewUploadedAssig/${courseID}/${AssignmentID}`)
+        nav(`/Student/ViewUploadedAssig/${courseID}/${AssignmentID}`)
       }
     }
     else{
-      nav(`/Assignment/ViewUploadedAssig/${courseID}/${AssignmentID}`)
+      nav(`/Student/ViewUploadedAssig/${courseID}/${AssignmentID}`)
 
     }
     
