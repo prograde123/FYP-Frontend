@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import { Grid } from "@mui/material";
+import { Grid, Radio, RadioGroup  } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
@@ -13,6 +13,8 @@ import Checkbox from '@mui/material/Checkbox';
 import http from "../../../../../Axios/axios";
 import { CgAddR } from "react-icons/cg";
 import { GiConfirmed } from "react-icons/gi";
+import { FcAddImage } from 'react-icons/fc';
+import { GrNotes } from 'react-icons/gr';
 
 import { RiDeleteBin5Line } from "react-icons/ri";
 
@@ -24,14 +26,39 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   const [questionTotalMarks, setQuestionTotalMarks] = useState(0);
   const [isTestcaseArray, setIsTestcaseArray] = useState(false);
   const [testCases, setTestCases] = useState([{ input: "", output: "" }]);
+  //solution code only input test case
+  const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
+
+
+  //for radio button testcase option
+  const [selectedOption, setSelectedOption] = useState('');
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  //checkbox for input array option
+  const handleSold = (event) => {
+    setIsTestcaseArray(event.target.checked);
+  };
 
   const navigate = useNavigate();
   const theme = useTheme();
 
-
   const handleAddTestCase = () => {
     // Adding new test case
     setTestCases([...testCases, { input: "", output: "" }]);
+  };
+
+  const handleAddInput=()=>{
+     // Adding new input test case
+     setInputTestCases([...inputTestCases, { input: ""}]);
+  }
+
+  const handleRemoveInputTestCase = (index) => {
+    // Remove the input test case at the specified index
+    const updatedTestCases = [...inputTestCases];
+    updatedTestCases.splice(index, 1);
+    setInputTestCases(updatedTestCases);
   };
 
   const handleRemoveTestCase = (index) => {
@@ -40,9 +67,7 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
     updatedTestCases.splice(index, 1);
     setTestCases(updatedTestCases);
   };
-  const handleSold = (event) => {
-    setIsTestcaseArray(event.target.checked);
-      };
+
 const handleClick = async () => {
   if (testCases[0].input !== "" && testCases[0].output !== "" && question !== "") {
     const newQuestion = {
@@ -101,8 +126,8 @@ const parseInput = (input) => {
 
   return (
    <Box sx={{marginLeft:2,marginRight:2}}>
-    <p style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 1, fontSize:25, display:'flex', flexDirection:'row',justifyContent:'center' }}><span className='underline'>Add Questions</span> </p>
-     <Box sx={{ display: 'flex',marginTop:3,marginBottom:5, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px' }}>
+    <p style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 1, fontSize:25, display:'flex', flexDirection:'row',justifyContent:'center' }}><span className='underline'>Add Question</span> </p>
+     <Box sx={{ display: 'flex',marginTop:3,marginBottom:5, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset' }}>
      <Grid container spacing={2} sx={{ marginTop:2}}>
         <p style={{fontWeight:'bold',fontSize:20,marginLeft:15,marginTop:0,marginBottom:0}}>
             Write Description of Question # {questionNumber + 1}
@@ -132,18 +157,46 @@ const parseInput = (input) => {
             />
         </Grid>
         <Grid item lg={6}>
-          <Box sx={{marginLeft:7}}>
-            <p style={{fontWeight:'bold',fontSize:18,marginTop:10,marginBottom:0}}>
-                Select Box for Input Array
-            </p>
+          <Box sx={{marginTop:5.5}}>
             <FormControlLabel
-                sx={{paddingTop:1}}
-                label="Is Input Array?"
+                sx={{paddingTop:1, fontSize:20}}
+                label="Select Box for Input Array"
                 control={<Checkbox checked={isTestcaseArray} onChange={handleSold} color='secondary' />}
             />
           </Box>
         </Grid>
-      {testCases.map((testCase, index) => (
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={12} lg={12}>
+            <Box sx={{ marginLeft: 2, marginTop: 4 }}>
+              <p style={{ fontWeight: 'bold', fontSize: 18, marginTop: 10, marginBottom: 0 }}>
+                Choose a TESTCASE Option*
+              </p>
+              <RadioGroup value={selectedOption} onChange={handleOptionChange}>
+                <FormControlLabel
+                  sx={{ paddingTop: 1 }}
+                  label="Select to Enter Test cases"
+                  value="testcase"
+                  control={<Radio color="secondary" />}
+                />
+                <FormControlLabel
+                  sx={{ paddingTop: 1 }}
+                  label="Select to Upload Solution Code"
+                  value="solutionCode"
+                  control={<Radio color="secondary" />}
+                />
+                <FormControlLabel
+                  sx={{ paddingTop: 1 }}
+                  label="Select to Automate Test cases"
+                  value="automatedTestcase"
+                  control={<Radio color="secondary" />}
+                />
+              </RadioGroup>
+            </Box>
+          </Grid>
+        </Grid>
+
+
+      {/* {testCases.map((testCase, index) => (
         <Grid item lg={4} md={3} sm={4} xs={12} key={index}>
           <Box sx={{display:'flex', flexDirection:'row'}}>
             <Box sx={{marginRight:2}}>
@@ -180,20 +233,136 @@ const parseInput = (input) => {
         </Grid>
       ))}
       <Box>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={handleAddTestCase}
-        sx={{
-          mx: { lg: 3, md: 3, sm: 3, xs: "auto" },
-          mt: 6.5,
-          padding:2,borderRadius:5
-        }}
-        startIcon={<CgAddR/>}
-      >
-       Add
-      </Button>
-      </Box>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleAddTestCase}
+          sx={{
+            mx: { lg: 3, md: 3, sm: 3, xs: "auto" },
+            mt: 6.5,
+            padding:2,borderRadius:5
+          }}
+          startIcon={<CgAddR/>}
+        >
+        Add
+        </Button>
+      </Box> */}
+
+      {selectedOption === 'testcase' && (
+        <>
+          {testCases.map((testCase, index) => (
+            <Grid item lg={4} md={3} sm={4} xs={12} key={index}>
+            <Box sx={{display:'flex', flexDirection:'row',marginTop:2}}>
+              <Box sx={{marginRight:2}}>
+                <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Input</p>
+                <TextField sx={{marginBottom:2}}
+                  value={testCase.input}
+                  onChange={(e) => {
+                    const updatedTestCases = [...testCases];
+                    updatedTestCases[index].input = e.target.value;
+                    setTestCases(updatedTestCases);
+                  }}
+                  label="Enter Input"
+                  color="secondary"
+                />
+              </Box>
+              <Box>
+              <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Output</p>
+              <TextField
+                value={testCase.output}
+                onChange={(e) => {
+                  const updatedTestCases = [...testCases];
+                  updatedTestCases[index].output = e.target.value;
+                  setTestCases(updatedTestCases);
+                }}
+                label="Expected Output"
+                color="secondary"
+              />
+  
+              </Box>
+            </Box>
+            <IconButton onClick={() => handleRemoveTestCase(index)}>
+              <RiDeleteBin5Line style={{color:theme.palette.secondary.main, fontSize:28,marginTop:0}} />
+            </IconButton>
+          </Grid>
+          ))}
+          <Box>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleAddTestCase}
+              sx={{
+                mx: { lg: 3, md: 3, sm: 3, xs: "auto" },
+                mt:9,
+                padding:2,borderRadius:5
+              }}
+              startIcon={<CgAddR/>}
+            >
+            Add
+            </Button>
+          </Box>
+        </>
+      )}
+
+
+      {selectedOption === 'solutionCode' && (
+        <>
+          <Box sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold',width:'100%',marginLeft:2 }} >
+            <p style={{marginTop:0,marginBottom:10}}>Upload Solution File*</p>
+            <p style={{ fontWeight: 'bold',margin:0}}><Button variant="outlined" component="label"
+              color='secondary' sx={{
+              width: '100%', padding: 2,
+              borderStyle: 'dashed', borderRadius: 2
+              }}>
+              <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+              <FcAddImage fontSize={45} style={{marginRight:19}}/>Click to browse or <br />Drag and Drop Files
+              <input  name='file' hidden accept="file/*" multiple type="file" />
+              </Button></Button>
+            </p>
+          </Box>
+          {inputTestCases.map((testCase, index) => (
+            <Grid item lg={3} md={3} sm={4} xs={12} key={index}>
+              <Box sx={{display:'flex', flexDirection:'row'}}>
+                <Box>
+                  <Box>
+                  <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Input</p>
+                  </Box>
+                  <TextField sx={{marginBottom:2}}
+                    value={testCase.input}
+                    onChange={(e) => {
+                      const updatedTestCases = [...inputTestCases];
+                      updatedTestCases[index].input = e.target.value;
+                      setInputTestCases(updatedTestCases);
+                    }}
+                    label="Enter Input"
+                    color="secondary"
+                  />
+                </Box>
+              </Box>
+              <IconButton onClick={() => handleRemoveInputTestCase(index)}>
+                <RiDeleteBin5Line style={{color:theme.palette.secondary.main, fontSize:28,marginTop:0}} />
+              </IconButton>
+            </Grid>
+          ))}
+          <Box>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleAddInput}
+              sx={{
+                mx: { lg: 3, md: 3, sm: 3, xs: "auto" },
+                mt:6.5,
+                padding:2,borderRadius:5
+              }}
+              startIcon={<CgAddR/>}
+            >
+            Add
+            </Button>
+          </Box>
+        </>
+      )}
+
+      
       <Grid item lg={12} md={12} sm={12} xs={12} sx={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
         <Button
           onClick={handleClick}
