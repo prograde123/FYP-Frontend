@@ -170,7 +170,7 @@ const AddAssignment = () => {
       </Box>
       <Box sx={{width:'95%'}}>
         <form onSubmit={handleSubmit}>
-        <Box sx={{ display: 'flex',marginTop:3,marginBottom:5, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px' }}>
+        <Box sx={{ display: 'flex',marginTop:3,marginBottom:5, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'  }}>
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
               <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
                   <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Assignment Number</p>
