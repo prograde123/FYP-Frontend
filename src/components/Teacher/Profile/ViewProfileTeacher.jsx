@@ -2,11 +2,8 @@ import React,{useEffect} from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-import CreateIcon from '@mui/icons-material/Create';
-import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
 import {RiRadioButtonLine} from 'react-icons/ri';
-import {PiStudentDuotone} from 'react-icons/pi';
 import {CiEdit} from 'react-icons/ci';
 import {CiRead} from 'react-icons/ci';
 import {ImProfile} from 'react-icons/im';
@@ -148,8 +145,8 @@ function ViewProfile() {
                     </Box>
                     <Button onClick={handlelogout}
                     >
-                    <p style={{fontSize:17, cursor:'pointer', padding:13, borderRadius:14,
-                     backgroundColor:theme.palette.secondary.button, color:theme.palette.primary.background}}>Log out</p>
+                    <p style={{fontSize:17, cursor:'pointer', padding:11, borderRadius:14,
+                     backgroundColor:theme.palette.secondary.main, color:theme.palette.primary.background}}>Log out</p>
                      </Button>
                 </Box>
              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
@@ -350,7 +347,7 @@ function ViewProfile() {
                         <p style={{fontWeight:'bolder', fontSize:25}}>Notifications</p>
                         </Box>
                         <Box sx={{marginTop:4}}>
-                        <Button sx={{":hover":{backgroundColor:theme.palette.secondary.main},backgroundColor:theme.palette.secondary.button, color:theme.palette.primary.background, paddingRight:3, paddingLeft:3,paddingTop:1,paddingBottom:1, borderRadius:3}} startIcon={<CiRead size={20}/>}>Read All</Button>
+                        <Button sx={{":hover":{backgroundColor:theme.palette.secondary.main},backgroundColor:theme.palette.secondary.main, color:theme.palette.primary.background, paddingRight:3, paddingLeft:3,paddingTop:1,paddingBottom:1, borderRadius:3}} startIcon={<CiRead size={20}/>}>Read All</Button>
                       
                         </Box>
                         </Box>

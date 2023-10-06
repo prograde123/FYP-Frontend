@@ -66,6 +66,19 @@ function ViewCourse({courses}) {
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
   };
+  const startDate = course.startingDate;
+  const sdate = new Date(startDate);
+
+  const formattedStartDate = `${sdate.getDate()}-${
+    sdate.getMonth() + 1
+  }-${sdate.getFullYear()}`;
+
+  const endDate = course.endingDate;
+  const edate = new Date(endDate);
+
+  const formattedEndDate = `${edate.getDate()}-${
+    edate.getMonth() + 1
+  }-${edate.getFullYear()}`;
 
   const renderSelectedContent = () => {
     switch (selectedTab) {
@@ -216,7 +229,7 @@ const buttons = [
                   </Typography>
                   <Box sx={{paddingTop:'5%'}}>
                   <Typography variant="p" >
-                   {Sdate} to {Ldate}
+                   {formattedStartDate} to {formattedEndDate}
                   </Typography>
                   </Box>
                 </Grid>

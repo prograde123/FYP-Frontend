@@ -12,7 +12,7 @@ body {
     background: #f1f1f1;
   }
   ::-webkit-scrollbar-thumb {
-    background: #2a3290;
+    background: #1665b5;
   }
 
   Box:after {
@@ -62,7 +62,7 @@ body {
   
   .text {
     border-radius: 5px;
-    background-color: #2a3290;
+    background-color: #1665b5;
     border: 2px solid #fecf03;
     color: white;
     font-size: 16px;
@@ -103,7 +103,7 @@ body {
     content: '';
     position: absolute;
     width: 100%;
-    border-top: solid 3px #2a3290;
+    border-top: solid 3px #1665b5;
     left: 0;
     bottom: -22px;
     border-radius: 50%;

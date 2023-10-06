@@ -25,6 +25,15 @@ import { useNavigate } from 'react-router-dom';
 import { EditAssignment } from '../../../../Axios/assigAxios';
 import TeacherBody from '../Body/TeacherBody';
 import {BsArrowRightSquare } from "react-icons/bs";
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+
+const steps = [
+  'Assignment Details',
+  'Add Questions',
+  'Create an Assignment',
+];
 
 
 const AddAssignment = () => {
@@ -168,7 +177,32 @@ const AddAssignment = () => {
         <p className='underline' style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 1, fontSize:25 }}>
           {assignment  == undefined ? "Add Assignment" : "Edit Assignment"}</p>
       </Box>
-      <Box sx={{width:'95%'}}>
+      <Box sx={{width:'95%', marginTop:3}}>
+        <Stepper activeStep={0} alternativeLabel color="secondary">
+          {steps.map((label) => (
+            <Step key={label} sx={{
+              '& .MuiStepLabel-root .Mui-completed': {
+                color: 'secondary.main', // circle color (COMPLETED)
+              },
+              '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
+                {
+                  color: 'primary.main', // Just text label (COMPLETED)
+                },
+              '& .MuiStepLabel-root .Mui-active': {
+                color: 'secondary.main', // circle color (ACTIVE)
+              },
+              '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
+                {
+                  color: 'primary.main', // Just text label (ACTIVE)
+                },
+              '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                fill: 'primary.background', // circle's number (ACTIVE)
+              },
+            }}>
+              <StepLabel sx={{color:'red'}}>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
         <form onSubmit={handleSubmit}>
         <Box sx={{ display: 'flex',marginTop:3,marginBottom:5, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'  }}>
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>

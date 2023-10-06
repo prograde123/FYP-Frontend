@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
 import  Box from '@mui/material/Box';
 import { useTheme } from '@emotion/react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import PhoneIcon from '@mui/icons-material/Phone';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import http from '../../../../Axios/axios';
 import Modal from '@mui/material/Modal';
@@ -17,8 +16,53 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
+import Grid from "@mui/material/Grid";
+import {RiArrowLeftSLine} from "react-icons/ri";
+import { TbEdit } from "react-icons/tb";
+import { FcQuestions } from "react-icons/fc";
+import { FcViewDetails} from "react-icons/fc";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { FcAcceptDatabase } from "react-icons/fc";
+import { FcPositiveDynamic } from "react-icons/fc";
+import PropTypes from 'prop-types';
+import QuestionList from './Components/QuestionList';
+import TestcaseList from './Components/TestcaseList';
+import Contents from './SubmitTable';
+import NoSubmission from './NoSubmission';
 
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+ 
 
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const ViewUploadedTeacherAssig = ()=> {
     
@@ -32,6 +76,14 @@ const ViewUploadedTeacherAssig = ()=> {
     const [questions, setQuestions] = React.useState([]);
     const [isTeacher, setIsTeacher] = React.useState(false);
     const [isAlreadySubmitted, setIsSubmitted] = React.useState(false);
+
+    const [Assigdata,setAssigdata] = React.useState(false)
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
 
     const getSubmission = async ()=>{
       try {
@@ -118,72 +170,92 @@ useEffect(() => {
 
     return(
      <>
-     <Box component='main' sx={{height:'100vh',overflow: 'auto',flexGrow:1, p:3, 
-    }}>
-        <Box sx={{display:'flex', flexDirection:'row'}}>
-           <Box> 
-            <Typography variant='h4' sx={{fontWeight:'bold', padding:1, 
-           paddingBottom:1,}}>Assignment : {assig.assignmentNumber}</Typography> </Box>
-          {
-          isTeacher && (
-            <>
-            <Button 
-               variant="contained" color="secondary" 
-                sx={{
-                paddingY: 1, fontSize: 16, 
-                paddingX:'3%',
-                fontWeight: 'bold',marginLeft:'38%' }}
-                onClick={() => navigate(`/Teacher/AddAssignment/${cid}`
-                , {
-                    // state: { course: courses.find(c =>  c._id === id) },
-                    state: { assig: assig },
-                  })
-            }
-                >
-                Edit
-            </Button>
-            <Button 
-               variant="contained" color="error" 
-                sx={{ 
-                paddingY: 1, fontSize: 16,
-                paddingX:'3%',
-                fontWeight: 'bold' ,marginLeft:'5%'}}
-                onClick={handleDeleteClick(assig._id)}
-                >
-                Delete
-            </Button>
-            </>
-          )
-            }
+      <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
+        <Tabs color="secondary" sx={{color:theme.palette.secondary.main}} value={value} onChange={handleChange} aria-label="icon label tabs example">
+          <Tab icon={<FcViewDetails fontSize={25} />} label="Assignment Details" sx={{color:theme.palette.secondary.main, marginRight:7}}/>
+          <Tab icon={<FcQuestions fontSize={25} />} label="Questions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7}} />
+          <Tab icon={<FcAcceptDatabase fontSize={25}/>} label="Submissions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7}} />
+          <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Test Cases" sx={{color:theme.palette.secondary.main}}/>
+        </Tabs>
+      </Box>
+      <hr style={{borderTop: '0.1px solid 	#F0F0F0', width:'99%', margin:0}}></hr>
+
+      <CustomTabPanel value={value} index={0}>
+      <Grid container spacing={2}>
+        <Grid xs={12} md={12} lg={12}>
+          <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between', marginTop:3,marginLeft:2}}>
+            <Box sx={{display:'flex', flexDirection:'row', cursor:'pointer'}}>
+              <RiArrowLeftSLine fontSize={20} style={{color:theme.palette.secondary.main}}/>
+              <p style={{marginTop:0, marginLeft:8, fontSize:16, color:theme.palette.secondary.main, fontWeight:'bold'}}>Back</p>
+            </Box>
+            <Box>
+              {
+              isTeacher && (
+                <>
+                <Button 
+                  variant="outlined" color="secondary" 
+                    sx={{fontSize: 16, paddingTop:1,paddingBottom:1,paddingLeft:2,paddingRight:2, marginRight:2}}
+                    startIcon={<TbEdit/>}
+                    onClick={() => navigate(`/Teacher/AddAssignment/${cid}`
+                    , {
+                        // state: { course: courses.find(c =>  c._id === id) },
+                        state: { assig: assig },
+                      })
+                }
+                    >
+                    Edit
+                </Button>
+                <Button 
+                  variant="outlined" color="error" 
+                  startIcon={<RiDeleteBin5Line/>}
+                  sx={{fontSize: 16, padding:1, marginRight:3}}
+                    onClick={handleDeleteClick(assig._id)}
+                    >
+                    Delete
+                </Button>
+                </>
+              )
+                }
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2}>
+        <Grid xs={12} md={12} lg={7}>
+          <Box sx={{marginTop:3, marginLeft:2}}>
+          <Box>
+           <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between'}}>
+              <Box> 
+                  <p style={{fontWeight:'bolder', margin:0, fontSize:30}}>Assignment : {assig.assignmentNumber}</p> 
+                  <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Due at {formattedDueDate}</p> 
+              </Box>
+              <Box> 
+                  <p style={{fontWeight:'bolder', margin:0, fontSize:18}}>Marks</p> 
+                  <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Total Points: {assig.totalMarks}</p> 
+              </Box>
+           </Box>
+          
         </Box>
-        <Box sx={{marginTop:'2%'}}>
-            <Typography variant='p' sx={{ padding:2}}>{assig.description}</Typography>
+        <Box sx={{marginTop:2}}>
+            <p style={{fontWeight:'bold', fontSize:18, margin:0}}>Instructions</p>
+            <p>{assig.description}</p>
         </Box>
-        <Box sx={{marginTop:'3%'}}>
-            <Typography variant='p' sx={{ padding:2}}><b>Uploaded On </b>{formattedUploadDate}</Typography>
-            <Typography variant='p' sx={{ padding:2}}> <b>Due</b> {formattedDueDate}</Typography>
+        
+        <Box sx={{marginTop:4}}>
+            <p style={{fontSize:18}}> <b>File Extension: </b> {assig.format}</p>
         </Box>
-        <Box sx={{marginTop:'1%'}}>
-            <Typography variant='h6' sx={{ padding:2}}> <b>Total Marks: </b> {assig.totalMarks}</Typography>
-        </Box>
-        <Box >
-            <Typography variant='h6' sx={{ padding:2}}> <b>Submission File Extension: </b> {assig.format}</Typography>
-        </Box>
-        <Box >
-            <Typography variant='h6' sx={{ paddingLeft:2}}> <b>File: </b></Typography>
+        <Box sx={{marginTop:2}}>
+            <p style={{fontSize:18}}> <b>Assignment File </b></p>
         </Box>
       
         <Box sx={{display:'flex',flexDirection:'row',marginTop:'1%'}} >
-        <Box sx ={{width:'20%',marginLeft:'1.5%'}}>
-        
-       
-        <Link style={{textDecoration:'none'}} onClick={handleAssignmentOpen}> 
-            <Box 
-                sx={{border:1,padding:1,flexGrow:1,borderRight:0}}>View Questions
-            </Box>
-            
-            
-        </Link>
+          <Box sx ={{width:'60%',}}>
+            <Link style={{textDecoration:'none'}} onClick={handleAssignmentOpen}> 
+                <Box 
+                    sx={{border:1,padding:2,flexGrow:1,borderRight:0,borderRadius:1, color:theme.palette.secondary.main}}>View Assignment
+                </Box>
+            </Link>
         <Modal
                 open={isAssignmentViewed}
                 onClose={handleAssignmentClose}
@@ -216,10 +288,9 @@ useEffect(() => {
                 }}
                 >
                  <Box sx={{display:'flex' , flexDirection: 'row' , justifyContent:'space-between'}}>
-                 <Typography variant='h4' sx={{fontWeight:'bold', padding:1, 
-           paddingBottom:1,}}>Assignment : {assig.assignmentNumber}</Typography>
+                 <Typography variant='h4' sx={{fontWeight:'bold', paddingBottom:1,}}>Assignment : {assig.assignmentNumber}</Typography>
             <Box sx={{marginY:'1%'}}>
-            <Typography variant='p' > <b>Total Marks: </b> {assig.totalMarks}</Typography>
+            <Typography variant='p' sx={{color:theme.palette.secondary.main}}> <b>Total Marks: </b> {assig.totalMarks}</Typography>
         </Box>
                  </Box>
                 {questions.map((question , index) => (
@@ -228,7 +299,7 @@ useEffect(() => {
                         <b> Question {index + 1} </b>
                         {question.questionDescription}
                         </Typography>
-                        <Typography  sx={{my:'1%'}}>
+                        <Typography  sx={{my:'1%', color:theme.palette.secondary.main }}>
                         {`( ${question.questionTotalMarks} )`}
                         
                         </Typography>
@@ -252,28 +323,24 @@ useEffect(() => {
         </Button>
         </Box>
         </Box>
-        <Box sx={{display:'flex', justifyContent:'center'}}>
-        <Button
-                variant="contained" color="secondary" 
-                sx={{
-                  
-                  padding: 2, fontSize: 16, marginLeft: '3%',marginTop:'3%',
-                  fontWeight: 'bold', paddingRight: '2%',paddingLeft:'2%'
-                }} 
-                onClick={()=>navigate(
-                  isTeacher ?
-                   `/Teacher/ViewSubmittedAssigList` : 
-                   isAlreadySubmitted ?
-                    `/Student/Result/${assig._id}`  :
-                  `/Student/SubmitAssignment/${assig._id}` , {
-                    state: { Questions : questions , format : assig.format , courseID : cid  },
-                  })}
-                  >
-                {isTeacher ? "View Submissions" : isAlreadySubmitted ? "View Result" : "Submit Assignment"}
-              </Button>
-              </Box>
         
-     </Box>
+        
+          </Box>
+        </Grid>
+      </Grid>
+      </CustomTabPanel>
+
+      <CustomTabPanel value={value} index={1}>
+        <QuestionList/>
+      </CustomTabPanel>
+
+      <CustomTabPanel value={value} index={2}>
+        {Assigdata ? <Contents   /> : <NoSubmission /> }
+      </CustomTabPanel>
+
+      <CustomTabPanel value={value} index={3}>
+        <TestcaseList/>
+      </CustomTabPanel>
      </>
     )
 }
