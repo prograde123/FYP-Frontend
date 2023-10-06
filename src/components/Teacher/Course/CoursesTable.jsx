@@ -209,7 +209,7 @@ useEffect(() => {
         }}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 5, page: 0 },
+            paginationModel: { pageSize: 7, page: 0 },
           },
         }}
         options={{

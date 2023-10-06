@@ -8,6 +8,7 @@ import InputBase from "@mui/material/InputBase";
 import Typography from "@mui/material/Typography";
 import { Box} from "@mui/material";
 import "../../style.scss";
+import { useTheme } from '@emotion/react';
 import profile from "../../assets/profile.png"
 
 import IconButton from '@mui/material/IconButton';
@@ -23,6 +24,7 @@ import {
 } from "react-pro-sidebar";
 
 function Navbar() {
+  const theme = useTheme();
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -122,7 +124,7 @@ function Navbar() {
         <Search 
           breakPoint="sm"
           sx={{
-            border: "2px solid #dbdbdb",
+            border: "1px solid #1665b5",
             ":hover": { backgroundColor: "#dbdbdb" },
             borderRadius: 15,
             display: "flex",
@@ -131,7 +133,7 @@ function Navbar() {
           }}
         >
           <SearchIconWrapper>
-            <SearchIcon />
+            <SearchIcon sx={{color: theme.palette.secondary.main}}/>
           </SearchIconWrapper>
           <StyledInputBase
             style={{ padding: 6 }}
@@ -145,12 +147,13 @@ function Navbar() {
         <VscColorMode
           size={25}
           style={{
+            color:theme.palette.secondary.main,
             marginTop: 8,
             marginRight: 20,
             display: "flex",
             flexDirection: "row",
             textAlign: "center",
-            border: "2px solid	#E8E8E8",
+            border: "2px solid #E8E8E8",
             padding: 6,
             borderRadius: 6,
             ":hover": { backgroundColor: "#F5F5F5" },
@@ -160,12 +163,13 @@ function Navbar() {
         <MdOutlineNotificationsActive
           size={25}
           style={{
+            color:theme.palette.secondary.main,
             marginTop: 8,
             marginRight: 20,
             display: "flex",
             flexDirection: "row",
             textAlign: "center",
-            border: "2px solid	#E8E8E8",
+            border: "2px solid #E8E8E8",
             padding: 6,
             borderRadius: 6,
             ":hover": { backgroundColor: "#F5F5F5" },
@@ -178,7 +182,7 @@ function Navbar() {
             style={{
               borderRadius: 12,
               marginRight: 13,
-              border: "2px solid grey",
+              border: "1px solid #1665b5",
             }}
             height={40}
             width={40}
@@ -195,11 +199,12 @@ function Navbar() {
             >
               {profileData ? profileData.user.fullName : 'User'}
             </Typography>
-            <Typography sx={{ fontSize: 15 }}>Teacher</Typography>
+            <Typography sx={{ fontSize: 15, color:theme.palette.secondary.main }}>Teacher</Typography>
           </Box>
           <MdOutlineKeyboardArrowDown
             size={25}
             style={{
+              color:theme.palette.secondary.main,
               marginTop: 8,
               marginRight: 1,
               marginLeft:10,

@@ -28,6 +28,14 @@ const CreateCourseContent = ({ courses }) => {
   const course = location.state.course
   const [file, setFile] = React.useState(null);
   const [fileError, setFileError] = React.useState('')
+  
+  const [selectedFileName, setSelectedFileName] = React.useState('');
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    setSelectedFileName(selectedFile ? selectedFile.name : ''); 
+  };
 
  console.log(course.courseContent)
   const initialValues = {
@@ -172,17 +180,18 @@ const CreateCourseContent = ({ courses }) => {
               
               <Box sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }} >
                 <p style={{marginTop:0,marginBottom:10}}>Upload File*</p>
-                <p style={{ fontWeight: 'bold',margin:0}}><Button variant="outlined" component="label"
-                    color='secondary' sx={{
-                      width: '100%', padding: 2,
-                      borderStyle: 'dashed', borderRadius: 2
-                    }}>
-                    <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                    <FcAddImage fontSize={45} style={{marginRight:19}}/>Click to browse or <br />Drag and Drop Files
-                      <input  name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/*" multiple type="file" />
-                    </Button></Button>
-                </p>
-                    <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row' }}>{fileError}</p>
+                <p style={{ fontWeight: 'bold', margin: 0 }}>
+  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 2 }}>
+    <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+      <FcAddImage fontSize={45} style={{ marginRight: 19 }} />Click to browse or <br />Drag and Drop Files
+      <input name='file' onChange={handleFileChange} hidden accept="file/*" multiple type="file" />
+    </Button>
+  </Button>
+  {selectedFileName && (
+    <p style={{ marginTop: 10 }}>Selected Image: {selectedFileName}</p>
+  )}
+</p>
+                 <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row' }}>{fileError}</p>
               </Box>
               <Box sx={{ display:'flex',flexDirection:'row',justifyContent:'center', marginTop: 2, marginBottom:3 }}>
                 <Box sx={{width: '50%',}}>

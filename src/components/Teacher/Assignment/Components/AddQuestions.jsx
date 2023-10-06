@@ -15,8 +15,16 @@ import { CgAddR } from "react-icons/cg";
 import { GiConfirmed } from "react-icons/gi";
 import { FcAddImage } from 'react-icons/fc';
 import { GrNotes } from 'react-icons/gr';
-
 import { RiDeleteBin5Line } from "react-icons/ri";
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+
+const steps = [
+  'Assignment Details',
+  'Add Questions',
+  'Create an Assignment',
+];
 
 export default function AddQuestion({ currentQuestion, totalQuestions, assig, courseID }) {
   
@@ -127,9 +135,67 @@ const parseInput = (input) => {
   return (
    <Box sx={{marginLeft:2,marginRight:2}}>
     <p style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 1, fontSize:25, display:'flex', flexDirection:'row',justifyContent:'center' }}><span className='underline'>Add Question</span> </p>
+    {questionNumber !== (totalQuestions - 1) && (
+            <>
+              <Stepper activeStep={1} alternativeLabel sx={{marginTop:3}} >
+          {steps.map((label) => (
+            <Step key={label} sx={{
+              '& .MuiStepLabel-root .Mui-completed': {
+                color: 'secondary.main', // circle color (COMPLETED)
+              },
+              '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
+                {
+                  color: 'primary.main', // Just text label (COMPLETED)
+                },
+              '& .MuiStepLabel-root .Mui-active': {
+                color: 'secondary.main', // circle color (ACTIVE)
+              },
+              '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
+                {
+                  color: 'primary.main', // Just text label (ACTIVE)
+                },
+              '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                fill: 'primary.background', // circle's number (ACTIVE)
+              },
+            }}>
+              <StepLabel sx={{color:'red'}}>{label}</StepLabel>
+            </Step>
+          ))}
+    </Stepper>
+            </>
+    )}
+    {questionNumber === (totalQuestions - 1) && (
+            <>
+              <Stepper activeStep={2} alternativeLabel sx={{marginTop:3}} >
+          {steps.map((label) => (
+            <Step key={label} sx={{
+              '& .MuiStepLabel-root .Mui-completed': {
+                color: 'secondary.main', // circle color (COMPLETED)
+              },
+              '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
+                {
+                  color: 'primary.main', // Just text label (COMPLETED)
+                },
+              '& .MuiStepLabel-root .Mui-active': {
+                color: 'secondary.main', // circle color (ACTIVE)
+              },
+              '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
+                {
+                  color: 'primary.main', // Just text label (ACTIVE)
+                },
+              '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                fill: 'primary.background', // circle's number (ACTIVE)
+              },
+            }}>
+              <StepLabel sx={{color:'red'}}>{label}</StepLabel>
+            </Step>
+          ))}
+    </Stepper>
+            </>
+    )}
      <Box sx={{ display: 'flex',marginTop:3,marginBottom:5, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset' }}>
      <Grid container spacing={2} sx={{ marginTop:2}}>
-        <p style={{fontWeight:'bold',fontSize:20,marginLeft:15,marginTop:0,marginBottom:0}}>
+        <p style={{fontWeight:'bold',fontSize:20,marginLeft:15,marginTop:10,marginBottom:0}}>
             Write Description of Question # {questionNumber + 1}
         </p>
         <Grid item lg={12}>
@@ -194,59 +260,6 @@ const parseInput = (input) => {
             </Box>
           </Grid>
         </Grid>
-
-
-      {/* {testCases.map((testCase, index) => (
-        <Grid item lg={4} md={3} sm={4} xs={12} key={index}>
-          <Box sx={{display:'flex', flexDirection:'row'}}>
-            <Box sx={{marginRight:2}}>
-              <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Input</p>
-              <TextField sx={{marginBottom:2}}
-                value={testCase.input}
-                onChange={(e) => {
-                  const updatedTestCases = [...testCases];
-                  updatedTestCases[index].input = e.target.value;
-                  setTestCases(updatedTestCases);
-                }}
-                label="Enter Input"
-                color="secondary"
-              />
-            </Box>
-            <Box>
-            <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Output</p>
-            <TextField
-              value={testCase.output}
-              onChange={(e) => {
-                const updatedTestCases = [...testCases];
-                updatedTestCases[index].output = e.target.value;
-                setTestCases(updatedTestCases);
-              }}
-              label="Expected Output"
-              color="secondary"
-            />
-
-            </Box>
-          </Box>
-          <IconButton onClick={() => handleRemoveTestCase(index)}>
-            <RiDeleteBin5Line style={{color:theme.palette.secondary.main, fontSize:28,marginTop:0}} />
-          </IconButton>
-        </Grid>
-      ))}
-      <Box>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleAddTestCase}
-          sx={{
-            mx: { lg: 3, md: 3, sm: 3, xs: "auto" },
-            mt: 6.5,
-            padding:2,borderRadius:5
-          }}
-          startIcon={<CgAddR/>}
-        >
-        Add
-        </Button>
-      </Box> */}
 
       {selectedOption === 'testcase' && (
         <>

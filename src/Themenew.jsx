@@ -11,7 +11,7 @@ import { createTheme } from "@mui/material";
     secondary: {
       main: '#f0f0f0', 
       background:'#d90700',//red
-      footer:'#2a3290',//blue
+      footer:'#1665b5',//blue
       icon:'#fecf03',//yellow
       cardBg:'#93e9c1',
       card1:'#fffceb',

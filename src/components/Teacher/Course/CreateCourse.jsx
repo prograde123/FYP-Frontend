@@ -29,6 +29,14 @@ function CreateCourse() {
   const [image, setImage] = React.useState(null);
   const [user, setUser] = React.useState('')
   const [imageError, setImageError] = React.useState('')
+  const [selectedImageName, setSelectedImageName] = React.useState(''); // Added state for the selected image name
+
+// Update the selected image name when a file is selected
+const handleImageChange = (e) => {
+  const selectedFile = e.target.files[0];
+  setImage(selectedFile);
+  setSelectedImageName(selectedFile ? selectedFile.name : ''); // Set the name or an empty string if no file is selected
+};
 
   useEffect(()=>{
     if (course) {
@@ -304,10 +312,17 @@ function CreateCourse() {
             <Box sx={{display:'flex', flexDirection:'row',width:'100%', justifyContent:'space-between'}}>
                 <Box sx={{  fontWeight: 'bold', width: '100%',marginTop:1 }} >
                     <p style={{marginTop:0,marginBottom:10}}>Upload Picture*</p>
-                    <p style={{ fontWeight: 'bold',margin:0}}><Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                        <FcAddImage fontSize={45} style={{marginRight:19}}/>Click to browse or <br />Drag and Drop Files
-                        <input name='image' onChange={(e) => { setImage(e.target.files[0]) }} hidden accept="image/*" multiple type="file" />
-                    </Button></Button></p>
+                    <p style={{ fontWeight: 'bold', margin: 0 }}>
+  <Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 2, borderStyle: 'dashed', borderRadius: 2 }}>
+    <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+      <FcAddImage fontSize={45} style={{ marginRight: 19 }} />Click to browse or <br />Drag and Drop Files
+      <input name='image' onChange={handleImageChange} hidden accept="image/*" multiple type="file" />
+    </Button>
+  </Button>
+  {selectedImageName && (
+    <p style={{ marginTop: 10 }}>Selected Image: {selectedImageName}</p>
+  )}
+</p>
                     <p style={{ color: 'red', fontWeight: 'normal', marginTop: 0, marginLeft: 4, marginBottom: 0, display: 'flex', flexDirection: 'row' }}>{imageError}</p>
                 </Box>
             </Box>
@@ -316,7 +331,7 @@ function CreateCourse() {
               <Box sx={{width:'55%'}}>
                 <Button type='submit' onClick={() => { handleClick() }}
                     variant="contained" color="secondary" endIcon={<ImportContactsIcon fontSize='large' />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold',borderRadius: 2 }}>
-                    {course === undefined ? 'Create Course' : 'Update Course'}
+                    {course === undefined ? 'Create Course' : 'Edit Course'}
                 </Button>
               </Box>
             </Box>
