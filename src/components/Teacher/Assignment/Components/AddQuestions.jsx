@@ -36,6 +36,8 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   const [testCases, setTestCases] = useState([{ input: "", output: "" }]);
   //solution code only input test case
   const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
+  const [file, setFile] = React.useState(null)
+
 
 
   //for radio button testcase option
@@ -77,39 +79,162 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   };
 
 const handleClick = async () => {
-  if (testCases[0].input !== "" && testCases[0].output !== "" && question !== "") {
-    const newQuestion = {
-      questionDescription: question,
-      questionTotalMarks: questionTotalMarks,
-      testCases: testCases.map((testCase) => ({
-        input: isTestcaseArray ? parseInput(testCase.input) : testCase.input,
-        output: testCase.output,
-      })),
-      isInputArray: isTestcaseArray,
-    };
-
-    console.log("new question ", newQuestion);
-
-    questions.push(newQuestion);
-
-    console.log("questions", questions);
-
-    setQuestion('');
-    setQuestionTotalMarks(0);
-    setIsTestcaseArray(false);
-    setTestCases([{ input: "", output: "" }]);
-
-    setQuestionNumber(questionNumber + 1);
-
-    if (questionNumber === totalQuestions - 1) {
-      const response = await http.post("/assignment/addAssignment", { questions, assig });
-      if (response.data.success) {
-        alert("Assignment Created Successfully");
-        navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
+  if(selectedOption === 'testcase'){
+    if (testCases[0].input !== "" && testCases[0].output !== "" && question !== "") {
+      const newQuestion = {
+        questionDescription: question,
+        questionTotalMarks: questionTotalMarks,
+        testCases: testCases.map((testCase) => ({
+          input: isTestcaseArray ? parseInput(testCase.input) : testCase.input,
+          output: testCase.output,
+        })),
+        isInputArray: isTestcaseArray,
+      };
+  
+      console.log("new question ", newQuestion);
+  
+      questions.push(newQuestion);
+  
+      console.log("questions", questions);
+  
+      setQuestion('');
+      setQuestionTotalMarks(0);
+      setIsTestcaseArray(false);
+      setTestCases([{ input: "", output: "" }]);
+  
+      setQuestionNumber(questionNumber + 1);
+  
+      if (questionNumber === totalQuestions - 1) {
+        const response = await http.post("/assignment/addAssignment", { questions, assig });
+        if (response.data.success) {
+          alert("Assignment Created Successfully");
+          navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
+        }
       }
+    } else {
+      alert("Please enter at least 1 test case, question, and total marks");
     }
-  } else {
-    alert("Please enter at least 1 test case, question, and total marks");
+  }
+  else if(selectedOption === 'solutionCode'){
+    
+    if  (
+      inputTestCases.length > 0 &&
+      inputTestCases[0].input !== "" &&
+      question !== "" &&
+      file !== null
+    ) { 
+     //  console.log(file)
+       const formData = new FormData();
+
+       const FileSplit = file.name.split('.')
+       const FileFormat = `.${FileSplit[FileSplit.length - 1]}`
+
+       console.log(assig.format)
+      console.log(FileFormat)
+
+      if(assig.format === FileFormat){
+
+        formData.append('files', file);
+
+     
+
+        
+
+        console.log(inputTestCases)
+
+        let testCasesString;
+
+        if(isTestcaseArray){
+          testCasesString = JSON.stringify(inputTestCases.map((testCase) => ({
+            input:  parseInput(testCase.input) 
+          }))
+          )
+        }
+        else{
+          testCasesString =  JSON.stringify(inputTestCases)
+        }
+
+        
+        
+
+        let url;
+
+        switch (
+          FileFormat
+        ) {
+          case ".py":
+            url =`/submit/getOutputPython/${testCasesString}/${isTestcaseArray}`
+            break;
+          case ".java":
+            url = `/submit/getOutputJava/${testCasesString}/${isTestcaseArray}`
+            break;
+          case ".c":
+            url = `/submit/getOutputC/${testCasesString}/${isTestcaseArray}`
+            break;
+          case ".cpp":
+            url = `/submit/getOutputCpp/${testCasesString}/${isTestcaseArray}`
+            break;
+          default:
+            break;
+        }
+       const res =  await http.post(url, formData,
+          
+          {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        const testCases = res.data
+
+        console.log(testCases)
+
+        const newQuestion = {
+          questionDescription: question,
+          questionTotalMarks: questionTotalMarks,
+          testCases: testCases.map((testCase) => ({
+            input: Array.isArray(testCase.input) ? testCase.input : [testCase.input],
+            output: testCase.output,
+          })),
+          
+          isInputArray: isTestcaseArray,
+        };
+    
+        console.log("new question ", newQuestion);
+    
+        questions.push(newQuestion);
+    
+        console.log("questions ", questions);
+    
+        setQuestion('');
+        setQuestionTotalMarks(0);
+        setIsTestcaseArray(false);
+        setTestCases([{ input: "", output: "" }]);
+        setFile(null)
+        setInputTestCases([ { inputs : ""}])
+        setSelectedOption('')
+        setQuestionNumber(questionNumber + 1);
+
+        if (questionNumber === totalQuestions - 1) {
+          const response = await http.post("/assignment/addAssignment", { questions, assig });
+          if (response.data.success) {
+            alert("Assignment Created Successfully");
+            navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
+          }
+        }
+      }
+
+      else{
+        alert('File format should be the same as of assignment')
+      }
+
+     
+  
+
+    }
+    else{
+      alert('please fill required fields')
+    }
   }
 };
 
@@ -329,7 +454,7 @@ const parseInput = (input) => {
               }}>
               <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
               <FcAddImage fontSize={45} style={{marginRight:19}}/>Click to browse or <br />Drag and Drop Files
-              <input  name='file' hidden accept="file/*" multiple type="file" />
+              <input  name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/*" multiple type="file" />
               </Button></Button>
             </p>
           </Box>

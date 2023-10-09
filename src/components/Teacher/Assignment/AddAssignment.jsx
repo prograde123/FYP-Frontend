@@ -321,7 +321,7 @@ const AddAssignment = () => {
                     <MenuItem value={".c"}>.c</MenuItem>
                     <MenuItem value={".masm"}>.masm</MenuItem>
                     <MenuItem value={".mips"}>.mips</MenuItem>
-                    <MenuItem value={".py || .ipynb"}>.py / .ipynb</MenuItem>
+                    <MenuItem value={".py"}>.py</MenuItem>
                   </Select>
                 </FormControl>
               {errors.format && touched.format ? (
