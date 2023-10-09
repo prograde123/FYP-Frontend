@@ -170,29 +170,27 @@ const buttons = [
         sx={{
           position:'absolute',
           left:0,
-          top:0,
+          top:-10,
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(90,85,133, 0.7)', 
         }}
       />
     </Box>
-    <Box sx={{ paddingBottom: "19%", display: 'flex', alignItems: 'center', 
+    <Box sx={{ paddingBottom: 9, display: 'flex', alignItems: 'center', 
         justifyContent: 'center',position: 'relative',
         flexDirection:'column',width:'100%'
         }}>
      
      <Box sx={{ width: '75%' }}>
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', 
-        width: '100%', marginTop: '-20%', marginBottom: '5%' }}>
-          <Card sx={{ border: '1px solid #ccc', borderRadius: '8px', 
-          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', width: '100%', padding: '3%' }}>
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '-20%', marginBottom: '5%', height:'53vh'}}>
+          <Card sx={{ border: '1px solid #ccc', borderRadius: '15px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', width: '100%', padding: '3%' }}>
           <Box sx={{ height: '150px', width: '150px', margin: '0 auto' }}>
             <CardMedia
               component="img"
               image={Cphoto} 
               alt="Course Image" 
-              sx={{ objectFit: 'cover', height: '100%', width: '100%' }}
+              sx={{ objectFit: 'cover', height: '100%', width: '100%', borderRadius:6 }}
             />
           </Box>
             <CardContent><Box sx={{display:'flex',justifyContent:'center'}}>

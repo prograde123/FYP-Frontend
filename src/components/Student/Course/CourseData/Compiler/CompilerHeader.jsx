@@ -85,7 +85,7 @@ const CompilerHeader = ({
               onChange={(e) => setUserTheme(e.value)}
               placeholder={userTheme}
             />
-            <Button
+            {/* <Button
               startIcon={<FileDownloadIcon />}
               sx={{
                 backgroundColor: newtheme.palette.primary.background,
@@ -112,7 +112,7 @@ const CompilerHeader = ({
               }}
             >
               Submit
-            </Button>
+            </Button> */}
             {/* <Button
               startIcon={<UploadIcon />}
               sx={{

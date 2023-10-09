@@ -14,6 +14,7 @@ import EnrollCourseCard from '../Course/EnrollCourseCard';
 import Submit from '../Assignment/Components/SubmitQuestions';
 import Result from '../Assignment/Result';
 import ViewUploadedAssig from '../Assignment/ViewUploadedAssignment';
+import ViewCourseDetails from '../Course/ViewCourseDetails';
 
 const StudentBody = () => {
   return (
@@ -33,6 +34,7 @@ const StudentBody = () => {
             <Route path='/ViewUploadedAssig/:cid/:aid' element={<ViewUploadedAssig />} />
             <Route path="/SubmitAssignment/:aid" element= {<Submit />} />
             <Route path='/Result/:aid' element={<Result />} />
+            <Route path='/Course/:id' element={<ViewCourseDetails />} />
           </Routes>
         </Box>
         <Footer />
