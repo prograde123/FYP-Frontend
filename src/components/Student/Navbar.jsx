@@ -145,58 +145,26 @@ export default function DrawerAppBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography component="div" sx={{ flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center',fontSize:30 }} data-aos="fade-right">
+            <Typography  onClick={() => { navigate('/Student/Home') }} component="div" sx={{cursor:'pointer', flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center',fontSize:30, fontFamily:'Dela Gothic One' }} data-aos="fade-right">
                <img style={{marginRight:10}} height={65} width={60} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
-              <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder'}}>PRO<span style={{color: newtheme.palette.secondary.background}}>GRADE</span></span>
+              <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder'}}>PROGRADE</span>
             </Typography>
 
             <Box sx={{ display: { xs: 'none', sm: 'block', lg:'flex' }}}  data-aos="fade-left">
               
-                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                   Home
                 </Button>
-                <Button
-          
-                    aria-haspopup="true"
-                    onMouseEnter={handleMenuOpenCourses}
-                    
-                    
-                    sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712'}}}
-                    >
-                    Courses
+                <Button className="fontlink" onClick={() => { navigate('/Student/AllCourses') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                 All Courses
                 </Button>
-                <Menu
-                anchorEl={anchorElCourses}
-                open={Boolean(anchorElCourses)}
-                onClose={handleMenuCloseCourses}
-                
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                MenuListProps={{onMouseLeave: handleMenuCloseCourses}}
-                
-                sx={{ zIndex: 1200 }} 
-                >
-                        <MenuItem onClick={() => { navigate('/Student/AllCourses') }}>All Courses</MenuItem>
-                        <MenuItem onClick={handleMenuCloseCourses}>java</MenuItem>
-                        <MenuItem onClick={handleMenuCloseCourses}>C++</MenuItem>
-                        <MenuItem onClick={handleMenuCloseCourses}>Python</MenuItem>
-                        <MenuItem onClick={handleMenuCloseCourses}>C#</MenuItem>
-                        <MenuItem onClick={handleMenuCloseCourses}>Nasm/Masm</MenuItem>
-                        <MenuItem onClick={handleMenuCloseCourses}>C</MenuItem>
-                </Menu>
-                
+               
                 <Button
                 
                 aria-haspopup="true"
                 onMouseEnter={handleMenuOpenAssignments}
                 
-                sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712'}}}
+                sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5'}}}
                 >
                 Assignments
                 </Button>
@@ -234,18 +202,17 @@ export default function DrawerAppBar() {
                         >C</MenuItem>
                         
                 </Menu>
-                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #ff2712' } }}>
+                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                   Reports
                 </Button>
                 <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}}>
-                        <NotificationsActiveIcon />
+                        <NotificationsActiveIcon sx={{color:newtheme.palette.secondary.footer}}/>
                 </IconButton>
                  <IconButton sx={{color:newtheme.palette.primary.main}}
                 
                 >
                 <img style={{
               borderRadius: 20,
-              border: "2px solid grey",
             }}
             height={40}
             width={40}

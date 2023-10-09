@@ -1,18 +1,10 @@
 import React, { useState } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { ThemeProvider } from "@mui/material/styles";
 import newtheme from "../../../Themenew";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import DescriptionIcon from "@mui/icons-material/Description";
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
-import PersonIcon from "@mui/icons-material/Person";
-import LanguageIcon from "@mui/icons-material/Language";
-import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
-import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import { useNavigate } from 'react-router-dom';
 import { TiTickOutline } from 'react-icons/ti';
 import { ImStatsBars } from 'react-icons/im';
@@ -25,14 +17,14 @@ function CourseCard({ course }) {
 
   return (
     <ThemeProvider theme={newtheme}>
-      <Box sx={{ marginLeft: 4, cursor: "pointer" }} onClick={() => {
-            navigate("/Student/ViewCourse/" + course._id, {
+      <Box sx={{ marginLeft: 2, cursor: "pointer" }} onClick={() => {
+            navigate("/Student/Course/" + course._id, {
               state: { course: course },
             });
           }}>
         <Grid
           container
-          spacing={5}
+          spacing={2}
           sx={{ display: "flex", flexDirection: "row" }}
         >
           <Grid
@@ -48,7 +40,7 @@ function CourseCard({ course }) {
           >
             <Box
               sx={{
-                width: 360,
+                width: 359,
                 backgroundColor: "white",
                 marginBottom: 5,
                 boxShadow:
@@ -95,8 +87,8 @@ function CourseCard({ course }) {
               <Box sx={{marginLeft:4, marginBottom:4}}>
                 <p style={{margin:0,fontSize:22,fontWeight:'bolder', marginBottom:18}} >Complete Master Class of: <br/> {course.name}</p>
                 <Box sx={{display:'flex', flexDirection:'row'}}>
-                  <p style={{fontSize:16,fontWeight:'bolder', margin:0}} >View Course</p>
-                  <BsFillArrowRightCircleFill fontSize={19} style={{marginLeft:7, marginTop:3}}/>
+                  <p style={{fontSize:18,fontWeight:'bolder', margin:0, color:newtheme.palette.secondary.footer}} >View Course</p>
+                  <BsFillArrowRightCircleFill fontSize={24} style={{marginLeft:7, marginTop:3, color:newtheme.palette.secondary.footer}}/>
                 </Box>
               </Box>
             </Box>

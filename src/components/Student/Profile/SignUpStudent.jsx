@@ -159,7 +159,7 @@ const SignUpStudent = () => {
                                             </Typography>
                                     </FormHelperText>
                                 </FormControl>
-                                <FormControl sx={{ width: '100%' }}>
+                                <FormControl sx={{ width: '100%' , marginTop: 2}}>
                                     <InputLabel htmlFor="outlined-adornment-name" color='secondary'>Username</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-name"

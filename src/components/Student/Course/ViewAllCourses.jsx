@@ -15,6 +15,8 @@ import { styled } from "@mui/material/styles";
 import http from "../../../../Axios/axios";
 import { useTheme } from '@emotion/react';
 import EnrollCourseCard from "./EnrollCourseCard";
+import BeatLoader from "react-spinners/BeatLoader";
+import noCoursesImage from "../../../assets/noCourses.png"
 
 const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: 3,
@@ -84,16 +86,25 @@ function ViewAllCourses() {
   const theme = useTheme();
     const navigate = useNavigate()
     const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = React.useState(false);
+    const [noCourses, setNoCourses] = React.useState(false);
     
     async function getCourses() {
       const user = JSON.parse(localStorage.getItem('User'))
       console.log(user)  
       try {
+        setLoading(true)
           const response = await http.get('/course/ViewAllAvailableCourses/' + user._id)
           setCourses(response.data.courses)
           console.log(response.data.courses)
+
+          if (response.data.courses.length === 0) {
+            setNoCourses(true); // Set noCourses to true if there are no courses
+          }
         } catch (e) {
           console.log(e);
+        }finally {
+          setLoading(false); // Set loading back to false when the API call completes
         }
       }
 
@@ -179,7 +190,7 @@ function ViewAllCourses() {
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.background, fontWeight:'bold' }}>
+                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.footer, fontWeight:'bold' }}>
                       (4)
                     </Typography>
                   </Box>
@@ -200,7 +211,7 @@ function ViewAllCourses() {
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.background, fontWeight:'bold'  }}>
+                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.footer, fontWeight:'bold'  }}>
                       (6)
                     </Typography>
                   </Box>
@@ -221,7 +232,7 @@ function ViewAllCourses() {
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h6" sx={{color: newtheme.palette.secondary.background, fontWeight:'bold' }}>
+                    <Typography variant="h6" sx={{color: newtheme.palette.secondary.footer, fontWeight:'bold' }}>
                       (2)
                     </Typography>
                   </Box>
@@ -243,7 +254,7 @@ function ViewAllCourses() {
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.background, fontWeight:'bold'  }}>
+                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.footer, fontWeight:'bold'  }}>
                       (7)
                     </Typography>
                   </Box>
@@ -264,7 +275,7 @@ function ViewAllCourses() {
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.background, fontWeight:'bold'  }}>
+                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.footer, fontWeight:'bold'  }}>
                       (3)
                     </Typography>
                   </Box>
@@ -285,7 +296,7 @@ function ViewAllCourses() {
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.background, fontWeight:'bold' }}>
+                    <Typography variant="h6" sx={{ color: newtheme.palette.secondary.footer, fontWeight:'bold' }}>
                       (1)
                     </Typography>
                   </Box>
@@ -312,8 +323,39 @@ function ViewAllCourses() {
             </Grid>
 
 {/* COURSE CARD */}
+<Grid container sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+{loading ? (
+          <Box
+          sx={{
+            backgroundColor: "white",
+            height: "80vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <BeatLoader color="#1665b5"
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </Box>
+      ) : noCourses ? ( // Check if there are no courses
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          flexDirection:'column' 
+        }}
+      >
+        <Typography variant="h4">No New Courses Found</Typography>
+        <img src={noCoursesImage}  height={200} width={200}/>
+      </Box>
+    ) : ( 
             <Box
-              
               sx={{
                 display: "flex",
                 flexDirection:'row',
@@ -329,6 +371,8 @@ function ViewAllCourses() {
                 })}
               </Box>
             </Box>
+    )}
+</Grid>
              
           </Grid>
         </Grid>

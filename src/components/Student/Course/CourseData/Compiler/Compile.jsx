@@ -108,10 +108,8 @@ function Compile() {
 
   return (
     <ThemeProvider theme={newtheme}>
-      <Typography variant="h6" sx={{ fontStyle: "italic", marginTop: 3 }}>
-        <span style={{ fontWeight: "bolder", fontSize: 25 }}>Problem:</span>{" "}
-        Question to be solved will be displayed here!
-      </Typography>
+      <p style={{ fontWeight: 'bold', marginBottom: 8, fontSize:25, marginLeft:9,marginTop:0, display:'flex', flexDirection:'row', justifyContent:'center' }}><span className='underline'>Online Code Compiler</span></p>
+      
       <Box>
         <CompilerHeader
           userLang={userLang}
@@ -121,7 +119,7 @@ function Compile() {
           fontSize={fontSize}
           setFontSize={setFontSize}
         ></CompilerHeader>
-        <Box style={{ display: "flex", height: "calc(100vh - 50px)" }}>
+        <Box style={{ display: "flex", height: "calc(100vh - 50px)",width:'100%' }}>
           <Grid container spacing={0}>
             <Grid
               item
