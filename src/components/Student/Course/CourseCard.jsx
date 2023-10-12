@@ -17,7 +17,7 @@ function CourseCard({ course }) {
 
   return (
     <ThemeProvider theme={newtheme}>
-      <Box sx={{ marginLeft: 2, cursor: "pointer" }} onClick={() => {
+      <Box className="zoom" sx={{ marginLeft: 2, cursor: "pointer" }} onClick={() => {
             navigate("/Student/Course/" + course._id, {
               state: { course: course },
             });

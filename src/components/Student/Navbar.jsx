@@ -35,7 +35,9 @@ export default function DrawerAppBar() {
   const navigate = useNavigate();
 
   function deleteAll() {
-    localStorage.removeItem("User", JSON.stringify([]));
+    localStorage.removeItem("User");
+     localStorage.removeItem("token");
+    localStorage.removeItem("loggedIn")
     return navigate('/SignIn')
   }
   const [profileData, setProfileData ] = React.useState(null)
@@ -135,7 +137,7 @@ export default function DrawerAppBar() {
       <Box sx={{ display: 'flex', color: 'red' }}>
         <CssBaseline />
         <AppBar component="nav" sx={{ backgroundColor: newtheme.palette.primary.background, padding: '1%',boxShadow:'none' }} >
-          <Toolbar >
+          <Toolbar sx={{ justifyContent: 'center' }}>
             <IconButton
               color='theme.palette.primary.background'
               aria-label="open drawer"
@@ -149,13 +151,14 @@ export default function DrawerAppBar() {
                <img style={{marginRight:10}} height={65} width={60} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
               <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder'}}>PROGRADE</span>
             </Typography>
+            
 
-            <Box sx={{ display: { xs: 'none', sm: 'block', lg:'flex' }}}  data-aos="fade-left">
-              
-                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+            <div style={{flexGrow:1}} data-aos="fade-left">
+            <div >
+                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                   Home
                 </Button>
-                <Button className="fontlink" onClick={() => { navigate('/Student/AllCourses') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                <Button className="fontlink" onClick={() => { navigate('/Student/AllCourses') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                  All Courses
                 </Button>
                
@@ -164,7 +167,7 @@ export default function DrawerAppBar() {
                 aria-haspopup="true"
                 onMouseEnter={handleMenuOpenAssignments}
                 
-                sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5'}}}
+                sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5'}}}
                 >
                 Assignments
                 </Button>
@@ -202,24 +205,29 @@ export default function DrawerAppBar() {
                         >C</MenuItem>
                         
                 </Menu>
-                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 4, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                   Reports
                 </Button>
-                <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}}>
+                </div>
+                
+                
+
+            </div>
+            <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}}>
                         <NotificationsActiveIcon sx={{color:newtheme.palette.secondary.footer}}/>
                 </IconButton>
                  <IconButton sx={{color:newtheme.palette.primary.main}}
-                
+                    onMouseEnter={handleMenuOpenProfile}
                 >
-                <img style={{
-              borderRadius: 20,
-            }}
-            height={40}
-            width={40}
-            src={
-              profileData?.userID?.profilePic ? profileData.userID.profilePic :
-              profile}
-            />
+                      <img style={{
+                    borderRadius: 20,
+                  }}
+                  height={40}
+                  width={40}
+                  src={
+                    profileData?.userID?.profilePic ? profileData.userID.profilePic :
+                    profile}
+                  />
                 </IconButton>
                 <Menu
                 anchorE2={anchorE2profile}
@@ -248,8 +256,6 @@ export default function DrawerAppBar() {
               deleteAll()}}>Logout</MenuItem>
                 </Menu>
 
-
-            </Box>
           </Toolbar>
         </AppBar>
 

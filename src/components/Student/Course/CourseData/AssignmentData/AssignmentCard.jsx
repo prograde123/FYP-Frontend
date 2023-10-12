@@ -24,7 +24,7 @@ export default function AssignmentCard({Assignment , CourseId}) {
   return (
     <>
     <ThemeProvider theme={newtheme}>
-    <Box
+    <Box className="zoom"
       sx={{p: 2,
         margin: 'auto',
         marginTop:'2%',
