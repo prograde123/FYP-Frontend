@@ -8,7 +8,7 @@ import http from "../../../../../Axios/axios";
 import { useLocation } from "react-router-dom";
 import storage from "../../../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import { FcAddImage } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import { useEffect } from "react";
@@ -17,6 +17,11 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import newtheme from "../../../../Themenew";
 import { ThemeProvider } from "@mui/material/styles";
+import { BsCloudArrowUp } from 'react-icons/bs';
+import { BsSendCheck } from 'react-icons/bs';
+import { BsArrowRightCircle } from 'react-icons/bs';
+
+
 
 const steps = ["Upload Solution", "Confirm Submission"];
 
@@ -26,6 +31,15 @@ export default function Submit() {
   const courseID = useLocation().state?.courseID;
 
   const AssignmentID = window.location.pathname.split("/").pop();
+
+  const [file, setFile] = React.useState(null);
+  const [selectedFileName, setSelectedFileName] = React.useState("");
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    setSelectedFileName(selectedFile ? selectedFile.name : "");
+  };
 
   const [index, setIndex] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -235,91 +249,156 @@ export default function Submit() {
           </Box>
         </Box>
         <Box sx={{ marginLeft: 5 }}>
-          <Grid container spacing={2} sx={{ padding: "2%" }}>
+          <Grid container spacing={2} sx={{ marginTop:3, marginBottom:1, marginLeft:1.5 }}>
             <Grid item lg={12} md={12} sm={12} xs={12}>
-              <Typography variant="h4">Question # {index + 1}</Typography>
+              <Typography sx={{fontWeight:'bold', fontSize:30}}>Question # {index + 1}</Typography>
             </Grid>
+          </Grid>
 
+          <Grid container spacing={2} >
             <Grid item lg={12} md={12} sm={12} xs={12}>
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
+                  marginLeft:4
                 }}
               >
                 <Box sx={{ justifyContent: "flex-start" }}>
-                  <Typography variant="h6" sx={{ fontStyle: "italic" }}>
-                    {questionDescription}
+                  <Typography variant="h6" sx={{}}>
+                    Description: {questionDescription}
                   </Typography>
                 </Box>
-                <Box sx={{ justifyContent: "flex-end" }}>
-                  <Typography variant="h6">( {questionMarks} )</Typography>
+                <Box sx={{ justifyContent: "flex-end", marginRight:10 }}>
+                  <Typography variant="h6">Total Points: ( {questionMarks} Marks )</Typography>
                 </Box>
               </Box>
             </Grid>
+          </Grid>
 
-            <div className="container" style={{ paddingTop: "20px" }}>
-              <form onSubmit={action} encType="multipart/form-data">
-                <div
-                  id="uploadForm"
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <input
-                    type="file"
-                    name="files"
-                    ref={fileInput}
-                    className="btn btn-primary"
-                    style={{ flex: 0.8 }}
-                  />
-                  <Button
-                    type="Submit"
-                    className="btn btn-primary"
-                    sx={{
-                      color: newtheme.palette.primary.background,
-                      backgroundColor: newtheme.palette.secondary.footer,
-                      fontWeight: "bold",
-
-                      ":hover": {
-                        backgroundColor: theme.palette.primary.background,
-                        color: theme.palette.secondary.footer,
-                      },
-                      border: 1,
-                      borderRadius: 2,
-                      paddingLeft: 2,
-                      paddingRight: 2,
-                      paddingTop: 1.5,
-                      paddingBottom: 1.5,
-                    }}
-                  >
-                    Upload
-                  </Button>
-                </div>
-              </form>
-            </div>
-
+          <Grid container spacing={2}>
             <Grid item lg={12} md={12} sm={12} xs={12}>
+              <Box sx={{ marginLeft: 4 }}>
+                <div style={{ paddingTop: "20px" }}>
+                  <form onSubmit={action} encType="multipart/form-data">
+                    <div
+                      id="uploadForm"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Box sx={{display: "flex", flexDirection: "row" }}>
+                          <Box sx={{width:'80%', marginRight:3}}>
+                          <p style={{ fontWeight: 'bold' }}>Upload File*</p>
+                          <Button
+                            variant="outlined"
+                            component="label"
+                            color="secondary"
+                            sx={{
+                              width: "100%",
+                              padding: 2,
+                              borderStyle: "dashed",
+                              borderRadius: 2,
+                              borderColor: newtheme.palette.secondary.footer,
+                              ":hover": {
+                                borderColor: newtheme.palette.secondary.footer,
+                              },
+                            }}
+                          >
+                            <Button
+                              variant="dashed"
+                              component="label"
+                              
+                              sx={{ color: "#999999" }}
+                            >
+                              <FcAddImage
+                                fontSize={45}
+                                style={{ marginRight: 19 }}
+                              />
+                              Click to browse or <br />
+                              Drag and Drop Files
+                              <input
+                                type="file"
+                                name="files"
+                                ref={fileInput}
+                                hidden
+                                onChange={handleFileChange}
+                              />
+                            </Button>
+                          </Button>
+                          </Box>
+                          <Box sx={{width:'20%'}}>
+                          <Button
+                        type="Submit"
+                        startIcon={<BsCloudArrowUp fontSize={25}/>}
+                        className="btn btn-primary"
+                        sx={{
+                          color: newtheme.palette.primary.background,
+                          backgroundColor: newtheme.palette.secondary.footer,
+                          width: "70%",
+                          // height:'10',
+                          marginRight:10,
+                          marginBottom:-22,
+                          ":hover": {
+                            backgroundColor: theme.palette.primary.background,
+                            color: theme.palette.secondary.footer,
+                          },
+                          border: 1,
+                          borderRadius: 10,
+                          paddingLeft: 2,
+                          paddingRight: 2,
+                          paddingTop: 2,
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Upload
+                      </Button>
+                          </Box> 
+                        </Box>
+                        <Box>
+                          {selectedFileName && (
+                            <p style={{ marginTop: 10 }}>
+                              Selected File: {selectedFileName}
+                            </p>
+                          )}
+                        </Box>
+                      </Box>
+                      
+                    </div>
+                  </form>
+                </div>
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center', marginTop:5, marginBottom:5}}>
               {index + 1 < Questions.length && (
                 <Button
                   onClick={handleClick}
                   disabled={index + 1 < Questions.length ? false : true}
+                  endIcon={<BsArrowRightCircle/>}
                   sx={{
-                    color: theme.palette.secondary.text,
-                    backgroundColor: theme.palette.secondary.main,
-                    fontWeight: "bold",
-                    boxShadow: 10,
-                    my: 3,
+                    color: newtheme.palette.primary.background,
+                    backgroundColor: newtheme.palette.secondary.footer,
+                    width: "30%",
+                    marginBottom:5,
+                    marginTop:1,
                     ":hover": {
-                      backgroundColor: theme.palette.secondary.hoverButton,
-                      color: theme.palette.secondary.main,
+                      backgroundColor: theme.palette.primary.background,
+                      color: theme.palette.secondary.footer,
                     },
                     border: 1,
-                    borderRadius: 2,
-                    paddingLeft: 1,
-                    paddingRight: 1,
-                    paddingTop: 1,
-                    paddingBottom: 1,
-                    borderColor: theme.palette.secondary.Button,
+                    borderRadius: 3,
+                    paddingLeft: 2,
+                    paddingRight: 2,
+                    paddingTop: 2,
+                    paddingBottom: 2,
                   }}
                 >
                   {"Next"}
@@ -328,28 +407,29 @@ export default function Submit() {
               {index + 1 >= Questions.length && (
                 <Button
                   onClick={handleSubmit}
+                  endIcon={<BsSendCheck/>}
                   sx={{
-                    color: theme.palette.secondary.text,
-                    backgroundColor: theme.palette.secondary.main,
-                    fontWeight: "bold",
-                    boxShadow: 10,
-                    my: 3,
+                    color: newtheme.palette.primary.background,
+                    backgroundColor: newtheme.palette.secondary.footer,
+                    width: "30%",
+                    marginBottom:5,
+                    marginTop:1,
                     ":hover": {
-                      backgroundColor: theme.palette.secondary.hoverButton,
-                      color: theme.palette.secondary.main,
+                      backgroundColor: theme.palette.primary.background,
+                      color: theme.palette.secondary.footer,
                     },
                     border: 1,
-                    borderRadius: 2,
-                    paddingLeft: 1,
-                    paddingRight: 1,
-                    paddingTop: 1,
-                    paddingBottom: 1,
-                    borderColor: theme.palette.secondary.Button,
+                    borderRadius: 3,
+                    paddingLeft: 2,
+                    paddingRight: 2,
+                    paddingTop: 2,
+                    paddingBottom: 2,
                   }}
                 >
                   {"Submit"}
                 </Button>
               )}
+              </Box>
             </Grid>
           </Grid>
         </Box>

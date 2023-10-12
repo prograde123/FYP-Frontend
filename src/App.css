@@ -15,6 +15,16 @@ body {
     background: #1665b5;
   }
 
+  .zoom {
+    transition: transform .2s;
+  }
+  
+  .zoom:hover {
+    -ms-transform: scale(1); /* IE 9 */
+  -webkit-transform: scale(1); /* Safari 3-8 */
+  transform: scale(1.02);
+  }
+
   Box:after {
     content: "";
     position: absolute;

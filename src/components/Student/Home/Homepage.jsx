@@ -108,7 +108,7 @@ function Homepage() {
               Welcome to Prograde My Courses page
             </p>
           </Box>
-          <Box sx={{ marginRight: 4 }}>
+          <Box onClick={() => { navigate('/Student/AllCourses') }} sx={{ marginRight: 4 }}>
             <p
               style={{
                 fontSize: 16,
