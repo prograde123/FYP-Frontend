@@ -74,10 +74,13 @@ const ViewUploadedTeacherAssig = ()=> {
     const [file,setFile] = React.useState()
     const [isAssignmentViewed, setAssignmentViewed] = React.useState(false);
     const [questions, setQuestions] = React.useState([]);
+    const [testCases, settestCases] = React.useState([]);
     const [isTeacher, setIsTeacher] = React.useState(false);
     const [isAlreadySubmitted, setIsSubmitted] = React.useState(false);
 
     const [Assigdata,setAssigdata] = React.useState(false)
+
+    const [submiteedAssigdata,setSubmiteedAssigdata] = React.useState([])
 
     const [value, setValue] = React.useState(0);
 
@@ -97,18 +100,40 @@ const ViewUploadedTeacherAssig = ()=> {
       }
     }
 
+
+const getSubmittedAssignments = async ()=> {
+      try {
+        const res = await http.get(`/submit/AssignmentSubmissions/${Assignmentid}`)
+        if(res.data.length == 0){
+          setAssigdata(false)
+        }
+        else{
+          setSubmiteedAssigdata(res.data)
+          setAssigdata(true)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+}
+
 useEffect(() => {
   http.get(`/assignment/viewAssignment/${Assignmentid}`)
     .then((response) => {
       setAssig(response.data.Viewassignment);
       setFile(response.data.PdfDataUrl);
       setQuestions(response.data.Viewquestions);
+      settestCases(response.data.TestCase)
+
+      response.data.TestCase.map((t) => {
+        console.log(t)
+      })
     });
 
     const userJSON = localStorage.getItem('User')
     const user = JSON.parse(userJSON);
     if(user.user?.role == 'Teacher'){
       setIsTeacher(true)
+      getSubmittedAssignments()
     }
     else{
       if(user.userID?.role == 'Student'){
@@ -156,8 +181,19 @@ useEffect(() => {
     const ddate = new Date(DueDate);
 
     const formattedDueDate = `${ddate.getDate()}-${ddate.getMonth() + 1}-${ddate.getFullYear()}`;
+
+    function formatTimeToAMPM(hours, minutes) {
+      const period = hours >= 12 ? "PM" : "AM";
+      const formattedHours = hours % 12 || 12; // Convert 0 to 12
+      const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+      return `${formattedHours}:${formattedMinutes} ${period}`;
+    }
     
     
+    const time = assig?.dueTime ? new Date(assig.dueTime) : new Date();
+    
+
+const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
 
     const handleDownload = () => {
         var downloadURL = file;
@@ -229,6 +265,9 @@ useEffect(() => {
               <Box> 
                   <p style={{fontWeight:'bolder', margin:0, fontSize:30}}>Assignment : {assig.assignmentNumber}</p> 
                   <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Due at {formattedDueDate}</p> 
+                  <p style={{ marginTop: 6, fontSize: 16, color: "red", }}>
+                      ({formattedTime}) 
+                    </p>
               </Box>
               <Box> 
                   <p style={{fontWeight:'bolder', margin:0, fontSize:18}}>Marks</p> 
@@ -331,15 +370,27 @@ useEffect(() => {
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
-        <QuestionList/>
+        <QuestionList  questions = {questions}/>
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={2}>
-        {Assigdata ? <Contents   /> : <NoSubmission /> }
+        {Assigdata ? <Contents Assignments = {submiteedAssigdata} id = {Assignmentid}   /> : <NoSubmission /> }
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={3}>
-        <TestcaseList/>
+        {
+          testCases.length > 0 && 
+           testCases.map((t, index) => (
+            <>
+                <Typography>
+                  Q{index+1}: {t._doc.questionDescription}
+                </Typography>
+                <TestcaseList testCases = {t.testCases}  />
+              </>
+           )
+
+           )
+        }
       </CustomTabPanel>
      </>
     )

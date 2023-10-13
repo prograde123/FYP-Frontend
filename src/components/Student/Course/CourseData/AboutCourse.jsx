@@ -62,14 +62,14 @@ const About = () => {
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
   };
-  const startDate = course.startingDate;
+  const startDate = course?.startingDate;
   const sdate = new Date(startDate);
 
   const formattedStartDate = `${sdate.getDate()}-${
     sdate.getMonth() + 1
   }-${sdate.getFullYear()}`;
 
-  const endDate = course.endingDate;
+  const endDate = course?.endingDate;
   const edate = new Date(endDate);
 
   const formattedEndDate = `${edate.getDate()}-${

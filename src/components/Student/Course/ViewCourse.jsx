@@ -26,7 +26,7 @@ import newtheme from '../../../Themenew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FeedbackIcon from '@mui/icons-material/Feedback';
-import FeedBack from './CourseData/FeedBack';
+import Grades from './CourseData/Grades';
 import AddIcon from '@mui/icons-material/Add';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -62,24 +62,24 @@ function ViewCourse({courses}) {
     setInstructor(course?.teacher.user.fullName)
     // console.log(course.teacher.user)
 })
-  
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
   };
-  const startDate = course.startingDate;
+  const startDate = course?.startingDate;
   const sdate = new Date(startDate);
 
   const formattedStartDate = `${sdate.getDate()}-${
     sdate.getMonth() + 1
   }-${sdate.getFullYear()}`;
 
-  const endDate = course.endingDate;
+  const endDate = course?.endingDate;
   const edate = new Date(endDate);
 
   const formattedEndDate = `${edate.getDate()}-${
     edate.getMonth() + 1
   }-${edate.getFullYear()}`;
 
+  
   const renderSelectedContent = () => {
     switch (selectedTab) {
       case 'coursecontent':
@@ -95,7 +95,7 @@ function ViewCourse({courses}) {
       case 'compiler':
         return <Compiler />
       case 'feedback':
-        return <FeedBack />
+        return <Grades />
       default:
         return null;
     }

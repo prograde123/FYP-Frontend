@@ -7,6 +7,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from '@emotion/react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchBar from '@mkyy/mui-search-bar';
+import { ref, listAll, getDownloadURL } from 'firebase/storage';
+import { Link } from "react-router-dom";
+
+import storage from "../../../firebase";
 
 import {
   DataGrid,
@@ -82,11 +86,48 @@ EditToolbar.propTypes = {
   setRows: PropTypes.func.isRequired,
 };
 
-export default function Contents() {
+export default function Contents({Assignments ,id}) {
   const theme = useTheme();
   const navigate = useNavigate()
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState(Assignments);
   const [rowModesModel, setRowModesModel] = React.useState({});
+
+
+  const handleDownload = async (userID) => {
+    const folderRef = ref(storage, `Submission/${id}/${userID}/`);
+    const fileList = await listAll(folderRef);
+  
+    async function downloadFile(index) {
+      if (index >= fileList.items.length) {
+        return; 
+      }
+  
+      try {
+        const item = fileList.items[index];
+        const downloadURL = await getDownloadURL(item);
+        const link = document.createElement("a");
+        link.href = downloadURL;
+        link.download = item.name;
+        link.click();
+  
+        // Wait for a short delay before starting the next download
+        await new Promise((resolve) => setTimeout(resolve, 1000)); 
+  
+        // Download the next file
+        downloadFile(index + 1);
+      } catch (error) {
+        console.error(`Error downloading file: ${error.message}`);
+  
+        
+        downloadFile(index + 1);
+      }
+    }
+  
+    downloadFile(0); 
+  };
+  
+  
+  
 
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
@@ -94,36 +135,35 @@ export default function Contents() {
 
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setRows(rows.map((row) => (row._id === newRow._id ? updatedRow : row)));
     return updatedRow;
   };
 
   const columns = [
-    {
-        field: 'imageUrl', headerName: 'File', renderCell: (params) => (
-          <img src={params.row.imageUrl} style={{ width: 50, borderRadius: '50%' }} />
-        )
-      },
-    { field: 'AssigName', headerName: 'Assignment Name', width: 200},
+   
+    { field: 'studentName', headerName: 'Student Name',width:150},
 
-    { field: 'size', headerName: 'Size', width: 200},
+    { field: 'totalQuestionsSubmitted', headerName: 'Questions Submitted',width:150},
     {
-      field: 'dateCreated',
-      headerName: 'Date Uploaded',
-      type: 'date',
-      width: 200,
+      field: 'totalObtainedMarks',
+      headerName: 'Obtained Marks'
+      ,width:150
     },
     {
-        field: 'dueDate',
-        headerName: 'Due Date',
-        type: 'date',
-        width: 200,
+        field: 'submissionDate',
+        headerName: 'Submitted on'
+        ,width:150
+      },
+      {
+        field: 'submissionTime',
+        headerName: 'Time'
+        ,width:150
       },
     {
       field: 'actions',
-      type: 'actions',
+      type: 'actions'
+      ,width:150,
       headerName: 'Actions',
-      width: 230,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
@@ -132,59 +172,52 @@ export default function Contents() {
             icon={<VisibilityIcon />}
             label="View"
             className="textPrimary"
+            onClick={ () => handleDownload(id)}
             sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
           />,
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
-
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.secondary.main }}
-          />,
+          
+        
         ];
       },
     },
   ];
 
   return (
-    <Box sx={{ marginBottom: 5,
-      height: "100vh", width: "100%" }}>
-      <DataGrid 
-        sx={{
-          backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
-            color: theme.palette.secondary.main,
+    <Box sx={{ marginBottom: 5, width: "100%" }}>
+      <DataGrid
+  sx={{
+    backgroundColor: theme.palette.primary.background,
+    '& .MuiDataGrid-cell:hover': {
+      color: theme.palette.secondary.main,
+    },
+    marginTop: 3,
+    borderRadius: 2,
+    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
+  }}
+  rows={rows}
+  rowHeight={70}
+  columns={columns}
+  rowModesModel={rowModesModel}
+  processRowUpdate={processRowUpdate}
+  slots={{
+    toolbar: EditToolbar,
+  }}
+  slotProps={{
+    toolbar: { setRows, setRowModesModel },
+  }}
+  initialState={{
+    pagination: {
+      paginationModel: { pageSize: 15, page: 0 },
+    },
+  }}
+  options={{
+    search: true,
+  }}
+  getRowId={(row) => row.studentId} // Specify the custom id field
+  // checkboxSelection
+  // disableRowSelectionOnClick
+/>
 
-          }, marginTop: 3, borderRadius: 2, height:'100vh', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
-        }}
-        rows={rows}
-        rowHeight={70}
-        columns={columns}
-        rowModesModel={rowModesModel}
-        processRowUpdate={processRowUpdate}
-        slots={{
-          toolbar: EditToolbar,
-        }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 15, page: 0 },
-          },
-        }}
-        options={{
-          search: true
-        }}
-        // checkboxSelection
-        // disableRowSelectionOnClick
-      />
     </Box>
   );
 }
