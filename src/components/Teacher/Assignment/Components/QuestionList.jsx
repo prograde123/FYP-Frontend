@@ -70,9 +70,7 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      <Button startIcon={<VscNewFile style={{fontSize:25}}/>} sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2, padding:1.5,borderRadius:7}} variant="contained" color="secondary">
-        Add Question
-      </Button>
+      
       <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
         <SearchBar value={searched}
           onChange={(searchVal) => requestSearch(searchVal)}
@@ -90,13 +88,13 @@ EditToolbar.propTypes = {
   
 };
 
-export default function QuestionList() {
+export default function QuestionList( {questions}) {
   const theme = useTheme();
   const navigate = useNavigate()
-  
+
   const [rowModesModel, setRowModesModel] = React.useState({});
   const [courseID , setcourseID] = React.useState(null)
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = React.useState(questions);
 
   
  
@@ -109,61 +107,51 @@ export default function QuestionList() {
   };
   
   const columns = [
-    { field: 'Question Number', headerName: 'Question Number', width: 200},
-
-    { field: 'isArray', headerName: 'Is Array', width: 200},
+    
     {
-      field: 'uploadDate',
-      headerName: 'Marks',
-      
-      width: 220,
+      field: 'questionDescription',
+      headerName: 'Question Description',
+      width: 200,
     },
     {
-        field: 'dueDate',
-        headerName: 'Total Testcases',
-        
-        width: 220,
-      },
+      field: 'isInputArray',
+      headerName: 'Is Array',
+      width: 200,
+    },
+    {
+      field: 'questionTotalMarks',
+      headerName: 'Marks',
+      width: 220,
+    },
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
       width: 220,
       cellClassName: 'actions',
-      getActions: ({ id }) => {
-
-        return [
-          <GridActionsCellItem
-          icon={<TbEdit style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
+      getActions: ({ id }) => [
+        <GridActionsCellItem
+          icon={<TbEdit style={{ color: theme.palette.secondary.main, fontSize: 25, ":hover": { fontSize: 30 } }} />}
           label="Edit"
-            // onClick={() => {
-            //   navigate(`/Teacher/AddAssignment/${courseID}`, {
-            //     // state: { course: courses.find(c =>  c._id === id) },
-            //     state: { assig: rows.find(row =>  row._id === id) },
-            //   });
-            // }} 
-            
-          />,
-          <GridActionsCellItem
-          icon={<RiDeleteBin5Line style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
+        />,
+        <GridActionsCellItem
+          icon={<RiDeleteBin5Line style={{ color: theme.palette.secondary.main, fontSize: 25, ":hover": { fontSize: 30 } }} />}
           label="Delete"
-            // onClick={handleDeleteClick(id)}
-            />,
-          
-        ];
-      },
+        />,
+      ],
     },
   ];
+  
 
   return (
     <Box sx={{ marginBottom: 2,
-      height: "100vh", width: "100%" }}>
+      width: "100%" }}>
       <DataGrid 
         sx={{
             paddingX:2,backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
             color: theme.palette.secondary.main,
 
-          }, marginTop: 3, borderRadius: 2, height:'100vh', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
+          }, marginTop: 3, borderRadius: 2,  boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
         }}
         rows={rows}
         rowHeight={70}

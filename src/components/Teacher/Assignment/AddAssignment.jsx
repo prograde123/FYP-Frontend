@@ -6,13 +6,15 @@ import { useTheme } from '@emotion/react';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { DateCalendar } from '@mui/x-date-pickers';
 import { useFormik } from "formik";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useLocation } from "react-router-dom";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
+
 import dayjs from 'dayjs';
 import * as Yup from "yup";
 import Select from '@mui/material/Select';
@@ -46,7 +48,7 @@ const AddAssignment = () => {
   const [showAddQuestion, setShowAddQuestion] = React.useState(false);
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [Assignment, setAssignment] = React.useState({ CourseID: "" ,assignmentNumber:  "",description:  "" ,
-  uploadDate: "",dueDate: "",totalMarks: "",format: "",noOfQuestions : ""});
+  uploadDate: "",dueDate: "",dueTime:"",totalMarks: "",format: "",noOfQuestions : ""});
 
   const [file,setFile] = React.useState(null)
   const [fileError,setFileError] = React.useState('')
@@ -65,6 +67,7 @@ const AddAssignment = () => {
     description:"",
     uploadDate:"",
     dueDate:"",
+    dueTime:"",
     marks:"",
     format:"",
     questions:"",
@@ -74,6 +77,7 @@ const AddAssignment = () => {
     description : assignment.description,
     uploadDate : dayjs( assignment.uploadDate),
     dueDate : dayjs(assignment.dueDate),
+    dueTime: dayjs(assignment.dueTime),
     marks : assignment.totalMarks,
     format : assignment.format,
     questions : assignment.questions
@@ -86,6 +90,7 @@ const AddAssignment = () => {
       description: Yup.string().min(2).max(55).required("Please Enter the course Description"),
       uploadDate: Yup.date().required("Upload Date is required"),
       dueDate: Yup.date().required("Due Date is required"),
+      dueTime:Yup.date().required("Due Time is required"),
       marks: Yup.number().min(1).required("Marks are required!"),
       format: Yup.string().ensure().required("Please Enter the format"),
       questions: Yup.number().min(1).required("Please Enter the Number of questions"),
@@ -125,6 +130,7 @@ const AddAssignment = () => {
             description:values.description,
             uploadDate:values.uploadDate.$d,
             dueDate:values.dueDate.$d,
+            dueTime:values.dueTime,
             totalMarks:values.marks,
             format:values.format,
             noOfQuestions : values.questions
@@ -132,6 +138,10 @@ const AddAssignment = () => {
 
           }
         )
+
+
+
+        console.log(values.dueTime)
         setShowAddQuestion(true);
           if (currentQuestion <= values.questions ) {
             setCurrentQuestion(currentQuestion);
@@ -301,6 +311,29 @@ const AddAssignment = () => {
               </DemoContainer>
             </LocalizationProvider>
            
+           <Box>
+           <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={['TimePicker']}>
+                  <TimePicker
+                    name="dueTime"
+                    id="dueTime"
+                    label="Due Time"
+
+                    value={values.dueTime}
+                    onChange={(value) => setFieldValue("dueTime", value, true)}
+                    onBlur={handleBlur}
+                    
+                    slotProps={{ textField: { fullWidth: true,error: false } }}
+                    viewRenderers={{
+                      hours: renderTimeViewClock,
+                      minutes: renderTimeViewClock,
+                      seconds: renderTimeViewClock,
+                    }}
+                  />
+                </DemoContainer>
+            </LocalizationProvider>
+                  
+            </Box>
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
               <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
                 <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Select File Format</p>

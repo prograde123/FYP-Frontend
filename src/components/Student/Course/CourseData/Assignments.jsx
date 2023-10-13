@@ -16,6 +16,7 @@ import { TbCalendarDue } from "react-icons/tb";
 import PastAssignmentCard from "./AssignmentData/PastAssignmentCard";
 import BeatLoader from "react-spinners/BeatLoader";
 import noCoursesImage from "../../../../assets/noCourses.png";
+import CompletedCard from "./AssignmentData/completedCard";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -112,6 +113,15 @@ const Assignments = () => {
                   color: newtheme.palette.secondary.footer,
                 }}
               />
+                <Tab
+                icon={<MdRunningWithErrors fontSize={25} />}
+                label="Completed"
+                color="black"
+                sx={{
+                  marginRight: 7,
+                  color: newtheme.palette.secondary.footer,
+                }}
+              />
             </Tabs>
           </Box>
           <hr
@@ -155,11 +165,18 @@ const Assignments = () => {
               <Box>
                 {assignments &&
                   assignments.map((assignment) => {
-                    return (
-                      <AssignmentCard Assignment={assignment} CourseId={id} />
-                    );
+                    const currentDate = new Date();
+                    const DueDate = new Date(assignment.dueDate);
+                    const dueTime = assignment?.dueTime ? new Date(assignment.dueTime) : new Date();
+                    DueDate.setHours(dueTime.getHours());
+                    DueDate.setMinutes(dueTime.getMinutes());
+                    
+                    const PastDueDate = DueDate < currentDate;
+
+                    return PastDueDate ? null : <AssignmentCard Assignment={assignment} CourseId={id} />;
                   })}
               </Box>
+
             </CustomTabPanel>
           )}
           </Grid>
@@ -168,13 +185,31 @@ const Assignments = () => {
           <Grid container sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
           <CustomTabPanel value={value} index={1}>
             <Box>
-              {assignments &&
-                assignments.map((assignment) => {
-                  return (
-                    <PastAssignmentCard Assignment={assignment} CourseId={id} />
-                  );
-                })}
-            </Box>
+                {assignments &&
+                  assignments.map((assignment) => {
+                    const currentDate = new Date();
+                    const DueDate = new Date(assignment.dueDate);
+                    const dueTime = assignment?.dueTime ? new Date(assignment.dueTime) : new Date();
+                    DueDate.setHours(dueTime.getHours());
+                    DueDate.setMinutes(dueTime.getMinutes());
+                    
+                    const PastDueDate = DueDate < currentDate;
+
+                    return PastDueDate ? <PastAssignmentCard Assignment={assignment} CourseId={id} /> : null;
+                  })}
+              </Box>
+   
+          </CustomTabPanel>
+          </Grid>
+          <Grid container sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+          <CustomTabPanel value={value} index={2}>
+            <Box>
+                {assignments &&
+                  assignments.map((assignment) => {
+                    return  <CompletedCard Assignment={assignment} CourseId={id} /> ;
+                  })}
+              </Box>
+   
           </CustomTabPanel>
           </Grid>
           

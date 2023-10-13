@@ -60,9 +60,7 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      <Button startIcon={<VscNewFile style={{fontSize:25}}/>} sx={{ marginLeft: 2, marginRight: 2, marginTop: 2, marginBottom: 2, padding:1.5,borderRadius:7}} variant="contained" color="secondary">
-        Add testCase
-      </Button>
+      
       <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
         <SearchBar value={searched}
           onChange={(searchVal) => requestSearch(searchVal)}
@@ -80,13 +78,13 @@ EditToolbar.propTypes = {
   
 };
 
-export default function TestcaseList() {
+export default function TestcaseList({testCases}) {
   const theme = useTheme();
   const navigate = useNavigate()
   
   const [rowModesModel, setRowModesModel] = React.useState({});
   const [courseID , setcourseID] = React.useState(null)
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = React.useState(testCases);
 
   
  
@@ -99,21 +97,20 @@ export default function TestcaseList() {
   };
   
   const columns = [
-    { field: 'Testcase Number', headerName: 'testcase Number', width: 150},
-    { field: 'isArray', headerName: 'Is Array', width: 150},
+    
     {
-      field: 'Input',
+      field: 'input',
       headerName: 'Input',
       
       width: 200,
     },
     {
-        field: 'Output',
+        field: 'output',
         headerName: 'Output',
         
         width: 200,
       },
-      { field: 'Question Number', headerName: 'Question Number', width: 150},
+      
     {
       field: 'actions',
       type: 'actions',
@@ -147,13 +144,13 @@ export default function TestcaseList() {
 
   return (
     <Box sx={{ marginBottom: 2,
-      height: "100vh", width: "100%" }}>
+       width: "100%" }}>
       <DataGrid 
         sx={{
             paddingX:2,backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
             color: theme.palette.secondary.main,
 
-          }, marginTop: 3, borderRadius: 2, height:'100vh', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
+          }, marginTop: 3, borderRadius: 2,  boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
         }}
         rows={rows}
         rowHeight={70}

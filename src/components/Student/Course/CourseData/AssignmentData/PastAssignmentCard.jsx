@@ -10,6 +10,9 @@ import { Box } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 import newtheme from '../../../../../Themenew'
 import {RxCross1} from 'react-icons/rx'
+import http from '../../../../../../Axios/axios';
+import {LuView} from 'react-icons/lu'
+
 const Img = styled('img')({
   margin: 'auto',
   display: 'block',
@@ -19,9 +22,32 @@ const Img = styled('img')({
 
 export default function PastAssignmentCard({Assignment , CourseId}) {
 
+  const [isAlreadySubmitted, setIsSubmitted] = React.useState(false);
+
+  const getSubmission = async () => {
+    try {
+      const res = await http.get(`/submit/isSubmitted/${Assignment._id}`);
+      if (res.data.success) {
+        setIsSubmitted(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }finally {
+      setLoading(false); 
+    }
+  };
+
+  React.useEffect(()=>{
+      getSubmission()
+  },[])
+
+  const assigDate = new Date(Assignment.dueDate)
+  const formattedDueDate = `${assigDate.getDate()}-${
+    assigDate.getMonth() + 1
+  }-${assigDate.getFullYear()}`;
   const nav = useNavigate()
   return (
-    <>
+    isAlreadySubmitted ? <></> :<>
     <ThemeProvider theme={newtheme}>
     <Box
       sx={{p: 2,
@@ -40,7 +66,7 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
         backgroundColor: (theme) =>
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }}
-    //   onClick={() => nav(`/Student/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
+     onClick={() => nav(`/Student/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
     >
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12} >
@@ -63,11 +89,12 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
             </Box>
             <Grid item>
               <Typography sx={{ cursor: 'pointer', color: newtheme.palette.secondary.background, margin:0}} variant="body2">
-                Past Due Date: {Assignment.dueDate?.split('T')[0]} 
+                Past Due Date: {formattedDueDate} 
               </Typography>
-              <Typography sx={{ cursor: 'pointer', marginBottom:2 , color:newtheme.palette.secondary.footer, marginTop:1, fontWeight:'bold'}} variant="body2">
-                <RxCross1 style={{color:newtheme.palette.secondary.footer, marginBottom:-2, marginRight:5, fontWeight:'bold'}}/>Not Sumbitted
-              </Typography>
+              <p style={{color: newtheme.palette.secondary.footer, fontWeight:'bold',
+               margin:0, padding:10, border:"1px solid #1665b5", width:'17%', borderRadius:10,
+                cursor:'pointer'}}><LuView fontSize={22} 
+                style={{marginBottom:-6, marginRight:5}}/>View Assignment</p>
               </Grid>
           </Grid>
         </Grid>

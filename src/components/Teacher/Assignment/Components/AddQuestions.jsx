@@ -37,8 +37,10 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   //solution code only input test case
   const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
   const [file, setFile] = React.useState(null)
+  const [MaxMarks , setMaxMarks] = useState(assig.totalMarks)
 
 
+  console.log(assig)
 
   //for radio button testcase option
   const [selectedOption, setSelectedOption] = useState('');
@@ -80,7 +82,14 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
 
 const handleClick = async () => {
   if(selectedOption === 'testcase'){
-    if (testCases[0].input !== "" && testCases[0].output !== "" && question !== "") {
+    if (
+          testCases[0].input !== "" 
+          && testCases[0].output !== "" 
+          && question !== "" 
+          && questionTotalMarks <= MaxMarks
+        ) {
+      
+      setMaxMarks(MaxMarks-questionTotalMarks);
       const newQuestion = {
         questionDescription: question,
         questionTotalMarks: questionTotalMarks,
@@ -105,14 +114,16 @@ const handleClick = async () => {
       setQuestionNumber(questionNumber + 1);
   
       if (questionNumber === totalQuestions - 1) {
+        console.log("inside full questions questionNumber " , questionNumber)
         const response = await http.post("/assignment/addAssignment", { questions, assig });
+        console.log("Assignment added successfully " , response.data.success)
         if (response.data.success) {
           alert("Assignment Created Successfully");
           navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
         }
       }
     } else {
-      alert("Please enter at least 1 test case, question, and total marks");
+      alert("Please enter at least 1 test case, question, and total marks \n Note : Question marks should be less than total Assignment Marks");
     }
   }
   else if(selectedOption === 'solutionCode'){
@@ -122,8 +133,10 @@ const handleClick = async () => {
       inputTestCases[0].input !== "" &&
       question !== "" &&
       file !== null
+      && questionTotalMarks <= MaxMarks
     ) { 
      //  console.log(file)
+     setMaxMarks(MaxMarks-questionTotalMarks);
        const formData = new FormData();
 
        const FileSplit = file.name.split('.')
@@ -137,9 +150,6 @@ const handleClick = async () => {
         formData.append('files', file);
 
      
-
-        
-
         console.log(inputTestCases)
 
         let testCasesString;
@@ -193,7 +203,7 @@ const handleClick = async () => {
           questionDescription: question,
           questionTotalMarks: questionTotalMarks,
           testCases: testCases.map((testCase) => ({
-            input: Array.isArray(testCase.input) ? testCase.input : [testCase.input],
+            input: Array.isArray(testCase.input) ? testCase.input : testCase.input,
             output: testCase.output,
           })),
           
@@ -216,7 +226,9 @@ const handleClick = async () => {
         setQuestionNumber(questionNumber + 1);
 
         if (questionNumber === totalQuestions - 1) {
+          console.log("inside full questions questionNumber " , questionNumber)
           const response = await http.post("/assignment/addAssignment", { questions, assig });
+          console.log("Assignment added successfully " , response.data.success)
           if (response.data.success) {
             alert("Assignment Created Successfully");
             navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
@@ -225,7 +237,7 @@ const handleClick = async () => {
       }
 
       else{
-        alert('File format should be the same as of assignment')
+        alert('File format should be the same as of assignment \n Note : Question marks should be less than total Assignment Marks')
       }
 
      

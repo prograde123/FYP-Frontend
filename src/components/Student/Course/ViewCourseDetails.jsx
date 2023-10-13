@@ -9,7 +9,7 @@ import Assignments from "./CourseData/Assignments";
 import Compiler from "./CourseData/Compiler/Compile";
 import Members from "./CourseData/members";
 import Instructor from "./CourseData/Instructor";
-import FeedBack from "./CourseData/FeedBack";
+import Grades from "./CourseData/Grades";
 import CourseContent from "./CourseData/CourseContent";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ import { TbBrandCpp } from "react-icons/tb";
 import { TbNotes } from "react-icons/tb";
 import { PiStudent } from "react-icons/pi";
 import { SiAssemblyscript } from "react-icons/si";
+import http from "../../../../Axios/axios";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,7 +81,14 @@ function ViewCourseDetails({ courses }) {
   const [instructor, setInstructor] = React.useState("");
   const [selectedTab, setSelectedTab] = useState("about");
   const course = location.state?.course;
+  const [grades , setGrades] = useState([])
 
+
+  const getGrades = async()=>{
+     const res = await http.get(`/submit/GetGrades/${course._id}`)
+     setGrades(res.data)
+  }
+  
   React.useEffect(() => {
     // setCode(course.courseCode)
     setCname(course?.name);
@@ -92,19 +100,20 @@ function ViewCourseDetails({ courses }) {
     setLdate(course?.endingDate);
     setInstructor(course?.teacher.user.fullName);
     // console.log(course.teacher.user)
-  });
+    getGrades()
+  },[]);
 
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
   };
-  const startDate = course.startingDate;
+  const startDate = course?.startingDate;
   const sdate = new Date(startDate);
 
   const formattedStartDate = `${sdate.getDate()}-${
     sdate.getMonth() + 1
   }-${sdate.getFullYear()}`;
 
-  const endDate = course.endingDate;
+  const endDate = course?.endingDate;
   const edate = new Date(endDate);
 
   const formattedEndDate = `${edate.getDate()}-${
@@ -217,7 +226,7 @@ function ViewCourseDetails({ courses }) {
           <Assignments />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <FeedBack />
+          <Grades grades= {grades} />
         </TabPanel>
         <TabPanel value={value} index={3}>
           <CourseContent />

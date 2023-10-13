@@ -29,6 +29,7 @@ const ViewUploadedAssig = () => {
   const [questions, setQuestions] = React.useState([]);
   const [isTeacher, setIsTeacher] = React.useState(false);
   const [isAlreadySubmitted, setIsSubmitted] = React.useState(false);
+  const [PastDueDate ,setPastDueDate] = React.useState(false)
 
   const [loading, setLoading] = React.useState(false);
   const [noCourses, setNoCourses] = React.useState(false);
@@ -64,13 +65,27 @@ const ViewUploadedAssig = () => {
     }
   };
 
+  const currentDate = new Date()
+
+  
   useEffect(() => {
       setLoading(true);
       http.get(`/assignment/viewAssignment/${Assignmentid}`).then((response) => {
       setAssig(response.data.Viewassignment);
       setFile(response.data.PdfDataUrl);
       setQuestions(response.data.Viewquestions);
+      
+
+      const DueDate = new Date(response.data.Viewassignment.dueDate)
+      const dueTime = new Date(response.data.Viewassignment.dueTime);
+      DueDate.setHours(dueTime.getHours());
+     DueDate.setMinutes(dueTime.getMinutes());
+     
+      if(DueDate < currentDate) {
+        setPastDueDate(true)
+      }
       setLoading(false);
+      
     });
 
     const userJSON = localStorage.getItem("User");
@@ -114,6 +129,21 @@ const ViewUploadedAssig = () => {
   const formattedDueDate = `${ddate.getDate()}-${
     ddate.getMonth() + 1
   }-${ddate.getFullYear()}`;
+
+
+  function formatTimeToAMPM(hours, minutes) {
+    const period = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12; // Convert 0 to 12
+    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+    return `${formattedHours}:${formattedMinutes} ${period}`;
+  }
+  
+  
+  const time = assig?.dueTime ? new Date(assig.dueTime) : new Date();
+
+  
+
+const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
 
   const handleDownload = () => {
     var downloadURL = file;
@@ -186,7 +216,7 @@ const ViewUploadedAssig = () => {
                       Due at {formattedDueDate} 
                     </p>
                     <p style={{ marginTop: 6, fontSize: 16, color: "red", }}>
-                      (11:59 PM) 
+                      ({formattedTime}) 
                     </p>
                     </Box>
                   </Box>
@@ -367,6 +397,7 @@ const ViewUploadedAssig = () => {
                   variant="contained"
                   color="secondary"
                   endIcon={<FiArrowRightCircle fontSize={25}/>}
+                  disabled={PastDueDate && !isAlreadySubmitted ? true : false}
                   sx={{
                     padding: 2,
                     fontSize: 16,
@@ -403,7 +434,7 @@ const ViewUploadedAssig = () => {
                     ? "View Submissions"
                     : isAlreadySubmitted
                     ? "View Result"
-                    : "Submit Assignment"}
+                    : PastDueDate ? "Due Date has passed" : "Submit Assignment"}
                 </Button>
             </Box>
           </Grid>

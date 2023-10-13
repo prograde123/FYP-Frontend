@@ -11,6 +11,7 @@ import StudentBody from "./components/Student/Body/StudentBody";
 import StartPage from "./components/LandingPage/StartPage";
 import ContactUs from "./components/LandingPage/ContactUs";
 
+
 function Auth() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/StudentSignUp" element={<SignUpStudent />} />
         <Route path="/Teacher/*" element={<TeacherBody />} />
         <Route path="ForgotPassword" element={<ForgotPassword />} />
+        
         
         <Route path="OTPVerification" element={<OTP />} />
         <Route path="/Student/*" element={<StudentBody />} />
