@@ -16,10 +16,12 @@ import { useNavigate } from 'react-router-dom';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import AntDesignGrid from './CourseOverviewTable';
 import profile from '../../../../src/assets/profile.png';
+import BeatLoader from "react-spinners/BeatLoader";
 
 function Dashboard() {
   const theme = useTheme();
   const navigate = useNavigate()
+  const [loading, setLoading] = React.useState(false);
 
   //donut chart
   const [pieChart,setPieChart] =React.useState({
@@ -209,6 +211,7 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      setLoading(true)
         const userJSON = await localStorage.getItem('User')
         const user = JSON.parse(userJSON);
         setProfileData(user)
@@ -216,6 +219,7 @@ function Dashboard() {
     }
 
     fetchProfile()
+    setLoading(false)
     
   },[])
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -228,7 +232,25 @@ function Dashboard() {
   
 
   return (
-    <Box sx={{ backgroundColor:theme.palette.primary.background,}}>
+    <>
+    {loading ? (
+          <Box
+          sx={{
+            backgroundColor: "white",
+            height:'80vh',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BeatLoader color="#1665b5"
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </Box>
+      ) : ( 
+        <Box sx={{ backgroundColor:theme.palette.primary.background,}}>
     
       <Grid
         container
@@ -270,7 +292,7 @@ function Dashboard() {
                 width={40}
                 src={profileData?.user?.profilePic ? profileData.user.profilePic : profile }
               />
-              <p style={{ fontWeight: "bolder", fontSize: 22, marginTop: 7 }}>
+              <p style={{ fontWeight: "bolder", fontSize: 18, marginTop: 10 }}>
                 Welcome, {profileData ? profileData.user.fullName : 'User'}
               </p>
             </Box>
@@ -728,6 +750,9 @@ function Dashboard() {
         </Grid>
       </Grid>
     </Box>
+      )}
+    </>
+    
   );
 }
 

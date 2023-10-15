@@ -15,7 +15,6 @@ import { CircleGrid } from "react-awesome-shapes";
 import FormControl from '@mui/material/FormControl';
 import storage  from '../../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
@@ -24,6 +23,7 @@ import Person2Icon from '@mui/icons-material/Person2';
 import { MuiTelInput } from 'mui-tel-input'
 import { Link } from "react-router-dom";
 import { Register } from '../../../../Axios/axiosall';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const SignUp = () => {
     const theme = useTheme()
@@ -42,6 +42,7 @@ const SignUp = () => {
     const [nameError,setNameError]  = React.useState('')
     const [emailError,setEmailError]  = React.useState('')
     const [passError, setPassError] = React.useState('')
+    const [isLoading, setIsLoading] = React.useState(false);
    
 
 
@@ -64,8 +65,6 @@ const SignUp = () => {
         setEmailError('')
         return true
     }
-
-   
 
     const validatePasswords = () => {
         if (pass != Cpass || pass == '' || Cpass == '') {
@@ -103,6 +102,7 @@ const SignUp = () => {
        
         const isPassValid = validatePasswords()
         if(isNameValid && isEmailValid  && isPassValid ){
+            setIsLoading(true);
            const response =  Register(name,email,pass,"Teacher",pic,'/123',null)
            if(response){
                 navigate('/SignIn')
@@ -270,11 +270,31 @@ const SignUp = () => {
                    
                         {/* submit button */}
                         <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
-                            <Button
-                                type='submit' onClick={() => { handleClick() }}
-                                variant="contained" color="secondary" endIcon={<HowToRegIcon />} sx={{ width: '90%', padding: 2, fontSize: 16, fontWeight: 'bold', marginTop: 1,borderRadius:2 }}>
-                             Sign Up as a Teacher
-                            </Button>
+                        <Button
+  type='submit'
+  onClick={() => handleClick()}
+  variant="contained"
+  color="secondary"
+ endIcon={
+    isLoading ? null : ( 
+      <HowToRegIcon fontSize='large' sx={{ color: 'white' }} />
+    )
+  }
+  sx={{
+    width: '90%',
+    padding: 2,
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 1,
+    borderRadius: 2,
+  }}
+>
+  {isLoading ? ( 
+    <ClipLoader size={20} color="#fff" loading={isLoading} />
+  ) : (
+    "Sign Up as a Teacher"
+  )}
+</Button>
                         </Box>
                     
                         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>

@@ -310,28 +310,40 @@ const AddAssignment = () => {
                 </Box>
               </DemoContainer>
             </LocalizationProvider>
-           
            <Box>
-           <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['TimePicker']}>
-                  <TimePicker
-                    name="dueTime"
-                    id="dueTime"
-                    label="Due Time"
 
-                    value={values.dueTime}
-                    onChange={(value) => setFieldValue("dueTime", value, true)}
-                    onBlur={handleBlur}
-                    
-                    slotProps={{ textField: { fullWidth: true,error: false } }}
-                    viewRenderers={{
-                      hours: renderTimeViewClock,
-                      minutes: renderTimeViewClock,
-                      seconds: renderTimeViewClock,
-                    }}
-                  />
-                </DemoContainer>
+           <Box sx={{marginTop:3}}>
+            <LocalizationProvider dateAdapter={AdapterDayjs} >
+                  <p style={{display:'flex',flexDirection:'row',marginBottom:15,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Due Time</p>  
+                  <DemoContainer components={['TimePicker']} sx={{width:'100%'}}>
+                    <Box sx={{display:'flex', flexDirection:'column', width:'100%'}}>
+                    <Box>
+                    <TimePicker
+                      name="dueTime"
+                      id="dueTime"
+                      label="Due Time"
+
+                      value={values.dueTime}
+                      onChange={(value) => setFieldValue("dueTime", value, true)}
+                      onBlur={handleBlur}
+                      
+                      slotProps={{ textField: { fullWidth: true,error: false } }}
+                      viewRenderers={{
+                        hours: renderTimeViewClock,
+                        minutes: renderTimeViewClock,
+                        seconds: renderTimeViewClock,
+                      }}
+                    />
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row'}}>
+                    {errors.dueTime && touched.dueTime ? (
+                      <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.dueTime}</p>
+                    ) : null}
+                  </Box>
+                    </Box>
+                  </DemoContainer>
             </LocalizationProvider>
+           </Box>
                   
             </Box>
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>

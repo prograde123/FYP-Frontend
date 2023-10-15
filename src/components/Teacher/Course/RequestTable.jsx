@@ -13,6 +13,7 @@ import { LuView } from "react-icons/lu";
 import { VscNewFile } from "react-icons/vsc";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
+import BeatLoader from "react-spinners/BeatLoader";
 import {
     DataGrid,
     GridToolbarContainer,
@@ -96,6 +97,7 @@ export default function Requests({ courses }) {
     const course = location.state.course
     const [request, setRequest] = React.useState([]);
     const [rows, setRows] = React.useState(request);
+    const [loading, setLoading] = React.useState(false);
     
     const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -107,11 +109,14 @@ export default function Requests({ courses }) {
 
     async function getRequests() {
         try {
+            setLoading(true)
           const response = await http.get('/course/viewRequests/'+ course._id)
           setRequest(response.data.requests)
           console.log(response.data)
         } catch (e) {
           console.log(e);
+        } finally{
+            setLoading(false)
         }
       }
 
@@ -188,6 +193,25 @@ export default function Requests({ courses }) {
                 },
             }}
         >
+            {loading ? (
+        <Box
+          sx={{
+            backgroundColor: "white",
+            height: "80vh",
+            width: "160vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BeatLoader
+            color="#1665b5"
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </Box>
+      ) : (
             <DataGrid
                 sx={{
                     backgroundColor: theme.palette.primary.background,paddingX:4,'& .MuiDataGrid-cell:hover': {
@@ -212,6 +236,7 @@ export default function Requests({ courses }) {
                     },
                 }}
             />
+      )}
         </Box>
     );
 }

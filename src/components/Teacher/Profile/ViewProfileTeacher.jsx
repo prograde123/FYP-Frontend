@@ -36,6 +36,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Person2Icon from '@mui/icons-material/Person2';
+import BeatLoader from "react-spinners/BeatLoader";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,6 +79,7 @@ function ViewProfile() {
   const [isProfileOpen, setProfileOpen] = React.useState(false);
   const handleProfileOpen = () => setProfileOpen(true);
   const handleProfileClose = () => setProfileOpen(false);
+  const [loading, setLoading] = React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -97,14 +99,15 @@ function ViewProfile() {
 
   const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  useEffect(() => {
+    
     const fetchProfile = async () => {
+      setLoading(true)
         const profile = await getProfile()
-        setProfileData(profile)
-        
+        setProfileData(profile)   
+        setLoading(false) 
     }
 
+  useEffect(() => {
     fetchProfile()
     
   },[])
@@ -116,6 +119,26 @@ function ViewProfile() {
 
   return (
     <>
+    {loading ? (
+        <Box
+          sx={{
+            backgroundColor: "white",
+            height: "80vh",
+            width: "160vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BeatLoader
+            color="#1665b5"
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </Box>
+      ) : (
+   <Box>
    { profileData && 
    ( <Box>
       
@@ -474,6 +497,8 @@ function ViewProfile() {
      
     </Box>)
   }
+   </Box>
+      )}
   </>
   );
 }

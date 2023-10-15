@@ -29,6 +29,7 @@ import QuestionList from './Components/QuestionList';
 import TestcaseList from './Components/TestcaseList';
 import Contents from './SubmitTable';
 import NoSubmission from './NoSubmission';
+import BeatLoader from "react-spinners/BeatLoader";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,6 +84,9 @@ const ViewUploadedTeacherAssig = ()=> {
     const [submiteedAssigdata,setSubmiteedAssigdata] = React.useState([])
 
     const [value, setValue] = React.useState(0);
+    const [loading, setLoading] = React.useState(false);
+    const [noCourses, setNoCourses] = React.useState(false);
+
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -117,16 +121,24 @@ const getSubmittedAssignments = async ()=> {
 }
 
 useEffect(() => {
+  setLoading(true);
   http.get(`/assignment/viewAssignment/${Assignmentid}`)
     .then((response) => {
+      // setLoading(true);
       setAssig(response.data.Viewassignment);
+      // setLoading(false);
       setFile(response.data.PdfDataUrl);
       setQuestions(response.data.Viewquestions);
       settestCases(response.data.TestCase)
-
+      
       response.data.TestCase.map((t) => {
         console.log(t)
       })
+
+      setLoading(false);
+    }).catch((error) => {
+      console.error("Error fetching data:", error);
+      setLoading(false); // Make sure to set loading to false in case of an error too
     });
 
     const userJSON = localStorage.getItem('User')
@@ -217,156 +229,176 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
       <hr style={{borderTop: '0.1px solid 	#F0F0F0', width:'99%', margin:0}}></hr>
 
       <CustomTabPanel value={value} index={0}>
-      <Grid container spacing={2}>
-        <Grid xs={12} md={12} lg={12}>
-          <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between', marginTop:3,marginLeft:2}}>
-            <Box sx={{display:'flex', flexDirection:'row', cursor:'pointer'}}>
-              <RiArrowLeftSLine fontSize={20} style={{color:theme.palette.secondary.main}}/>
-              <p style={{marginTop:0, marginLeft:8, fontSize:16, color:theme.palette.secondary.main, fontWeight:'bold'}}>Back</p>
-            </Box>
-            <Box>
-              {
-              isTeacher && (
-                <>
-                <Button 
-                  variant="outlined" color="secondary" 
-                    sx={{fontSize: 16, paddingTop:1,paddingBottom:1,paddingLeft:2,paddingRight:2, marginRight:2}}
-                    startIcon={<TbEdit/>}
-                    onClick={() => navigate(`/Teacher/AddAssignment/${cid}`
-                    , {
-                        // state: { course: courses.find(c =>  c._id === id) },
-                        state: { assig: assig },
-                      })
-                }
-                    >
-                    Edit
-                </Button>
-                <Button 
-                  variant="outlined" color="error" 
-                  startIcon={<RiDeleteBin5Line/>}
-                  sx={{fontSize: 16, padding:1, marginRight:3}}
-                    onClick={handleDeleteClick(assig._id)}
-                    >
-                    Delete
-                </Button>
-                </>
-              )
-                }
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid xs={12} md={12} lg={7}>
-          <Box sx={{marginTop:3, marginLeft:2}}>
-          <Box>
-           <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between'}}>
-              <Box> 
-                  <p style={{fontWeight:'bolder', margin:0, fontSize:30}}>Assignment : {assig.assignmentNumber}</p> 
-                  <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Due at {formattedDueDate}</p> 
-                  <p style={{ marginTop: 6, fontSize: 16, color: "red", }}>
-                      ({formattedTime}) 
-                    </p>
-              </Box>
-              <Box> 
-                  <p style={{fontWeight:'bolder', margin:0, fontSize:18}}>Marks</p> 
-                  <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Total Points: {assig.totalMarks}</p> 
-              </Box>
-           </Box>
-          
-        </Box>
-        <Box sx={{marginTop:2}}>
-            <p style={{fontWeight:'bold', fontSize:18, margin:0}}>Instructions</p>
-            <p>{assig.description}</p>
-        </Box>
-        
-        <Box sx={{marginTop:4}}>
-            <p style={{fontSize:18}}> <b>File Extension: </b> {assig.format}</p>
-        </Box>
-        <Box sx={{marginTop:2}}>
-            <p style={{fontSize:18}}> <b>Assignment File </b></p>
-        </Box>
-      
-        <Box sx={{display:'flex',flexDirection:'row',marginTop:'1%'}} >
-          <Box sx ={{width:'60%',}}>
-            <Link style={{textDecoration:'none'}} onClick={handleAssignmentOpen}> 
-                <Box 
-                    sx={{border:1,padding:2,flexGrow:1,borderRight:0,borderRadius:1, color:theme.palette.secondary.main}}>View Assignment
-                </Box>
-            </Link>
-        <Modal
-                open={isAssignmentViewed}
-                onClose={handleAssignmentClose}
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                    backdrop: {
-                    timeout: 500,
-                    },
-                }}
-            >
-            <Fade in={isAssignmentViewed}>
-                <Box
-                sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    width: '90%',
-                    maxWidth: '800px',
-                    transform: 'translate(-50%, -50%)',
-                    bgcolor: 'white',
-                    boxShadow: 24,
-                    p: 4,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-around',
-                    borderRadius: '25px',
-                }}
-                >
-                 <Box sx={{display:'flex' , flexDirection: 'row' , justifyContent:'space-between'}}>
-                 <Typography variant='h4' sx={{fontWeight:'bold', paddingBottom:1,}}>Assignment : {assig.assignmentNumber}</Typography>
-            <Box sx={{marginY:'1%'}}>
-            <Typography variant='p' sx={{color:theme.palette.secondary.main}}> <b>Total Marks: </b> {assig.totalMarks}</Typography>
-        </Box>
-                 </Box>
-                {questions.map((question , index) => (
-                    <Box sx={{display:'flex' , flexDirection: 'row' , justifyContent:'space-between'}}>
-                        <Typography  sx={{my:'1%'}}>
-                        <b> Question {index + 1} </b>
-                        {question.questionDescription}
-                        </Typography>
-                        <Typography  sx={{my:'1%', color:theme.palette.secondary.main }}>
-                        {`( ${question.questionTotalMarks} )`}
-                        
-                        </Typography>
-                    </Box>
-                ))}
-                </Box>
-            </Fade>
-            </Modal>
-
-        </Box>
-        <Box sx={{width:'30%'}}>
-        <Button
-             variant="contained" color="secondary" 
-             sx={{  height:'100%', 
-               
-              }}
-            onClick={handleDownload}
-           
+      {loading ? (
+          <Box
+          sx={{
+            backgroundColor: "white",
+            height:'80vh',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-            {<FileDownloadOutlinedIcon />}
-        </Button>
+          <BeatLoader color="#1665b5"
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </Box>
+      ) : ( 
+        <Box>
+          <Grid container spacing={2}>
+          <Grid xs={12} md={12} lg={12}>
+            <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between', marginTop:3,marginLeft:2}}>
+              <Box sx={{display:'flex', flexDirection:'row', cursor:'pointer'}}>
+                <RiArrowLeftSLine fontSize={20} style={{color:theme.palette.secondary.main}}/>
+                <p style={{marginTop:0, marginLeft:8, fontSize:16, color:theme.palette.secondary.main, fontWeight:'bold'}}>Back</p>
+              </Box>
+              <Box>
+                {
+                isTeacher && (
+                  <>
+                  <Button 
+                    variant="contained" color="secondary" 
+                      sx={{fontSize: 16, paddingTop:1,paddingBottom:1,paddingLeft:2,paddingRight:2, marginRight:2}}
+                      startIcon={<TbEdit/>}
+                      onClick={() => navigate(`/Teacher/AddAssignment/${cid}`
+                      , {
+                          // state: { course: courses.find(c =>  c._id === id) },
+                          state: { assig: assig },
+                        })
+                  }
+                      >
+                      Edit
+                  </Button>
+                  <Button 
+                    variant="outlined" color="error" 
+                    startIcon={<RiDeleteBin5Line/>}
+                    sx={{fontSize: 16, padding:1, marginRight:3}}
+                      onClick={handleDeleteClick(assig._id)}
+                      >
+                      Delete
+                  </Button>
+                  </>
+                )
+                  }
+              </Box>
+            </Box>
+          </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid xs={12} md={12} lg={7}>
+              <Box sx={{marginTop:3, marginLeft:2}}>
+              <Box>
+              <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between'}}>
+                  <Box> 
+                      <p style={{fontWeight:'bolder', margin:0, fontSize:30}}>Assignment : {assig.assignmentNumber}</p> 
+                      <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Due at {formattedDueDate}</p> 
+                      <p style={{ marginTop: 6, fontSize: 16, color: "red", }}>
+                          ({formattedTime}) 
+                        </p>
+                  </Box>
+                  <Box> 
+                      <p style={{fontWeight:'bolder', margin:0, fontSize:18}}>Marks</p> 
+                      <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Total Points: {assig.totalMarks}</p> 
+                  </Box>
+              </Box>
+              
+            </Box>
+            <Box sx={{marginTop:2}}>
+                <p style={{fontWeight:'bold', fontSize:18, margin:0}}>Instructions</p>
+                <p>{assig.description}</p>
+            </Box>
+            
+            <Box sx={{marginTop:4}}>
+                <p style={{fontSize:18}}> <b>File Extension: </b> {assig.format}</p>
+            </Box>
+            <Box sx={{marginTop:2}}>
+                <p style={{fontSize:18}}> <b>Assignment File </b></p>
+            </Box>
+          
+            <Box sx={{display:'flex',flexDirection:'row',marginTop:'1%'}} >
+              <Box sx ={{width:'60%',}}>
+                <Link style={{textDecoration:'none'}} onClick={handleAssignmentOpen}> 
+                    <Box 
+                        sx={{border:1,padding:2,flexGrow:1,borderRight:0,borderRadius:1, color:theme.palette.secondary.main}}>View Assignment
+                    </Box>
+                </Link>
+            <Modal
+                    open={isAssignmentViewed}
+                    onClose={handleAssignmentClose}
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    closeAfterTransition
+                    slots={{ backdrop: Backdrop }}
+                    slotProps={{
+                        backdrop: {
+                        timeout: 500,
+                        },
+                    }}
+                >
+                <Fade in={isAssignmentViewed}>
+                    <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        width: '90%',
+                        maxWidth: '800px',
+                        transform: 'translate(-50%, -50%)',
+                        bgcolor: 'white',
+                        boxShadow: 24,
+                        p: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-around',
+                        borderRadius: '25px',
+                    }}
+                    >
+                    <Box sx={{display:'flex' , flexDirection: 'row' , justifyContent:'space-between'}}>
+                    <Typography variant='h4' sx={{fontWeight:'bold', paddingBottom:1,}}>Assignment : {assig.assignmentNumber}</Typography>
+                <Box sx={{marginY:'1%'}}>
+                <Typography variant='p' sx={{color:theme.palette.secondary.main}}> <b>Total Marks: </b> {assig.totalMarks}</Typography>
+            </Box>
+                    </Box>
+                    {questions.map((question , index) => (
+                        <Box sx={{display:'flex' , flexDirection: 'row' , justifyContent:'space-between'}}>
+                            <Typography  sx={{my:'1%'}}>
+                            <b> Question {index + 1} </b>
+                            {question.questionDescription}
+                            </Typography>
+                            <Typography  sx={{my:'1%', color:theme.palette.secondary.main }}>
+                            {`( ${question.questionTotalMarks} )`}
+                            
+                            </Typography>
+                        </Box>
+                    ))}
+                    </Box>
+                </Fade>
+                </Modal>
+
+            </Box>
+            <Box sx={{width:'30%'}}>
+            <Button
+                variant="contained" color="secondary" 
+                sx={{  height:'100%', 
+                  
+                  }}
+                onClick={handleDownload}
+              
+            >
+                {<FileDownloadOutlinedIcon />}
+            </Button>
+            </Box>
+            </Box>
+            
+            
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
-        
-        
-          </Box>
-        </Grid>
-      </Grid>
+         )}
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
@@ -382,9 +414,9 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
           testCases.length > 0 && 
            testCases.map((t, index) => (
             <>
-                <Typography>
-                  Q{index+1}: {t._doc.questionDescription}
-                </Typography>
+                <p>
+                  <span style={{fontWeight:'bold', fontSize:20}}>Question-{index+1}: </span> <span style={{fontStyle:'italic', fontSize:20}}>{t._doc.questionDescription}</span>
+                </p>
                 <TestcaseList testCases = {t.testCases}  />
               </>
            )

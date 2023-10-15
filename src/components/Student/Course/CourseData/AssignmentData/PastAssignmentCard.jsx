@@ -32,8 +32,6 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
       }
     } catch (error) {
       console.log(error);
-    }finally {
-      setLoading(false); 
     }
   };
 
@@ -49,7 +47,7 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
   return (
     isAlreadySubmitted ? <></> :<>
     <ThemeProvider theme={newtheme}>
-    <Box
+    <Box className="zoom"
       sx={{p: 2,
         margin: 'auto',
         marginTop:'2%',
@@ -66,7 +64,7 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
         backgroundColor: (theme) =>
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }}
-     onClick={() => nav(`/Student/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
+    //  onClick={() => nav(`/Student/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
     >
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12} >
@@ -92,9 +90,9 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
                 Past Due Date: {formattedDueDate} 
               </Typography>
               <p style={{color: newtheme.palette.secondary.footer, fontWeight:'bold',
-               margin:0, padding:10, border:"1px solid #1665b5", width:'17%', borderRadius:10,
-                cursor:'pointer'}}><LuView fontSize={22} 
-                style={{marginBottom:-6, marginRight:5}}/>View Assignment</p>
+               margin:0,
+                cursor:'pointer'}}>
+                Not Submitted</p>
               </Grid>
           </Grid>
         </Grid>

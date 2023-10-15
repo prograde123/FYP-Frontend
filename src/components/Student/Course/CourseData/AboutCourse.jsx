@@ -4,24 +4,18 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
 import Picture2 from "../../../../assets/Picture2.png"
-
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { HiOutlineInformationCircle } from "react-icons/hi";
-import { ThemeProvider } from '@mui/material/styles';
-// import newtheme from '../../../Themenew'
-import { MdOutlineAssignment } from "react-icons/md";
-import {BsCodeSlash } from "react-icons/bs";
-import { MdOutlineGrade } from "react-icons/md";
-import { PiChalkboardTeacher } from "react-icons/pi";
-import { TbBrandCpp } from "react-icons/tb";
-import { TbNotes } from "react-icons/tb";
-import { PiStudent } from "react-icons/pi";
-import { SiAssemblyscript } from "react-icons/si";
 import Grid from "@mui/material/Grid";
+import {FiCodepen} from "react-icons/fi"
+import {FcViewDetails} from "react-icons/fc"
+import {BsCodeSlash} from "react-icons/bs"
+import {ImHourGlass} from 'react-icons/im'
+import {FaChalkboardTeacher} from "react-icons/fa"
+import {AiOutlineBars} from 'react-icons/ai'
+import newtheme from '../../../../Themenew';
+
 
 const About = () => {
   const [value, setValue] = React.useState(0);
@@ -42,20 +36,22 @@ const About = () => {
   const [Sdate, setSdate] = React.useState('')
   const [Ldate, setLdate] = React.useState('')
   const [instructor, setInstructor] = React.useState('')
+  const [instructorEmail, setInstructorEmail] = React.useState('')
   const [selectedTab, setSelectedTab] = useState('about');
   const course = location.state?.course
  
   React.useEffect(() => {
 
-    // setCode(course.courseCode)
+    setCode(course.courseCode)
     setCname(course?.name)
-    // setCDescription(course.description)
+    setCDescription(course.description)
     setCphoto(course?.image)
-    // setcreditHours(course.creditHours)
+    setcreditHours(course.creditHours)
     setLanguage(course?.language)
     setSdate(course?.startingDate)
     setLdate(course?.endingDate)
     setInstructor(course?.teacher.user.fullName)
+    setInstructorEmail(course?.teacher.user.email)
     // console.log(course.teacher.user)
 })
   
@@ -78,7 +74,7 @@ const About = () => {
 
 
   return (
-    <Box>
+    <Box sx={{minHeight:'150vh'}}>
       <Grid container >
         <Grid item xs={12} sm={12} md={12} lg={12}>
            <Box sx={{ position: "relative", color: "white" }}>
@@ -101,10 +97,60 @@ const About = () => {
                 
               </Box>
            </Box>
-           <Box sx={{marginTop:3}}>
+           <Box sx={{marginTop:3, marginLeft:3}}>
             <Typography variant='h5' sx={{fontWeight:'bold'}}>Complete Master Class of: {Cname}</Typography>
             <Typography sx={{color:'grey',marginTop:1}}>Includes Programming Assignments, Lectures and Quick feedback for the Assesments</Typography>
            </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container sx={{marginTop:5, height:'30vh', borderRadius:12}}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+            <Typography sx={{fontWeight:'bolder', fontSize:26, marginBottom:4, color:newtheme.palette.secondary.footer}}>Course Details</Typography>
+          </Box>
+          <Box sx={{display:'flex', flexDirection:'row'}}>
+
+
+            <Box sx={{display:'flex', flexDirection:'column'}}>
+              <Box sx={{display:'flex', flexDirection:'row'}}>
+                <Box sx={{display:'flex', flexDirection:'column', marginRight:2, boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px', borderRadius:5}}>
+                  <Box sx={{marginTop:2,display:'flex', flexDirection:'column',backgroundColor:newtheme.palette.primary.background, padding:2, borderRadius:7}}>
+                    <Typography sx={{fontWeight:'bold', fontSize:20,}}><FiCodepen fontSize={25} style={{marginBottom:-5, marginRight:8}}/>Course Code</Typography>
+                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center', marginTop:1}}>
+                      <Typography sx={{ fontSize:18}}>{Code}</Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{marginTop:2,display:'flex', flexDirection:'column',backgroundColor:newtheme.palette.primary.background, padding:2, borderRadius:7}}>
+                    <Typography sx={{fontWeight:'bold', fontSize:20, marginRight:5}}><BsCodeSlash fontSize={25} style={{marginBottom:-5, marginRight:8}}/>Language</Typography>
+                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center', marginTop:1}}>
+                      <Typography sx={{ fontSize:18}}>{language}</Typography>
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Box sx={{display:'flex', flexDirection:'column',boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px', borderRadius:5}}>
+                  <Box sx={{display:'flex', flexDirection:'column', textAlign:'center',marginTop:2,marginLeft:3, backgroundColor:newtheme.palette.primary.background, padding:2, borderRadius:7}}>
+                    <Typography sx={{fontWeight:'bold', fontSize:20, marginRight:5, marginBottom:3}}><FaChalkboardTeacher fontSize={25} style={{marginBottom:-5, marginRight:8}}/>Instructor Details</Typography>
+                    <Typography sx={{fontSize:18}}>{instructor}</Typography>
+                    <Typography sx={{fontSize:18, marginTop:3}}>{instructorEmail}</Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px', borderRadius:5, padding:4, marginTop:3, display:'flex', flexDirection:'row', justifyContent:'center'}}>
+                <Typography sx={{fontWeight:'bold', fontSize:20}}>Starting From <span style={{color:newtheme.palette.secondary.background}}>{formattedStartDate}</span> To <span style={{color:newtheme.palette.secondary.background}}>{formattedEndDate}</span> </Typography>
+              </Box>
+              
+            </Box>
+
+            
+            <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px', borderRadius:5, marginLeft:3, width:'50%',}}>
+              <Box sx={{marginLeft:3, marginTop:3, marginRight:3, marginBottom:3}}>
+                <Typography sx={{fontWeight:'bold', fontSize:20, marginBottom:2}}><AiOutlineBars fontSize={25} style={{marginBottom:-5, marginRight:5}}/>Course Oultine</Typography>
+                <Typography sx={{fontSize:17}}>{Description}</Typography>
+              </Box>
+            </Box>
+          </Box>
         </Grid>
       </Grid>
     </Box>

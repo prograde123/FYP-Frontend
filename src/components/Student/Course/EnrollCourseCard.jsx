@@ -60,7 +60,7 @@ function EnrollCourseCard({ card }) {
     }, []);
 
   return (
-    <Box sx={{display:'flex', flexDirection:'row',justifyContent:'center', marginLeft:5,}}>
+    <Box className="zoom" sx={{display:'flex', flexDirection:'row',justifyContent:'center', marginLeft:5,}}>
         <Grid container  sx={{ display: "flex", flexDirection: "row" }}>
       <Grid item xs={12} md={12} lg={12}  sx={{
               display: "flex",
