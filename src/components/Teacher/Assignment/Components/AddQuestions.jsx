@@ -141,7 +141,7 @@ const handleClick = async () => {
      setMaxMarks(MaxMarks-questionTotalMarks);
        const formData = new FormData();
 
-       const FileSplit = file.name.split('.')
+       const FileSplit = file.name.split('.')   // q1.java  [q1, java]
        const FileFormat = `.${FileSplit[FileSplit.length - 1]}`
 
        console.log(assig.format)
@@ -226,7 +226,6 @@ const handleClick = async () => {
         setInputTestCases([ { inputs : ""}])
         setSelectedOption('')
         setQuestionNumber(questionNumber + 1);
-
         if (questionNumber === totalQuestions - 1) {
           console.log("inside full questions questionNumber " , questionNumber)
           const response = await http.post("/assignment/addAssignment", { questions, assig });

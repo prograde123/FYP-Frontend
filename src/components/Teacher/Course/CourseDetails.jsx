@@ -484,45 +484,7 @@ function CourseDetails({ courses }) {
                     </Box>
                   </Box>
 
-                  <Box
-                    onClick={() => navigate("/Teacher/ViewSubmittedAssigList")}
-                    sx={{
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "row",
-                      marginLeft: 2,
-                      justifyContent: "space-between",
-                      marginRight: 2,
-                      marginTop: 2,
-                      ":hover": {
-                        color: theme.palette.secondary.main,
-                        borderBottom: "0.1px solid 	#F0F0F0",
-                      },
-                    }}
-                  >
-                    <Box sx={{ display: "flex", flexDirection: "row" }}>
-                      <GoFileCode
-                        fontSize={21}
-                        style={{ color: theme.palette.secondary.main }}
-                      />
-                      <p
-                        style={{
-                          margin: 0,
-                          fontSize: 16,
-                          marginLeft: 10,
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Submissions
-                      </p>
-                    </Box>
-                    <Box>
-                      <TfiArrowCircleRight
-                        fontSize={22}
-                        style={{ color: theme.palette.secondary.main }}
-                      />
-                    </Box>
-                  </Box>
+                   
 
                   <Box
                     onClick={() => {

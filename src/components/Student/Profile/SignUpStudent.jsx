@@ -48,7 +48,11 @@ const SignUpStudent = () => {
 
     const ValidateName = (name,setError) => {
         const namePattern = /^[A-Za-z\s]+$/
-        if(!namePattern.test(name) || name == '') {
+        if(name==''){
+            setError('Name cannot be empty')
+            return false
+        }
+        else if(!namePattern.test(name) ) {
             setError('Invalid Name')
             return false
         }
@@ -57,7 +61,11 @@ const SignUpStudent = () => {
     }
     const ValidateUName = () => {
         const UnamePattern = /^[A-Za-z0-9\s]+$/
-        if(!UnamePattern.test(Uname) || Uname == '') {
+        if(Uname == ''){
+            setUNameError(' UserName cannot be empty')
+            return false
+        }
+        else if(!UnamePattern.test(Uname) ) {
             setUNameError('Invalid UserName')
             return false
         }
@@ -67,7 +75,11 @@ const SignUpStudent = () => {
 
     const ValidateEmail = () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if(!emailPattern.test(email) || email == '') {
+        if(email == ''){
+            setEmailError('Email cannot be empty')
+            return false
+        }
+       else if(!emailPattern.test(email) ) {
             setEmailError('Email Error')
             return false
         }
@@ -78,7 +90,11 @@ const SignUpStudent = () => {
    
 
     const validatePasswords = () => {
-        if (pass != Cpass || pass == '' || Cpass == '') {
+        if ( pass == '' || Cpass == '') {
+            setPassError('Passwords cannot be empty');
+            return false;
+          }
+        else if (pass != Cpass ) {
           setPassError('Passwords do not match');
           return false;
         }

@@ -100,7 +100,6 @@ const AddAssignment = () => {
     validateOnBlur: false,
     onSubmit: (values, action) => {
       console.log(values);
-      action.resetForm();
     },
   });
 
@@ -121,7 +120,11 @@ const AddAssignment = () => {
   const handleClick = async () => {
     if (values.questions === "" || values.questions <= 0) {
       alert("Please enter a valid number of questions");
-    } else {
+    }
+  else if(values.dueDate.$d < values.uploadDate.$d)  {
+    alert("Due Date cannot be lesser than upload date")
+  }
+    else {
       if (!showAddQuestion) {
         setAssignment(
           {
