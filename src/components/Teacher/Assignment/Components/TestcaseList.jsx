@@ -59,15 +59,8 @@ function EditToolbar(props) {
   };
 
   return (
-    <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      
-      <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom:1 }}>
-        <SearchBar value={searched}
-          onChange={(searchVal) => requestSearch(searchVal)}
-          onCancelSearch={() => cancelSearch()}
-        />
-      </Paper>
-    </GridToolbarContainer>
+    <>
+    </>
 
   );
 }
@@ -102,20 +95,20 @@ export default function TestcaseList({testCases}) {
       field: 'input',
       headerName: 'Input',
       
-      width: 200,
+      width: 400,
     },
     {
         field: 'output',
         headerName: 'Output',
         
-        width: 200,
+        width: 350,
       },
       
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 220,
+      width: 320,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 

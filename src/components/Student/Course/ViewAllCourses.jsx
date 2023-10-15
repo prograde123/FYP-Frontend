@@ -325,7 +325,12 @@ function ViewAllCourses() {
 {/* COURSE CARD */}
 <Grid container sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
 {loading ? (
-          <Box
+          <Box sx={{
+            display: "flex",
+            alignContent: "center",
+            flexDirection: "row",
+          }}>
+            <Box
           sx={{
             backgroundColor: "white",
             height: "80vh",
@@ -341,6 +346,7 @@ function ViewAllCourses() {
             data-testid="loader"
           />
         </Box>
+          </Box>
       ) : noCourses ? ( // Check if there are no courses
       <Box
         sx={{

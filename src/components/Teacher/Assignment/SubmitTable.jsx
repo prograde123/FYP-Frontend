@@ -9,7 +9,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchBar from '@mkyy/mui-search-bar';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { Link } from "react-router-dom";
-
+import {FiDownload} from "react-icons/fi"
+import {LuView} from "react-icons/lu"
 import storage from "../../../firebase";
 
 import {
@@ -141,40 +142,43 @@ export default function Contents({Assignments ,id}) {
 
   const columns = [
    
-    { field: 'studentName', headerName: 'Student Name',width:150},
+    { field: 'studentName', headerName: 'Student Name',width:200},
 
-    { field: 'totalQuestionsSubmitted', headerName: 'Questions Submitted',width:150},
+    { field: 'totalQuestionsSubmitted', headerName: 'Questions Submitted',width:170},
     {
       field: 'totalObtainedMarks',
       headerName: 'Obtained Marks'
-      ,width:150
+      ,width:170
     },
     {
         field: 'submissionDate',
         headerName: 'Submitted on'
-        ,width:150
+        ,width:170
       },
       {
         field: 'submissionTime',
         headerName: 'Time'
-        ,width:150
+        ,width:170
       },
     {
       field: 'actions',
       type: 'actions'
-      ,width:150,
+      ,width:170,
       headerName: 'Actions',
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
         return [
             <GridActionsCellItem
-            icon={<VisibilityIcon />}
+            icon={<LuView style={{ color: theme.palette.secondary.main, fontSize: 25, ":hover": { fontSize: 30 } }} />}
             label="View"
-            className="textPrimary"
             onClick={ () => handleDownload(id)}
-            sx={{ border: 2, backgroundColor: theme.palette.secondary.background, color: theme.palette.primary.main }}
           />,
+          <GridActionsCellItem
+          icon={<FiDownload style={{ color: theme.palette.secondary.main, fontSize: 25, ":hover": { fontSize: 30 } }} />}
+          label="Download"
+          onClick={ () => handleDownload(id)}
+        />,
           
         
         ];
@@ -183,17 +187,15 @@ export default function Contents({Assignments ,id}) {
   ];
 
   return (
-    <Box sx={{ marginBottom: 5, width: "100%" }}>
-      <DataGrid
-  sx={{
-    backgroundColor: theme.palette.primary.background,
-    '& .MuiDataGrid-cell:hover': {
-      color: theme.palette.secondary.main,
-    },
-    marginTop: 3,
-    borderRadius: 2,
-    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
-  }}
+    <Box sx={{ marginBottom: 2,
+      width: "100%", height:'100vh' }}>
+      <DataGrid 
+        sx={{
+            paddingX:2,backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
+            color: theme.palette.secondary.main,
+
+          }, marginTop: 3, borderRadius: 2,  boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
+        }}
   rows={rows}
   rowHeight={70}
   columns={columns}

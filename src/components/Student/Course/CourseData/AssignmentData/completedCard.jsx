@@ -47,10 +47,11 @@ export default function CompletedCard({Assignment , CourseId}) {
   return (
     isAlreadySubmitted ? <>
     <ThemeProvider theme={newtheme}>
-    <Box
+    <Box className="zoom"
       sx={{p: 2,
         margin: 'auto',
         marginTop:'2%',
+        paddingBottom:18,
         boxShadow:
         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 ":hover": {
@@ -90,7 +91,7 @@ export default function CompletedCard({Assignment , CourseId}) {
                  Due Date: {formattedDueDate} 
               </Typography>
               <p style={{color: newtheme.palette.secondary.footer, fontWeight:'bold',
-               margin:0, padding:10, border:"1px solid #1665b5", width:'17%', borderRadius:10,
+               marginTop:10,marginBottom:10, padding:10, border:"1px solid #1665b5", width:'17%', borderRadius:10,
                 cursor:'pointer'}}><LuView fontSize={22} 
                 style={{marginBottom:-6, marginRight:5}}/>View Assignment</p>
               </Grid>

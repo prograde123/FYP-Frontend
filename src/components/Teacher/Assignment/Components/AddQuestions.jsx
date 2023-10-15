@@ -19,6 +19,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const steps = [
   'Assignment Details',
@@ -38,6 +39,7 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
   const [file, setFile] = React.useState(null)
   const [MaxMarks , setMaxMarks] = useState(assig.totalMarks)
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
 
   console.log(assig)

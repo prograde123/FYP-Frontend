@@ -15,6 +15,7 @@ import { TbEdit } from "react-icons/tb";
 import { LuView } from "react-icons/lu";
 import { VscNewFile } from "react-icons/vsc";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import BeatLoader from "react-spinners/BeatLoader";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -104,7 +105,7 @@ export default function Contents() {
   const [rowModesModel, setRowModesModel] = React.useState({});
   const [courseID , setcourseID] = React.useState(null)
   const [rows, setRows] = React.useState([]);
-
+  const [loading, setLoading] = React.useState(false);
   
  
 
@@ -119,12 +120,15 @@ export default function Contents() {
       setcourseID(cid)
 
     try {
+      setLoading(true)
       const response = await http.get(`/assignment/viewAssigList/${cid}`)
       console.log(response)
       setRows(response.data.assignments)
       console.log(response.data.assignments)
     } catch(e) {
       console.log(e)
+    } finally{
+      setLoading(false)
     }
   }
   useEffect(() => {
@@ -206,6 +210,25 @@ export default function Contents() {
   return (
     <Box sx={{ marginBottom: 5,
       height: "100vh", width: "100%" }}>
+        {loading ? (
+        <Box
+          sx={{
+            backgroundColor: "white",
+            height: "80vh",
+            width: "160vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BeatLoader
+            color="#1665b5"
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </Box>
+      ) : (
       <DataGrid 
         sx={{
           backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
@@ -236,6 +259,7 @@ export default function Contents() {
         // checkboxSelection
         // disableRowSelectionOnClick
       />
+      )}
     </Box>
   );
 }

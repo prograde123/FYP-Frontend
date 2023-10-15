@@ -6,7 +6,7 @@ import SignInImage from '../assets/Saly.png'
 import CircleImage from '../assets/circle.png'
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-
+import ClipLoader from "react-spinners/ClipLoader";
 import { useTheme } from '@emotion/react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -36,11 +36,12 @@ function SignIn() {
     const [pass, setPass] = React.useState('')
     const [user, setUser] = React.useState('')
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = React.useState(false);
 
     async function loginUser() {
-         await login(email, pass)
-        
-    }
+        setIsLoading(true); 
+        await login(email, pass);
+      }
 
     function getUser() {
         const user = localStorage.getItem("User");
@@ -207,18 +208,31 @@ function SignIn() {
                                 </Box>
                             </Box>
                             <Box sx={{ marginTop: 1}}>
-                                <Button onClick={() => loginUser()}
-                                    variant="contained" color="secondary" endIcon={<LoginIcon />} sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', borderRadius:2 }}>
-                                    Sign In
-                                </Button>
+                            <Button
+  onClick={loginUser}
+  variant="contained"
+  color="secondary"
+  endIcon={
+    isLoading ? null : ( 
+      <LoginIcon fontSize='large' sx={{ color: 'white' }} />
+    )
+  }
+  sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', borderRadius: 2 }}
+>
+  {isLoading ? (
+    <ClipLoader color="white" size={20} loading={isLoading} />
+  ) : (
+    "Sign In"
+  )}
+</Button>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: 'column', width: '100%', alignContent: 'center'}}>
                                 <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
                                     <p variant='body1' sx={{ color: theme.palette.primary.main }} >- OR -</p>
                                 </Box>
                                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',marginBottom:3  }}>
-                            <Button variant="outlined" color='secondary' sx={{padding:1, borderRadius:2}}> <img src={GoogleImage} height={28} style={{ marginRight: 5 }} />SignIn with Google</Button>
-                            <Button variant="outlined" color='secondary' sx={{padding:1, borderRadius:2}}> <img src={FbImage} height={28} style={{ marginRight: 5 }} />SignIn with Facebook</Button>
+                            <Button variant="outlined" color='secondary' sx={{padding:2, borderRadius:2}}> <img src={GoogleImage} height={28} style={{ marginRight: 5 }} />SignIn with Google</Button>
+                            <Button variant="outlined" color='secondary' sx={{padding:2, borderRadius:2}}> <img src={FbImage} height={28} style={{ marginRight: 5 }} />SignIn with Facebook</Button>
                         </Box>
                             </Box>
                         </Box>

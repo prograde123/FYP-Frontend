@@ -111,16 +111,16 @@ export default function QuestionList( {questions}) {
     {
       field: 'questionDescription',
       headerName: 'Question Description',
-      width: 200,
+      width: 400,
     },
     {
       field: 'isInputArray',
       headerName: 'Is Array',
-      width: 200,
+      width: 250,
     },
     {
       field: 'questionTotalMarks',
-      headerName: 'Marks',
+      headerName: 'Total Marks',
       width: 220,
     },
     {
@@ -145,7 +145,7 @@ export default function QuestionList( {questions}) {
 
   return (
     <Box sx={{ marginBottom: 2,
-      width: "100%" }}>
+      width: "100%", height:'100vh' }}>
       <DataGrid 
         sx={{
             paddingX:2,backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {

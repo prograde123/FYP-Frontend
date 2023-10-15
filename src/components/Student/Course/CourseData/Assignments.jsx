@@ -17,6 +17,8 @@ import PastAssignmentCard from "./AssignmentData/PastAssignmentCard";
 import BeatLoader from "react-spinners/BeatLoader";
 import noCoursesImage from "../../../../assets/noCourses.png";
 import CompletedCard from "./AssignmentData/completedCard";
+import {GrCompliance } from 'react-icons/gr';
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,8 +72,8 @@ const Assignments = () => {
       const response = await http.get(`/assignment/viewAssigList/${id}`);
       setAssignments(response.data.assignments);
 
-      if (response.data.assignments.length === 0) {
-        setNoCourses(true); // Set noCourses to true if there are no courses
+      if (!response.data.assignments || response.data.assignments.length === 0) {
+        setNoCourses(true);
       }
     } catch (e) {
       console.log(e);
@@ -107,16 +109,15 @@ const Assignments = () => {
               <Tab
                 icon={<MdRunningWithErrors fontSize={25} />}
                 label="Past Due"
-                color="black"
                 sx={{
                   marginRight: 7,
                   color: newtheme.palette.secondary.footer,
                 }}
               />
                 <Tab
-                icon={<MdRunningWithErrors fontSize={25} />}
+                icon={<AssignmentTurnedInOutlinedIcon/>}
                 label="Completed"
-                color="black"
+                color="secondary"
                 sx={{
                   marginRight: 7,
                   color: newtheme.palette.secondary.footer,
@@ -183,7 +184,41 @@ const Assignments = () => {
           
 
           <Grid container sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+          {loading ? (
+            <Box
+              sx={{
+                backgroundColor: "white",
+                height: "80vh",
+                width:'160vh',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <BeatLoader
+                color="#1665b5"
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
+          ) : noCourses ? ( // Check if there are no courses
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "70vh",
+                width:'160vh',
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="h4">You're All Caught Up!</Typography>
+              <img src={noCoursesImage} height={200} width={200} />
+            </Box>
+          ) : (
           <CustomTabPanel value={value} index={1}>
+            
             <Box>
                 {assignments &&
                   assignments.map((assignment) => {
@@ -200,8 +235,44 @@ const Assignments = () => {
               </Box>
    
           </CustomTabPanel>
+          )}
           </Grid>
+
+          
           <Grid container sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+          {loading ? (
+            <Box
+              sx={{
+                backgroundColor: "white",
+                height: "80vh",
+                width:'160vh',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <BeatLoader
+                color="#1665b5"
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
+          ) : noCourses ? ( // Check if there are no courses
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "70vh",
+                width:'160vh',
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="h4">You're All Caught Up!</Typography>
+              <img src={noCoursesImage} height={200} width={200} />
+            </Box>
+          ) : (
           <CustomTabPanel value={value} index={2}>
             <Box>
                 {assignments &&
@@ -211,6 +282,7 @@ const Assignments = () => {
               </Box>
    
           </CustomTabPanel>
+          )}
           </Grid>
           
         </Grid>
