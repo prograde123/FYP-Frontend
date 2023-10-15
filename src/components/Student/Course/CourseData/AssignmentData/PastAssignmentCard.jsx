@@ -64,7 +64,7 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
         backgroundColor: (theme) =>
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }}
-    //  onClick={() => nav(`/Student/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
+     onClick={() => nav(`/Student/ViewUploadedAssig/${CourseId}/${Assignment._id}`)}
     >
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12} >
