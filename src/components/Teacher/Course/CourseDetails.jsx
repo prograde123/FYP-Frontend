@@ -382,7 +382,7 @@ function CourseDetails({ courses }) {
                 <Box
                   sx={{
                     overflow: "hidden",
-                    height: "52vh",
+                    height: "47vh",
                     marginTop: 1,
                     backgroundColor: theme.palette.primary.background,
                     borderRadius: 1,
@@ -750,7 +750,7 @@ function CourseDetails({ courses }) {
 
                 <Box
                   sx={{
-                    height: "43.5vh",
+                    height: "48vh",
                     marginTop: 2,
                     backgroundColor: theme.palette.primary.background,
                     borderRadius: 1,

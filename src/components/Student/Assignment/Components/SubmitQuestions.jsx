@@ -20,10 +20,33 @@ import { ThemeProvider } from "@mui/material/styles";
 import { BsCloudArrowUp } from 'react-icons/bs';
 import { BsSendCheck } from 'react-icons/bs';
 import { BsArrowRightCircle } from 'react-icons/bs';
-
-
+import LinearProgress from '@mui/material/LinearProgress';
+import PropTypes from 'prop-types';
 
 const steps = ["Upload Solution", "Confirm Submission"];
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress color="secondary.footer" variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="secondary">{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+LinearProgressWithLabel.propTypes = {
+  /**
+   * The value of the progress indicator for the determinate and buffer variants.
+   * Value between 0 and 100.
+   */
+  value: PropTypes.number.isRequired,
+};
 
 export default function Submit() {
   const Questions = useLocation().state?.Questions;
@@ -34,9 +57,34 @@ export default function Submit() {
 
   const [file, setFile] = React.useState(null);
   const [selectedFileName, setSelectedFileName] = React.useState("");
+  const [progress, setProgress] = useState(0);
+
+  const handleChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setSelectedFileName(selectedFile.name);
+      setProgress(50); // Set progress to 50% when file is added
+    } else {
+      setSelectedFileName('');
+      setProgress(0);
+    }
+  };
+
+  const handleUploadClick = () => {
+    setTimeout(() => {
+      setProgress(100); // Set progress to 100% when upload is clicked
+    }, 1000);
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setSelectedFileName(selectedFile.name);
+      setProgress(50); // Set progress to 50% when file is added
+    } else {
+      setSelectedFileName('');
+      setProgress(0);
+    }
     setFile(selectedFile);
     setSelectedFileName(selectedFile ? selectedFile.name : "");
   };
@@ -330,12 +378,16 @@ export default function Submit() {
                               />
                             </Button>
                           </Button>
+                            <Box sx={{ width: '100%', marginTop:2 }}>
+                              <LinearProgress color="primary"  variant="determinate" value={progress} />
+                            </Box>
                           </Box>
                           <Box sx={{width:'20%'}}>
                           <Button
                         type="Submit"
                         startIcon={<BsCloudArrowUp fontSize={25}/>}
                         className="btn btn-primary"
+                        onClick={handleUploadClick}
                         sx={{
                           color: newtheme.palette.primary.background,
                           backgroundColor: newtheme.palette.secondary.footer,
@@ -381,7 +433,8 @@ export default function Submit() {
               {index + 1 < Questions.length && (
                 <Button
                   onClick={handleClick}
-                  disabled={index + 1 < Questions.length ? false : true}
+                  // disabled={index + 1 < Questions.length ? false : true}
+                  disabled={progress !== 100}
                   endIcon={<BsArrowRightCircle/>}
                   sx={{
                     color: newtheme.palette.primary.background,
@@ -407,6 +460,7 @@ export default function Submit() {
               {index + 1 >= Questions.length && (
                 <Button
                   onClick={handleSubmit}
+                  disabled={progress !== 100}
                   endIcon={<BsSendCheck/>}
                   sx={{
                     color: newtheme.palette.primary.background,
