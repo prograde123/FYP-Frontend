@@ -407,6 +407,7 @@ const parseInput = (input) => {
               <Box sx={{marginRight:2}}>
                 <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Input</p>
                 <TextField sx={{marginBottom:2}}
+                multiline
                   value={testCase.input}
                   onChange={(e) => {
                     const updatedTestCases = [...testCases];
@@ -421,6 +422,7 @@ const parseInput = (input) => {
               <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Output</p>
               <TextField
                 value={testCase.output}
+                multiline
                 onChange={(e) => {
                   const updatedTestCases = [...testCases];
                   updatedTestCases[index].output = e.target.value;

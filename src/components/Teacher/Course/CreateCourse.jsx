@@ -401,7 +401,7 @@ function CreateCourse() {
                     <MenuItem value={"Java"}>Java</MenuItem>
                     <MenuItem value={"C++"}>C++</MenuItem>
                     <MenuItem value={"C Sharp"}>C# (sharp)</MenuItem>
-                    <MenuItem value={"C Language"}>C Language</MenuItem>
+                    <MenuItem value={"C Language"}>C Lang</MenuItem>
                     <MenuItem value={"Masm"}>Assembly (MASM)</MenuItem>
                     <MenuItem value={"Mips"}>Assembly (MIPS)</MenuItem>
                     <MenuItem value={"Python"}>Python</MenuItem>
