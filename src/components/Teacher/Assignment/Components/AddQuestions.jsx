@@ -38,7 +38,6 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   //solution code only input test case
   const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
   const [file, setFile] = React.useState(null)
-  const [MaxMarks , setMaxMarks] = useState(assig.totalMarks)
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
 
@@ -88,10 +87,8 @@ const handleClick = async () => {
           testCases[0].input !== "" 
           && testCases[0].output !== "" 
           && question !== "" 
-          && questionTotalMarks <= MaxMarks
         ) {
       
-      setMaxMarks(MaxMarks-questionTotalMarks);
       const newQuestion = {
         questionDescription: question,
         questionTotalMarks: questionTotalMarks,
@@ -135,10 +132,7 @@ const handleClick = async () => {
       inputTestCases[0].input !== "" &&
       question !== "" &&
       file !== null
-      && questionTotalMarks <= MaxMarks
     ) { 
-     //  console.log(file)
-     setMaxMarks(MaxMarks-questionTotalMarks);
        const formData = new FormData();
 
        const FileSplit = file.name.split('.')   // q1.java  [q1, java]

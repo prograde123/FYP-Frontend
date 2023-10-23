@@ -21,7 +21,10 @@ const Result = () => {
 
   const [sumObtainedMarks, setObtainedMarks] = useState(0);
   const [sumTotalMarks, setSumTotalMarks] = useState(0);
-
+  function getRandom ( ){
+    return Math.random
+  }  
+  
   const getSubmission = async () => {
     try {
       setLoading(true);
@@ -186,57 +189,67 @@ const Result = () => {
                   </Box>
 
                   <Box sx={{ marginLeft: 3, marginTop: 2, marginRight: 3 }}>
-                    {res.testResults.map((testResult, index) => (
-                      <>
-                        <Accordion>
-                          <AccordionSummary
-                            expandIcon={
-                              <ExpandMoreIcon sx={{ color: newtheme.palette.secondary.footer }} />
-                            }
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                          >
-                            <Typography sx={{ fontWeight: "bold" }}>
-                              Test Case {index + 1}
-                            </Typography>
-                          </AccordionSummary>
-                          <AccordionDetails>
-                          <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          {testResult.actualOutput ? (
-                            <Box key={testResult._id} sx={{width:'80%'}}>
-                              <Typography variant="body1">
-                                Your Output: {testResult.actualOutput}
-                              </Typography>
-                            </Box>
-                          ) : (
-                            <></>
-                          )}
-                          {testResult.errorOutput != "" && (
-                            <Box key={testResult._id} sx={{width:'80%'}}>
-                              <Typography variant="body1">
-                                Error Output: {testResult.errorOutput}
-                              </Typography>
-                            </Box>
-                          )}
-                          <Box key={testResult._id} sx={{width:'20%'}}>
-                            <Typography variant="body1">
-                              Passed: {testResult.passed ? "Yes" : "No"}
-                            </Typography>
-                          </Box>
-                        </Box>
-                          </AccordionDetails>
-                        </Accordion>
-                      </>
-                    ))}
+  {res.testResults.map((testResult, index) => (
+    <React.Fragment key={testResult._id}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={
+            <ExpandMoreIcon sx={{ color: newtheme.palette.secondary.footer }} />
+          }
+          aria-controls={`panel${index + 1}-content`}
+          id={`panel${index + 1}-header`}
+        >
+          <Typography sx={{ fontWeight: "bold" }}>
+            Test Case {index + 1}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            {testResult.actualOutput ? (
+              <Box sx={{ width: "80%" }}>
+                <Typography variant="body1">
+                  Your Output: {testResult.actualOutput}
+                </Typography>
+              </Box>
+            ) : null}
+            {testResult.errorOutput !== "" && (
+              <Box sx={{ width: "80%" }}>
+                <Typography variant="body1">
+                  Error Output: {testResult.errorOutput}
+                </Typography>
+              </Box>
+            )}
+            <Box sx={{ width: "20%" }}>
+              <Typography variant="body1">
+                Passed: {testResult.passed ? "Yes" : "No"}
+              </Typography>
+            </Box>
+            <Box sx={{ width: "20%" }}>
+              <Typography variant="body1">
+                Teacher's Input:{" "}
+                {testResult.isHidden ? "Hidden" : testResult.testCase.input}
+              </Typography>
+            </Box>
+            <Box sx={{ width: "20%" }}>
+              <Typography variant="body1">
+                Teacher's Expected Output:{" "}
+                {testResult.isHidden ? "Hidden" : testResult.testCase.output}
+              </Typography>
+            </Box>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
+    </React.Fragment>
+  ))}
+</Box>
 
-                   
-                  </Box>
+                  
                 </div>
               </Box>
             ))}
