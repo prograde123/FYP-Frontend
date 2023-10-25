@@ -229,87 +229,8 @@ const AddAssignment = () => {
                   <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.assigNo}</p>
                 ) : null}
               </Box>
-
-            </Box>
-            <Box sx={{display:'flex', flexDirection:'column',width:'100%'}}>
-              <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Assignment Description</p>
-            <TextField sx={{ marginTop: 2, width: '100%' }}
-              id="outlined-multiline-flexible"
-              label="Descripiton"
-              color='secondary'
-              name='description'
-              multiline
-              rows={2}
-              value={values.description}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />{errors.description && touched.description ? (
-              <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.description}</p>
-            ) : null}
-            <br/>
-            </Box>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['DatePicker']} sx={{ width: '100%', marginTop: 0 }}>
-                
-                <Box sx={{display:'flex', flexDirection:'column', width:'100%'}}>
-                  <p style={{display:'flex',flexDirection:'row',marginBottom:5,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Due Date</p>
-                  <Box sx={{marginTop:2}}>
-                    <DatePicker
-                      name='dueDate'
-                      id='dueDate'
-                      value={values.dueDate}
-                      onChange={(value) => setFieldValue("dueDate", value, true)}
-                      onBlur={handleBlur}
-                      label="Due Date" 
-                      slotProps={{ textField: { fullWidth: true,error: false } }} />
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                    {errors.dueDate && touched.dueDate ? (
-                      <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.dueDate}</p>
-                    ) : null}
-                  </Box>
-                </Box>
-              </DemoContainer>
-            </LocalizationProvider>
-           <Box>
-
-           <Box sx={{marginTop:3}}>
-            <LocalizationProvider dateAdapter={AdapterDayjs} >
-                  <p style={{display:'flex',flexDirection:'row',marginBottom:15,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Due Time</p>  
-                  <DemoContainer components={['TimePicker']} sx={{width:'100%'}}>
-                    <Box sx={{display:'flex', flexDirection:'column', width:'100%'}}>
-                    <Box>
-                    <TimePicker
-                      name="dueTime"
-                      id="dueTime"
-                      label="Due Time"
-
-                      value={values.dueTime}
-                      onChange={(value) => setFieldValue("dueTime", value, true)}
-                      onBlur={handleBlur}
-                      
-                      slotProps={{ textField: { fullWidth: true,error: false } }}
-                      viewRenderers={{
-                        hours: renderTimeViewClock,
-                        minutes: renderTimeViewClock,
-                        seconds: renderTimeViewClock,
-                      }}
-                    />
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                    {errors.dueTime && touched.dueTime ? (
-                      <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.dueTime}</p>
-                    ) : null}
-                  </Box>
-                    </Box>
-                  </DemoContainer>
-            </LocalizationProvider>
-           </Box>
-                  
-            </Box>
-            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
               <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
-                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Select File Format</p>
+                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Select File Format *</p>
                 <FormControl sx={{ marginTop: 2, width: '100%' }}>
                   <InputLabel >Select Format</InputLabel>
                   <Select
@@ -334,8 +255,92 @@ const AddAssignment = () => {
                 <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.format}</p>
               ) : null}
               </Box>
-              <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
-                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Total Questions</p>
+            </Box>
+            <Box sx={{display:'flex', flexDirection:'column',width:'100%'}}>
+              <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Add Description *</p>
+            <TextField sx={{ marginTop: 2, width: '100%' }}
+              id="outlined-multiline-flexible"
+              label="Descripiton"
+              color='secondary'
+              name='description'
+              multiline
+              rows={3}
+              value={values.description}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />{errors.description && touched.description ? (
+              <p style={{ color: 'red', marginLeft: 4, marginBottom: 0, marginTop: 0 }}>{errors.description}</p>
+            ) : null}
+            <br/>
+            </Box>
+
+            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+              <Box sx={{width:'49%'}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker']} sx={{ width: '100%', marginTop: 0 }}>
+                    
+                    <Box sx={{display:'flex', flexDirection:'column', width:'100%'}}>
+                      <p style={{display:'flex',flexDirection:'row',marginBottom:5,marginTop:0,padding:0, textAlign:'start', fontWeight:'bold'}}>Due Date</p>
+                      <Box sx={{marginTop:2}}>
+                        <DatePicker
+                          name='dueDate'
+                          id='dueDate'
+                          value={values.dueDate}
+                          onChange={(value) => setFieldValue("dueDate", value, true)}
+                          onBlur={handleBlur}
+                          label="Due Date" 
+                          slotProps={{ textField: { fullWidth: true,error: false } }} />
+                      </Box>
+                      <Box sx={{ display: 'flex', flexDirection: 'row'}}>
+                        {errors.dueDate && touched.dueDate ? (
+                          <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.dueDate}</p>
+                        ) : null}
+                      </Box>
+                    </Box>
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Box>
+              <Box sx={{width:'49%'}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                      <p style={{display:'flex',flexDirection:'row',marginBottom:15,marginTop:6,padding:0, textAlign:'start', fontWeight:'bold'}}>Due Time</p>  
+                      <DemoContainer components={['TimePicker']} sx={{width:'100%'}}>
+                        <Box sx={{display:'flex', flexDirection:'column', width:'100%'}}>
+                        <Box>
+                        <TimePicker
+                          name="dueTime"
+                          id="dueTime"
+                          label="Due Time"
+
+                          value={values.dueTime}
+                          onChange={(value) => setFieldValue("dueTime", value, true)}
+                          onBlur={handleBlur}
+                          
+                          slotProps={{ textField: { fullWidth: true,error: false } }}
+                          viewRenderers={{
+                            hours: renderTimeViewClock,
+                            minutes: renderTimeViewClock,
+                            seconds: renderTimeViewClock,
+                          }}
+                        />
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'row'}}>
+                        {errors.dueTime && touched.dueTime ? (
+                          <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.dueTime}</p>
+                        ) : null}
+                      </Box>
+                        </Box>
+                      </DemoContainer>
+                </LocalizationProvider>
+              </Box>
+            </Box>
+           <Box>
+
+                  
+            </Box>
+            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+              
+              <Box sx={{display:'flex', flexDirection:'column',width:'100%'}}>
+                <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Total Questions *</p>
                 <TextField sx={{ marginTop: 2, width: '100%' }}
                   id="outlined-number"
                   label=" No Of Questions"
