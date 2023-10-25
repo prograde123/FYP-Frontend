@@ -211,37 +211,38 @@ const Result = () => {
               justifyContent: "space-between",
             }}
           >
+            <Box sx={{ width: "30%" }}>
+              <Typography variant="body1">
+                <span style={{fontWeight:'bold'}}>Input:</span>{" "}
+                {testResult.isHidden ? "Hidden" : testResult.testCase.input}
+              </Typography>
+            </Box>
+            <Box sx={{ width: "50%" }}>
+              <Typography variant="body1">
+              <span style={{fontWeight:'bold'}}>Expected Output:</span>{" "}
+                <pre>{testResult.isHidden ? "Hidden" : testResult.testCase.output}</pre>
+              </Typography>
+            </Box>
             {testResult.actualOutput ? (
-              <Box sx={{ width: "80%" }}>
+              <Box sx={{ width: "50%" }}>
                 <Typography variant="body1">
-                  Your Output: {testResult.actualOutput}
+                <span style={{fontWeight:'bold'}}>Your Output:</span> <pre>{testResult.actualOutput}</pre>
                 </Typography>
               </Box>
             ) : null}
             {testResult.errorOutput !== "" && (
               <Box sx={{ width: "80%" }}>
                 <Typography variant="body1">
-                  Error Output: {testResult.errorOutput}
+                <span style={{fontWeight:'bold'}}>Error Output:</span> {testResult.errorOutput}
                 </Typography>
               </Box>
             )}
             <Box sx={{ width: "20%" }}>
               <Typography variant="body1">
-                Passed: {testResult.passed ? "Yes" : "No"}
+              <span style={{fontWeight:'bold'}}>Passed:</span> {testResult.passed ? "Yes" : "No"}
               </Typography>
             </Box>
-            <Box sx={{ width: "20%" }}>
-              <Typography variant="body1">
-                Teacher's Input:{" "}
-                {testResult.isHidden ? "Hidden" : testResult.testCase.input}
-              </Typography>
-            </Box>
-            <Box sx={{ width: "20%" }}>
-              <Typography variant="body1">
-                Teacher's Expected Output:{" "}
-                {testResult.isHidden ? "Hidden" : testResult.testCase.output}
-              </Typography>
-            </Box>
+            
           </Box>
         </AccordionDetails>
       </Accordion>
