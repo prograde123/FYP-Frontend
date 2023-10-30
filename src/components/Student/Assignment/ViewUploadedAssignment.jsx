@@ -29,6 +29,8 @@ const ViewUploadedAssig = () => {
   const [questions, setQuestions] = React.useState([]);
   const [isTeacher, setIsTeacher] = React.useState(false);
   const [isAlreadySubmitted, setIsSubmitted] = React.useState(false);
+  const [isAlreadySubmitted1, setIsSubmitted1] = React.useState(false);
+
   const [PastDueDate ,setPastDueDate] = React.useState(false)
 
   const [loading, setLoading] = React.useState(false);
@@ -57,6 +59,10 @@ const ViewUploadedAssig = () => {
       const res = await http.get(`/submit/isSubmitted/${Assignmentid}`);
       if (res.data.success) {
         setIsSubmitted(true);
+      }
+      const res1 = await http.get(`/submit/isReSubmitted/${Assignmentid}`);
+      if (res1.data.success) {
+        setIsSubmitted1(true);
       }
     } catch (error) {
       console.log(error);
@@ -105,17 +111,8 @@ const ViewUploadedAssig = () => {
 
   const handleAssignmentClose = () => setAssignmentViewed(false);
 
-
-  //useeffect m usestate ayegi
-  //1 use state to check role and render screen acc to it
   const theme = useTheme();
 
-  // const[AssigNo,setAssigNo] = React.useState('')
-  // const[Description,setDescription] = React.useState('assig.description')
-  // const[uploadDate,setuploadDate] = React.useState('3/10/2023')
-  // const[dueDate,setdueDate] = React.useState('7/10/2023')
-  // const[marks,setMarks] = React.useState('10')
-  // const[file,setFile] = React.useState('file')
   const uploadDate = assig.uploadDate;
   const udate = new Date(uploadDate);
 
@@ -152,6 +149,11 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
     link.download = "assignment.pdf";
     link.click();
   };
+
+  console.log(isAlreadySubmitted1)
+  console.log(PastDueDate)
+  console.log(isAlreadySubmitted)
+  console.log('both with or operator ' ,PastDueDate || isAlreadySubmitted1 || !isAlreadySubmitted)
 
   return (
     <ThemeProvider theme={newtheme}>
@@ -425,6 +427,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                           Questions: questions,
                           format: assig.format,
                           courseID: cid,
+                          resubmit: false,
                         },
                       }
                     )
@@ -435,6 +438,49 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                     : isAlreadySubmitted
                     ? "View Result"
                     : PastDueDate ? "Due Date has passed" : "Submit Assignment"}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  
+                  endIcon={<FiArrowRightCircle fontSize={25}/>}
+                  disabled={PastDueDate || isAlreadySubmitted1 || !isAlreadySubmitted ? true : false}
+                
+
+                  sx={{
+                    display: (PastDueDate || isAlreadySubmitted1 || !isAlreadySubmitted) ? "none" : "block",               
+                         padding: 2,
+                    fontSize: 16,
+                    borderRadius: 8,
+                    marginTop: "3%",
+                    paddingRight: "2%",
+                    paddingLeft: "2%",
+                    backgroundColor: newtheme.palette.secondary.footer,
+                    color: newtheme.palette.primary.background,
+                    ":hover": {
+                      color: newtheme.palette.secondary.footer,
+                      backgroundColor: newtheme.palette.primary.background,
+                      border:1
+                    },
+                  }}
+                  onClick={() =>
+                    navigate( `/Student/SubmitAssignment/${assig._id}`,
+                      {
+                        state: {
+                          Questions: questions,
+                          format: assig.format,
+                          courseID: cid,
+                          resubmit: true,
+                        },
+                      }
+                    )
+                  }
+                >
+                  {isTeacher
+                    ? "View Submissions"
+                    : isAlreadySubmitted1
+                    ? "You have already resubmitted"
+                    : PastDueDate ? "Due Date has passed" : "ReSubmit Assignment"}
                 </Button>
             </Box>
           </Grid>

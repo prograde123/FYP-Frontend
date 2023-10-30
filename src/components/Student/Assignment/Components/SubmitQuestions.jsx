@@ -52,7 +52,8 @@ export default function Submit() {
   const Questions = useLocation().state?.Questions;
   const format = useLocation().state?.format;
   const courseID = useLocation().state?.courseID;
-
+  const resubmit = useLocation().state?.resubmit;
+  console.log(resubmit);
   const AssignmentID = window.location.pathname.split("/").pop();
 
   const [file, setFile] = React.useState(null);
@@ -188,16 +189,16 @@ export default function Submit() {
         let url;
         switch (format) {
           case ".py":
-            url = `/submit/Python/${Questions[index]._id}`;
+            url = `/submit/Python/${Questions[index]._id}/${resubmit}`;
             break;
           case ".java":
-            url = `/submit/Java/${Questions[index]._id}`;
+            url = `/submit/Java/${Questions[index]._id}/${resubmit}`;
             break;
           case ".c":
-            url = `/submit/C/${Questions[index]._id}`;
+            url = `/submit/C/${Questions[index]._id}/${resubmit}`;
             break;
           case ".cpp":
-            url = `/submit/Cpp/${Questions[index]._id}`;
+            url = `/submit/Cpp/${Questions[index]._id}/${resubmit}`;
             break;
           default:
             break;

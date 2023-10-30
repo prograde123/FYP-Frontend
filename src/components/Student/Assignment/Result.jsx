@@ -15,12 +15,17 @@ import newtheme from "../../../Themenew";
 const Result = () => {
   const { aid } = useParams();
   const [result, setResult] = useState([]);
+  const [result1, setResult1] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [noCourses, setNoCourses] = useState(false);
   const theme = useTheme();
+  const [isAlreadySubmitted1, setIsSubmitted1] = useState(false);
 
   const [sumObtainedMarks, setObtainedMarks] = useState(0);
   const [sumTotalMarks, setSumTotalMarks] = useState(0);
+  const [sumObtainedMarks1, setObtainedMarks1] = useState(0);
+  const [sumTotalMarks1, setSumTotalMarks1] = useState(0);
   function getRandom ( ){
     return Math.random
   }  
@@ -28,6 +33,22 @@ const Result = () => {
   const getSubmission = async () => {
     try {
       setLoading(true);
+      const res1 = await http.get(`/submit/isReSubmitted/${aid}`);
+      if (res1.data.success) {
+        setIsSubmitted1(true);
+        const submissions = await http.get("/submit/getReSubmissions", {
+          params: { assignmentId: aid },
+        });
+        setResult1(submissions.data.formattedResponse);
+        let sumO = 0;
+        let sumT = 0;
+        for (const submission of submissions.data.formattedResponse) {
+          sumO += submission.ObtainedMarks;
+          sumT += submission.TotalMarks;
+        }
+        setObtainedMarks1(sumO);
+        setSumTotalMarks1(sumT);
+      }
       const submissions = await http.get("/submit/getSubmissions", {
         params: { assignmentId: aid },
       });
@@ -133,6 +154,7 @@ const Result = () => {
                 </Box>
               </Box>
             )}
+            
           </Box>
 
           {result &&
@@ -254,6 +276,167 @@ const Result = () => {
                 </div>
               </Box>
             ))}
+
+{
+              isAlreadySubmitted1 &&
+              result1 && result1.length > 0 && (
+                <>
+                <Typography
+                      variant="h5"
+                      sx={{ display:'flex' , marginLeft: 5, 
+                      fontWeight: "bold",justifyContent:'center' }}
+                    >
+                      {" "}
+                     Resubmission Result
+                    </Typography>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Box>
+                  
+                    <Typography
+                      variant="h5"
+                      sx={{ marginLeft: 5, fontWeight: "bold", color: "red" }}
+                    >
+                      {" "}
+                      Obtained Marks : {sumObtainedMarks1}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="h5"
+                      sx={{ marginRight: 5, fontWeight: "bold" }}
+                    >
+                      {" "}
+                      Total Marks : {sumTotalMarks1}
+                    </Typography>
+                  </Box>
+                </Box>
+                </>
+              )
+            }
+
+          {
+            isAlreadySubmitted1 && 
+            result1 &&
+              result1.length > 0 &&
+              result1.map((res, index) => (
+                <Box
+                  className="zoom"
+                  sx={{
+                    minHeight: "35vh",
+                    cursor: "pointer",
+                    borderRadius: 5,
+                    marginLeft: 3,
+                    marginRight: 3,
+                    marginBottom: 4,
+                    paddingBottom: 2,
+                    boxShadow:
+                      "rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px",
+                  }}
+                >
+                  <div key={index}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Box sx={{ marginLeft: 3.5, marginRight: 3, marginTop: 3 }}>
+                        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                          {" "}
+                          Question # {index + 1}
+                        </Typography>
+                        <Typography sx={{ fontSize: 17, marginLeft:0.5 }}>
+                          {res.questionDescription}
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography
+                          sx={{
+                            marginTop: 3,
+                            marginRight: 3,
+                            fontSize: 16,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {" "}
+                          Question Marks: {res.TotalMarks}
+                        </Typography>
+                        <Typography sx={{ marginRight: 3, fontSize: 16 }}>
+                          {" "}
+                          Obtained Marks: {res.ObtainedMarks}/{res.TotalMarks}
+                        </Typography>
+                      </Box>
+                    </Box>
+  
+                    <Box sx={{ marginLeft: 3, marginTop: 2, marginRight: 3 }}>
+    {res.testResults.map((testResult, index) => (
+      <React.Fragment key={testResult._id}>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={
+              <ExpandMoreIcon sx={{ color: newtheme.palette.secondary.footer }} />
+            }
+            aria-controls={`panel${index + 1}-content`}
+            id={`panel${index + 1}-header`}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>
+              Test Case {index + 1}
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ width: "30%" }}>
+                <Typography variant="body1">
+                  <span style={{fontWeight:'bold'}}>Input:</span>{" "}
+                  {testResult.isHidden ? "Hidden" : testResult.testCase.input}
+                </Typography>
+              </Box>
+              <Box sx={{ width: "50%" }}>
+                <Typography variant="body1">
+                <span style={{fontWeight:'bold'}}>Expected Output:</span>{" "}
+                  <pre>{testResult.isHidden ? "Hidden" : testResult.testCase.output}</pre>
+                </Typography>
+              </Box>
+              {testResult.actualOutput ? (
+                <Box sx={{ width: "50%" }}>
+                  <Typography variant="body1">
+                  <span style={{fontWeight:'bold'}}>Your Output:</span> <pre>{testResult.actualOutput}</pre>
+                  </Typography>
+                </Box>
+              ) : null}
+              {testResult.errorOutput !== "" && (
+                <Box sx={{ width: "80%" }}>
+                  <Typography variant="body1">
+                  <span style={{fontWeight:'bold'}}>Error Output:</span> {testResult.errorOutput}
+                  </Typography>
+                </Box>
+              )}
+              <Box sx={{ width: "20%" }}>
+                <Typography variant="body1">
+                <span style={{fontWeight:'bold'}}>Passed:</span> {testResult.passed ? "Yes" : "No"}
+                </Typography>
+              </Box>
+              
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+      </React.Fragment>
+    ))}
+  </Box>
+  
+                    
+                  </div>
+                </Box>
+              ))
+          }
+          
         </Box>
       )}
       </ThemeProvider>
