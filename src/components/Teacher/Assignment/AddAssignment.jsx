@@ -205,9 +205,9 @@ const AddAssignment = () => {
                 },
               '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
                 fill: 'primary.background', // circle's number (ACTIVE)
-              },
+              }, 
             }}>
-              <StepLabel sx={{color:'red'}}>{label}</StepLabel>
+              <StepLabel sx={{color:'red',}}>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
@@ -364,7 +364,7 @@ const AddAssignment = () => {
             <Box sx={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
               <Box sx={{ width: '55%', marginBottom: 5, marginTop: 4 }}>
                 <Button type='submit' onClick={() => { handleClick() }} endIcon={<BsArrowRightSquare/>}
-                  variant="contained" color="secondary"  sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold',borderRadius: 2 }}>
+                  variant="contained" color="secondary"  sx={{fontFamily:'Nunito, sans-serif', width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold',borderRadius: 2 }}>
                   {assignment == undefined ? 'Next' : 'Edit questions'}
                 </Button>
               </Box>

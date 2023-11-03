@@ -134,11 +134,12 @@ function Homepage() {
             flexDirection: "row",
             marginTop: 2,
             justifyContent: "center",
+            fontFamily: 'Nunito, sans-serif',
           }}
         >
           <Tabs
             color="secondary"
-            sx={{ color: newtheme.palette.secondary.footer }}
+            sx={{ color: newtheme.palette.secondary.footer,fontFamily: 'Nunito, sans-serif', }}
             value={value}
             onChange={handleChange}
             aria-label="icon label tabs example"
@@ -146,39 +147,39 @@ function Homepage() {
             <Tab
               icon={<MdOutlineBallot fontSize={25} />}
               label="All"
-              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 }}
+              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder' }}
             />
             <Tab
               icon={<FaJava fontSize={25} />}
               label="Java"
-              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 }}
+              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder'  }}
             />
             <Tab
               icon={<TbBrandPython fontSize={25} />}
               label="Python"
               color="secondary"
-              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 }}
+              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder'  }}
             />
             <Tab
               icon={<TbBrandCpp fontSize={25} />}
               label="Cpp"
               color="secondary"
-              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 }}
+              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 ,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder' }}
             />
             <Tab
               icon={<TbBrandCSharp fontSize={25} />}
               label="C Sharp"
-              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 }}
+              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 ,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder' }}
             />
             <Tab
               icon={<SiCoursera fontSize={25} />}
               label="C Language"
-              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 }}
+              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder'  }}
             />
             <Tab
               icon={<SiAssemblyscript fontSize={25} />}
               label="Masm / Nasm"
-              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 }}
+              sx={{ color: newtheme.palette.secondary.footer, marginRight: 7,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder'  }}
             />
           </Tabs>
         </Box>

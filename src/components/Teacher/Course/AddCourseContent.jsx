@@ -395,6 +395,7 @@ const CreateCourseContent = ({ courses }) => {
                       fontSize: 16,
                       fontWeight: "bold",
                       backgroundColor: isSubmitting ? '#1665b5' : '#1665b5',
+                      fontFamily:'Nunito, sans-serif',
                     }}
                     // disabled={isSubmitting} 
                   >

@@ -34,7 +34,7 @@ export default function Grades({grades}) {
     <Box sx={{ height: '90vh', marginBottom:20}}>
       <p style={{ fontWeight: 'bold', marginBottom: 38, fontSize:25, marginLeft:9,marginTop:0, display:'flex', flexDirection:'row', justifyContent:'center' }}><span className='underline'>Graded Assignemnts</span></p>
       
-      <DataGrid sx={{boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'}}
+      <DataGrid sx={{fontFamily:'Nunito, sans-serif',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'}}
         rows={grades}
         columns={columns}
         initialState={{

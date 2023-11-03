@@ -69,6 +69,7 @@ function EditToolbar(props) {
           marginBottom: 2,
           padding: 1.5,
           borderRadius: 7,
+          fontFamily:'Nunito, sans-serif',
         }}
         variant="contained"
         color="secondary"
@@ -272,10 +273,12 @@ export default function CoursesListTable() {
             backgroundColor: theme.palette.primary.background,
             "& .MuiDataGrid-cell:hover": {
               color: theme.palette.secondary.main,
+              
             },
             marginTop: 3,
             borderRadius: 2,
             height: "100vh",
+            fontFamily:'Nunito, sans-serif',
             boxShadow:
               "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset",
           }}

@@ -530,7 +530,8 @@ const parseInput = (input) => {
             marginBottom:3,
             borderColor: theme.palette.secondary.Button,
             width:'50%',
-            fontWeight:'bold'
+            fontWeight:'bold',
+            fontFamily:'Nunito, sans-serif',
           }}
           endIcon={<GiConfirmed style={{}}/>}
         >

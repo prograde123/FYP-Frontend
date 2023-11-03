@@ -72,7 +72,7 @@ export default function AssignmentCard({Assignment , CourseId}) {
           <Grid item xs container direction="column" spacing={2}>
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginTop:2, paddingLeft:2, paddingRight:2}}>
               <Grid item xs>
-                <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'bolder'}}>
+                <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'bolder', fontFamily:'Nunito, sans-serif',}}>
                   Assignment No {Assignment.assignmentNumber}
                 </Typography>
                 <Typography variant="p" gutterBottom>
@@ -81,22 +81,22 @@ export default function AssignmentCard({Assignment , CourseId}) {
               
               </Grid>
               <Grid item>
-                <Typography variant="subtitle1" component="div" sx={{color: newtheme.palette.secondary.footer, fontWeight:'bold' }}>
+                <Typography variant="subtitle1" component="div" sx={{color: newtheme.palette.secondary.footer, fontWeight:'bold', fontFamily:'Nunito, sans-serif', }}>
                   Total points: {Assignment.totalMarks}
                 </Typography>
               </Grid>
             </Box>
             <Grid item>
-              <Typography sx={{ cursor: 'pointer', color: newtheme.palette.secondary.footer }} variant="body2">
+              <Typography sx={{ cursor: 'pointer', color: newtheme.palette.secondary.footer, fontFamily:'Nunito, sans-serif', }} variant="body2">
                 Due at: {formattedDueDate} 
               </Typography>
-              <Typography sx={{ cursor: 'pointer', marginBottom:2 }} variant="body2">
+              <Typography sx={{ cursor: 'pointer', marginBottom:2, fontFamily:'Nunito, sans-serif', }} variant="body2">
                 Uploaded on: {Assignment.uploadDate?.split('T')[0]} 
               </Typography>
               <p style={{color: newtheme.palette.secondary.footer, fontWeight:'bold',
                margin:0, padding:10, border:"1px solid #1665b5", width:'17%', borderRadius:10,
                 cursor:'pointer'}}><LuView fontSize={22} 
-                style={{marginBottom:-6, marginRight:5}}/>View Assignment</p>
+                style={{marginBottom:-6, marginRight:5, fontFamily:'Nunito, sans-serif',}}/>View Assignment</p>
             </Grid>
           </Grid>
         </Grid>

@@ -220,10 +220,10 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
      <>
       <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
         <Tabs color="secondary" sx={{color:theme.palette.secondary.main}} value={value} onChange={handleChange} aria-label="icon label tabs example">
-          <Tab icon={<FcViewDetails fontSize={25} />} label="Assignment Details" sx={{color:theme.palette.secondary.main, marginRight:7}}/>
-          <Tab icon={<FcQuestions fontSize={25} />} label="Questions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7}} />
-          <Tab icon={<FcAcceptDatabase fontSize={25}/>} label="Submissions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7}} />
-          <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Test Cases" sx={{color:theme.palette.secondary.main}}/>
+          <Tab icon={<FcViewDetails fontSize={25} />} label="Assignment Details" sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
+          <Tab icon={<FcQuestions fontSize={25} />} label="Questions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
+          <Tab icon={<FcAcceptDatabase fontSize={25}/>} label="Submissions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
+          <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Test Cases" sx={{color:theme.palette.secondary.main, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
         </Tabs>
       </Box>
       <hr style={{borderTop: '0.1px solid 	#F0F0F0', width:'99%', margin:0}}></hr>
@@ -294,10 +294,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
               <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between'}}>
                   <Box> 
                       <p style={{fontWeight:'bolder', margin:0, fontSize:30}}>Assignment : {assig.assignmentNumber}</p> 
-                      <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Due at {formattedDueDate}</p> 
-                      <p style={{ marginTop: 6, fontSize: 16, color: "red", }}>
-                          ({formattedTime}) 
-                        </p>
+                      <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Due at {formattedDueDate} <span style={{color:'red', fontWeight:'bold'}}>({formattedTime})</span> </p> 
                   </Box>
                   <Box> 
                       <p style={{fontWeight:'bolder', margin:0, fontSize:18}}>Marks</p> 

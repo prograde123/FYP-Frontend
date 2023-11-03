@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import "../../App.css"
 
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
@@ -148,17 +149,17 @@ export default function DrawerAppBar() {
               <MenuIcon />
             </IconButton>
             <Typography  onClick={() => { navigate('/Student/Home') }} component="div" sx={{cursor:'pointer', flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center',fontSize:30, fontFamily:'Dela Gothic One' }} data-aos="fade-right">
-               <img style={{marginRight:10}} height={65} width={60} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
-              <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder'}}>PROGRADE</span>
+               <img style={{marginRight:10}} height={55} width={55} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
+              <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif',}}>PROGRADE</span>
             </Typography>
             
 
             <div style={{flexGrow:1}} data-aos="fade-left">
-            <div >
-                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+            <div style={{fontFamily: 'Nunito, sans-serif'}}>
+                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder', marginRight: 2,fontFamily: 'Nunito, sans-serif', ":hover": { borderBottom: '4px solid #1665b5' } }}>
                   Home
                 </Button>
-                <Button className="fontlink" onClick={() => { navigate('/Student/AllCourses') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                <Button className="fontlink" onClick={() => { navigate('/Student/AllCourses') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                  All Courses
                 </Button>
                
@@ -167,7 +168,7 @@ export default function DrawerAppBar() {
                 aria-haspopup="true"
                 onMouseEnter={handleMenuOpenAssignments}
                 
-                sx={{color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5'}}}
+                sx={{color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5'}}}
                 >
                 Assignments
                 </Button>
@@ -190,22 +191,22 @@ export default function DrawerAppBar() {
                 MenuListProps={{onMouseLeave: handleMenuCloseAssignments}}
                 >
                         <MenuItem
-                        onClick={handleMenuCloseAssignments}>All Assignments</MenuItem>
-                        <MenuItem onClick={handleMenuCloseAssignments}
+                        onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}>All Assignments</MenuItem>
+                        <MenuItem onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
                         >Java</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
                         >C++</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
                         >Python</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
                         >C#</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
                         >Nasm/Masm</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments}
+                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
                         >C</MenuItem>
                         
                 </Menu>
-                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bold', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                   Reports
                 </Button>
                 </div>
@@ -250,8 +251,8 @@ export default function DrawerAppBar() {
                
                 MenuListProps={{onMouseLeave: handleMenuCloseProfile}}
                 >
-                  <MenuItem>My profile</MenuItem>
-                  <MenuItem onClick={(e) => {
+                  <MenuItem sx={{fontFamily: 'Nunito, sans-serif',}}>My profile</MenuItem>
+                  <MenuItem sx={{fontFamily: 'Nunito, sans-serif',}} onClick={(e) => {
               e.preventDefault()
               deleteAll()}}>Logout</MenuItem>
                 </Menu>
