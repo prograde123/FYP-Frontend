@@ -163,7 +163,7 @@ function ViewCourseDetails({ courses }) {
                 marginBottom: 1,
               }}
             >
-              <Typography sx={{ fontWeight: "bolder", fontSize: 24 }}>
+              <Typography sx={{ fontWeight: "bolder", fontSize: 24,fontFamily:'Nunito, sans-serif', }}>
                 {Cname}
               </Typography>
               <PiDotsThreeOutlineLight
@@ -185,38 +185,38 @@ function ViewCourseDetails({ courses }) {
           <Tab
             icon={<MdOutlineAssignment fontSize={25} style={{ marginRight: 10 }} />}
             iconPosition="start"
-            sx={{ color: newtheme.palette.secondary.footer, fontSize:17 }}
+            sx={{ color: newtheme.palette.secondary.footer, fontSize:16, fontFamily:'Nunito, sans-serif', }}
             label="Assignments"
             {...a11yProps(1)}
           />
           <Tab
             icon={<MdOutlineGrade fontSize={25} />}
             iconPosition="start"
-            sx={{ color: newtheme.palette.secondary.footer, fontSize:17  }}
+            sx={{ color: newtheme.palette.secondary.footer, fontSize:16, fontFamily:'Nunito, sans-serif',  }}
             label="Grades"
             {...a11yProps(2)}
           />
           <Tab
             icon={<TbNotes fontSize={25} />}
             iconPosition="start"
-            sx={{ color: newtheme.palette.secondary.footer, fontSize:17  }}
+            sx={{ color: newtheme.palette.secondary.footer, fontSize:16, fontFamily:'Nunito, sans-serif',  }}
             label="Lectures"
             {...a11yProps(3)}
           />
           <Tab
             icon={<BsCodeSlash fontSize={25} />}
             iconPosition="start"
-            sx={{ color: newtheme.palette.secondary.footer,  fontSize:17  }}
+            sx={{ color: newtheme.palette.secondary.footer,  fontSize:16,fontFamily:'Nunito, sans-serif',  }}
             label="Compiler"
             {...a11yProps(4)}
           />
-          <Tab
+          {/* <Tab
             icon={<PiStudent fontSize={25} />}
             iconPosition="start"
             sx={{ color: newtheme.palette.secondary.footer, fontSize:17,  }}
             label="Students"
             {...a11yProps(5)}
-          />
+          /> */}
         </Tabs>
         <Box sx={{width:'80%'}}>
         <TabPanel value={value} index={0}>

@@ -675,7 +675,7 @@ function CreateCourse() {
                   aria-label="Loading Spinner"
                   data-testid="loader" />
                 ) : (
-                  <Box>
+                  <Box sx={{fontFamily:'Nunito, sans-serif',}}>
                     {course === undefined ? "Create Course" : "Edit Course"}
                   </Box>
                 )}

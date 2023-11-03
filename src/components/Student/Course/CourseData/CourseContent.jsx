@@ -162,6 +162,7 @@ export default function Contents({ courses }) {
             "& .MuiDataGrid-cell:hover": {
               color: newtheme.palette.secondary.footer
             },
+            fontFamily:'Nunito, sans-serif',
             marginTop: 3,
             borderRadius: 2,
             height: "100vh",

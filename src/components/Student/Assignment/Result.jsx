@@ -137,7 +137,7 @@ const Result = () => {
                 <Box>
                   <Typography
                     variant="h5"
-                    sx={{ marginLeft: 5, fontWeight: "bold", color: "red" }}
+                    sx={{ marginLeft: 5, fontWeight: "bold", color: "red",fontFamily:'Nunito, sans-serif', }}
                   >
                     {" "}
                     Obtained Marks : {sumObtainedMarks}
@@ -146,7 +146,7 @@ const Result = () => {
                 <Box>
                   <Typography
                     variant="h5"
-                    sx={{ marginRight: 5, fontWeight: "bold" }}
+                    sx={{ marginRight: 5, fontWeight: "bold",fontFamily:'Nunito, sans-serif', }}
                   >
                     {" "}
                     Total Marks : {sumTotalMarks}
@@ -183,11 +183,11 @@ const Result = () => {
                     }}
                   >
                     <Box sx={{ marginLeft: 3.5, marginRight: 3, marginTop: 3 }}>
-                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                      <Typography variant="h5" sx={{ fontWeight: "bold",fontFamily:'Nunito, sans-serif', }}>
                         {" "}
                         Question # {index + 1}
                       </Typography>
-                      <Typography sx={{ fontSize: 17, marginLeft:0.5 }}>
+                      <Typography sx={{ fontSize: 17, marginLeft:0.5,fontFamily:'Nunito, sans-serif', }}>
                         {res.questionDescription}
                       </Typography>
                     </Box>
@@ -198,12 +198,13 @@ const Result = () => {
                           marginRight: 3,
                           fontSize: 16,
                           fontWeight: "bold",
+                          fontFamily:'Nunito, sans-serif',
                         }}
                       >
                         {" "}
                         Question Marks: {res.TotalMarks}
                       </Typography>
-                      <Typography sx={{ marginRight: 3, fontSize: 16 }}>
+                      <Typography sx={{ marginRight: 3, fontSize: 16, fontFamily:'Nunito, sans-serif', }}>
                         {" "}
                         Obtained Marks: {res.ObtainedMarks}/{res.TotalMarks}
                       </Typography>
@@ -221,7 +222,7 @@ const Result = () => {
           aria-controls={`panel${index + 1}-content`}
           id={`panel${index + 1}-header`}
         >
-          <Typography sx={{ fontWeight: "bold" }}>
+          <Typography sx={{ fontWeight: "bold", fontFamily:'Nunito, sans-serif', }}>
             Test Case {index + 1}
           </Typography>
         </AccordionSummary>
@@ -235,33 +236,33 @@ const Result = () => {
           >
             <Box sx={{ width: "30%" }}>
               <Typography variant="body1">
-                <span style={{fontWeight:'bold'}}>Input:</span>{" "}
+                <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Input:</span>{" "}
                 {testResult.isHidden ? "Hidden" : testResult.testCase.input}
               </Typography>
             </Box>
             <Box sx={{ width: "50%" }}>
               <Typography variant="body1">
-              <span style={{fontWeight:'bold'}}>Expected Output:</span>{" "}
+              <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Expected Output:</span>{" "}
                 <pre>{testResult.isHidden ? "Hidden" : testResult.testCase.output}</pre>
               </Typography>
             </Box>
             {testResult.actualOutput ? (
               <Box sx={{ width: "50%" }}>
                 <Typography variant="body1">
-                <span style={{fontWeight:'bold'}}>Your Output:</span> <pre>{testResult.actualOutput}</pre>
+                <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Your Output:</span> <pre>{testResult.actualOutput}</pre>
                 </Typography>
               </Box>
             ) : null}
             {testResult.errorOutput !== "" && (
               <Box sx={{ width: "80%" }}>
                 <Typography variant="body1">
-                <span style={{fontWeight:'bold'}}>Error Output:</span> {testResult.errorOutput}
+                <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Error Output:</span> {testResult.errorOutput}
                 </Typography>
               </Box>
             )}
             <Box sx={{ width: "20%" }}>
               <Typography variant="body1">
-              <span style={{fontWeight:'bold'}}>Passed:</span> {testResult.passed ? "Yes" : "No"}
+              <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Passed:</span> {testResult.passed ? "Yes" : "No"}
               </Typography>
             </Box>
             
@@ -284,7 +285,7 @@ const Result = () => {
                 <Typography
                       variant="h5"
                       sx={{ display:'flex' , marginLeft: 5, 
-                      fontWeight: "bold",justifyContent:'center' }}
+                      fontWeight: "bold",justifyContent:'center', fontFamily:'Nunito, sans-serif', }}
                     >
                       {" "}
                      Resubmission Result
@@ -294,7 +295,7 @@ const Result = () => {
                   
                     <Typography
                       variant="h5"
-                      sx={{ marginLeft: 5, fontWeight: "bold", color: "red" }}
+                      sx={{ marginLeft: 5, fontWeight: "bold", color: "red", fontFamily:'Nunito, sans-serif', }}
                     >
                       {" "}
                       Obtained Marks : {sumObtainedMarks1}
@@ -303,7 +304,7 @@ const Result = () => {
                   <Box>
                     <Typography
                       variant="h5"
-                      sx={{ marginRight: 5, fontWeight: "bold" }}
+                      sx={{ marginRight: 5, fontWeight: "bold", fontFamily:'Nunito, sans-serif', }}
                     >
                       {" "}
                       Total Marks : {sumTotalMarks1}
@@ -342,11 +343,11 @@ const Result = () => {
                       }}
                     >
                       <Box sx={{ marginLeft: 3.5, marginRight: 3, marginTop: 3 }}>
-                        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        <Typography variant="h5" sx={{ fontWeight: "bold", fontFamily:'Nunito, sans-serif', }}>
                           {" "}
                           Question # {index + 1}
                         </Typography>
-                        <Typography sx={{ fontSize: 17, marginLeft:0.5 }}>
+                        <Typography sx={{ fontSize: 17, marginLeft:0.5, fontFamily:'Nunito, sans-serif', }}>
                           {res.questionDescription}
                         </Typography>
                       </Box>
@@ -357,12 +358,13 @@ const Result = () => {
                             marginRight: 3,
                             fontSize: 16,
                             fontWeight: "bold",
+                            fontFamily:'Nunito, sans-serif',
                           }}
                         >
                           {" "}
                           Question Marks: {res.TotalMarks}
                         </Typography>
-                        <Typography sx={{ marginRight: 3, fontSize: 16 }}>
+                        <Typography sx={{ marginRight: 3, fontSize: 16, fontFamily:'Nunito, sans-serif', }}>
                           {" "}
                           Obtained Marks: {res.ObtainedMarks}/{res.TotalMarks}
                         </Typography>
@@ -380,7 +382,7 @@ const Result = () => {
             aria-controls={`panel${index + 1}-content`}
             id={`panel${index + 1}-header`}
           >
-            <Typography sx={{ fontWeight: "bold" }}>
+            <Typography sx={{ fontWeight: "bold", fontFamily:'Nunito, sans-serif', }}>
               Test Case {index + 1}
             </Typography>
           </AccordionSummary>
@@ -394,33 +396,33 @@ const Result = () => {
             >
               <Box sx={{ width: "30%" }}>
                 <Typography variant="body1">
-                  <span style={{fontWeight:'bold'}}>Input:</span>{" "}
+                  <span style={{fontWeight:'bold',fontFamily:'Nunito, sans-serif',}}>Input:</span>{" "}
                   {testResult.isHidden ? "Hidden" : testResult.testCase.input}
                 </Typography>
               </Box>
               <Box sx={{ width: "50%" }}>
                 <Typography variant="body1">
-                <span style={{fontWeight:'bold'}}>Expected Output:</span>{" "}
+                <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Expected Output:</span>{" "}
                   <pre>{testResult.isHidden ? "Hidden" : testResult.testCase.output}</pre>
                 </Typography>
               </Box>
               {testResult.actualOutput ? (
                 <Box sx={{ width: "50%" }}>
                   <Typography variant="body1">
-                  <span style={{fontWeight:'bold'}}>Your Output:</span> <pre>{testResult.actualOutput}</pre>
+                  <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Your Output:</span> <pre>{testResult.actualOutput}</pre>
                   </Typography>
                 </Box>
               ) : null}
               {testResult.errorOutput !== "" && (
                 <Box sx={{ width: "80%" }}>
                   <Typography variant="body1">
-                  <span style={{fontWeight:'bold'}}>Error Output:</span> {testResult.errorOutput}
+                  <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Error Output:</span> {testResult.errorOutput}
                   </Typography>
                 </Box>
               )}
               <Box sx={{ width: "20%" }}>
                 <Typography variant="body1">
-                <span style={{fontWeight:'bold'}}>Passed:</span> {testResult.passed ? "Yes" : "No"}
+                <span style={{fontWeight:'bold', fontFamily:'Nunito, sans-serif',}}>Passed:</span> {testResult.passed ? "Yes" : "No"}
                 </Typography>
               </Box>
               

@@ -99,28 +99,31 @@ const Assignments = () => {
               aria-label="icon label tabs example"
             >
               <Tab
-                icon={<TbCalendarDue fontSize={25} />}
+                icon={<TbCalendarDue fontSize={22} />}
                 label="Due Assignments"
                 sx={{
                   marginRight: 7,
                   color: newtheme.palette.secondary.footer,
+                  fontFamily:'Nunito, sans-serif',
                 }}
               />
               <Tab
-                icon={<MdRunningWithErrors fontSize={25} />}
+                icon={<MdRunningWithErrors fontSize={22} />}
                 label="Past Due"
                 sx={{
                   marginRight: 7,
                   color: newtheme.palette.secondary.footer,
+                  fontFamily:'Nunito, sans-serif',
                 }}
               />
                 <Tab
-                icon={<AssignmentTurnedInOutlinedIcon/>}
+                icon={<AssignmentTurnedInOutlinedIcon />}
                 label="Completed"
                 color="secondary"
                 sx={{
                   marginRight: 7,
                   color: newtheme.palette.secondary.footer,
+                  fontFamily:'Nunito, sans-serif',
                 }}
               />
             </Tabs>

@@ -71,7 +71,7 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
           <Grid item xs container direction="column" spacing={2}>
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginTop:2, paddingLeft:2, paddingRight:2}}>
               <Grid item xs>
-                <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'bolder'}}>
+                <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'bolder',fontFamily:'Nunito, sans-serif',}}>
                   Assignment No {Assignment.assignmentNumber}
                 </Typography>
                 <Typography variant="p" gutterBottom>
@@ -80,18 +80,18 @@ export default function PastAssignmentCard({Assignment , CourseId}) {
               
               </Grid>
               <Grid item>
-                <Typography variant="subtitle1" component="div" sx={{color: newtheme.palette.secondary.footer, fontWeight:'bold' }}>
+                <Typography variant="subtitle1" component="div" sx={{color: newtheme.palette.secondary.footer, fontWeight:'bold',fontFamily:'Nunito, sans-serif', }}>
                   Total points: {Assignment.totalMarks}
                 </Typography>
               </Grid>
             </Box>
             <Grid item>
-              <Typography sx={{ cursor: 'pointer', color: newtheme.palette.secondary.background, margin:0}} variant="body2">
+              <Typography sx={{ cursor: 'pointer', color: newtheme.palette.secondary.background, margin:0, fontFamily:'Nunito, sans-serif',}} variant="body2">
                 Past Due Date: {formattedDueDate} 
               </Typography>
               <p style={{color: newtheme.palette.secondary.footer, fontWeight:'bold',
                margin:0,
-                cursor:'pointer'}}>
+                cursor:'pointer', fontFamily:'Nunito, sans-serif',}}>
                 Not Submitted</p>
               </Grid>
           </Grid>

@@ -195,11 +195,12 @@ function Navbar() {
               style={{
                 marginRight: 13,
                 fontWeight: "bold",
+                fontFamily:'Nunito, sans-serif',
               }}
             >
               {profileData ? profileData.user.fullName : 'User'}
             </Typography>
-            <Typography sx={{ fontSize: 15, color:theme.palette.secondary.main }}>Teacher</Typography>
+            <Typography sx={{ fontSize: 15, color:theme.palette.secondary.main, fontFamily:'Nunito, sans-serif', }}>Teacher</Typography>
           </Box>
           <MdOutlineKeyboardArrowDown
             size={25}
