@@ -49,6 +49,11 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
     setSelectedOption(event.target.value);
   };
 
+  const [inputOption, setInputOption] = useState('');
+  const handleInputChange = (event) => {
+    setInputOption(event.target.value);
+  };
+
   //checkbox for input array option
   const handleSold = (event) => {
     setIsTestcaseArray(event.target.checked);
@@ -354,7 +359,7 @@ const parseInput = (input) => {
                 type='number'
             />
         </Grid>
-        <Grid item lg={6}>
+        {/* <Grid item lg={6}>
           <Box sx={{marginTop:5.5}}>
             <FormControlLabel
                 sx={{paddingTop:1, fontSize:20}}
@@ -362,7 +367,7 @@ const parseInput = (input) => {
                 control={<Checkbox checked={isTestcaseArray} onChange={handleSold} color='secondary' />}
             />
           </Box>
-        </Grid>
+        </Grid> */}
         <Grid container spacing={2}>
           <Grid item xs={12} md={12} lg={12}>
             <Box sx={{ marginLeft: 2, marginTop: 4 }}>
@@ -395,7 +400,30 @@ const parseInput = (input) => {
 
       {selectedOption === 'testcase' && (
         <>
-          {testCases.map((testCase, index) => (
+          <Box sx={{marginLeft:2, marginTop:2, width:'100%'}}>
+            <FormControlLabel
+                sx={{paddingTop:1, fontSize:20}}
+                label="Select Box for Input Array"
+                control={<Checkbox checked={isTestcaseArray} onChange={handleSold} color='secondary' />}
+            />
+          </Box>
+          {/* <Box sx={{marginLeft:2, marginTop:2}}>
+            <RadioGroup value={inputOption} onChange={handleInputChange} sx={{ display:'flex', flexDirection:'row'}}>
+                  <FormControlLabel
+                    sx={{ paddingTop: 1, fontWeight:'bold', fontFamily:'Nunito, sans-serif' }}
+                    label="Select for Array Input"
+                    value="arrayInput"
+                    control={<Radio color="secondary" />}
+                  />
+                  <FormControlLabel
+                    sx={{ paddingTop: 1 }}
+                    label="Select for Simple Input"
+                    value="simpleInput"
+                    control={<Radio color="secondary" />}
+                  />
+            </RadioGroup>
+          </Box> */}
+          {/* {testCases.map((testCase, index) => (
             <Grid item lg={4} md={3} sm={4} xs={12} key={index}>
             <Box sx={{display:'flex', flexDirection:'row',marginTop:2}}>
               <Box sx={{marginRight:2}}>
@@ -431,7 +459,7 @@ const parseInput = (input) => {
             <IconButton onClick={() => handleRemoveTestCase(index)}>
               <RiDeleteBin5Line style={{color:theme.palette.secondary.main, fontSize:28,marginTop:0}} />
             </IconButton>
-          </Grid>
+            </Grid>
           ))}
           <Box>
             <Button
@@ -447,7 +475,139 @@ const parseInput = (input) => {
             >
             Add
             </Button>
+          </Box> */}
+
+{isTestcaseArray ? (
+  <>
+    {testCases.map((testCase, index) => (
+      <Grid item lg={4} md={3} sm={4} xs={12} key={index}>
+        <Box sx={{marginRight:2}}>
+            <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Array Size*</p>
+            <TextField
+              sx={{marginBottom:2}}
+              multiline
+              value={testCase.input}
+              onChange={(e) => {
+                const updatedTestCases = [...testCases];
+                updatedTestCases[index].input = e.target.value;
+                setTestCases(updatedTestCases);
+              }}
+              label="Enter Array Size"
+              color="secondary"
+            />
           </Box>
+        <Box sx={{display:'flex', flexDirection:'row',marginTop:2}}>
+        
+          <Box sx={{marginRight:2}}>
+            <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Input</p>
+            <TextField
+              sx={{marginBottom:2}}
+              multiline
+              value={testCase.input}
+              onChange={(e) => {
+                const updatedTestCases = [...testCases];
+                updatedTestCases[index].input = e.target.value;
+                setTestCases(updatedTestCases);
+              }}
+              label="Enter Array Input"
+              color="secondary"
+            />
+          </Box>
+          <Box>
+            <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Output</p>
+            <TextField
+              value={testCase.output}
+              multiline
+              onChange={(e) => {
+                const updatedTestCases = [...testCases];
+                updatedTestCases[index].output = e.target.value;
+                setTestCases(updatedTestCases);
+              }}
+              label="Expected Output"
+              color="secondary"
+            />
+          </Box>
+        </Box>
+        <IconButton onClick={() => handleRemoveTestCase(index)}>
+          <RiDeleteBin5Line style={{color:theme.palette.secondary.main, fontSize:28,marginTop:0}} />
+        </IconButton>
+      </Grid>
+    ))}
+    <Box>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={handleAddTestCase}
+        sx={{
+          mx: { lg: 3, md: 3, sm: 3, xs: "auto" },
+          mt:9,
+          padding:2,
+          borderRadius:5
+        }}
+        startIcon={<CgAddR/>}
+      >
+        Add
+      </Button>
+    </Box>
+  </>
+) : (
+  <>
+    {testCases.map((testCase, index) => (
+      <Grid item lg={4} md={3} sm={4} xs={12} key={index}>
+        <Box sx={{display:'flex', flexDirection:'row',marginTop:2}}>
+          <Box sx={{marginRight:2}}>
+            <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Input</p>
+            <TextField
+              sx={{marginBottom:2}}
+              multiline
+              value={testCase.input}
+              onChange={(e) => {
+                const updatedTestCases = [...testCases];
+                updatedTestCases[index].input = e.target.value;
+                setTestCases(updatedTestCases);
+              }}
+              label="Enter Input"
+              color="secondary"
+            />
+          </Box>
+          <Box>
+            <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Output</p>
+            <TextField
+              value={testCase.output}
+              multiline
+              onChange={(e) => {
+                const updatedTestCases = [...testCases];
+                updatedTestCases[index].output = e.target.value;
+                setTestCases(updatedTestCases);
+              }}
+              label="Expected Output"
+              color="secondary"
+            />
+          </Box>
+        </Box>
+        <IconButton onClick={() => handleRemoveTestCase(index)}>
+          <RiDeleteBin5Line style={{color:theme.palette.secondary.main, fontSize:28,marginTop:0}} />
+        </IconButton>
+      </Grid>
+    ))}
+    <Box>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={handleAddTestCase}
+        sx={{
+          mx: { lg: 3, md: 3, sm: 3, xs: "auto" },
+          mt:9,
+          padding:2,
+          borderRadius:5
+        }}
+        startIcon={<CgAddR/>}
+      >
+        Add
+      </Button>
+    </Box>
+  </>
+)}
         </>
       )}
 
