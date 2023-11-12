@@ -227,7 +227,8 @@ const handleClick = async () => {
         setQuestionNumber(questionNumber + 1);
         if (questionNumber === totalQuestions - 1) {
           console.log("inside full questions questionNumber " , questionNumber)
-          const response = await http.post("/assignment/addAssignment", { questions, assig });
+          const response = await http.post("/assignment/addAssignment", { questions, assig //send usestate here
+         });
           console.log("Assignment added successfully " , response.data.success)
           if (response.data.success) {
             alert("Assignment Created Successfully");
@@ -668,6 +669,40 @@ const parseInput = (input) => {
           </Box>
         </>
       )}
+
+      {selectedOption === 'automatedTestcase' && (
+        <>
+          <Box sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold',width:'100%',marginLeft:2 }} >
+            <p style={{marginTop:0,marginBottom:10}}>Upload Solution File*</p>
+            <p style={{ fontWeight: 'bold',margin:0}}><Button variant="outlined" component="label"
+              color='secondary' sx={{
+              width: '100%', padding: 2,
+              borderStyle: 'dashed', borderRadius: 2
+              }}>
+              <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+              <FcAddImage fontSize={45} style={{marginRight:19}}/>Click to browse or <br />Drag and Drop Files
+              <input  name='file' onChange={(e) => { setFile(e.target.files[0]) }} hidden accept="file/*" multiple type="file" />
+              </Button></Button>
+            </p>
+          </Box>
+         
+          <Box sx={{marginLeft:2, marginTop:2, width:'100%'}}>
+            <FormControlLabel
+                sx={{paddingTop:1, fontSize:20}}
+                label="Select Box for Input Array"
+                control={<Checkbox checked={isTestcaseArray} onChange={handleSold} color='secondary' />}
+            />
+          </Box>
+          <Box>
+          {
+            isTestcaseArray ? <Typography>input Array fields</Typography>
+            : <Typography>input simple fields</Typography>
+          
+          }
+          </Box>
+        </>
+      )}
+
 
       
       <Grid item lg={12} md={12} sm={12} xs={12} sx={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
