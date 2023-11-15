@@ -15,11 +15,19 @@ import { CgAddR } from "react-icons/cg";
 import { GiConfirmed } from "react-icons/gi";
 import { FcAddImage } from 'react-icons/fc';
 import { GrNotes } from 'react-icons/gr';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { RiDeleteBin5Line } from "react-icons/ri";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import ClipLoader from "react-spinners/ClipLoader";
+import { generateArrayTestCases } from "./ArrayAutomation";
+import { formatTestCasesAsObjects } from "./SimpleInputAutomation";
 
 const steps = [
   'Assignment Details',
@@ -39,9 +47,8 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
   const [file, setFile] = React.useState(null)
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-
-
-  console.log(assig)
+  //for automation
+  const [automatedInput,setAutomatedInput] = useState(null)
 
   //for radio button testcase option
   const [selectedOption, setSelectedOption] = useState('');
@@ -54,6 +61,35 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
     setInputOption(event.target.value);
   };
 
+  const initialValues = {
+    arraySize:"",
+    numInputs:"",
+    
+    numTestCases:"",
+    startRange:"",
+    endRange:"",
+    dataType:"",
+
+  } 
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched, setFieldValue } =
+  useFormik({
+    initialValues,
+    validationSchema: Yup.object({
+      arraySize: Yup.number().required("Please Enter the array size"),
+      numInputs: Yup.number().required("Please Enter the number of inputs required"),
+     
+      numTestCases: Yup.number().required("Number of testcases is required"),
+      startRange:Yup.number().required("Please Enter the start range"),
+      endRange: Yup.number().required("Please Enter the end range"),
+      dataType:Yup.string().ensure().required("Please Enter the data type"),
+      
+    }),
+    validateOnChange: true,
+    validateOnBlur: false,
+    onSubmit: (values, action) => {
+      console.log(values);
+    },
+  });
   //checkbox for input array option
   const handleSold = (event) => {
     setIsTestcaseArray(event.target.checked);
@@ -87,6 +123,8 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   };
 
 const handleClick = async () => {
+  
+ try {
   if(selectedOption === 'testcase'){
     if (
           testCases[0].input !== "" 
@@ -249,6 +287,158 @@ const handleClick = async () => {
       alert('please fill required fields')
     }
   }
+  else if (selectedOption === 'automatedTestcase') {
+    if (
+      question !== "" &&
+      file !== null &&
+      (values.arraySize !== '' || values.numInputs !== '') &&
+      values.dataType !== '' &&
+      values.numTestCases !== "" &&
+      values.startRange !== '' &&
+      values.endRange !== ''
+    ) {
+      let testcaseInputs;
+      let inputs
+      if (isTestcaseArray) {
+        testcaseInputs = await generateArrayTestCases(
+          values.arraySize,
+          values.numTestCases,
+          values.startRange,
+          values.endRange,
+          values.dataType
+        );
+        inputs = JSON.stringify(testcaseInputs.map((testCase) => ({
+          input: parseInput(testCase.input),
+        })))
+        console.log(inputs)
+      } else {
+        testcaseInputs = await formatTestCasesAsObjects(
+          values.numInputs,
+          values.numTestCases,
+          values.startRange,
+          values.endRange,
+          values.dataType
+        );
+        console.log(testcaseInputs)
+        inputs = JSON.stringify(testcaseInputs);
+        console.log(inputs)
+      }
+     // Set the inputs to state
+      setAutomatedInput(inputs);
+
+      const formData = new FormData();
+      const FileSplit = file.name.split('.');
+      const FileFormat = `.${FileSplit[FileSplit.length - 1]}`;
+  
+      if (assig.format === FileFormat) {
+        formData.append('files', file);
+  
+        //let testCasesString;
+  
+        // if (isTestcaseArray) {
+        //   const testCaseCopy = [...automatedInput]; // Create a copy of automatedInput
+        //   testCasesString = JSON.stringify(testCaseCopy.map((testCase) => ({
+        //     input: parseInput(testCase.input),
+        //   })));
+
+        // } else {
+        //   const testCaseCopy = automatedInput
+        //   testCasesString = JSON.stringify(testCaseCopy);
+        // }
+  
+        //console.log(testCasesString);
+        let url;
+
+        switch (
+          FileFormat
+        ) {
+          case ".py":
+            url =`/submit/getOutputPython/${inputs}/${isTestcaseArray}`
+            break;
+          case ".java":
+            url = `/submit/getOutputJava/${inputs}/${isTestcaseArray}`
+            break;
+          case ".c":
+            url = `/submit/getOutputC/${inputs}/${isTestcaseArray}`
+            break;
+          case ".cpp":
+            url = `/submit/getOutputCpp/${inputs}/${isTestcaseArray}`
+            break;
+          default:
+            break;
+        }
+       const res =  await http.post(url, formData,
+          
+          {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        const testCases = res.data
+
+        console.log(testCases)
+
+        const newQuestion = {
+          questionDescription: question,
+          questionTotalMarks: questionTotalMarks,
+          testCases: testCases.map((testCase) => ({
+            input: Array.isArray(testCase.input) ? testCase.input : testCase.input,
+            output: testCase.output,
+          })),
+          
+          isInputArray: isTestcaseArray,
+        };
+    
+        console.log("new question ", newQuestion);
+    
+        questions.push(newQuestion);
+    
+        console.log("questions ", questions);
+    
+        setQuestion('');
+        setQuestionTotalMarks(0);
+        setIsTestcaseArray(false);
+        setTestCases([{ input: "", output: "" }]);
+        setFile(null)
+        setInputTestCases([ { inputs : ""}])
+        setSelectedOption('')
+        setQuestionNumber(questionNumber + 1);
+        values.arraySize = ''
+        values.dataType=''
+        values.startRange = ''
+        values.endRange = ''
+        values.numInputs=''
+        values.numTestCases=''
+        setAutomatedInput(null)
+        if (questionNumber === totalQuestions - 1) {
+          console.log("inside full questions questionNumber " , questionNumber)
+          const response = await http.post("/assignment/addAssignment", { questions, assig //send usestate here
+         });
+          console.log("Assignment added successfully " , response.data.success)
+          if (response.data.success) {
+            alert("Assignment Created Successfully");
+            navigate(`/Teacher/ViewUploadedAssigList/${courseID}`);
+          }
+        }
+      }
+
+      else{
+        alert('File format should be the same as of assignment \n Note : Question marks should be less than total Assignment Marks')
+      }
+
+     
+  
+
+
+    }
+    else{
+      alert('please fill required fields')
+    }
+  }
+ } catch (error) {
+    console.error(error)
+ }
 };
 
 
@@ -693,12 +883,120 @@ const parseInput = (input) => {
                 control={<Checkbox checked={isTestcaseArray} onChange={handleSold} color='secondary' />}
             />
           </Box>
-          <Box>
+          <Box sx={{width:'100%' , ml:2}}>
+          <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-evenly'}}>
+
+         
           {
-            isTestcaseArray ? <Typography>input Array fields</Typography>
-            : <Typography>input simple fields</Typography>
+            isTestcaseArray ? 
+
+            <Box sx={{display:'flex', flexDirection:'column',width:'50%'}}>
+            <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, 
+            textAlign:'start', fontWeight:'bold'}}>Enter Array Size</p>
+            <TextField sx={{  width: '100%', marginTop:2 }}
+            id="outlined-multiline-flexible"
+            label="Enter array size"
+            type = 'number'
+            color='secondary'
+            name='arraySize'
+            value={values.arraySize}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />{errors.arraySize && touched.arraySize ? (
+            <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.arraySize}</p>
+          ) : null}
+        </Box>
+            : 
+            <Box sx={{display:'flex', flexDirection:'column',width:'50%'}}>
+                  <p style={{display:'flex',flexDirection:'row',marginBottom:0,
+                  marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Enter Number of Inputs</p>
+                  <TextField sx={{  width: '100%', marginTop:2 }}
+                  id="outlined-multiline-flexible"
+                  label="Number of Inputs"
+                  type = 'number'
+                  color='secondary'
+                  name='numInputs'
+                  value={values.numInputs}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />{errors.numInputs && touched.numInputs ? (
+                  <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.numInputs}</p>
+                ) : null}
+              </Box>
           
           }
+           <Box sx={{display:'flex', flexDirection:'column',width:'50%'}}>
+                  <p style={{display:'flex',flexDirection:'row',marginBottom:0,
+                  marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Enter Number of testcases</p>
+                  <TextField sx={{  width: '100%', marginTop:2 }}
+                  id="outlined-multiline-flexible"
+                  label="Number of testcases"
+                  type = 'number'
+                  color='secondary'
+                  name='numTestCases'
+                  value={values.numTestCases}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />{errors.numTestCases && touched.numTestCases ? (
+                  <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.numTestCases}</p>
+                ) : null}
+              </Box>
+              </Box>
+              <Box sx={{display:'flex', flexDirection:'column',width:'50%'}}>
+                  <p style={{display:'flex',flexDirection:'row',marginBottom:0,
+                  marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Enter Start Range</p>
+                  <TextField sx={{  width: '100%', marginTop:2 }}
+                  id="outlined-multiline-flexible"
+                  label="Start Range"
+                  type = 'number'
+                  color='secondary'
+                  name='startRange'
+                  value={values.startRange}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />{errors.startRange && touched.startRange ? (
+                  <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.startRange}</p>
+                ) : null}
+              </Box>
+              <Box sx={{display:'flex', flexDirection:'column',width:'50%'}}>
+                  <p style={{display:'flex',flexDirection:'row',marginBottom:0,
+                  marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Enter End Range</p>
+                  <TextField sx={{  width: '100%', marginTop:2 }}
+                  id="outlined-multiline-flexible"
+                  label="End Range"
+                  type = 'number'
+                  color='secondary'
+                  name='endRange'
+                  value={values.endRange}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />{errors.endRange && touched.endRange ? (
+                  <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.endRange}</p>
+                ) : null}
+              </Box>
+              <Box sx={{display:'flex', flexDirection:'column',width:'50%'}}>
+                <p style={{display:'flex',flexDirection:'row',marginBottom:0,
+                marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Select Data Type *</p>
+                <FormControl sx={{ marginTop: 2, width: '100%' }}>
+                  <InputLabel >Select DataType</InputLabel>
+                  <Select
+                    id="outlined-multiline-flexible"
+                    label="Select DataType"
+                    color='secondary'
+                    name='dataType'
+                    value={values.dataType}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  >
+                    <MenuItem value={"float"}>float</MenuItem>
+                    <MenuItem value={"string"}>string</MenuItem>
+                    <MenuItem value={"int"}>int</MenuItem>
+                  </Select>
+                </FormControl>
+              {errors.dataType && touched.dataType ? (
+                <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.dataType}</p>
+              ) : null}
+              </Box>
           </Box>
         </>
       )}
