@@ -35,11 +35,11 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   const [questionTotalMarks, setQuestionTotalMarks] = useState(0);
   const [isTestcaseArray, setIsTestcaseArray] = useState(false);
   const [testCases, setTestCases] = useState([{ input: "", output: "" }]);
+  const [arraySize, setArraySize] = useState([]);
   //solution code only input test case
   const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
   const [file, setFile] = React.useState(null)
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-
 
   console.log(assig)
 
@@ -221,6 +221,7 @@ const handleClick = async () => {
         setQuestionTotalMarks(0);
         setIsTestcaseArray(false);
         setTestCases([{ input: "", output: "" }]);
+        setArraySize('')
         setFile(null)
         setInputTestCases([ { inputs : ""}])
         setSelectedOption('')
@@ -251,7 +252,6 @@ const handleClick = async () => {
   }
 };
 
-
 const parseInput = (input) => {
   try {
     const parsedInput = JSON.parse(input);
@@ -265,7 +265,6 @@ const parseInput = (input) => {
     return [input];
   }
 };
-
 
 
 
@@ -487,11 +486,15 @@ const parseInput = (input) => {
             <TextField
               sx={{marginBottom:2}}
               multiline
-              value={testCase.input}
+              value={arraySize[index] ? arraySize[index].size : ''}
               onChange={(e) => {
-                const updatedTestCases = [...testCases];
-                updatedTestCases[index].input = e.target.value;
-                setTestCases(updatedTestCases);
+                const updatedTestCases = [...arraySize];
+                if (!updatedTestCases[index]) {
+                  updatedTestCases[index] = { size: e.target.value };
+                } else {
+                  updatedTestCases[index].size = e.target.value;
+                }
+                setArraySize(updatedTestCases);
               }}
               label="Enter Array Size"
               color="secondary"
@@ -612,7 +615,6 @@ const parseInput = (input) => {
         </>
       )}
 
-
       {selectedOption === 'solutionCode' && (
         <>
           <Box sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold',width:'100%',marginLeft:2 }} >
@@ -703,7 +705,6 @@ const parseInput = (input) => {
         </>
       )}
 
-
       
       <Grid item lg={12} md={12} sm={12} xs={12} sx={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
         <Button
@@ -738,3 +739,5 @@ const parseInput = (input) => {
    </Box>
   );
 }
+
+
