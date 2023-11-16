@@ -43,10 +43,11 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
   const [question, setQuestion] = useState('');
   const [questionTotalMarks, setQuestionTotalMarks] = useState(0);
   const [isTestcaseArray, setIsTestcaseArray] = useState(false);
-  const [testCases, setTestCases] = useState([{ input: "", output: "" }]);
-  const [arraySize, setArraySize] = useState([]);
+  const [testCases, setTestCases] = useState([{ input: "", output: "" ,arraySize: "" }]);
+ // const [arraySize, setArraySize] = useState([]);
+
   //solution code only input test case
-  const [inputTestCases, setInputTestCases] = useState([{ input: ""}]);
+  const [inputTestCases, setInputTestCases] = useState([{ input: "", arraySize: ""}]);
   const [file, setFile] = React.useState(null)
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   //for automation
@@ -102,12 +103,12 @@ export default function AddQuestion({ currentQuestion, totalQuestions, assig, co
 
   const handleAddTestCase = () => {
     // Adding new test case
-    setTestCases([...testCases, { input: "", output: "" }]);
+    setTestCases([...testCases, { input: "", output: "" , arraySize : "" }]);
   };
 
   const handleAddInput=()=>{
      // Adding new input test case
-     setInputTestCases([...inputTestCases, { input: ""}]);
+     setInputTestCases([...inputTestCases, { input: "" , arraySize : ""}]);
   }
 
   const handleRemoveInputTestCase = (index) => {
@@ -140,6 +141,7 @@ const handleClick = async () => {
         testCases: testCases.map((testCase) => ({
           input: isTestcaseArray ? parseInput(testCase.input) : testCase.input,
           output: testCase.output,
+          arraySize :  isTestcaseArray ? testCase.arraySize : null,
         })),
         isInputArray: isTestcaseArray,
       };
@@ -153,7 +155,7 @@ const handleClick = async () => {
       setQuestion('');
       setQuestionTotalMarks(0);
       setIsTestcaseArray(false);
-      setTestCases([{ input: "", output: "" }]);
+      setTestCases([{ input: "", output: "" , arraySize : "" }]);
   
       setQuestionNumber(questionNumber + 1);
   
@@ -197,7 +199,8 @@ const handleClick = async () => {
 
         if(isTestcaseArray){
           testCasesString = JSON.stringify(inputTestCases.map((testCase) => ({
-            input:  parseInput(testCase.input) 
+            input:  parseInput(testCase.input) ,
+            arraySize: testCase.arraySize
           }))
           )
         }
@@ -206,8 +209,6 @@ const handleClick = async () => {
         }
 
         
-        
-
         let url;
 
         switch (
@@ -246,6 +247,7 @@ const handleClick = async () => {
           testCases: testCases.map((testCase) => ({
             input: Array.isArray(testCase.input) ? testCase.input : testCase.input,
             output: testCase.output,
+            arraySize :  Array.isArray(testCase.input) ?  testCase.arraySize : null
           })),
           
           isInputArray: isTestcaseArray,
@@ -260,10 +262,10 @@ const handleClick = async () => {
         setQuestion('');
         setQuestionTotalMarks(0);
         setIsTestcaseArray(false);
-        setTestCases([{ input: "", output: "" }]);
-        setArraySize('')
+        setTestCases([{ input: "", output: "" , arraySize : ""}]);
+        //setArraySize('')
         setFile(null)
-        setInputTestCases([ { inputs : ""}])
+        setInputTestCases([ { inputs : "" , arraySize : ""}])
         setSelectedOption('')
         setQuestionNumber(questionNumber + 1);
         if (questionNumber === totalQuestions - 1) {
@@ -587,18 +589,19 @@ const parseInput = (input) => {
                 />
               </RadioGroup>
             </Box>
-          </Grid>
-        </Grid>
-
-      {selectedOption === 'testcase' && (
-        <>
-          <Box sx={{marginLeft:2, marginTop:2, width:'100%'}}>
+            <Box sx={{marginLeft:2, marginTop:2, width:'100%'}}>
             <FormControlLabel
                 sx={{paddingTop:1, fontSize:20}}
                 label="Select Box for Input Array"
                 control={<Checkbox checked={isTestcaseArray} onChange={handleSold} color='secondary' />}
             />
           </Box>
+          </Grid>
+        </Grid>
+
+      {selectedOption === 'testcase' && (
+        <>
+          
           {/* <Box sx={{marginLeft:2, marginTop:2}}>
             <RadioGroup value={inputOption} onChange={handleInputChange} sx={{ display:'flex', flexDirection:'row'}}>
                   <FormControlLabel
@@ -678,15 +681,11 @@ const parseInput = (input) => {
             <TextField
               sx={{marginBottom:2}}
               multiline
-              value={arraySize[index] ? arraySize[index].size : ''}
+              value={testCase.arraySize}
               onChange={(e) => {
-                const updatedTestCases = [...arraySize];
-                if (!updatedTestCases[index]) {
-                  updatedTestCases[index] = { size: e.target.value };
-                } else {
-                  updatedTestCases[index].size = e.target.value;
-                }
-                setArraySize(updatedTestCases);
+                const updatedTestCases = [...testCases];
+                updatedTestCases[index].arraySize = e.target.value;
+                setTestCases(updatedTestCases);
               }}
               label="Enter Array Size"
               color="secondary"
@@ -825,6 +824,21 @@ const parseInput = (input) => {
           {inputTestCases.map((testCase, index) => (
             <Grid item lg={3} md={3} sm={4} xs={12} key={index}>
               <Box sx={{display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginRight:2}}>
+            <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Array Size*</p>
+            <TextField
+              sx={{marginBottom:2}}
+              multiline
+              value={testCase.arraySize}
+                    onChange={(e) => {
+                      const updatedTestCases = [...inputTestCases];
+                      updatedTestCases[index].arraySize = e.target.value;
+                      setInputTestCases(updatedTestCases);
+                    }}
+              label="Enter Array Size"
+              color="secondary"
+            />
+          </Box>
                 <Box>
                   <Box>
                   <p style={{fontWeight:'bold',fontSize:18,marginTop:0}}>Testcase Input</p>
@@ -880,13 +894,7 @@ const parseInput = (input) => {
             </p>
           </Box>
          
-          <Box sx={{marginLeft:2, marginTop:2, width:'100%'}}>
-            <FormControlLabel
-                sx={{paddingTop:1, fontSize:20}}
-                label="Select Box for Input Array"
-                control={<Checkbox checked={isTestcaseArray} onChange={handleSold} color='secondary' />}
-            />
-          </Box>
+         
           <Box sx={{width:'100%' , ml:2}}>
           <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-evenly'}}>
 
