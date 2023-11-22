@@ -1,94 +1,133 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SimilarityResult from './test2';
-import storage from "./firebase";
-import { ref, uploadBytesResumable, getDownloadURL  } from "firebase/storage";
+import storage from './firebase';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { Button } from '@mui/material';
+
+const FileUploadForm = () => {
+  const [fileA, setFileA] = useState(null);
+  const [fileB, setFileB] = useState(null);
+  const [result, setResult] = useState([]);
+  const [currQuestion , setCurrQuestion] = useState(null)
 
 
-const fetchFiles = async (AssignmentID, userID, index, format) => {
+  const fetchFile_to_be_checked = async (AssignmentID, userID, index, format) => {
     try {
       const fileRef = ref(
         storage,
         `Submission/${AssignmentID}/${userID}/Q${index + 1}${format}`
       );
-  
-      const downloadURL = await getDownloadURL(fileRef);
-  
-      console.log("Download URL:", downloadURL);
-    const response = await axios.get(downloadURL, { responseType: 'arraybuffer' });
-    fs.writeFileSync(`Q${index + 1}${format}`, response.data);
 
-    console.log("File created successfully.");
-  
+      const downloadURL = await getDownloadURL(fileRef);
+      console.log('Download URL:', downloadURL);
+
+      const response = await fetch(downloadURL);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch file: ${response.statusText}`);
+      }
+
+      const fileBlob = await response.blob();
+      console.log(`File: ${fileBlob}`);
+
+      const customFileObject = new File([fileBlob], `Q${index + 1}${format}`, {
+        type: fileBlob.type,
+        lastModified: new Date().getTime(), 
+      });
+
+      setFileA(customFileObject);
+      console.log('File fetched successfully.');
+      
+      return customFileObject
     } catch (error) {
-      console.error("Error fetching file:", error);
+      console.error('Error fetching file:', error);
+      return null
     }
   };
 
+  const fetchFile_for_comaprison = async (AssignmentID, userID, index, format) => {
+  try {
+    const fileRef = ref(
+      storage,
+      `Submission/${AssignmentID}/${userID}/Q${index + 1}${format}`
+    );
 
+    const downloadURL = await getDownloadURL(fileRef);
+    console.log('Download URL:', downloadURL);
 
-const FileUploadForm = () => {
-  const [fileA, setFileA] = useState(null);
-  const [fileB, setFileB] = useState([]);
+    
+    const response = await fetch(downloadURL);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch file: ${response.statusText}`);
+    }
 
-  useEffect(()=>{
-    fetchFiles('64fb0492ed746530e938a1e9','6511c1f0bc2828793be83bfe',0 ,'.py')
-  })
-  const handleFileAChange = (e) => {
-    setFileA(e.target.files[0]);
-  };
+    const fileBlob = await response.blob();
+    const customFileObject = new File([fileBlob], `Q${index + 1}${format}`, {
+      type: fileBlob.type,
+      lastModified: new Date().getTime(), 
+    });
 
-  const handleFileBChange = (e) => {
-    setFileB([...e.target.files]);
-  };
+    setFileB(customFileObject);
+    return customFileObject;
 
-  const [result, setResult] = useState([]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  } 
+  catch (error) {
+    console.error('Error fetching file:', error);
+    return null
+  }
+};
+ 
+  const handleSubmit = async () => {
+    const Assig_id = '65242fcfe45348a1ece15c0b';
+    const student_TO_be_checked = '64f0b6b7448605ec2c77b79a';
+    const SubmittedSids = ['6513f3c68049d9b3df93e296'];
+    const assigFormat = '.c';
+    const numberOfQuestions = 1;
   
-    for (const file of fileB) {
-      try {
-        const formDataB = new FormData();
-        formDataB.append('file_a', fileA); 
-        formDataB.append('file_b', file);
+    for (let index = 0; index < numberOfQuestions; index++) {
+      setFileA(null);
+      const a = await fetchFile_to_be_checked(Assig_id, student_TO_be_checked, index, assigFormat);
+      setCurrQuestion(index + 1);
   
-        const responseB = await axios.post('http://127.0.0.1:8000/get_plagiarism', formDataB, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+      for (let j = 0; j < SubmittedSids.length; j++) {
+        try {
+          setFileB(null);
+          const b = await fetchFile_for_comaprison(Assig_id, SubmittedSids[j], index, assigFormat);
+          console.log(a)
+          console.log(b)
+        
+          const formDataB = new FormData();
+          formDataB.append('file_a', a);
+          formDataB.append('file_b', b);
   
-        setResult(prevResult => [...prevResult, responseB.data]);
-      } catch (error) {
-        console.error('Error uploading files:', error);
+          const responseB = await axios.post('http://127.0.0.1:8000/get_plagiarism', formDataB, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+  
+          setResult((prevResult) => [...prevResult, responseB.data]);
+        } catch (error) {
+          console.error('Error uploading files:', error);
+        }
       }
     }
   };
   
+  
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="fileA">File A:</label>
-          <input type="file" id="fileA" onChange={handleFileAChange} />
-        </div>
-        <div>
-          <label htmlFor="fileB">File B (multiple files allowed):</label>
-          <input type="file" id="fileB" onChange={handleFileBChange} multiple />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-
-      {result.map((res, index) => (
+      <Button onClick={handleSubmit}>
+          Check Plagiarism
+      </Button>
+          {result.map((res, index) => (
         <div key={index}>
-          <b><p>Similarity from backend API: {res['similar_content']}</p></b>
-          <b><p>File content from backend API: {res['file_a_content']}</p></b>
           <SimilarityResult
             similarityPercentage={res['similarity_percentage']}
             fileAContent={res['file_a_content']}
             similarContent={res['similar_content']}
+           
           />
         </div>
       ))}

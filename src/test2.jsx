@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SimilarityResult = ({ similarityPercentage, fileAContent, similarContent }) => {
+const SimilarityResult = ({ similarityPercentage, fileAContent, similarContent, cuurentQuestion }) => {
   const [highlightedContent, setHighlightedContent] = useState('');
 
   const highlightSimilarContent = () => {
@@ -44,6 +44,7 @@ const SimilarityResult = ({ similarityPercentage, fileAContent, similarContent }
 
   return (
     <div>
+      <center><h1>{cuurentQuestion}</h1></center>
       <h2>Similarity Percentage: {similarityPercentage}%</h2>
       <p>
         <strong>File A Content:</strong>
