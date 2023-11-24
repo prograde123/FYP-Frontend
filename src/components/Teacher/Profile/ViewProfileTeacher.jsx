@@ -172,17 +172,7 @@ function ViewProfile() {
                      backgroundColor:theme.palette.secondary.main, color:theme.palette.primary.background}}>Log out</p>
                      </Button>
                 </Box>
-             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                <Box sx={{display:'flex', flexDirection:'row'}}>
-                  
-                  <p style={{fontSize:16,color:'grey',marginTop:0}}><span style={{fontWeight:'bolder'}}>Role :</span> {profileData.role}</p>
-                </Box>
-                <Box sx={{display:'flex', flexDirection:'row'}}>
-                <p style={{marginTop:0}}><SiTraefikproxy size={20} style={{marginRight:6}}/></p>
-                  <p style={{fontSize:15,color:'grey',marginTop:0}}><span style={{fontWeight:'bolder'}}>Skilled At :</span> C | C++ | Java | Python | CSharp | MASM-NASM</p>
-                </Box>
-                <p style={{fontSize:15,color:'grey'}}></p>
-             </Box>
+             
              </Box>
           </Box>
           </Box>
@@ -201,7 +191,7 @@ function ViewProfile() {
               <CustomTabPanel value={value} index={0}>
 {/* information */}
                 <Grid container gap={2}>
-                  <Grid item xs={12} md={12} lg={6} >
+                  <Grid item xs={12} md={12} lg={12} >
                     <Box sx={{height:'70vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
                       <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginLeft:5, marginRight:5, marginTop:1}}>
                         <Box sx={{marginTop:1}}>
@@ -322,7 +312,7 @@ function ViewProfile() {
                             </Fade>
                         </Modal>
                       </Box>
-                      <Box sx={{marginLeft:4, marginRight:4}}>
+                      <Box sx={{marginLeft:4, marginRight:4,}}>
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
                             <GoPerson size={22} style={{color:'black', marginRight:5}}/>
                             <p style={{marginTop:0, fontSize:18, marginRight:20}}>Full Name : </p>
@@ -333,13 +323,13 @@ function ViewProfile() {
                             <p style={{marginTop:0, fontSize:18, marginRight:20}}>Email Address : </p>
                             <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>{profileData.email}</p>
                           </Box>
-                          <Box sx={{display:'flex', flexDirection:'row', marginTop:2, justifyContent:'space-between'}}>
+                          <Box sx={{display:'flex', flexDirection:'column', marginTop:2, justifyContent:'space-between'}}>
                             <Box sx={{display:'flex', flexDirection:'row'}}>
                               <CiStar size={27} style={{color:'black', marginRight:5}}/>
                               <p style={{marginTop:0, fontSize:18, marginRight:20}}>Role : </p>
                               <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>{profileData.role}</p>
                             </Box>
-                            <Box sx={{display:'flex', flexDirection:'row'}}>
+                            <Box sx={{display:'flex', flexDirection:'row',marginTop:2,}}>
                               <GrStatusGoodSmall size={22} style={{color:'black', marginRight:5}}/>
                               <p style={{marginTop:0, fontSize:18, marginRight:20}}>Status : </p>
                               <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>Active</p>
@@ -351,31 +341,11 @@ function ViewProfile() {
                             <p style={{marginTop:0, fontSize:18, marginRight:20}}>Number of Current Courses : </p>
                             <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>10</p>
                           </Box>
-                          <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
-                            <SiTraefikproxy size={22} style={{color:'black', marginRight:5}}/>
-                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Skills : </p>
-                            <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>C | C++ | Java | Python | CSharp | MASM-NASM</p>
-                          </Box>
                           
                       </Box>
                     </Box>
                   </Grid>
 
-
-{/* Notifications */}
-                  <Grid item xs={12} md={12} lg={5} >
-                    <Box sx={{height:'70vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset', borderRadius:5}}>
-                      <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginLeft:5, marginRight:5, marginTop:1}}>
-                        <Box sx={{marginTop:1}}>
-                        <p style={{fontWeight:'bolder', fontSize:25}}>Notifications</p>
-                        </Box>
-                        <Box sx={{marginTop:4}}>
-                        <Button sx={{":hover":{backgroundColor:theme.palette.secondary.main},backgroundColor:theme.palette.secondary.main, color:theme.palette.primary.background, paddingRight:3, paddingLeft:3,paddingTop:1,paddingBottom:1, borderRadius:3}} startIcon={<CiRead size={20}/>}>Read All</Button>
-                      
-                        </Box>
-                        </Box>
-                      </Box>  
-                  </Grid>
                 </Grid>
 
 {/* change password tab */}
