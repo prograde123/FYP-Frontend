@@ -115,12 +115,12 @@ function Navbar() {
       style={{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
         marginTop: 4,
         backgroundColor:"FFFFFF"
       }}
     >
-      <div>
+      {/* <div>
         <Search 
           breakPoint="sm"
           sx={{
@@ -141,7 +141,7 @@ function Navbar() {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
-      </div>
+      </div> */}
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Box sx={{display:'flex',flexDirection:'row', marginTop:-0.8}}>
         <VscColorMode
