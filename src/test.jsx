@@ -123,12 +123,14 @@ const FileUploadForm = () => {
       </Button>
           {result.map((res, index) => (
         <div key={index}>
-          <SimilarityResult
+          <pre>
+            <SimilarityResult
             similarityPercentage={res['similarity_percentage']}
             fileAContent={res['file_a_content']}
             similarContent={res['similar_content']}
            
           />
+          </pre>
         </div>
       ))}
     </div>

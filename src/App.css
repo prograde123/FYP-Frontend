@@ -2,6 +2,39 @@
 p{
   font-family: 'Nunito', sans-serif;
 }
+
+@media only screen and (max-width: 700px) {
+  .example {display: none;}
+}
+
+@media only screen and (max-width: 700px) {
+  .signin {display: none; width: 0%;}
+}
+
+@media only screen and (max-width: 490px) {
+  .charts {display: none;}
+}
+
+@media only screen and (max-width: 370px) {
+  .sidebar {
+    margin-left:0;
+    margin-top: 0;
+    margin-bottom:0; 
+    border:'0px'; 
+    border-radius:0;
+  }
+}
+
+.app {
+  display: flex;
+  .btn-toggle {
+    cursor: pointer;
+    display: none;
+    margin-left: 10px;
+    border-radius:0
+  }
+}
+
 Button{
   font-family: 'Nunito', sans-serif;
 }

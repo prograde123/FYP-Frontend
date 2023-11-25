@@ -160,7 +160,7 @@ function Navbar() {
             cursor:'pointer'
           }}
         />
-        <MdOutlineNotificationsActive
+        {/* <MdOutlineNotificationsActive
           size={25}
           style={{
             color:theme.palette.secondary.main,
@@ -175,7 +175,7 @@ function Navbar() {
             ":hover": { backgroundColor: "#F5F5F5" },
             cursor:'pointer'
           }}
-        />
+        /> */}
         </Box>
         <Box sx={{':hover':{backgroundColor:'	#F5F5F5', borderRadius:3}, display: "flex", flexDirection: "row", cursor:'pointer' }} aria-haspopup="true" aria-controls={menuId} onClick={handleProfileMenuOpen}>
           <img onClick={()=>{handleProfileMenuOpen}}

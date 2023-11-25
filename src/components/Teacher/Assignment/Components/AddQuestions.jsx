@@ -1139,13 +1139,25 @@ export default function AddQuestion({
                   </Button>
                 </p>
               </Box>
-
+              <Box sx={{ marginLeft: 2, marginTop: 1, width: "100%" }}>
+                <FormControlLabel
+                  sx={{ paddingTop: 1, fontSize: 20 }}
+                  label="Select Box for Input Array"
+                  control={
+                    <Checkbox
+                      checked={isTestcaseArray}
+                      onChange={handleSold}
+                      color="secondary"
+                    />
+                  }
+                />
+              </Box>
               <Box sx={{ width: "100%", ml: 2 }}>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-evenly",
+                    justifyContent: "space-between",
                   }}
                 >
                   {isTestcaseArray ? (
@@ -1153,7 +1165,7 @@ export default function AddQuestion({
                       sx={{
                         display: "flex",
                         flexDirection: "column",
-                        width: "50%",
+                        width: "49%",
                       }}
                     >
                       <p
@@ -1198,7 +1210,7 @@ export default function AddQuestion({
                       sx={{
                         display: "flex",
                         flexDirection: "column",
-                        width: "50%",
+                        width: "49%",
                       }}
                     >
                       <p
@@ -1243,7 +1255,7 @@ export default function AddQuestion({
                     sx={{
                       display: "flex",
                       flexDirection: "column",
-                      width: "50%",
+                      width: "49%",
                     }}
                   >
                     <p
@@ -1284,11 +1296,12 @@ export default function AddQuestion({
                     ) : null}
                   </Box>
                 </Box>
+                <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "50%",
+                    width: "49%",
                   }}
                 >
                   <p
@@ -1332,7 +1345,7 @@ export default function AddQuestion({
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "50%",
+                    width: "49%",
                   }}
                 >
                   <p
@@ -1372,11 +1385,12 @@ export default function AddQuestion({
                     </p>
                   ) : null}
                 </Box>
+                </Box>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "50%",
+                    width: "49%",
                   }}
                 >
                   <p

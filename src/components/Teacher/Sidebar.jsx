@@ -46,11 +46,12 @@ const Sidebar = ({
 }) => {
   const navigate = useNavigate()
   return (
-    <ProSidebar style={{marginLeft:8,marginTop:8,marginBottom:8, border:'6px solid #1665b5', borderRadius:20.5}}
+    <ProSidebar className="sidebar" style={{marginLeft:8,marginTop:8,marginBottom:8, border:'6px solid #1665b5', borderRadius:20.5}}
       // image={sidebarBg}
       collapsed={collapsed}
       toggled={toggled}
       onToggle={handleToggleSidebar}
+     breakPoint="md"
     >
       {/* Header */}
       <SidebarHeader style={{borderRadius:50}}>

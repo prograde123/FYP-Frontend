@@ -13,6 +13,7 @@ import { useState } from "react";
 import ViewProfile from "../Profile/ViewProfileTeacher";
 import CreateCourseContent from "../Course/AddCourseContent";
 import CourseDetails from "../Course/CourseDetails";
+import { FaBars } from 'react-icons/fa';
 
 import AddAssignment from "../Assignment/AddAssignment";
 import ViewSubmittedAssigList from "../Assignment/ViewSubmittedAssigList";
@@ -20,7 +21,7 @@ import ViewSubmittedAssigList from "../Assignment/ViewSubmittedAssigList";
 import ViewUploadedAssigList from "../Assignment/ViewUploadedAssigList";
 
 import ViewUploadedAssig from "../Assignment/ViewUploadedAssignment";
-
+import { CiBoxList } from "react-icons/ci";
 import PDFViewer from "../Assignment/pdf";
 import ViewUploadedTeacherAssig from "../Assignment/ViewUploadedAssignment";
 
@@ -45,7 +46,7 @@ export default function TeacherBody() {
     <>
       <Box className={`app ${toggled ? "toggled" : ""}`}
         sx={{
-          display: "flex",
+         
         }}
       >
         <Sidebar 
@@ -57,6 +58,9 @@ export default function TeacherBody() {
         />
         
         <Box component="main" sx={{ flexGrow: 1, p: 3, }}>
+        <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
+          <CiBoxList style={{color:'#1665b5'}} fontSize={25}/>
+        </div>
         <Navbar/>
         <Box sx={{marginTop:1}}></Box>
           <Routes>

@@ -385,7 +385,7 @@ function CreateCourse() {
                     fontWeight: "bold",
                   }}
                 >
-                  Language
+                 Language
                 </p>
                 <FormControl sx={{ marginTop: 2, width: "100%" }}>
                   <InputLabel>Select Language</InputLabel>

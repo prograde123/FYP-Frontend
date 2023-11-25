@@ -149,7 +149,7 @@ function CourseDetails({ courses }) {
           <Box>
             <Grid
               container
-              spacing={2}
+              spacing={1}
               sx={{
                 marginBottom: 3,
                 display: "flex",
@@ -157,11 +157,11 @@ function CourseDetails({ courses }) {
                 justifyContent: "space-between",
               }}
             >
-              <Grid item sm={12} md={12} lg={8}>
+              <Grid item xs={12} sm={12} md={12} lg={8}>
                 <Box
                   sx={{
                     overflow: "hidden",
-                    height: "154vh",
+                    minHeight: "158vh",
                     marginTop: 1,
                     backgroundColor: theme.palette.primary.background,
                     borderRadius: 1,
@@ -378,11 +378,11 @@ function CourseDetails({ courses }) {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item sm={12} md={12} lg={4}>
+              <Grid item xs={12} sm={12} md={12} lg={4}>
                 <Box
                   sx={{
                     overflow: "hidden",
-                    height: "47vh",
+                    minHeight: "49vh",
                     marginTop: 1,
                     backgroundColor: theme.palette.primary.background,
                     borderRadius: 1,
@@ -661,7 +661,7 @@ function CourseDetails({ courses }) {
 
                 <Box
                   sx={{
-                    height: "54vh",
+                    minHeight: "54vh",
                     marginTop: 2,
                     backgroundColor: theme.palette.primary.background,
                     borderRadius: 1,
@@ -750,7 +750,7 @@ function CourseDetails({ courses }) {
 
                 <Box
                   sx={{
-                    height: "48vh",
+                    minHeight: "50vh",
                     marginTop: 2,
                     backgroundColor: theme.palette.primary.background,
                     borderRadius: 1,
@@ -829,196 +829,6 @@ function CourseDetails({ courses }) {
               </Grid>
             </Grid>
           </Box>
-
-          {/* <Box>
-        
-        <Box>
-          <Grid container spacing={2}>
-            <Grid item={true} xs={12}>
-              <Stack spacing={2}>
-                <Box sx={{ minWidth: "49%", height: "51vh" }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      color: theme.palette.secondary.main,
-                    }}
-                  >
-                    
-                    <Box
-                      sx={{
-                        width: "70%",
-                        marginTop: 2,
-                        marginLeft: 4,
-                        marginRight: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        color: theme.palette.primary.main,
-                      }}
-                    >
-                      
-                    
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          marginTop: 2,
-                        }}
-                      >
-                        <AccountBoxIcon sx={{ marginRight: 2, marginTop: 1 }} />
-                        <Typography
-                          gutterBottom
-                          variant="h5"
-                          sx={{
-                            fontWeight: "bold",
-                            marginBottom: 3,
-                            borderBottom: 1,
-                            width: 140,
-                          }}
-                        >
-                          Instructor
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography
-                          gutterBottom
-                          variant="body"
-                          sx={{
-                            fontWeight: "bold",
-                            marginBottom: 3,
-                            marginLeft: 5,
-                            color: theme.palette.secondary.main,
-                          }}
-                        >
-                          {instructor}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          color: theme.palette.secondary.main,
-                          marginTop: 2,
-                        }}
-                      >
-                        <Box sx={{ display: "flex", flexDirection: "row" }}>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "row",
-                              marginRight: 3,
-                              color: theme.palette.primary.main,
-                            }}
-                          >
-                            <HourglassBottomIcon
-                              sx={{ marginRight: 2, marginTop: 1 }}
-                            />
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              sx={{
-                                fontWeight: "bold",
-                                marginBottom: 3,
-                                borderBottom: 1,
-                                width: 140,
-                              }}
-                            >
-                              Credit Hours:
-                            </Typography>
-                          </Box>
-                          <Box>
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              sx={{
-                                fontWeight: "bold",
-                                marginBottom: 3,
-                                color: theme.palette.secondary.main,
-                              }}
-                            >
-                              {creditHours}
-                            </Typography>
-                          </Box>
-                        </Box>
-                        <Box sx={{ display: "flex", flexDirection: "row" }}>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "row",
-                              marginRight: 3,
-                              color: theme.palette.primary.main,
-                            }}
-                          >
-                            <LanguageIcon
-                              sx={{ marginRight: 2, marginTop: 1 }}
-                            />
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              sx={{
-                                fontWeight: "bold",
-                                marginBottom: 3,
-                                borderBottom: 1,
-                                width: 140,
-                              }}
-                            >
-                              Language:
-                            </Typography>
-                          </Box>
-                          <Box>
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              sx={{
-                                fontWeight: "bold",
-                                marginBottom: 3,
-                                color: theme.palette.secondary.main,
-                              }}
-                            >
-                              {language}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          color: theme.palette.secondary.main,
-                        }}
-                      >
-                        <Typography
-                          gutterBottom
-                          variant="h6"
-                          sx={{ fontWeight: "bold", marginBottom: 3 }}
-                        >
-                          <span style={{ color: theme.palette.primary.main }}>
-                            Started At:
-                          </span>{" "}
-                          {Sdate}
-                        </Typography>
-                        <Typography
-                          gutterBottom
-                          variant="h6"
-                          sx={{ fontWeight: "bold", marginBottom: 3 }}
-                        >
-                          <span style={{ color: theme.palette.primary.main }}>
-                            Ending At:
-                          </span>{" "}
-                          {Ldate}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              </Stack>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box> */}
         </Box>
       )}
     </>

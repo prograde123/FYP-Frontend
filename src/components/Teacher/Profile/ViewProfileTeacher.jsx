@@ -183,7 +183,8 @@ function ViewProfile() {
       
             <Box sx={{ width: '100%', marginTop:3 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" sx={{color:theme.palette.secondary.main}}>
+                  <Tabs variant="scrollable"
+  scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs example" sx={{color:theme.palette.secondary.main}}>
                     <Tab icon={<ImProfile size={20}/>} iconPosition="start" sx={{fontWeight:'bold'}} label="Profile Information" {...a11yProps(0)} />
                     <Tab icon={<RiLockPasswordLine size={20}/>} iconPosition="start" sx={{fontWeight:'bold'}} label="Change Password" {...a11yProps(1)} />
                   </Tabs>
@@ -315,12 +316,12 @@ function ViewProfile() {
                       <Box sx={{marginLeft:4, marginRight:4,}}>
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
                             <GoPerson size={22} style={{color:'black', marginRight:5}}/>
-                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Full Name : </p>
+                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Name : </p>
                             <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>{profileData.fullName}</p>
                           </Box>
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
                             <HiOutlineMail size={22} style={{color:'black', marginRight:5}}/>
-                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Email Address : </p>
+                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Email : </p>
                             <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>{profileData.email}</p>
                           </Box>
                           <Box sx={{display:'flex', flexDirection:'column', marginTop:2, justifyContent:'space-between'}}>
@@ -338,7 +339,7 @@ function ViewProfile() {
                          
                           <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
                             <TbRosetteNumber9 size={22} style={{color:'black', marginRight:5}}/>
-                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Number of Current Courses : </p>
+                            <p style={{marginTop:0, fontSize:18, marginRight:20}}>Current Courses : </p>
                             <p style={{marginTop:0, fontSize:18, fontWeight:'bold'}}>10</p>
                           </Box>
                           

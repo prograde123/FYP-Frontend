@@ -10,18 +10,43 @@ import reports from "../../../assets/reports.svg";
 import students from "../../../assets/students.svg";
 import feedback from "../../../assets/feedback.svg";
 import welcome from "../../../assets/welcome.svg";
+import python from "../../../assets/python.jpg";
+import cpp from "../../../assets/cpp.jpg";
+import c from "../../../assets/C.jpg";
+import java from "../../../assets/21.jpg";
+import { CiTimer } from "react-icons/ci";
+import { MdLanguage } from "react-icons/md";
 import { FcComboChart } from "react-icons/fc";
 import { styled } from '@mui/material/styles';
+
 import { useNavigate } from 'react-router-dom';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import AntDesignGrid from './CourseOverviewTable';
 import profile from '../../../../src/assets/profile.png';
 import BeatLoader from "react-spinners/BeatLoader";
+import http from "../../../../Axios/axios";
 
 function Dashboard() {
   const theme = useTheme();
   const navigate = useNavigate()
   const [loading, setLoading] = React.useState(false);
+  const [counts, setCounts] = React.useState({
+    assignmentsCount: 0,
+    coursesCount: 0,
+    submissionsCount: 0,
+    teachersCount: 0,
+    studentsCount: 0,
+  });
+
+  useEffect(() => {
+    http.get('/course/assignmentsCount')
+      .then((response) => {
+        setCounts(response.data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, []);
 
   //donut chart
   const [pieChart,setPieChart] =React.useState({
@@ -84,7 +109,8 @@ function Dashboard() {
   //bar chart
   const [newChart, setNewChart] = React.useState({
     series: [{
-      data: [750, 400, 348, 670, 1040, 580, 690, 1100, 1200, 1380,550,800]
+      // data: [5, 40, 34, 52, 10, 50, 60, 11, 12, 38,55,8]
+      data: []
     }],
     options: {
       chart: {
@@ -114,6 +140,30 @@ function Dashboard() {
     },
   
   });
+
+  useEffect(() => {
+    http.get('/course/coursesCountByMonth')
+      .then((response) => {
+        const data = response.data;
+        const chartSeriesData = {
+          series: [{
+            data: data.map(item => item.count)
+          }],
+          options: {
+            xaxis: {
+              categories: [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July',
+                'August', 'September', 'October', 'November', 'December'
+              ]
+            },
+          },
+        };
+        setNewChart(chartSeriesData);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, []);
 
   //assignments created small chart
   const [currentHours, setCurrentHours] = React.useState({
@@ -262,7 +312,7 @@ function Dashboard() {
         <Grid
           item
           xs={12}
-          md={8}
+          md={12}
           lg={6.5}
           sx={{
             display: "flex",
@@ -272,7 +322,8 @@ function Dashboard() {
             borderRadius: 3,
             marginLeft: 2,
             marginRight: 2,
-            overflow:'hidden'
+            overflow:'hidden',
+            marginTop:2
           }}
         >
           <Box sx={{}}>
@@ -323,13 +374,13 @@ function Dashboard() {
             </Box>
           </Box>
           <Box>
-            <img src={welcome}></img>
+            <img className="example" src={welcome}></img>
           </Box>
         </Grid>
         <Grid
           item
           xs={12}
-          md={6}
+          md={5.5}
           lg={2}
           sx={{
             display: "flex",
@@ -337,6 +388,7 @@ function Dashboard() {
             border: "2px solid #ecf2ff",
             borderRadius: 3,
             marginRight: 1,
+            marginTop:2,
             // ":hover": { backgroundColor: "#ecf2ff", cursor: "pointer" },
             boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
           }}
@@ -365,6 +417,7 @@ function Dashboard() {
         <Grid
           item
           xs={12}
+          sm={12}
           md={6}
           lg={3.1}
           sx={{
@@ -372,11 +425,12 @@ function Dashboard() {
             flexDirection: "row",
             border: "2px solid #ecf2ff",
             borderRadius: 3,
+            marginTop:2,
             // ":hover": { backgroundColor: "#ecf2ff", cursor: "pointer" },
             boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
           }}
         >
-          <Box>
+          <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
             <Chart
               options={currentHours.options}
               series={currentHours.series}
@@ -421,7 +475,7 @@ function Dashboard() {
                   fontSize: 20,
                 }}
               >
-                700+
+                {counts.studentsCount}+
               </p>
             </Box>
           </Box>
@@ -455,7 +509,7 @@ function Dashboard() {
                   fontSize: 20,
                 }}
               >
-                98+
+                {counts.teachersCount}+
               </p>
             </Box>
           </Box>
@@ -489,7 +543,7 @@ function Dashboard() {
                   fontSize: 20,
                 }}
               >
-                200+
+                {counts.coursesCount}+
               </p>
             </Box>
           </Box>
@@ -523,7 +577,7 @@ function Dashboard() {
                   fontSize: 20,
                 }}
               >
-                500+
+                {counts.assignmentsCount}+
               </p>
             </Box>
           </Box>
@@ -557,7 +611,7 @@ function Dashboard() {
                   fontSize: 20,
                 }}
               >
-                700+
+                {counts.submissionsCount}+
               </p>
             </Box>
           </Box>
@@ -591,7 +645,7 @@ function Dashboard() {
                   fontSize: 20,
                 }}
               >
-                100+
+                 {counts.submissionsCount}+
               </p>
             </Box>
           </Box>
@@ -603,25 +657,125 @@ function Dashboard() {
 
       <Grid container spacing={2} sx={{marginTop:1}}>
         <Grid item xs={12} md={6} lg={4}>
-          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,height:'60vh',overflow:'hidden',':hover':{overflowY:'scroll'},borderRadius:2}}>
+          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,minHeight:'62vh',overflow:'hidden',':hover':{overflowY:'scroll'},borderRadius:2}}>
             <p style={{marginTop:5,fontWeight:'bolder'}}>Popular Courses</p>
             <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
-            {/* <Box sx={{ flexGrow: 1, marginBottom:3 }}>
-              <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                <p style={{marginTop:10, marginBottom:10,fontSize:16}}>Good</p>
-                <p style={{marginTop:10, marginBottom:10,fontSize:16,fontWeight:'bold'}}>80%</p>
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:5}} src={cpp}></img>
               </Box>
-              <BorderLinearProgress variant="determinate" value={80} sx={{  [`& .${linearProgressClasses.bar}`]: {
-                borderRadius: 5,
-                backgroundColor: theme.palette.mode === 'light' ? '#525ce5' : '#308fe8',
-              }}}/>
-            </Box> */}
+              <Box sx={{marginLeft:2}}>
+                <p style={{marginBottom:0,marginTop:5, fontWeight:'bold'}}>CPP Basics</p>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <CiTimer style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}>3 Hours</p>
+                    </Box>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, marginLeft:2}}>
+                      <MdLanguage style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}> Cpp</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>  
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:5}} src={python}></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <p style={{marginBottom:0,marginTop:5, fontWeight:'bold'}}>Introduction to Python</p>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <CiTimer style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}>4 Hours</p>
+                    </Box>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, marginLeft:2}}>
+                      <MdLanguage style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}>Python</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>  
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:5}} src={c}></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <p style={{marginBottom:0,marginTop:5, fontWeight:'bold'}}>C Basics</p>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <CiTimer style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}>3 Hours</p>
+                    </Box>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, marginLeft:2}}>
+                      <MdLanguage style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}> C lang</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>  
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:5}} src={java}></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <p style={{marginBottom:0,marginTop:5, fontWeight:'bold'}}>Java Coding</p>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <CiTimer style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}>4 Hours</p>
+                    </Box>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, marginLeft:2}}>
+                      <MdLanguage style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}> Java</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>  
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:5}} src={cpp}></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <p style={{marginBottom:0,marginTop:5, fontWeight:'bold'}}>CPP Basics</p>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <CiTimer style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}>3 Hours</p>
+                    </Box>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, marginLeft:2}}>
+                      <MdLanguage style={{marginTop:3, marginRight:3}}/>
+                      <p style={{margin:0, color:'grey'}}> CPP</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>  
           </Box>
         </Grid>
 
 
         <Grid item xs={12} md={6} lg={4}>
-          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,borderRadius:2,height:'60vh'}}>
+          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,borderRadius:2,minHeight:'60vh'}}>
             <p style={{marginTop:5,fontWeight:'bolder'}}>Students Overview</p>
             <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
             <Box sx={{ flexGrow: 1, marginBottom:3 }}>
@@ -689,21 +843,109 @@ function Dashboard() {
 
 
         <Grid item xs={12} md={6} lg={4}>
-          <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,height:'60vh',overflow:'hidden',borderRadius:2}}>
-            <p style={{marginTop:5,fontWeight:'bolder'}}>Famous Instructors</p>
+        <Box sx={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',padding:2,minHeight:'62vh',overflow:'hidden',':hover':{overflowY:'scroll'},borderRadius:2}}>
+            <p style={{marginTop:5,fontWeight:'bolder'}}>Famous Instructor</p>
             <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
-            <Box sx={{ flexGrow: 1, marginBottom:3 }}>
-              {/* <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                <p style={{marginTop:10, marginBottom:10,fontSize:16}}>Good</p>
-                <p style={{marginTop:10, marginBottom:10,fontSize:16,fontWeight:'bold'}}>80%</p>
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:30}} src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"></img>
               </Box>
-              <BorderLinearProgress variant="determinate" value={80} sx={{  [`& .${linearProgressClasses.bar}`]: {
-                borderRadius: 5,
-                backgroundColor: theme.palette.mode === 'light' ? '#525ce5' : '#308fe8',
-              }}}/> */}
+              <Box sx={{marginLeft:2}}>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <p style={{marginBottom:0, marginTop:5, fontWeight:'bold', marginRight:75}}>Lilian Blake</p>
+                  <p style={{marginBottom:0, marginTop:5, color:'grey', fontSize:14}}>Daily: 2 Hours</p>
+                </Box>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <p style={{margin:0, color:'grey',fontSize:14}}>Web Designer</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
             </Box>
-             
-            
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>  
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:30}} src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <p style={{marginBottom:0, marginTop:5, fontWeight:'bold', marginRight:75}}>Lilian Blake</p>
+                  <p style={{marginBottom:0, marginTop:5, color:'grey', fontSize:14}}>Daily: 2 Hours</p>
+                </Box>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <p style={{margin:0, color:'grey',fontSize:14}}>Web Designer</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr> 
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:30}} src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <p style={{marginBottom:0, marginTop:5, fontWeight:'bold', marginRight:75}}>Lilian Blake</p>
+                  <p style={{marginBottom:0, marginTop:5, color:'grey', fontSize:14}}>Daily: 2 Hours</p>
+                </Box>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <p style={{margin:0, color:'grey',fontSize:14}}>Web Designer</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr> 
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:30}} src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <p style={{marginBottom:0, marginTop:5, fontWeight:'bold', marginRight:75}}>Lilian Blake</p>
+                  <p style={{marginBottom:0, marginTop:5, color:'grey', fontSize:14}}>Daily: 2 Hours</p>
+                </Box>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <p style={{margin:0, color:'grey',fontSize:14}}>Web Designer</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr> 
+            <Box sx={{ flexGrow: 1, marginBottom:1 , display:'flex', flexDirection:'row'}}>
+              <Box sx={{marginTop:1}}>
+                <img style={{height:45, width:45, borderRadius:30}} src="https://demos.creative-tim.com/material-dashboard-react/static/media/bruce-mars.8a606c4a6dab54c9ceff.jpg"></img>
+              </Box>
+              <Box sx={{marginLeft:2}}>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <p style={{marginBottom:0, marginTop:5, fontWeight:'bold', marginRight:75}}>Lilian Blake</p>
+                  <p style={{marginBottom:0, marginTop:5, color:'grey', fontSize:14}}>Daily: 2 Hours</p>
+                </Box>
+                <Box sx={{display:'flex', flexDirection:'row'}}>
+                  <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex', flexDirection:'row', marginTop:0.5, }}>
+                      <p style={{margin:0, color:'grey',fontSize:14}}>Web Designer</p>
+                    </Box>
+                  </Box>
+  
+                </Box>
+              </Box>
+            </Box>
+            <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr> 
           </Box>
         </Grid>
       </Grid>
@@ -713,7 +955,7 @@ function Dashboard() {
 
 
       <Grid container spacing={1} sx={{marginTop:3,}}>
-        <Grid item xs={12} md={8} lg={6.8} sx={{border:'2px solid #ecf2ff', borderRadius:2,marginRight:2, boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
+        <Grid className="charts" item xs={12} md={12} lg={6.8} sx={{marginTop:2,border:'2px solid #ecf2ff', borderRadius:2,marginRight:2, boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
           <Box>
             <Chart
               options={newChart.options}
@@ -724,7 +966,7 @@ function Dashboard() {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} md={8} lg={5} sx={{border:'2px solid #ecf2ff',  borderRadius:2,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
+        <Grid className="charts" item xs={12} md={12} lg={5} sx={{marginTop:2,border:'2px solid #ecf2ff',  borderRadius:2,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
           <Box sx={{}}>
             <Chart
               options={pieChart.options}
@@ -739,7 +981,7 @@ function Dashboard() {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={12}>
-          <Box sx={{height:'73vh',borderRadius:2,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',marginTop:3,marginBottom:2,padding:2, overflow:'hidden'}}>
+          <Box sx={{height:'93vh',borderRadius:2,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',marginTop:3,marginBottom:2,padding:2, overflow:'hidden'}}>
             <p style={{marginTop:5,fontWeight:'bolder'}}>Courses Overview</p>
             <hr style={{borderTop: '0.1px solid 	#F0F0F0'}}></hr>
             <Box sx={{ flexGrow: 1, marginBottom:3 }}>
