@@ -219,12 +219,17 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
     return(
      <>
       <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
-        <Tabs color="secondary" sx={{color:theme.palette.secondary.main}} value={value} onChange={handleChange} aria-label="icon label tabs example">
-          <Tab icon={<FcViewDetails fontSize={25} />} label="Assignment Details" sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
-          <Tab icon={<FcQuestions fontSize={25} />} label="Questions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
-          <Tab icon={<FcAcceptDatabase fontSize={25}/>} label="Submissions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
-          <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Test Cases" sx={{color:theme.palette.secondary.main, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
-        </Tabs>
+      <Grid container spacing={2}>
+          <Grid xs={12} sm={12} md={12} lg={12}>
+          <Tabs variant="scrollable"
+  scrollButtons allowScrollButtonsMobile color="secondary" sx={{color:theme.palette.secondary.main}} value={value} onChange={handleChange} aria-label="icon label tabs example">
+            <Tab icon={<FcViewDetails fontSize={25} />} label="Assignment Details" sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
+            <Tab icon={<FcQuestions fontSize={25} />} label="Questions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
+            <Tab icon={<FcAcceptDatabase fontSize={25}/>} label="Submissions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
+            <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Test Cases" sx={{color:theme.palette.secondary.main, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
+          </Tabs>
+          </Grid>
+      </Grid>
       </Box>
       <hr style={{borderTop: '0.1px solid 	#F0F0F0', width:'99%', margin:0}}></hr>
 
@@ -249,11 +254,11 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
         <Box>
           <Grid container spacing={2}>
           <Grid xs={12} md={12} lg={12}>
-            <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between', marginTop:3,marginLeft:2}}>
-              <Box sx={{display:'flex', flexDirection:'row', cursor:'pointer'}}>
+            <Box sx={{display:'flex', flexDirection:'row',justifyContent:'flex-end', marginTop:3,marginLeft:2}}>
+              {/* <Box sx={{display:'flex', flexDirection:'row', cursor:'pointer'}}>
                 <RiArrowLeftSLine fontSize={20} style={{color:theme.palette.secondary.main}}/>
                 <p style={{marginTop:0, marginLeft:8, fontSize:16, color:theme.palette.secondary.main, fontWeight:'bold'}}>Back</p>
-              </Box>
+              </Box> */}
               <Box>
                 {
                 isTeacher && (
@@ -288,7 +293,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
           </Grid>
 
           <Grid container spacing={2}>
-            <Grid xs={12} md={12} lg={7}>
+            <Grid xs={12} sm={12} md={12} lg={7}>
               <Box sx={{marginTop:3, marginLeft:2}}>
               <Box>
               <Box sx={{display:'flex', flexDirection:'row',justifyContent:'space-between'}}>

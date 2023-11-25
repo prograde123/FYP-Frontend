@@ -239,7 +239,7 @@ function SignIn() {
                     </Box>
                 </Box>
             </Box>
-            <Box bgcolor={theme.palette.secondary.main} sx={{  width: '58%' }} >
+            <Box className="signin" bgcolor={theme.palette.secondary.main} sx={{  width: '58%' }} >
                 <Box sx={{ display: 'flex', flexDirection: 'row',justifyContent: 'flex-end' }}>
                 <CircleGrid
                     color="#696969"

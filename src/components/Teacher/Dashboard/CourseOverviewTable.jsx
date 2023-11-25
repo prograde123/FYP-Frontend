@@ -1,148 +1,250 @@
-import * as React from 'react';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import { useTheme } from "@emotion/react";
+import SearchBar from "@mkyy/mui-search-bar";
+import { useEffect, useState } from "react";
 import {
   DataGrid,
-  gridPageCountSelector,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
-} from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
-import { styled } from '@mui/material/styles';
-import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
+  GridToolbarContainer,
+  GridActionsCellItem,
+} from "@mui/x-data-grid";
+import { randomCreatedDate, randomId } from "@mui/x-data-grid-generator";
+import { useNavigate } from "react-router-dom";
+import { TbEdit } from "react-icons/tb";
+import { LuView } from "react-icons/lu";
+import { VscNewFile } from "react-icons/vsc";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { Paper } from "@mui/material";
+import http from "../../../../Axios/axios";
+import BeatLoader from "react-spinners/BeatLoader";
 
-function customCheckbox(theme) {
-  return {
-    '& .MuiCheckbox-root svg': {
-      width: 16,
-      height: 16,
-      backgroundColor: 'transparent',
-      border: `1px solid ${
-        theme.palette.mode === 'light' ? '#d9d9d9' : 'rgb(67, 67, 67)'
-      }`,
-      borderRadius: 2,
-    },
-    '& .MuiCheckbox-root svg path': {
-      display: 'none',
-    },
-    '& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg': {
-      backgroundColor: '#1890ff',
-      borderColor: '#1890ff',
-    },
-    '& .MuiCheckbox-root.Mui-checked .MuiIconButton-label:after': {
-      position: 'absolute',
-      display: 'table',
-      border: '2px solid #fff',
-      borderTop: 0,
-      borderLeft: 0,
-      transform: 'rotate(45deg) translate(-50%,-50%)',
-      opacity: 1,
-      transition: 'all .2s cubic-bezier(.12,.4,.29,1.46) .1s',
-      content: '""',
-      top: '50%',
-      left: '39%',
-      width: 5.71428571,
-      height: 9.14285714,
-    },
-    '& .MuiCheckbox-root.MuiCheckbox-indeterminate .MuiIconButton-label:after': {
-      width: 8,
-      height: 8,
-      backgroundColor: '#1890ff',
-      transform: 'none',
-      top: '39%',
-      border: 0,
-    },
+const initialRows = [
+  {
+    id: randomId(),
+    imageUrl: "https://img.freepik.com/free-icon/snakes_318-368381.jpg",
+    name: "Introduction to Computers",
+    instructor: "Ayesha Khan",
+    creditHours: 4,
+    language: "Python",
+    dateCreated: randomCreatedDate(),
+    dateEnding: randomCreatedDate(),
+  },
+];
+
+function EditToolbar(props) {
+  const { setRows, setRowModesModel } = props;
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const [row, setRow] = React.useState(initialRows);
+  const [searched, setSearched] = React.useState("");
+
+  const requestSearch = (searchedVal) => {
+    const filteredRows = initialRows.filter((row) => {
+      return row.name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
   };
-}
-
-const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-  border: 0,
-  color:
-    theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
-  fontFamily: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    '"Segoe UI"',
-    'Roboto',
-    '"Helvetica Neue"',
-    'Arial',
-    'sans-serif',
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(','),
-  WebkitFontSmoothing: 'auto',
-  letterSpacing: 'normal',
-  '& .MuiDataGrid-columnsContainer': {
-    backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
-  },
-  '& .MuiDataGrid-iconSeparator': {
-    display: 'none',
-  },
-  '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-    borderRight: `1px solid ${
-      theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-    }`,
-  },
-  '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
-    borderBottom: `1px solid ${
-      theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-    }`,
-  },
-  '& .MuiDataGrid-cell': {
-    color:
-      theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.65)',
-  },
-  '& .MuiPaginationItem-root': {
-    borderRadius: 0,
-  },
-  ...customCheckbox(theme),
-}));
-
-function CustomPagination() {
-  const apiRef = useGridApiContext();
-  const page = useGridSelector(apiRef, gridPageSelector);
-  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+  const cancelSearch = () => {
+    setSearched("");
+    requestSearch(searched);
+  };
 
   return (
-    <Pagination
-      color="primary"
-      variant="outlined"
-      shape="rounded"
-      page={page + 1}
-      count={pageCount}
-      // @ts-expect-error
-      renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
-      onChange={(event, value) => apiRef.current.setPage(value - 1)}
-    />
+    <GridToolbarContainer
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginRight: 4,
+      }}
+    >
+      
+    </GridToolbarContainer>
   );
 }
 
-const PAGE_SIZE = 7;
+EditToolbar.propTypes = {
+  setRowModesModel: PropTypes.func.isRequired,
+  setRows: PropTypes.func.isRequired,
+};
 
-export default function AntDesignGrid() {
-  const { data } = useDemoData({
-    dataSet: 'Commodity',
-    rowLength: 10,
-    maxColumns: 10,
-  });
+export default function CoursesListTable() {
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const [courses, setCourses] = useState([]);
+  const [rows, setRows] = React.useState(courses);
+  const [rowModesModel, setRowModesModel] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
+  
 
-  const [paginationModel, setPaginationModel] = React.useState({
-    pageSize: PAGE_SIZE,
-    page: 0,
-  });
+  const processRowUpdate = (newRow) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setCourses(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  async function getCourses() {
+    const user = JSON.parse(localStorage.getItem("User"));
+    console.log(user);
+    try {
+      setLoading(true);
+      const response = await http.get("/course/coursesList/" + user._id);
+      setCourses(response.data.courses);
+      console.log(response.data.courses);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function deleteCourse(id) {
+    try {
+      const response = await http.delete("/course/deleteCourse/" + id);
+      getCourses();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function updateCourse(id) {
+    try {
+      const response = await http.patch("/course/updateCourse/" + id);
+      const newCourses = rows.filter((item) => item._id !== id);
+      console.log(response.data);
+      setCourses(newCourses);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getCourses();
+  }, []);
+
+  const columns = [
+    {
+      field: "image",
+      headerName: "Image",
+      renderCell: (params) => (
+        <img
+          src={params.row.image}
+          style={{ width: 50, height: 50, borderRadius: "30%" }}
+          onClick={() => {
+            navigate("/Teacher/CourseDetails/" + id, {
+              state: { course: courses.find((c) => c._id === id) },
+            });
+          }}
+        />
+      ),
+    },
+    { field: "name", headerName: "Course Name", width: 220 },
+    {
+      field: "teacher.user.fullName",
+      valueGetter: (params) => params.row.teacher.user.fullName,
+      headerName: "Instructor",
+      width: 150,
+    },
+    { field: "language", headerName: "Language", width: 120 },
+    {
+      field: "startingDate",
+      headerName: "Started At",
+      width: 140,
+    },
+    {
+      field: "endingDate",
+      headerName: "Ending At",
+      width: 140,
+    },
+    { field: "creditHours", headerName: "Credit Hours", type: "number" },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      width: 180,
+      cellClassName: "actions",
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            icon={
+              <LuView
+                style={{
+                  color: theme.palette.secondary.main,
+                  fontSize: 25,
+                  ":hover": { fontSize: 30 },
+                }}
+              />
+            }
+            label="View"
+            onClick={() => {
+              navigate("/Teacher/CourseDetails/" + id, {
+                state: { course: courses.find((c) => c._id === id) },
+              });
+            }}
+          />,
+          
+        ];
+      },
+    },
+  ];
 
   return (
-    <div style={{ height: 480, width: '100%',}}>
-      <StyledDataGrid
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={[PAGE_SIZE]}
-        slots={{
-          pagination: CustomPagination,
-        }}
-        {...data}
-      />
-    </div>
+    <Box sx={{ marginBottom: 5, height: "83vh", width: "100%" }}>
+      {loading ? (
+        <Box
+          sx={{
+            backgroundColor: "white",
+            height: "80vh",
+            width: "160vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BeatLoader
+            color="#1665b5"
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </Box>
+      ) : (
+        <DataGrid
+          sx={{
+            backgroundColor: theme.palette.primary.background,
+            "& .MuiDataGrid-cell:hover": {
+              color: theme.palette.secondary.main,
+              
+            },
+
+            height: "83vh",
+            fontFamily:'Nunito, sans-serif',
+                      }}
+          rows={courses}
+          rowHeight={80}
+          columns={columns}
+          getRowId={(row) => row._id}
+          rowModesModel={rowModesModel}
+          processRowUpdate={processRowUpdate}
+          slots={{
+            toolbar: EditToolbar,
+          }}
+          slotProps={{
+            toolbar: { setRows, setRowModesModel },
+          }}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 6, page: 0 },
+            },
+          }}
+          options={{
+            search: true,
+          }}
+        />
+      )}
+    </Box>
   );
 }
