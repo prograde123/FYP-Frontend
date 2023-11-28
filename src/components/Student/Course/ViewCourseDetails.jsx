@@ -134,6 +134,8 @@ function ViewCourseDetails({ courses }) {
         <Tabs
           orientation="vertical"
           variant="scrollable"
+          scrollButtons 
+          allowScrollButtonsMobile
           value={value}
           onChange={handleChange}
           aria-label="Vertical tabs example"

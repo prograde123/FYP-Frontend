@@ -22,8 +22,8 @@ const StudentBody = () => {
     <ThemeProvider theme={newtheme}>
     <Box sx={{backgroundColor: newtheme.palette.primary.back}}>
         <DrawerAppBar/>
-        <Box component="main" sx={{
-             mt:'7%'
+        <Box className='nav2' component="main" sx={{
+             
         }}>
           <Routes>
             <Route path="/" element={<CourseCard />} />

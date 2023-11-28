@@ -30,10 +30,11 @@ export default function Footer() {
         backgroundColor: newtheme.palette.secondary.footer,
         color: newtheme.palette.primary.background,
         p: 6,
+        overflowX:'hidden'
       }}
     >
-      <Container maxWidth="lg">
-        <Grid container spacing={5}>
+      <Container>
+        <Grid container spacing={2}>
           <Grid item xs={8} sm={4} data-aos="fade-right">
             <Typography variant="h4" sx={{fontWeight:'bold',color: newtheme.palette.primary.background}}  gutterBottom>
               ProGrade
@@ -56,11 +57,6 @@ export default function Footer() {
             <Link href="#"  sx={{color: newtheme.palette.primary.background,textDecoration:'none' ,'&:hover': {
                 color:newtheme.palette.secondary.background ,
               }}}>
-              <Typography sx={{marginTop:'7%',marginBottom:'5%',marginLeft:'3%'}}>Assembly </Typography>
-            </Link>
-            <Link href="#"  sx={{color: newtheme.palette.primary.background,textDecoration:'none' ,'&:hover': {
-                color:newtheme.palette.secondary.background ,
-              }}}>
               <Typography sx={{marginTop:'7%',marginBottom:'5%',marginLeft:'3%'}}>Cpp</Typography>
             </Link>
             <Link href="#"  sx={{color: newtheme.palette.primary.background,textDecoration:'none' ,'&:hover': {
@@ -71,12 +67,12 @@ export default function Footer() {
             <Link href="#"  sx={{color: newtheme.palette.primary.background,textDecoration:'none' ,'&:hover': {
                 color:newtheme.palette.secondary.background ,
               }}}>
-              <Typography sx={{marginTop:'7%',marginBottom:'5%',marginLeft:'3%'}}>C</Typography>
+              <Typography sx={{marginTop:'7%',marginBottom:'5%',marginLeft:'3%'}}>C Language</Typography>
             </Link>
             <Link href="#"  sx={{color: newtheme.palette.primary.background,textDecoration:'none' ,'&:hover': {
                 color:newtheme.palette.secondary.background ,
               }}}>
-              <Typography sx={{marginLeft:'3%'}}>CSharp</Typography>
+              <Typography sx={{marginLeft:'3%'}}>R Language</Typography>
             </Link>
             
           </Grid>
