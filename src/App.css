@@ -7,6 +7,32 @@ p{
   .example {display: none;}
 }
 
+@media only screen and (max-width: 600px) {
+  .nav {display: none;}
+}
+
+@media only screen and (max-width: 664px) {
+  .logo {display: none;}
+}
+
+@media only screen and (max-width: 795px) {
+  .nav2 {  margin-top: 19%;}
+}
+
+@media only screen and (min-width: 796px) {
+  .nav2 {
+    margin-top: 10%; /* Apply 10% margin-top for screens larger than 795px */
+  }
+}
+
+@media only screen and (min-width: 1016px) {
+  .nav2 {
+    margin-top: 8%; /* Apply 10% margin-top for screens larger than 795px */
+  }
+}
+
+
+
 @media only screen and (max-width: 700px) {
   .signin {display: none; width: 0%;}
 }

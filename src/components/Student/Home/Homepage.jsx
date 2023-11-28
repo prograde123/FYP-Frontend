@@ -10,6 +10,7 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import BeatLoader from "react-spinners/BeatLoader";
 import Aos from "aos";
 import Grid from "@mui/material/Grid";
+import { BsBootstrapReboot } from "react-icons/bs";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
 import http from "../../../../Axios/axios";
@@ -73,6 +74,7 @@ function Homepage() {
           marginBottom: 5,
           display: "flex",
           flexDirection: "column",
+          width:'100%'
         }}
       >
         <Box
@@ -141,6 +143,9 @@ function Homepage() {
             color="secondary"
             sx={{ color: newtheme.palette.secondary.footer,fontFamily: 'Nunito, sans-serif', }}
             value={value}
+            variant="scrollable"
+            scrollButtons 
+            allowScrollButtonsMobile
             onChange={handleChange}
             aria-label="icon label tabs example"
           >
@@ -167,8 +172,8 @@ function Homepage() {
               sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 ,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder' }}
             />
             <Tab
-              icon={<TbBrandCSharp fontSize={25} />}
-              label="C Sharp"
+              icon={<BsBootstrapReboot fontSize={25} />}
+              label="R Language"
               sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 ,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder' }}
             />
             <Tab
@@ -176,11 +181,11 @@ function Homepage() {
               label="C Language"
               sx={{ color: newtheme.palette.secondary.footer, marginRight: 7,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder'  }}
             />
-            <Tab
+            {/* <Tab
               icon={<SiAssemblyscript fontSize={25} />}
               label="Masm / Nasm"
               sx={{ color: newtheme.palette.secondary.footer, marginRight: 7,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder'  }}
-            />
+            /> */}
           </Tabs>
         </Box>
         {loading ? (

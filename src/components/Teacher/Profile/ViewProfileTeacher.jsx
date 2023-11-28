@@ -155,7 +155,7 @@ function ViewProfile() {
              backgroundImage: "url('https://png.pngtree.com/background/20210710/original/pngtree-blue-technology-world-telecommunication-day-banner-background-picture-image_1057076.jpg')", width:'100%',
                 backgroundRepeat: "no-repeat", }}>
                 <img style={{borderRadius:12, border:'5px solid white',position:'relative', top:140, marginLeft:30}}
-                src={profileData.profilePic? profileData.profilePic:profile} height={130}></img>
+                src={profileData.profilePic? profileData.profilePic:profile} height={130} width={130}></img>
              </Box>
              <Box sx={{backgroundColor:theme.palette.primary.background,height:'20vh', marginLeft:23,marginRight:5}}>
                 <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>

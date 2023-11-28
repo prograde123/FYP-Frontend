@@ -149,74 +149,26 @@ export default function DrawerAppBar() {
               <MenuIcon />
             </IconButton>
             <Typography  onClick={() => { navigate('/Student/Home') }} component="div" sx={{cursor:'pointer', flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center',fontSize:30, fontFamily:'Dela Gothic One' }} data-aos="fade-right">
-               <img style={{marginRight:10}} height={55} width={55} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
+               <img className='logo' style={{marginRight:10}} height={55} width={55} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
               <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif',}}>PROGRADE</span>
             </Typography>
             
 
             <div style={{flexGrow:1}} data-aos="fade-left">
-            <div style={{fontFamily: 'Nunito, sans-serif'}}>
-                <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder', marginRight: 2,fontFamily: 'Nunito, sans-serif', ":hover": { borderBottom: '4px solid #1665b5' } }}>
-                  Home
-                </Button>
-                <Button className="fontlink" onClick={() => { navigate('/Student/AllCourses') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
-                 All Courses
-                </Button>
-               
-                <Button
-                
-                aria-haspopup="true"
-                onMouseEnter={handleMenuOpenAssignments}
-                
-                sx={{color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5'}}}
-                >
-                Assignments
-                </Button>
-                <Menu
-                anchorEl={anchorElAssignments}
-                open={Boolean(anchorElAssignments)}
-                onClose={handleMenuCloseAssignments}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                
-                elevation={0}
-                sx={{ zIndex: 1200 }} 
-                
-                MenuListProps={{onMouseLeave: handleMenuCloseAssignments}}
-                >
-                        <MenuItem
-                        onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}>All Assignments</MenuItem>
-                        <MenuItem onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
-                        >Java</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
-                        >C++</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
-                        >Python</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
-                        >C#</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
-                        >Nasm/Masm</MenuItem>
-                        <MenuItem  onClick={handleMenuCloseAssignments} sx={{fontFamily: 'Nunito, sans-serif',}}
-                        >C</MenuItem>
-                        
-                </Menu>
-                <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
-                  Reports
-                </Button>
-                </div>
-                
-                
-
+              <div className='nav' style={{fontFamily: 'Nunito, sans-serif'}}>
+                  <Button className="fontlink" onClick={() => { navigate('/Student/Home') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder', marginRight: 2,fontFamily: 'Nunito, sans-serif', ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                    Home
+                  </Button>
+                  <Button className="fontlink" onClick={() => { navigate('/Student/AllCourses') }}  sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                  All Courses
+                  </Button>
+                  
+                  <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                    Reports
+                  </Button>
+              </div>
             </div>
-            <IconButton sx={{color:newtheme.palette.primary.main,marginRight:2}}>
-                        <NotificationsActiveIcon sx={{color:newtheme.palette.secondary.footer}}/>
-                </IconButton>
+           
                  <IconButton sx={{color:newtheme.palette.primary.main}}
                     onMouseEnter={handleMenuOpenProfile}
                 >

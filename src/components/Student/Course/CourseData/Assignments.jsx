@@ -94,6 +94,9 @@ const Assignments = () => {
             <Tabs
               color="secondary"
               sx={{}}
+              variant="scrollable"
+              scrollButtons 
+              allowScrollButtonsMobile
               value={value}
               onChange={handleChange}
               aria-label="icon label tabs example"
