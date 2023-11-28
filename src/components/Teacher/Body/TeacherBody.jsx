@@ -14,12 +14,10 @@ import ViewProfile from "../Profile/ViewProfileTeacher";
 import CreateCourseContent from "../Course/AddCourseContent";
 import CourseDetails from "../Course/CourseDetails";
 import { FaBars } from 'react-icons/fa';
-
 import AddAssignment from "../Assignment/AddAssignment";
 import ViewSubmittedAssigList from "../Assignment/ViewSubmittedAssigList";
-
+import EditedAddQuestion from "../Assignment/Components/EditedAddQuestion";
 import ViewUploadedAssigList from "../Assignment/ViewUploadedAssigList";
-
 import ViewUploadedAssig from "../Assignment/ViewUploadedAssignment";
 import { CiBoxList } from "react-icons/ci";
 import PDFViewer from "../Assignment/pdf";
@@ -91,6 +89,12 @@ export default function TeacherBody() {
                 path="AddAssignment/:id"
                 element={<AddAssignment />}
               ></Route>
+              <Route
+              path="EditAddQuestion/:courseID/:assignemntID"
+              element={<EditedAddQuestion />}
+              >
+
+              </Route>
               <Route
                 path="ViewSubmittedAssigList"
                 element={<ViewSubmittedAssigList />}

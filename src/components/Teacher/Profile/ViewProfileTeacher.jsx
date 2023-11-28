@@ -24,7 +24,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 import TextField from '@mui/material/TextField';
-import { getProfile } from '../../../../Axios/axiosall';
+import { getProfile, updateProfile } from '../../../../Axios/axiosall';
 import profile from '../../../../src/assets/profile.png';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -106,6 +106,10 @@ function ViewProfile() {
         setProfileData(profile)   
         setLoading(false) 
     }
+    const handleEditProfile = async () => {
+        updateProfile( null, name, email, 'Teacher',  '/', null)
+        fetchProfile()
+    }
 
   useEffect(() => {
     fetchProfile()
@@ -183,8 +187,7 @@ function ViewProfile() {
       
             <Box sx={{ width: '100%', marginTop:3 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <Tabs variant="scrollable"
-  scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs example" sx={{color:theme.palette.secondary.main}}>
+                  <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs example" sx={{color:theme.palette.secondary.main}}>
                     <Tab icon={<ImProfile size={20}/>} iconPosition="start" sx={{fontWeight:'bold'}} label="Profile Information" {...a11yProps(0)} />
                     <Tab icon={<RiLockPasswordLine size={20}/>} iconPosition="start" sx={{fontWeight:'bold'}} label="Change Password" {...a11yProps(1)} />
                   </Tabs>
@@ -293,7 +296,11 @@ function ViewProfile() {
                                 </Box>
                                 <br />
                                 <Box>
-                                    <p style={{ fontWeight: 'bold', margin:0, }}>Profile Picture*<Button variant="outlined" component="label" color='secondary' sx={{ width: '100%', padding: 0.5, borderStyle: 'dashed', borderRadius: 2 }}><Button variant="dashed" component="label" sx={{ color: '#999999' }}>
+                                    <p style={{ fontWeight: 'bold', margin:0, }}>
+                                      Profile Picture*
+                                      <Button variant="outlined" component="label" color='secondary' 
+                                      sx={{ width: '100%', padding: 0.5, borderStyle: 'dashed', borderRadius: 2 }}>
+                                        <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
                                         Click to browse or <br />
                                         Drag and Drop Files
                                         <input hidden accept="file/*" multiple type="file" />
@@ -303,7 +310,11 @@ function ViewProfile() {
                                 <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
                                   <Button
                                       type='submit'
-                                      variant="contained" color="secondary"  sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', marginTop: 1,borderRadius:2 }}>
+                                      variant="contained" color="secondary" 
+                                       sx={{ width: '100%', padding: 2, fontSize: 16, 
+                                       fontWeight: 'bold', marginTop: 1,borderRadius:2 }}
+                                       onClick={()=>{handleEditProfile}}
+                                       >
                                       Save Changes
                                   </Button>
                                 </Box>
