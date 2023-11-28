@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, TextField, Select, MenuItem, InputLabel, FormControl, Backdrop } from '@mui/material';
 import  Box from '@mui/material/Box';
 import { useTheme } from '@emotion/react';
 import Tabs from '@mui/material/Tabs';
@@ -13,9 +13,9 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { delAssignment } from '../../../../Axios/assigAxios';
 import { useParams } from 'react-router-dom';
+import { VscNewFile } from "react-icons/vsc";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Backdrop from '@mui/material/Backdrop';
 import Grid from "@mui/material/Grid";
 import {RiArrowLeftSLine} from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
@@ -74,6 +74,8 @@ const ViewUploadedTeacherAssig = ()=> {
     const [assig,setAssig] = React.useState({})
     const [file,setFile] = React.useState()
     const [isAssignmentViewed, setAssignmentViewed] = React.useState(false);
+    const [isAssignmentViewed1, setAssignmentViewed1] = React.useState(false);
+
     const [questions, setQuestions] = React.useState([]);
     const [testCases, settestCases] = React.useState([]);
     const [isTeacher, setIsTeacher] = React.useState(false);
@@ -87,6 +89,14 @@ const ViewUploadedTeacherAssig = ()=> {
     const [loading, setLoading] = React.useState(false);
     const [noCourses, setNoCourses] = React.useState(false);
 
+    const [qid , setqid] = React.useState(null)
+    const [isArray, setisArray] = React.useState(false)
+
+    const [newTestCase, setNewTestCase] = React.useState({
+      input: '',
+      output: '',
+      arraySize : null
+    });
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -157,10 +167,15 @@ useEffect(() => {
       
     }
 }, [Assignmentid]); 
+
     
   const handleAssignmentOpen = () => setAssignmentViewed(true);
 
   const handleAssignmentClose = () => setAssignmentViewed(false);
+
+  const handleAssignmentOpen1 = () => setAssignmentViewed1(true);
+
+  const handleAssignmentClose1 = () => setAssignmentViewed1(false);
 
     const handleDeleteClick = (id) => () => {
         delAssignment(id, cid)
@@ -169,21 +184,11 @@ useEffect(() => {
             navigate(url);
           })
           .catch((error) => {
-            // Handle error if needed
             console.error(error);
           });
       };
       
-    //useeffect m usestate ayegi
-    //1 use state to check role and render screen acc to it
     const theme = useTheme()
-
-    // const[AssigNo,setAssigNo] = React.useState('')
-    // const[Description,setDescription] = React.useState('assig.description')
-    // const[uploadDate,setuploadDate] = React.useState('3/10/2023')
-    // const[dueDate,setdueDate] = React.useState('7/10/2023')
-    // const[marks,setMarks] = React.useState('10')
-    // const[file,setFile] = React.useState('file')
     const uploadDate = assig.uploadDate;
     const udate = new Date(uploadDate);
 
@@ -214,6 +219,39 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
         link.download = 'assignment.pdf';
         link.click();
       };
+
+      const AddTestCaseInQuestion = async(qid,input,output,arraySize)=>{
+          const res = await http.post('/assignment/AddTestCaseInQuestion' , 
+          {
+            qid,input,output,arraySize
+          })
+          if(res.status === 200){
+            alert('TEst Case added successfully')
+            navigate(0)
+          }
+      }
+
+      const captureThisQuestion = (id , Arr) => {
+        setqid(id)
+        setisArray(Arr)
+        setAssignmentViewed1(true)
+      }
+      const addTestCase = async () => {
+        console.log(qid)
+        console.log(newTestCase)
+        await AddTestCaseInQuestion(
+          qid , 
+          newTestCase.input , 
+          newTestCase.output , 
+          newTestCase.arraySize
+          )
+        setNewTestCase({
+          input: '',
+          output: '',
+          arraySize : null
+        })
+        handleAssignmentClose1()
+      }
       
 
     return(
@@ -404,7 +442,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
-        <QuestionList  questions = {questions}/>
+        <QuestionList  questions = {questions} format= {assig.format}/>
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={2}>
@@ -417,7 +455,160 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
            testCases.map((t, index) => (
             <>
                 <p>
-                  <span style={{fontWeight:'bold', fontSize:20}}>Question-{index+1}: </span> <span style={{fontStyle:'italic', fontSize:20}}>{t._doc.questionDescription}</span>
+                  <span style={{fontWeight:'bold', fontSize:20}}>Question-{index+1}: </span> 
+                  <span style={{fontStyle:'italic', fontSize:20}}>{t._doc.questionDescription}</span>
+                  <Button
+                    sx={{
+                      marginLeft: 2,
+                      marginRight: 2,
+                      marginTop: 2,
+                      marginBottom: 2,
+                      padding: 1.5,
+                      borderRadius: 7,
+                      fontFamily: 'Nunito, sans-serif',
+                      width: '15%',
+                    }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={()=> {captureThisQuestion( t.testCases[0].Question , t._doc.isInputArray )                  }}
+                    startIcon={<VscNewFile style={{ fontSize: 25 }} />}
+                  >
+                    Add TestCase
+                  </Button>
+      <Modal
+        open={isAssignmentViewed1}
+        onClose={handleAssignmentClose1}
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={isAssignmentViewed1}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '90%',
+              maxWidth: '800px',
+              transform: 'translate(-50%, -50%)',
+              bgcolor: 'white',
+              boxShadow: 24,
+              p: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-around',
+              borderRadius: '25px',
+            }}
+          >
+           <Typography variant="h6">
+              { 'Add Test Case'}
+            </Typography>
+           
+            <FormControl sx={{ marginBottom: 2 }}>
+              <p
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  marginBottom: 0,
+                  marginTop: 10,
+                  padding: 0,
+                  textAlign: 'start',
+                  fontWeight: 'bold',
+                }}
+              >
+                Input
+              </p>
+              <TextField
+                id="input"
+                value={newTestCase.input}
+                onChange={(e) =>
+                   setNewTestCase({
+                        ...newTestCase,
+                        input: e.target.value,
+                      })
+                }
+              />
+            </FormControl>
+            <FormControl sx={{ marginBottom: 2 }}>
+              <p
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  marginBottom: 0,
+                  marginTop: 10,
+                  padding: 0,
+                  textAlign: 'start',
+                  fontWeight: 'bold',
+                }}
+              >
+                Output
+              </p>
+              <TextField
+                id="output"
+                value={newTestCase.output}
+                onChange={(e) =>
+                  setNewTestCase({
+                        ...newTestCase,
+                        output: e.target.value,
+                      })
+                }
+              />
+            </FormControl>
+           {
+            isArray &&
+            <FormControl sx={{ marginBottom: 2 }}>
+            <p
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginBottom: 0,
+                marginTop: 10,
+                padding: 0,
+                textAlign: 'start',
+                fontWeight: 'bold',
+              }}
+            >
+              Array Size
+            </p>
+            <TextField
+              id="arraySize"
+              value={newTestCase.arraySize}
+              type='number'
+              onChange={(e) =>
+                setNewTestCase({
+                      ...newTestCase,
+                      arraySize: e.target.value,
+                    })
+              }
+            />
+          </FormControl>
+           }
+            <Button
+              sx={{
+                marginLeft: 2,
+                marginRight: 2,
+                marginTop: 2,
+                marginBottom: 2,
+                padding: 1.5,
+                borderRadius: 7,
+                fontFamily: 'Nunito, sans-serif',
+                width: '40%',
+              }}
+              variant="contained"
+              color="secondary"
+              onClick={() => addTestCase()}
+            >
+              {'Add Test Case'}
+            </Button>
+          </Box>
+        </Fade>
+      </Modal>
                 </p>
                 <TestcaseList testCases = {t.testCases}  />
               </>

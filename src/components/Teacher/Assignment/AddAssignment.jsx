@@ -14,7 +14,6 @@ import { useLocation } from "react-router-dom";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
-
 import dayjs from 'dayjs';
 import * as Yup from "yup";
 import Select from '@mui/material/Select';
@@ -30,6 +29,7 @@ import {BsArrowRightSquare } from "react-icons/bs";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import http from '../../../../Axios/axios';
 
 const steps = [
   'Assignment Details',
@@ -41,13 +41,13 @@ const steps = [
 const AddAssignment = () => {
   const theme = useTheme()
   const assignment = useLocation().state?.assig
- 
   const location = useLocation();
   const [fileURL,setfileURL] =React.useState('')
+  const [id , setID] = React.useState('')
   const [courseID , setcourseID] = React.useState(null)
   const [showAddQuestion, setShowAddQuestion] = React.useState(false);
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
-  const [Assignment, setAssignment] = React.useState({ CourseID: "" ,assignmentNumber:  "",description:  "" 
+  const [Assignment, setAssignment] = React.useState({ CourseID: "" ,description:  "" 
   ,dueDate: "",dueTime:"",format: "",noOfQuestions : ""});
 
   const [file,setFile] = React.useState(null)
@@ -56,25 +56,23 @@ const AddAssignment = () => {
 
   useEffect(() => {
     if (assignment) {
-      setFile(assignment.assignmentFile);
+      setID(assignment._id);
     } else {
       setFile(null);
     }
   }, [assignment]);
 
   const initialValues = assignment === undefined ? {
-    assigNo:"",
-    description:"",
     
+    description:"",
     dueDate:"",
     dueTime:"",
     format:"",
     questions:"",
 
   } : {
-    assigNo : assignment.assignmentNumber,
-    description : assignment.description,
    
+    description : assignment.description, 
     dueDate : dayjs(assignment.dueDate),
     dueTime: dayjs(assignment.dueTime),
     format : assignment.format,
@@ -84,9 +82,7 @@ const AddAssignment = () => {
   useFormik({
     initialValues,
     validationSchema: Yup.object({
-      assigNo: Yup.number().min(1).max(6).required("Please Enter the Assig Number"),
       description: Yup.string().min(2).max(55).required("Please Enter the course Description"),
-     
       dueDate: Yup.date().required("Due Date is required"),
       dueTime:Yup.date().required("Due Time is required"),
       format: Yup.string().ensure().required("Please Enter the format"),
@@ -104,9 +100,6 @@ const AddAssignment = () => {
     const id = location.pathname.split('/').pop();
     setcourseID(id)
   })
-
-
- 
 
   useEffect(() => {
     if(file === null)
@@ -126,19 +119,13 @@ const AddAssignment = () => {
         setAssignment(
           {
             CourseID : courseID,
-            assignmentNumber: values.assigNo,
             description:values.description,
             dueDate:values.dueDate.$d,
             dueTime:values.dueTime,
             format:values.format,
             noOfQuestions : values.questions
-
-
           }
         )
-
-
-
         console.log(values.dueTime)
         setShowAddQuestion(true);
           if (currentQuestion <= values.questions ) {
@@ -149,19 +136,44 @@ const AddAssignment = () => {
     }
     }
   };
+
+  const updateAssig = async (assigId,description,dueDate,dueTime,format)=>{
+    const res = await http.put('/assignment/editAssignment', 
+      {
+        assigId,description,dueDate,dueTime,format
+      })
+
+
+    if(res.status === 200){
+      navigate(`/Teacher/ViewUploadedAssig/${courseID}/${assigId}`)
+    }
+    else{
+      alert("Error editing assignment")
+    }
+
+    
+  }
+
+
+  const handleUpdate = async () => {
+ if(values.dueDate.$d < new Date())  {
+    alert("Due Date cannot be lesser than upload date")
+  }
+    else if( values.description != '' && values.format != null) {
+      await updateAssig(id, values.description, values.dueDate,values.dueTime, values.format)
+    }
+    else{
+      alert(" Please fill required fields")
+    }
+  };
   
   window.addEventListener('beforeunload', function (e) {
-    
-      
       const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave this page?';
       (e || window.event).returnValue = confirmationMessage; 
       return confirmationMessage;
     
   });
   
-
-  
-
  if(showAddQuestion) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
@@ -172,9 +184,7 @@ const AddAssignment = () => {
         assig={Assignment}
         courseID={courseID}
        />
-)}
-
-
+      )}
     </Box>
   )
  }
@@ -183,7 +193,7 @@ const AddAssignment = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Box>
         <p className='underline' style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 1, fontSize:25 }}>
-          {assignment  == undefined ? "Add Assignment" : "Edit Assignment"}</p>
+          {assignment  == undefined ? "Add Assignment" : "Edit Assignment Details"}</p>
       </Box>
       <Box sx={{width:'95%', marginTop:3}}>
         <Stepper activeStep={0} alternativeLabel color="secondary">
@@ -214,21 +224,7 @@ const AddAssignment = () => {
         <form onSubmit={handleSubmit}>
         <Box sx={{ display: 'flex',marginTop:3,marginBottom:5, flexDirection: 'column', backgroundColor: 'white', borderRadius: 2, paddingLeft: 5, paddingRight: 5,boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'  }}>
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-              <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
-                  <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Assignment Number</p>
-                  <TextField sx={{  width: '100%', marginTop:2 }}
-                  id="outlined-multiline-flexible"
-                  label="Assignment No"
-                  type = 'number'
-                  color='secondary'
-                  name='assigNo'
-                  value={values.assigNo}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />{errors.assigNo && touched.assigNo ? (
-                  <p style={{ color: 'red', marginTop: 0, marginLeft: 4, marginBottom: 0 }}>{errors.assigNo}</p>
-                ) : null}
-              </Box>
+             
               <Box sx={{display:'flex', flexDirection:'column',width:'49%'}}>
                 <p style={{display:'flex',flexDirection:'row',marginBottom:0,marginTop:33,padding:0, textAlign:'start', fontWeight:'bold'}}>Select File Format *</p>
                 <FormControl sx={{ marginTop: 2, width: '100%' }}>
@@ -244,11 +240,11 @@ const AddAssignment = () => {
                   >
                     <MenuItem value={".java"}>.java</MenuItem>
                     <MenuItem value={".cpp"}>.cpp</MenuItem>
-                    <MenuItem value={".cs"}>.cs</MenuItem>
-                    <MenuItem value={".c"}>.c</MenuItem>
-                    <MenuItem value={".masm"}>.masm</MenuItem>
-                    <MenuItem value={".mips"}>.mips</MenuItem>
+                    <MenuItem value={".R"}>.R</MenuItem>
                     <MenuItem value={".py"}>.py</MenuItem>
+                    <MenuItem value={".c"}>.c</MenuItem>
+                    
+                    
                   </Select>
                 </FormControl>
               {errors.format && touched.format ? (
@@ -337,6 +333,8 @@ const AddAssignment = () => {
 
                   
             </Box>
+            {
+            assignment  == undefined ?
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
               
               <Box sx={{display:'flex', flexDirection:'column',width:'100%'}}>
@@ -359,13 +357,22 @@ const AddAssignment = () => {
               </Box>
               
             </Box>
+            :
+            <></>
+            }
             
 
             <Box sx={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
               <Box sx={{ width: '55%', marginBottom: 5, marginTop: 4 }}>
-                <Button type='submit' onClick={() => { handleClick() }} endIcon={<BsArrowRightSquare/>}
+                <Button type='submit' 
+                onClick={ 
+                  assignment  == undefined ?  
+                  () => {  handleClick() } :
+                  () => {  handleUpdate() }
+                } 
+          endIcon={<BsArrowRightSquare/>}
                   variant="contained" color="secondary"  sx={{fontFamily:'Nunito, sans-serif', width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold',borderRadius: 2 }}>
-                  {assignment == undefined ? 'Next' : 'Edit questions'}
+                  {assignment == undefined ? 'Next' : 'Update'}
                 </Button>
               </Box>
             </Box>

@@ -2,7 +2,7 @@ import { SignalCellularNullRounded } from "@mui/icons-material";
 import http from "./axios";
 
 
-export const Register = async (fullName, email, password, role,profilePic='/',cv=null,userName = null) => {
+export const Register = async (fullName, email, password, role,profilePic=null,cv=null,userName = null) => {
     var userID
     await http.post("/users/signup",{
       fullName, email, password, role,profilePic
@@ -100,3 +100,30 @@ export const getProfile = async () => {
       return null
   }
 };
+
+
+export const updateProfile = async (
+  userName = null, fullName, email, role,  profilePic=null, cv=null
+  ) => {
+  var userID
+  await http.put("/users/UpdateProfile",{
+    userName, fullName, email, role,  profilePic, cv
+      })
+    .then( async  (response)=>{
+      console.log(response);//response data
+      console.log(response.data);//response data
+      
+      userID = response.data._id
+      console.log( userID )
+
+      console.log(response.status);//Status code
+      console.log(response.statusText);//OK for 200
+      console.log(response.headers);//Header
+     
+
+      })
+    .catch( (error) => {
+        console.log(error);
+      });
+      
+}

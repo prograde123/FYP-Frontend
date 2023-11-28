@@ -59,12 +59,8 @@ function EditToolbar(props) {
   const navigate = useNavigate()
   const theme = useTheme();
   const [row, setRow] = React.useState(initialRows);
-
   const [searched, setSearched] = React.useState("");
-  
  
-  
-  
   const requestSearch = (searchedVal) => {
     const filteredRows = initialRows.filter((row) => {
       return row.title.toLowerCase().includes(searchedVal.toLowerCase());
@@ -185,17 +181,7 @@ export default function Contents() {
             label="View"
             onClick={()=>navigate(`/Teacher/ViewUploadedAssig/${courseID}/${id}`)}
           />,
-          <GridActionsCellItem
-          icon={<TbEdit style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
-          label="Edit"
-            onClick={() => {
-              navigate(`/Teacher/AddAssignment/${courseID}`, {
-                // state: { course: courses.find(c =>  c._id === id) },
-                state: { assig: rows.find(row =>  row._id === id) },
-              });
-            }} 
-            
-          />,
+         
           <GridActionsCellItem
           icon={<RiDeleteBin5Line style={{color:theme.palette.secondary.main,fontSize:25,":hover":{fontSize:30}}}/>}
           label="Delete"
