@@ -4,15 +4,38 @@ import SimilarityResult from './test2';
 import storage from './firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { Button } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import http from '../Axios/axios';
 
 const FileUploadForm = () => {
   const [fileA, setFileA] = useState(null);
   const [fileB, setFileB] = useState(null);
   const [result, setResult] = useState([]);
-  const [currQuestion , setCurrQuestion] = useState(null)
+  const [currQuestion , setCurrQuestion] = useState(null)  
+  const [userID, setUserId] = useState(null);
+  const [students_for_comparison , setStudents_for_comparison] = useState(null)
+
+  const  { aid } = useParams()
 
 
-  const fetchFile_to_be_checked = async (AssignmentID, userID, index, format) => {
+  const fetchStudentIDS = async () =>{
+    const res = await http.get(`/assignment/getStudentIds/${aid}`)
+    // console.log(res.data.studentInfo)
+      const students = res.data.studentInfo.filter(student =>  student.id != userID )
+       console.log(students)
+       setStudents_for_comparison(students)
+  }
+
+  useEffect(() => {
+    const userJSON = localStorage.getItem("User");
+    const user = JSON.parse(userJSON);
+    setUserId(user.userID._id);
+
+    fetchStudentIDS()
+  
+  }, []);
+
+  const fetchFile_to_be_checked = async (AssignmentID,index, format) => {
     try {
       const fileRef = ref(
         storage,
@@ -20,7 +43,7 @@ const FileUploadForm = () => {
       );
 
       const downloadURL = await getDownloadURL(fileRef);
-      console.log('Download URL:', downloadURL);
+      //console.log('Download URL:', downloadURL);
 
       const response = await fetch(downloadURL);
       if (!response.ok) {
@@ -28,7 +51,7 @@ const FileUploadForm = () => {
       }
 
       const fileBlob = await response.blob();
-      console.log(`File: ${fileBlob}`);
+     // console.log(`File: ${fileBlob}`);
 
       const customFileObject = new File([fileBlob], `Q${index + 1}${format}`, {
         type: fileBlob.type,
@@ -36,7 +59,7 @@ const FileUploadForm = () => {
       });
 
       setFileA(customFileObject);
-      console.log('File fetched successfully.');
+    //  console.log('File fetched successfully.');
       
       return customFileObject
     } catch (error) {
@@ -53,7 +76,7 @@ const FileUploadForm = () => {
     );
 
     const downloadURL = await getDownloadURL(fileRef);
-    console.log('Download URL:', downloadURL);
+    //console.log('Download URL:', downloadURL);
 
     
     const response = await fetch(downloadURL);
@@ -78,23 +101,26 @@ const FileUploadForm = () => {
 };
  
   const handleSubmit = async () => {
-    const Assig_id = '65242fcfe45348a1ece15c0b';
-    const student_TO_be_checked = '64f0b6b7448605ec2c77b79a';
-    const SubmittedSids = ['6513f3c68049d9b3df93e296'];
-    const assigFormat = '.c';
-    const numberOfQuestions = 1;
+
+
+    
+    const assigFormat = '.py';
+    const numberOfQuestions = 3;
   
     for (let index = 0; index < numberOfQuestions; index++) {
       setFileA(null);
-      const a = await fetchFile_to_be_checked(Assig_id, student_TO_be_checked, index, assigFormat);
+      const a = await fetchFile_to_be_checked(aid,  index, assigFormat);
       setCurrQuestion(index + 1);
   
-      for (let j = 0; j < SubmittedSids.length; j++) {
+      for (let j = 0; j < students_for_comparison.length; j++) {
         try {
           setFileB(null);
-          const b = await fetchFile_for_comaprison(Assig_id, SubmittedSids[j], index, assigFormat);
-          console.log(a)
-          console.log(b)
+         console.log( " Question: " , index + 1);
+          console.log("Student Id: " , students_for_comparison[j].id)
+          console.log("Student Name: " , students_for_comparison[j].name)
+          const b = await fetchFile_for_comaprison(aid, students_for_comparison[j].id, index, assigFormat);
+          // console.log(a)
+          // console.log(b)
         
           const formDataB = new FormData();
           formDataB.append('file_a', a);

@@ -35,7 +35,7 @@ function App() {
         <Route path="/StudentSignUp" element={<SignUpStudent />} />
         <Route path="/Teacher/*" element={<TeacherBody />} />
         <Route path="ForgotPassword" element={<ForgotPassword />} />
-        <Route path="/testPlagiarism"  element={<FileUploadForm />} />
+        <Route path="/testPlagiarism/:aid"  element={<FileUploadForm />} />
         
         <Route path="OTPVerification" element={<OTP />} />
         <Route path="/Student/*" element={<StudentBody />} />
