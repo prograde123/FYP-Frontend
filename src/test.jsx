@@ -118,7 +118,7 @@ const FileUploadForm = () => {
 
   return (
     <div>
-      <Button onClick={handleSubmit}>
+      <Button onClick={handleSubmit} sx={{backgroundColor:'#1665b5',color:'white', fontWeight:'bold', padding:2, borderRadius:10, marginRight:7, fontFamily:'nunito, sans-serif', ":hover":{backgroundColor:'#1665b5',color:'white'}}}>
           Check Plagiarism
       </Button>
           {result.map((res, index) => (
