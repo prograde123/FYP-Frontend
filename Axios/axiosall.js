@@ -103,22 +103,16 @@ export const getProfile = async () => {
 
 
 export const updateProfile = async (
-  userName = null, fullName, email, role,  profilePic=null, cv=null
+  userName = null, fullName, email, profilePic=null, cv=null
   ) => {
-  var userID
+    console.log(profilePic)
   await http.put("/users/UpdateProfile",{
-    userName, fullName, email, role,  profilePic, cv
+    userName, fullName, email,  profilePic, cv
       })
     .then( async  (response)=>{
-      console.log(response);//response data
+     
       console.log(response.data);//response data
       
-      userID = response.data._id
-      console.log( userID )
-
-      console.log(response.status);//Status code
-      console.log(response.statusText);//OK for 200
-      console.log(response.headers);//Header
      
 
       })
