@@ -30,7 +30,7 @@ import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 200;
 
-const navItems = ['Home', 'Courses', 'About', 'Contact',];
+const navItems = ['Home', 'All Courses', 'Reports',];
 
 export default function DrawerAppBar() {
   const navigate = useNavigate();
@@ -99,7 +99,7 @@ export default function DrawerAppBar() {
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton className="fontlink" sx={{ textAlign: 'center' }}>
-              <Link href="#" sx={{ textDecoration: 'none', color: 'black' }}>
+              <Link href="/Student/Home" sx={{ textDecoration: 'none', color: 'black' }}>
                 {item}
               </Link>
             </ListItemButton>
@@ -108,7 +108,7 @@ export default function DrawerAppBar() {
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: 'center' }}>
             <Button
-              onClick={handleProfileOpen}
+              onClick={deleteAll}
               sx={{
                 fontWeight: 'bold',
                 ':hover': {
@@ -120,11 +120,11 @@ export default function DrawerAppBar() {
                 paddingRight: 4,
                 paddingTop: 2,
                 paddingBottom: 2,
-                backgroundColor: newtheme.palette.secondary.background,
+                backgroundColor: newtheme.palette.secondary.footer,
                 color: newtheme.palette.primary.background,
               }}
             >
-              Sign Up
+              Sign Out
             </Button>
           </ListItemButton>
         </ListItem>
@@ -163,7 +163,7 @@ export default function DrawerAppBar() {
                   All Courses
                   </Button>
                   
-                  <Button className="fontlink" onClick={()=>{navigate('/')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
+                  <Button className="fontlink" onClick={()=>{navigate('/Student/Home')}} sx={{ color: newtheme.palette.primary.main, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif', marginRight: 2, ":hover": { borderBottom: '4px solid #1665b5' } }}>
                     Reports
                   </Button>
               </div>
@@ -203,7 +203,7 @@ export default function DrawerAppBar() {
                
                 MenuListProps={{onMouseLeave: handleMenuCloseProfile}}
                 >
-                  <MenuItem sx={{fontFamily: 'Nunito, sans-serif',}}>My profile</MenuItem>
+                  <MenuItem sx={{fontFamily: 'Nunito, sans-serif',}} onClick={() => { navigate('/Student/Profile') }}>My profile</MenuItem>
                   <MenuItem sx={{fontFamily: 'Nunito, sans-serif',}} onClick={(e) => {
               e.preventDefault()
               deleteAll()}}>Logout</MenuItem>

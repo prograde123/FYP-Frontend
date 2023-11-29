@@ -15,6 +15,7 @@ import Submit from '../Assignment/Components/SubmitQuestions';
 import Result from '../Assignment/Result';
 import ViewUploadedAssig from '../Assignment/ViewUploadedAssignment';
 import ViewCourseDetails from '../Course/ViewCourseDetails';
+import ViewProfile from '../Profile/ViewProfile'
 
 const StudentBody = () => {
   return (
@@ -35,6 +36,7 @@ const StudentBody = () => {
             <Route path="/SubmitAssignment/:aid" element= {<Submit />} />
             <Route path='/Result/:aid' element={<Result />} />
             <Route path='/Course/:id' element={<ViewCourseDetails />} />
+            <Route path='/Profile' element={<ViewProfile />} />
           </Routes>
         </Box>
         <Footer />
