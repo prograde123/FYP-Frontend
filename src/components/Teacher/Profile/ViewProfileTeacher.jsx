@@ -38,6 +38,9 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Person2Icon from '@mui/icons-material/Person2';
 import BeatLoader from "react-spinners/BeatLoader";
 
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from "../../../firebase";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
  
@@ -96,6 +99,9 @@ function ViewProfile() {
   const [previousPass, setPreviousPass] = React.useState('')
   const [pass, setPass] = React.useState('')
   const [Cpass, setCPass] = React.useState('')
+  const [image, setImage] = React.useState(null);
+  const [selectedImageName, setSelectedImageName] = React.useState("");
+  const [imgURL, setImageURL] = React.useState(null)
 
   const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -103,11 +109,18 @@ function ViewProfile() {
     const fetchProfile = async () => {
       setLoading(true)
         const profile = await getProfile()
-        setProfileData(profile)   
+        setProfileData(profile) 
+       
+        setName(profile.fullName)
+        setEmail(profile.email)
         setLoading(false) 
     }
     const handleEditProfile = async () => {
-        updateProfile( null, name, email, 'Teacher',  '/', null)
+
+      console.log(imgURL)
+
+        const res = await updateProfile( null, name, email, imgURL, null)
+        setProfileOpen(false)
         fetchProfile()
     }
 
@@ -116,10 +129,38 @@ function ViewProfile() {
     
   },[])
 
-  if(profileData){
-    console.log(profileData)
-  }
+ 
+
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setImage(selectedFile);
+    setSelectedImageName(selectedFile ? selectedFile.name : ""); 
+    handleClickImage(selectedFile)
+  };
   
+  const handleClickImage = (pic) => {
+    console.log("image is  " , pic)
+    const imgRef = ref(storage, `ProfilePic/${profileData._id}`);
+    const uploadTask = uploadBytesResumable(imgRef, pic);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(progress);
+      },
+      (error) => {
+        console.log("error " , error);
+      },
+      () => {
+        console.log("success!");
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          console.log("i am download URL " , downloadURL)
+          await setImageURL(downloadURL);
+          return downloadURL
+        });
+      }
+    );
+  };
 
   return (
     <>
@@ -300,11 +341,22 @@ function ViewProfile() {
                                       Profile Picture*
                                       <Button variant="outlined" component="label" color='secondary' 
                                       sx={{ width: '100%', padding: 0.5, borderStyle: 'dashed', borderRadius: 2 }}>
-                                        <Button variant="dashed" component="label" sx={{ color: '#999999' }}>
-                                        Click to browse or <br />
-                                        Drag and Drop Files
-                                        <input hidden accept="file/*" multiple type="file" />
-                                    </Button></Button></p>
+                                       <Button
+                                          variant="dashed"
+                                          component="label"
+                                          sx={{ color: "#999999" }}
+                                        >
+                                          Click to browse or <br />
+                                          Drag and Drop Files
+                                          <input 
+                                          name="image"
+                                          onChange={handleImageChange}
+                                          hidden
+                                          accept="image/*"
+                                          multiple
+                                          type="file" />
+                                        </Button>
+                                    </Button></p>
                                 </Box>
                                 <br/>
                                 <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
@@ -313,7 +365,7 @@ function ViewProfile() {
                                       variant="contained" color="secondary" 
                                        sx={{ width: '100%', padding: 2, fontSize: 16, 
                                        fontWeight: 'bold', marginTop: 1,borderRadius:2 }}
-                                       onClick={()=>{handleEditProfile}}
+                                       onClick={()=>{handleEditProfile()}}
                                        >
                                       Save Changes
                                   </Button>
@@ -463,7 +515,9 @@ function ViewProfile() {
                           <br/>
                           <Box sx={{ marginTop: 1, display:'flex', flexDirection:'row', justifyContent:'center',width:'40%'}}>
                             <Button 
-                              variant="contained" color="secondary" sx={{ width: '100%', padding: 2, fontSize: 16, fontWeight: 'bold', borderRadius:2 }}>
+                              variant="contained" color="secondary" 
+                              sx={{ width: '100%', padding: 2, fontSize: 16,
+                               fontWeight: 'bold', borderRadius:2 }}>
                               Save New Password
                               </Button>
                           </Box>

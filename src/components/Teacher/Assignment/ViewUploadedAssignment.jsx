@@ -91,7 +91,7 @@ const ViewUploadedTeacherAssig = ()=> {
 
     const [qid , setqid] = React.useState(null)
     const [isArray, setisArray] = React.useState(false)
-
+  const [TotalMarks,setTotalMarks] = React.useState(0)
     const [newTestCase, setNewTestCase] = React.useState({
       input: '',
       output: '',
@@ -140,10 +140,11 @@ useEffect(() => {
       setFile(response.data.PdfDataUrl);
       setQuestions(response.data.Viewquestions);
       settestCases(response.data.TestCase)
+      const sum = response.data.Viewquestions.reduce((total, question) => total + question.questionTotalMarks, 0);
+      setTotalMarks(sum);
+     
       
-      response.data.TestCase.map((t) => {
-        console.log(t)
-      })
+
 
       setLoading(false);
     }).catch((error) => {
@@ -341,7 +342,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                   </Box>
                   <Box> 
                       <p style={{fontWeight:'bolder', margin:0, fontSize:18}}>Marks</p> 
-                      <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Total Points: {assig.totalMarks}</p> 
+                      <p style={{ marginTop:6, fontSize:16, color:'grey'}}>Total Points: {TotalMarks}</p> 
                   </Box>
               </Box>
               
@@ -399,7 +400,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                     <Box sx={{display:'flex' , flexDirection: 'row' , justifyContent:'space-between'}}>
                     <Typography variant='h4' sx={{fontWeight:'bold', paddingBottom:1,}}>Assignment : {assig.assignmentNumber}</Typography>
                 <Box sx={{marginY:'1%'}}>
-                <Typography variant='p' sx={{color:theme.palette.secondary.main}}> <b>Total Marks: </b> {assig.totalMarks}</Typography>
+                <Typography variant='p' sx={{color:theme.palette.secondary.main}}> <b>Total Marks: </b> {TotalMarks}</Typography>
             </Box>
                     </Box>
                     {questions.map((question , index) => (
