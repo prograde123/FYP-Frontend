@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import SimilarityResult from './test2';
-import storage from './firebase';
+import SimilarityResult from './PlagiarismScreen';
+import storage from '../../../firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import http from '../Axios/axios';
+import http from "../../../../Axios/axios";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FileUploadForm = () => {
+    const navigate = useNavigate();
   const [fileA, setFileA] = useState(null);
   const [fileB, setFileB] = useState(null);
   const [result, setResult] = useState([]);
@@ -144,7 +147,7 @@ const FileUploadForm = () => {
 
   return (
     <div>
-      <Button onClick={handleSubmit} sx={{backgroundColor:'#1665b5',color:'white', fontWeight:'bold', padding:2, borderRadius:10, marginRight:7, fontFamily:'nunito, sans-serif', ":hover":{backgroundColor:'#1665b5',color:'white'}}}>
+      <Button onClick={handleSubmit} sx={{backgroundColor:'#1665b5',color:'white', fontWeight:'bold', padding:3, borderRadius:10, marginRight:7, fontFamily:'nunito, sans-serif', ":hover":{backgroundColor:'#1665b5',color:'white'}}}>
           Check Plagiarism
       </Button>
           {result.map((res, index) => (
