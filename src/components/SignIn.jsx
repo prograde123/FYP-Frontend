@@ -16,7 +16,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
 import LoginIcon from '@mui/icons-material/Login';
-import { login } from '../../Axios/axiosall';
+import { login, loginStudent } from '../../Axios/axiosall';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Backdrop from '@mui/material/Backdrop';
@@ -26,7 +26,8 @@ import { ImFacebook } from 'react-icons/im';
 import { CircleGrid } from "react-awesome-shapes";
 import GoogleImage from '../../src/assets/google.png'
 import FbImage from '../../src/assets/fb.png'
-
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 function SignIn() {
     const theme = useTheme()
@@ -49,6 +50,21 @@ function SignIn() {
         console.log(p)
         setUser(JSON.parse(user));
     }
+
+    const AuthStudent = async (token) => {
+        // const res = 
+        const decoded = jwtDecode(token);
+        console.log(decoded.email)
+
+       await loginStudent(decoded.email)
+        // if(res){
+        //     navigate('/')
+        // }
+        
+       
+
+    }
+
 
     useEffect(() => {
         getUser();
@@ -231,8 +247,22 @@ function SignIn() {
                                     <p variant='body1' sx={{ color: theme.palette.primary.main }} >- OR -</p>
                                 </Box>
                                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',marginBottom:3  }}>
-                            <Button variant="outlined" color='secondary' sx={{padding:2, borderRadius:2}}> <img src={GoogleImage} height={28} style={{ marginRight: 5 }} />SignIn with Google</Button>
-                            <Button variant="outlined" color='secondary' sx={{padding:2, borderRadius:2}}> <img src={FbImage} height={28} style={{ marginRight: 5 }} />SignIn with Facebook</Button>
+                            
+
+                                  <GoogleLogin
+                                        onSuccess={(res)=>{
+                                            AuthStudent(res.credential)
+                                        }}  
+
+                                        onFailure={()=>{
+                                            alert('Unauthorized User')
+                                        }}
+
+                                        onError={() => {
+                                        console.log('Login Failed');
+                                        }}
+                                        />
+
                         </Box>
                             </Box>
                         </Box>
