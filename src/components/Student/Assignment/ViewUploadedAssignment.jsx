@@ -17,6 +17,7 @@ import newtheme from "../../../Themenew";
 import BeatLoader from "react-spinners/BeatLoader";
 import noCoursesImage from "../../../assets/noCourses.png"
 import { FiArrowRightCircle } from "react-icons/fi";
+import FileUploadForm from "./PlagiarismButton";
 
 const ViewUploadedAssig = () => {
   const { cid, aid } = useParams();
@@ -403,10 +404,11 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                   sx={{
                     padding: 2,
                     fontSize: 16,
-                    borderRadius: 8,
+                    borderRadius: 10,
                     marginTop: "3%",
                     paddingRight: "2%",
                     paddingLeft: "2%",
+                    fontFamily:'nunito, sans-serif',
                     backgroundColor: newtheme.palette.secondary.footer,
                     color: newtheme.palette.primary.background,
                     ":hover": {
@@ -439,6 +441,11 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                     ? "View Result"
                     : PastDueDate ? "Due Date has passed" : "Submit Assignment"}
                 </Button>
+                
+                <Box sx={{marginTop:6, marginLeft:4}}>
+                  <FileUploadForm />
+                </Box>
+                
                 <Button
                   variant="contained"
                   color="secondary"
@@ -451,7 +458,8 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                     display: (PastDueDate || isAlreadySubmitted1 || !isAlreadySubmitted) ? "none" : "block",               
                          padding: 2,
                     fontSize: 16,
-                    borderRadius: 8,
+                    borderRadius: 10,
+                    marginLeft:4,
                     marginTop: "3%",
                     paddingRight: "2%",
                     paddingLeft: "2%",
