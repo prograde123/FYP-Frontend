@@ -65,18 +65,22 @@ const SignUp = () => {
     return true;
   };
 
+  
   const ValidateEmail = () => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email == "") {
+    const emailPattern = /^[a-zA-Z0-9_.-]+@comsats\.edu\.pk$/;
+  
+    if (email === "") {
       setEmailError("Email cannot be empty");
       return false;
     } else if (!emailPattern.test(email)) {
       setEmailError("Email Error");
       return false;
     }
+  
     setEmailError("");
     return true;
   };
+  
 
   const validatePasswords = () => {
     if (pass == "" || Cpass == "") {
@@ -547,17 +551,9 @@ const SignUp = () => {
                     height={28}
                     style={{ marginRight: 5 }}
                   />
-                  Signup with Google
+                
                 </Button>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ padding: 1, borderRadius: 2 }}
-                >
-                  {" "}
-                  <img src={FbImage} height={28} style={{ marginRight: 5 }} />
-                  Signup with Facebook
-                </Button>
+                
               </Box>
             </Box>
           </Box>

@@ -560,28 +560,8 @@ const SignUpStudent = () => {
                   width: "80%",
                 }}
               >
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ padding: 1, borderRadius: 2 }}
-                >
-                  {" "}
-                  <img
-                    src={GoogleImage}
-                    height={28}
-                    style={{ marginRight: 5 }}
-                  />
-                  Signup with Google
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ padding: 1, borderRadius: 2 }}
-                >
-                  {" "}
-                  <img src={FbImage} height={28} style={{ marginRight: 5 }} />
-                  Signup with Facebook
-                </Button>
+               
+               
               </Box>
             </Box>
           </Box>

@@ -1,8 +1,7 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { Button, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import FbImage from "../../../assets/1.jpg";
-import { useNavigate } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useTheme } from "@emotion/react";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -19,7 +18,7 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import Person2Icon from "@mui/icons-material/Person2";
 import { MuiTelInput } from "mui-tel-input";
 import { Link } from "react-router-dom";
-import { Register } from "../../../../Axios/axiosall";
+import { Register, getProfile, updateProfile } from "../../../../Axios/axiosall";
 import Grid from "@mui/material/Grid";
 import { CiEdit } from "react-icons/ci";
 import { ImProfile } from "react-icons/im";
@@ -35,7 +34,8 @@ import Tab from "@mui/material/Tab";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
-
+import http from "../../../../Axios/axios";
+import { useNavigate } from 'react-router-dom';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -70,20 +70,107 @@ function a11yProps(index) {
 }
 
 function ViewProfile() {
-  const theme = useTheme();
-  const [name, setName] = React.useState("abc");
-  const [email, setEmail] = React.useState("abc@gmail");
+  const theme = useTheme(); 
+  const navigate = useNavigate();
+  const [profileData, setProfileData] = React.useState(null)
+
+  const [name, setName] = React.useState('')
+  const [email, setEmail] = React.useState('')
   const [previousPass, setPreviousPass] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [Cpass, setCPass] = React.useState("");
   const [value, setValue] = React.useState(0);
+  const [image, setImage] = React.useState(null);
+
+  const [loading, setLoading] = React.useState(false);
   const [isProfileOpen, setProfileOpen] = React.useState(false);
+  const [selectedImageName, setSelectedImageName] = React.useState("");
+
+  const [imgURL, setImageURL] = React.useState(null)
+
   const handleProfileOpen = () => setProfileOpen(true);
   const handleProfileClose = () => setProfileOpen(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setImage(selectedFile);
+    setSelectedImageName(selectedFile ? selectedFile.name : ""); 
+    handleClickImage(selectedFile)
+  };
+  
+  const handleClickImage = (pic) => {
+    console.log("image is  " , pic)
+    const imgRef = ref(storage, `ProfilePic/${profileData._id}`);
+    const uploadTask = uploadBytesResumable(imgRef, pic);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(progress);
+      },
+      (error) => {
+        console.log("error " , error);
+      },
+      () => {
+        console.log("success!");
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          console.log("i am download URL " , downloadURL)
+          await setImageURL(downloadURL);
+          return downloadURL
+        });
+      }
+    );
+  };
+
+  const handleChangePassword = async ()=> {
+
+    if(pass !== Cpass){
+      alert('Passwords do not match')
+    }
+    else if(pass === Cpass && previousPass === pass){
+      alert('New Password should be different')
+    }
+    else{
+      try {
+        const res = await http.put('/users/UpdatePassword' , { previousPass, pass })
+        alert(res.data.message)
+        setPass('')
+        setPreviousPass('')
+        setCPass('')
+      } catch (error) {
+        alert(error.response.data.message)
+      }
+    }
+    
+}
+
+  const fetchProfile = async () => {
+      const profile = await getProfile()
+      setProfileData(profile) 
+     
+      setName(profile.fullName)
+      setEmail(profile.email)
+  }
+
+  useEffect(() => {
+    fetchProfile()
+    
+  },[])
+
+
+  const handleEditProfile = async () => {
+
+    console.log(imgURL)
+
+      const res = await updateProfile( null, name, email, imgURL, null)
+      setProfileOpen(false)
+      fetchProfile()
+  }
+
 
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -129,23 +216,10 @@ function ViewProfile() {
               alignItems: "center",
             }}
           >
-            <img height={250} width={250} src={FbImage} style={{borderRadius:165}}></img>
+            <img height={250} width={250} src={profileData?.profilePic? profileData.profilePic:FbImage} style={{borderRadius:165}}></img>
             <p style={{fontWeight:'bold', fontSize:18}}>Student</p>
             <Box sx={{display:'flex', flexDirection:'row'}}>
-              <Button onClick={handlelogout}>
-                  <p
-                    style={{
-                      fontSize: 17,
-                      cursor: "pointer",
-                      padding: 11,
-                      borderRadius: 14,
-                      backgroundColor: 'red',
-                      color: theme.palette.primary.background,
-                    }}
-                  >
-                    <RiDeleteBin5Line fontSize={20} style={{marginBottom:-3}}/> Delete Account
-                  </p>
-              </Button>
+              
               <Button onClick={handlelogout}>
                 <p
                   style={{
@@ -413,41 +487,26 @@ function ViewProfile() {
                                 </Box>
                                 <br />
                                 <Box>
-                                  <p style={{ fontWeight: "bold", margin: 0 }}>
-                                    Profile Picture*
-                                    <Button
-                                      variant="outlined"
-                                      component="label"
-                                      color="secondary"
-                                      sx={{
-                                        width: "100%",
-                                        padding: 0.5,
-                                        borderStyle: "dashed",
-                                        borderRadius: 2,
-                                        borderColor:
-                                          theme.palette.secondary.footer,
-                                        ":hover": {
-                                          borderColor:
-                                            theme.palette.secondary.footer,
-                                        },
-                                      }}
-                                    >
-                                      <Button
-                                        variant="dashed"
-                                        component="label"
-                                        sx={{ color: "#999999" }}
-                                      >
-                                        Click to browse or <br />
-                                        Drag and Drop Files
-                                        <input
+                                <p style={{ fontWeight: 'bold', margin:0, }}>
+                                      Profile Picture*
+                                      <Button variant="outlined" component="label" color='secondary' 
+                                      sx={{ width: '100%', padding: 0.5, borderStyle: 'dashed', borderRadius: 2 }}>
+                                       <Button
+                                          variant="dashed"
+                                          component="label"
+                                          sx={{ color: "#999999" }}
+                                        >
+                                          Click to browse or <br />
+                                          Drag and Drop Files
+                                          <input 
+                                          name="image"
+                                          onChange={handleImageChange}
                                           hidden
-                                          accept="file/*"
+                                          accept="image/*"
                                           multiple
-                                          type="file"
-                                        />
-                                      </Button>
-                                    </Button>
-                                  </p>
+                                          type="file" />
+                                        </Button>
+                                    </Button></p>
                                 </Box>
                                 <br />
                                 <Box
@@ -478,7 +537,7 @@ function ViewProfile() {
                                       },
                                     }}
                                     onClick={() => {
-                                      handleEditProfile;
+                                      handleEditProfile();
                                     }}
                                   >
                                     Save Changes
@@ -579,7 +638,7 @@ function ViewProfile() {
                                 fontWeight: "bold",
                               }}
                             >
-                              abc
+                              Student
                             </p>
                           </Box>
                           <Box
@@ -900,6 +959,7 @@ function ViewProfile() {
                                 color: theme.palette.primary.background,
                               },
                             }}
+                            onClick={()=> handleChangePassword()}
                           >
                             Save New Password
                           </Button>

@@ -37,6 +37,7 @@ const ViewUploadedAssig = () => {
   const [loading, setLoading] = React.useState(false);
   const [noCourses, setNoCourses] = React.useState(false);
 
+  const [TotalMarks,setTotalMarks] = React.useState(0)
   //Teacher
   const [collapsed, setCollapsed] = useState(false);
   const [image, setImage] = useState(true);
@@ -81,7 +82,9 @@ const ViewUploadedAssig = () => {
       setAssig(response.data.Viewassignment);
       setFile(response.data.PdfDataUrl);
       setQuestions(response.data.Viewquestions);
-      
+      const sum = response.data.Viewquestions.reduce(
+        (total, question) => total + question.questionTotalMarks, 0);
+      setTotalMarks(sum);
 
       const DueDate = new Date(response.data.Viewassignment.dueDate)
       const dueTime = new Date(response.data.Viewassignment.dueTime);
@@ -316,7 +319,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                               sx={{ color: newtheme.palette.secondary.footer }}
                             >
                               {" "}
-                              <b>Total Marks: </b> {assig.totalMarks}
+                              <b>Total Marks: </b> {TotalMarks}
                             </Typography>
                           </Box>
                         </Box>
@@ -378,7 +381,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                       Marks
                     </p>
                     <p style={{ marginTop: 6, fontSize: 16, color: "grey" }}>
-                      Total Points: {assig.totalMarks}
+                      Total Points: {TotalMarks}
                     </p>
                   </Box>
             </Box>

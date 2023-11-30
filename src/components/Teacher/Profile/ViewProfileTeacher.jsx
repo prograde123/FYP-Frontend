@@ -40,6 +40,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storage from "../../../firebase";
+import http from '../../../../Axios/axios';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -162,6 +163,28 @@ function ViewProfile() {
     );
   };
 
+  const handleChangePassword = async ()=> {
+
+      if(pass !== Cpass){
+        alert('Passwords do not match')
+      }
+      else if(pass === Cpass && previousPass === pass){
+        alert('New Password should be different')
+      }
+      else{
+        try {
+          const res = await http.put('/users/UpdatePassword' , { previousPass, pass })
+          alert(res.data.message)
+          setPass('')
+          setPreviousPass('')
+          setCPass('')
+        } catch (error) {
+          alert(error.response.data.message)
+        }
+      }
+      
+  }
+
   return (
     <>
     {loading ? (
@@ -228,9 +251,15 @@ function ViewProfile() {
       
             <Box sx={{ width: '100%', marginTop:3 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs example" sx={{color:theme.palette.secondary.main}}>
-                    <Tab icon={<ImProfile size={20}/>} iconPosition="start" sx={{fontWeight:'bold'}} label="Profile Information" {...a11yProps(0)} />
-                    <Tab icon={<RiLockPasswordLine size={20}/>} iconPosition="start" sx={{fontWeight:'bold'}} label="Change Password" {...a11yProps(1)} />
+                  <Tabs variant="scrollable" scrollButtons 
+                  allowScrollButtonsMobile value={value} onChange={handleChange}
+                   aria-label="basic tabs example" sx={{color:theme.palette.secondary.main}}>
+                    <Tab icon={<ImProfile size={20}/>} 
+                    iconPosition="start" sx={{fontWeight:'bold'}} 
+                    label="Profile Information" {...a11yProps(0)} />
+                    <Tab icon={<RiLockPasswordLine size={20}/>}
+                     iconPosition="start" sx={{fontWeight:'bold'}} 
+                     label="Change Password" {...a11yProps(1)} />
                   </Tabs>
                 </Box>
               <CustomTabPanel value={value} index={0}>
@@ -426,9 +455,10 @@ function ViewProfile() {
                       </Box>
                       <Box sx={{marginTop:3, display:'flex', flexDirection:'column', alignItems:'center', width:'100%'}}>
                           <Box sx={{ textDecoration: 'none'}}>
-                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Confirm Password*</p>
+                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Enter Previous Password*</p>
                           <FormControl sx={{ width: '100%', marginRight:2, marginTop:1 }} variant="outlined">
-                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Enter Previous Password</InputLabel>
+                                        <InputLabel htmlFor="outlined-adornment-password"
+                                         color='secondary'>Enter Previous Password</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-password"
                                             color='secondary'
@@ -456,9 +486,10 @@ function ViewProfile() {
                           <br />
                                 
                           <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Confirm Password*</p>
+                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Enter New Password*</p>
                           <FormControl sx={{ width: '100%', marginRight:2, marginTop:1 }} variant="outlined">
-                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Enter New Password</InputLabel>
+                                        <InputLabel htmlFor="outlined-adornment-password" 
+                                        color='secondary'>Enter New Password</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-password"
                                             color='secondary'
@@ -485,9 +516,18 @@ function ViewProfile() {
                                 
                           <br />
                           <Box sx={{ textDecoration: 'none', textAlign: 'center' }}>
-                          <p style={{display:'flex',flexDirection:'row',marginBottom:3,marginTop:0,padding:0, fontWeight:'bold'}}>Confirm Password*</p>
-                          <FormControl sx={{ width: '100%', marginRight:2, marginTop:1 }} variant="outlined">
-                                        <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Confirm New Password</InputLabel>
+                          <p style={{display:'flex',
+                          flexDirection:'row',marginBottom:3
+                          ,marginTop:0,padding:0, 
+                          fontWeight:'bold'}}>
+                           Confirm New Password*
+                            </p>
+                          <FormControl 
+                          sx={{ width: '100%', marginRight:2, marginTop:1 }}
+                           variant="outlined">
+                                        <InputLabel 
+                                        htmlFor="outlined-adornment-password"
+                                         color='secondary'>Confirm New Password</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-password"
                                             color='secondary'
@@ -517,7 +557,10 @@ function ViewProfile() {
                             <Button 
                               variant="contained" color="secondary" 
                               sx={{ width: '100%', padding: 2, fontSize: 16,
-                               fontWeight: 'bold', borderRadius:2 }}>
+                               fontWeight: 'bold', borderRadius:2 }}
+                               onClick={()=> handleChangePassword()}
+                               >
+                                
                               Save New Password
                               </Button>
                           </Box>
