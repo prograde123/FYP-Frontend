@@ -78,7 +78,7 @@ const SignUpStudent = () => {
   };
 
   const ValidateEmail = () => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern = /^(?!.*@comsats\.edu\.pk)[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email == "") {
       setEmailError("Email cannot be empty");
       return false;

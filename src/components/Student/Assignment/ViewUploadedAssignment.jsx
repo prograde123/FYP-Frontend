@@ -177,7 +177,9 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                                     state : { 
                                     format : assig.format,
                                     totalQuestions : totalQuestions,
-                                    questions : questions
+                                    questions : questions,
+                                    student : true,
+                                    studentTobeChecked : null
                                   }})}
                       sx={{textDecoration:'underline',"&:hover": {
                         border: "white",
