@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { TbEdit } from "react-icons/tb";
+import { RiAiGenerate } from "react-icons/ri";
+import { PiStudentFill } from "react-icons/pi";
 
 import {
   ProSidebar,
@@ -32,6 +34,7 @@ import {AiOutlineFundView} from "react-icons/ai";
 import {MdOutlineAssignment} from "react-icons/md";
 import {GiMoebiusStar} from "react-icons/gi";
 import {SlPeople} from "react-icons/sl";
+import { SiGoogleclassroom } from "react-icons/si";
 import {RxDashboard} from "react-icons/rx";
 
 import sidebarBg from "../../assets/bg1.jpg";
@@ -101,7 +104,7 @@ const Sidebar = ({
             {/* <MenuItem style={{fontSize:16}} icon={<PiStudent size={20}/>} onClick={() => { navigate('/Teacher/StudentList') }}>Students</MenuItem>
             <MenuItem style={{fontSize:16}} icon={<SlPeople size={20}/>} onClick={() => { navigate('/Teacher/StudentRequests') }}>Requests</MenuItem> */}
           </SubMenu>
-          <SubMenu style={{fontSize:17}} title={"Assignments"} icon={<RiCodeView size={22}/>}>
+          {/* <SubMenu style={{fontSize:17}} title={"Assignments"} icon={<RiCodeView size={22}/>}>
             <SubMenu style={{fontSize:16}} icon={<CgAdd size={20}/>} title={"Add Assignment"}>
               <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 3.1 </MenuItem>
               <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 3.2 </MenuItem>
@@ -115,7 +118,7 @@ const Sidebar = ({
               <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>Nasm/Masm</MenuItem>
               <MenuItem style={{fontSize:13}} icon={<FaRegLaughWink />}>C</MenuItem>
             </SubMenu>
-          </SubMenu>
+          </SubMenu> */}
           
           <SubMenu style={{fontSize:17}}
             suffix={<span className="badge gray">3</span>}
@@ -126,7 +129,14 @@ const Sidebar = ({
             <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 2</MenuItem>
             <MenuItem style={{fontSize:15}} icon={<FaRegLaughWink />}>Submenu 3</MenuItem>
           </SubMenu>
-          <MenuItem icon={<TbReportAnalytics size={20} />} style={{fontSize:17}}>Reports</MenuItem>
+          <SubMenu style={{fontSize:17}}
+            title={"Reports"}
+            icon={<TbReportAnalytics size={22} />}
+          >
+            <MenuItem  style={{fontSize:15}} icon={<SiGoogleclassroom fontSize={20} />} onClick={() => { navigate('/Teacher/ClassGradeReport') }} >Class Grade Report</MenuItem>
+            <MenuItem style={{fontSize:15}} icon={<PiStudentFill fontSize={20}/>} onClick={() => { navigate('/Teacher/StudentCourseReport') }}>Student Report</MenuItem>
+          </SubMenu>
+          {/* <MenuItem icon={<TbReportAnalytics size={20} />} style={{fontSize:17}}>Reports</MenuItem> */}
           
         </Menu>
       </SidebarContent>
