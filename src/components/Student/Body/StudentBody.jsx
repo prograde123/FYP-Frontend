@@ -16,6 +16,7 @@ import Result from '../Assignment/Result';
 import ViewUploadedAssig from '../Assignment/ViewUploadedAssignment';
 import ViewCourseDetails from '../Course/ViewCourseDetails';
 import ViewProfile from '../Profile/ViewProfile'
+import FileUploadForm from '../Assignment/PlagiarismButton';
 
 const StudentBody = () => {
   return (
@@ -37,6 +38,7 @@ const StudentBody = () => {
             <Route path='/Result/:aid' element={<Result />} />
             <Route path='/Course/:id' element={<ViewCourseDetails />} />
             <Route path='/Profile' element={<ViewProfile />} />
+            <Route path='/CheckPlagiarism/:aid' element={<FileUploadForm />} />
           </Routes>
         </Box>
         <Footer />

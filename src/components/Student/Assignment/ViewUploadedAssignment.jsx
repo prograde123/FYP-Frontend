@@ -31,7 +31,7 @@ const ViewUploadedAssig = () => {
   const [isTeacher, setIsTeacher] = React.useState(false);
   const [isAlreadySubmitted, setIsSubmitted] = React.useState(false);
   const [isAlreadySubmitted1, setIsSubmitted1] = React.useState(false);
-
+  const [totalQuestions , setTotalQuestions] = React.useState(0)
   const [PastDueDate ,setPastDueDate] = React.useState(false)
 
   const [loading, setLoading] = React.useState(false);
@@ -82,6 +82,7 @@ const ViewUploadedAssig = () => {
       setAssig(response.data.Viewassignment);
       setFile(response.data.PdfDataUrl);
       setQuestions(response.data.Viewquestions);
+      setTotalQuestions(response.data.Viewquestions.length);
       const sum = response.data.Viewquestions.reduce(
         (total, question) => total + question.questionTotalMarks, 0);
       setTotalMarks(sum);
@@ -154,16 +155,43 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
     link.click();
   };
 
-  console.log(isAlreadySubmitted1)
-  console.log(PastDueDate)
-  console.log(isAlreadySubmitted)
-  console.log('both with or operator ' ,PastDueDate || isAlreadySubmitted1 || !isAlreadySubmitted)
-
+ 
   return (
     <ThemeProvider theme={newtheme}>
-      <Box sx={{marginTop:10}}>
-      <p style={{ fontWeight: 'bold', marginTop: 0, fontSize:25, marginLeft:9, display:'flex', flexDirection:'row', justifyContent:'center' }}><span className='underline'>Assignment Details</span></p>
+      <Box sx={{marginTop:10, display:'flex', flexDirection:'row', justifyContent:'center'  }}>
+      <p style={{ fontWeight: 'bold', marginTop: 0, fontSize:25, 
+      marginLeft:9,
+     }}><span className='underline'>Assignment Details</span></p>
+      
       </Box>
+     {
+      isAlreadySubmitted &&  PastDueDate &&
+      <Box sx={{
+          marginRight:'7%',display:'flex',
+          flexDirection:'row',
+          justifyContent:'flex-end'}}>
+                    <Button
+                      onClick={()=> 
+                        navigate(`/Student/CheckPlagiarism/${assig._id}` , 
+                                  {
+                                    state : { 
+                                    format : assig.format,
+                                    totalQuestions : totalQuestions,
+                                    questions : questions
+                                  }})}
+                      sx={{textDecoration:'underline',"&:hover": {
+                        border: "white",
+                        color: 'black',
+                        backgroundColor: 'white'
+                      },}}
+                      color='primary'
+                    >
+                        To Check Plagiarism of your assignment Click here
+                    </Button>
+      </Box>
+      }
+    
+
       {loading ? (
           <Box
           sx={{
@@ -445,9 +473,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                     : PastDueDate ? "Due Date has passed" : "Submit Assignment"}
                 </Button>
                 
-                <Box sx={{marginTop:6, marginLeft:4}}>
-                  <FileUploadForm />
-                </Box>
+                
                 
                 <Button
                   variant="contained"
