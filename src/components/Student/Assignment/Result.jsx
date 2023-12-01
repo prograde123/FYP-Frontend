@@ -26,6 +26,7 @@ const Result = () => {
   const [sumTotalMarks, setSumTotalMarks] = useState(0);
   const [sumObtainedMarks1, setObtainedMarks1] = useState(0);
   const [sumTotalMarks1, setSumTotalMarks1] = useState(0);
+  const[showMarks , setShowMarks] = useState(false)
   function getRandom() {
     return Math.random;
   }
@@ -62,8 +63,6 @@ const Result = () => {
       }
       setObtainedMarks(sumO);
       setSumTotalMarks(sumT);
-      console.log(sumObtainedMarks);
-      console.log(sumTotalMarks);
     } catch (error) {
       console.error("Error fetching submissions:", error);
     } finally {
@@ -71,8 +70,22 @@ const Result = () => {
     }
   };
 
+  const doesGotPlagiarism = async () => {
+    try {
+      setLoading(true);
+      const res = await http.get(`/Plagiarism/isSubmitted/${aid}`);
+      setShowMarks(res.data.success)
+      
+      
+    } catch (error) {
+      console.error("Error fetching submissions:", error);
+    } finally {
+      setLoading(false); // Set loading back to false when the API call completes
+    }
+  }
   useEffect(() => {
     getSubmission();
+    doesGotPlagiarism()
   }, []);
 
   return (
@@ -145,7 +158,7 @@ const Result = () => {
                       }}
                     >
                       {" "}
-                      Obtained Marks : {sumObtainedMarks}
+                      Obtained Marks : { showMarks ? sumObtainedMarks : "Submit Plagiarism Report First"}
                     </Typography>
                   </Box>
                   <Box>
@@ -226,6 +239,20 @@ const Result = () => {
                           {" "}
                           Question Marks: {res.TotalMarks}
                         </Typography>
+                       { 
+                       showMarks ?
+                       <Typography
+                          sx={{
+                            marginRight: 3,
+                            fontSize: 16,
+                            fontFamily: "Nunito, sans-serif",
+                          }}
+                        >
+                          {" "}
+                          
+                          Obtained Marks:  {res.ObtainedMarks}/{res.TotalMarks} 
+                        </Typography>
+                        :
                         <Typography
                           sx={{
                             marginRight: 3,
@@ -234,8 +261,10 @@ const Result = () => {
                           }}
                         >
                           {" "}
-                          Obtained Marks: {res.ObtainedMarks}/{res.TotalMarks}
+                          
+                          Obtained Marks:  Check Plagiarism 
                         </Typography>
+                        }
                       </Box>
                     </Box>
 
