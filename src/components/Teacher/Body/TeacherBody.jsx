@@ -22,6 +22,8 @@ import ViewUploadedAssig from "../Assignment/ViewUploadedAssignment";
 import { CiBoxList } from "react-icons/ci";
 import PDFViewer from "../Assignment/pdf";
 import ViewUploadedTeacherAssig from "../Assignment/ViewUploadedAssignment";
+import ReportGenerator from '../Report/ClassGradeReport'
+import StudentIndividualReport from "../Report/StudentIndividualReport";
 
 export default function TeacherBody() {
   const theme = useTheme();
@@ -67,6 +69,8 @@ export default function TeacherBody() {
               <Route path="Dashboard" element={<Dashboard />}></Route>
               <Route path="CreateCourse" element={<CreateCourse />}></Route>
               <Route path="CoursesList" element={<ViewCoursesList />}></Route>
+              <Route path="ClassGradeReport" element={<ReportGenerator />}></Route>
+              <Route path="StudentCourseReport" element={<StudentIndividualReport />}></Route>
               <Route
                 path="CourseDetails/:id"
                 element={<CourseDetails />}
@@ -93,7 +97,6 @@ export default function TeacherBody() {
               path="EditAddQuestion/:courseID/:assignemntID"
               element={<EditedAddQuestion />}
               >
-
               </Route>
               <Route
                 path="ViewSubmittedAssigList"

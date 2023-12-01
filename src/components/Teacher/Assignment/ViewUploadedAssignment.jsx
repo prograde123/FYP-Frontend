@@ -30,6 +30,7 @@ import TestcaseList from './Components/TestcaseList';
 import Contents from './SubmitTable';
 import NoSubmission from './NoSubmission';
 import BeatLoader from "react-spinners/BeatLoader";
+import PlagiarismList from './Components/PlagiarismScanList';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -260,12 +261,12 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
       <Box sx={{display:'flex', flexDirection:'row', marginTop:2}}>
       <Grid container spacing={2}>
           <Grid xs={12} sm={12} md={12} lg={12}>
-          <Tabs variant="scrollable"
-  scrollButtons allowScrollButtonsMobile color="secondary" sx={{color:theme.palette.secondary.main}} value={value} onChange={handleChange} aria-label="icon label tabs example">
+          <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile color="secondary" sx={{color:theme.palette.secondary.main}} value={value} onChange={handleChange} aria-label="icon label tabs example">
             <Tab icon={<FcViewDetails fontSize={25} />} label="Assignment Details" sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
             <Tab icon={<FcQuestions fontSize={25} />} label="Questions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
             <Tab icon={<FcAcceptDatabase fontSize={25}/>} label="Submissions" color='secondary' sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}} />
-            <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Test Cases" sx={{color:theme.palette.secondary.main, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
+            <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Test Cases" sx={{color:theme.palette.secondary.main, marginRight:7, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
+            <Tab icon={<FcPositiveDynamic fontSize={25}/>} label="Plagiarism Scan" sx={{color:theme.palette.secondary.main, fontFamily:'Nunito, sans-serif',fontWeight:'bolder'}}/>
           </Tabs>
           </Grid>
       </Grid>
@@ -617,6 +618,9 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
 
            )
         }
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
+        <PlagiarismList/>
       </CustomTabPanel>
      </>
     )

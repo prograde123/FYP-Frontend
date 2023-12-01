@@ -11,7 +11,7 @@ import StudentBody from "./components/Student/Body/StudentBody";
 import StartPage from "./components/LandingPage/StartPage";
 import ContactUs from "./components/LandingPage/ContactUs";
 import FileUploadForm from "./test";
-
+import ReportGenerator from './components/Teacher/Report/ClassGradeReport'
 
 function Auth() {
   const navigate = useNavigate();
@@ -40,6 +40,7 @@ function App() {
         <Route path="OTPVerification" element={<OTP />} />
         <Route path="/Student/*" element={<StudentBody />} />
         <Route path="/ContactUs" element={<ContactUs />} />
+        <Route path="/report" element={<ReportGenerator />} />
       </Routes>
     </>
   );
