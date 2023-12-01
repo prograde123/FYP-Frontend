@@ -30,7 +30,8 @@ const FileUploadForm = () => {
   const totalQuestions = useLocation().state?.totalQuestions;
   const format = useLocation().state?.format;
   const questions = useLocation().state?.questions
-
+  const student = useLocation().state?.student
+  const studentTobeChecked = useLocation().state?.studentTobeChecked
 
   const fetchStudentIDS = async (Uid) =>{
     const res = await http.get(`/assignment/getStudentIds/${aid}`)
@@ -45,11 +46,18 @@ const FileUploadForm = () => {
   }
 
   useEffect(() => {
+    if(student){
     const userJSON = localStorage.getItem("User");
     const user = JSON.parse(userJSON);
     setUserId(user.userID._id);
     fetchStudentIDS(user.userID._id)
-    setQuestionIds(questions.map(question => question._id))
+  }
+  else{
+    setUserId(studentTobeChecked)
+    fetchStudentIDS(studentTobeChecked)
+  }
+  
+  setQuestionIds(questions.map(question => question._id))
   }, []);
 
   const fetchFile_to_be_checked = async (AssignmentID,index, format) => {
@@ -163,6 +171,7 @@ const FileUploadForm = () => {
       console.log('Max Similarity Percentages:', maxArr);
     
       // mean of maxArr
+      if(student){
       const Overall_PlagiarismPercentage = maxArr.reduce((sum, value) => sum + value, 0) / totalQuestions;
     
       console.log('Overall Plagiarism Percentage:', Overall_PlagiarismPercentage);
@@ -183,6 +192,7 @@ const FileUploadForm = () => {
        {aid , Overall_PlagiarismPercentage ,Checked_With_No_Of_Submissions })
 
        console.log(res.data)
+      }
     }
     
     

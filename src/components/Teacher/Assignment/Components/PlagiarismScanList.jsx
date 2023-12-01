@@ -24,18 +24,17 @@ import { Paper } from '@mui/material';
 
 const initialRows = [
     {
-        id: randomId(),
+        id: '1',  // You can use a string for simplicity
         imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
         name: "Amna",
         email: "Amna@gmail.com",
     },
     {
-        id: randomId(),
+        id: '2',
         imageUrl: 'https://avatars0.githubusercontent.com/u/7895451?s=460&v=4',
         name: "Ahmed",
         email: "Ahmed@gmail.com",
     },
-
 ];
 
 
@@ -78,15 +77,15 @@ EditToolbar.propTypes = {
     setRows: PropTypes.func.isRequired,
 };
 
-export default function Students() {
+export default function Students({PlagiarismReports , format , totalQuestions ,questions}) {
     const theme = useTheme();
     const navigate = useNavigate()
-    const [rows, setRows] = React.useState(initialRows);
+    const [rows, setRows] = React.useState(PlagiarismReports);
     const [rowModesModel, setRowModesModel] = React.useState({});
-
     const handleDeleteClick = (id) => () => {
         setRows(rows.filter((row) => row.id !== id));
     };
+
 
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
@@ -95,12 +94,10 @@ export default function Students() {
     };
 
     const columns = [
-        { field: 'name', headerName: 'Name', width: 130, flex: 1, },
+        { field: 'fullName', headerName: 'Name', width: 130, flex: 1, },
         { field: 'email', headerName: 'Email', width: 130, flex: 1, },
-        { field: 'questions', headerName: 'Total Question', width: 100, flex: 1, },
-        { field: 'Score', headerName: 'Similarity Score', width: 100, flex: 1, },
-        { field: 'omarks', headerName: 'Obtained Marks', width: 100, flex: 1, },
-        { field: 'tmarks', headerName: 'Total Marks', width: 100, flex: 1, },
+        { field: 'Checked_With_No_Of_Submissions', headerName: 'Checked With No Of Submissions', width: 100, flex: 1, },
+        { field: 'Overall_PlagiarismPercentage', headerName: 'Plagiarism Percentage', width: 100, flex: 1, },
         {
             field: 'action',
             type: 'actions',
@@ -108,7 +105,7 @@ export default function Students() {
             flex: 1,
             width: 100,
             cellClassName: 'actions',
-            getActions: ({ id }) => {
+            getActions: ({ row }) => {
                 return [
                     <GridActionsCellItem
                     icon={
@@ -121,11 +118,18 @@ export default function Students() {
                       />
                     }
                     label="View"
-                    // onClick={() => {
-                    //   navigate("/Teacher/CourseDetails/" + id, {
-                    //     state: { course: courses.find((c) => c._id === id) },
-                    //   });
-                    // }}
+                    onClick={()=> 
+                       // console.log(row.userId)
+                        navigate(`/Student/CheckPlagiarism/${row.Assignment}` , 
+                                  {
+                                    state : { 
+                                    format : format,
+                                    totalQuestions : totalQuestions,
+                                    questions : questions,
+                                    student : false,
+                                    studentTobeChecked : row.userId
+                        }})
+                    }
                   />,    
                 ];
             },
@@ -157,7 +161,7 @@ export default function Students() {
                         color: theme.palette.secondary.main,
                     },fontFamily:'Nunito, sans-serif', marginTop: 3, borderRadius: 2, height:'100vh',boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
                 }}
-                rows={rows}
+                rows={PlagiarismReports.map((row) => ({ ...row, id: row._id }))}
                 rowHeight={70}
                 columns={columns}
                 rowModesModel={rowModesModel}

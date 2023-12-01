@@ -89,7 +89,10 @@ const ViewUploadedTeacherAssig = ()=> {
     const [value, setValue] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
     const [noCourses, setNoCourses] = React.useState(false);
-
+    const [Reports , setReports] = React.useState([]);
+    const [gotReports, setgotReports] = React.useState(false);
+    
+  const [totalQuestions , setTotalQuestions] = React.useState(0)
     const [qid , setqid] = React.useState(null)
     const [isArray, setisArray] = React.useState(false)
   const [TotalMarks,setTotalMarks] = React.useState(0)
@@ -130,9 +133,13 @@ const getSubmittedAssignments = async ()=> {
         console.log(error)
       }
 }
-
+ const getReports = async () =>{
+  const res = await http.get(`/Plagiarism/getReports/${aid}`)
+  setgotReports(res.data.success)
+  setReports(res.data.PlagiarismReports)
+ }
 useEffect(() => {
-  setLoading(true);
+  setLoading(true);  
   http.get(`/assignment/viewAssignment/${Assignmentid}`)
     .then((response) => {
       // setLoading(true);
@@ -140,10 +147,12 @@ useEffect(() => {
       // setLoading(false);
       setFile(response.data.PdfDataUrl);
       setQuestions(response.data.Viewquestions);
+      setTotalQuestions(response.data.Viewquestions.length);
       settestCases(response.data.TestCase)
       const sum = response.data.Viewquestions.reduce((total, question) => total + question.questionTotalMarks, 0);
       setTotalMarks(sum);
-     
+      getReports()
+   
       
 
 
@@ -239,8 +248,6 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
         setAssignmentViewed1(true)
       }
       const addTestCase = async () => {
-        console.log(qid)
-        console.log(newTestCase)
         await AddTestCaseInQuestion(
           qid , 
           newTestCase.input , 
@@ -620,7 +627,18 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
         }
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <PlagiarismList/>
+       { 
+       gotReports ? 
+       <PlagiarismList  
+          PlagiarismReports = {Reports}
+          format = {assig.format}
+          totalQuestions = {totalQuestions}
+          questions = {questions}
+        />
+        :
+        <Typography> No One Has got the report </Typography>
+       
+       }
       </CustomTabPanel>
      </>
     )
