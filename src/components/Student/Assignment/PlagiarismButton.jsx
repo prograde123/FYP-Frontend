@@ -198,6 +198,40 @@ const FileUploadForm = () => {
     
   };
   
+
+  const downloadPlagiarismReport = async () => {
+    const url = window.location.href;
+    const assignmentId = url.substring(url.lastIndexOf('/') + 1);
+    console.log(assignmentId)
+
+    const userId = JSON.parse(localStorage.getItem('User')).userID._id;
+    console.log(userId)
+
+    try {
+      const response = await http.get(`/course/downloadPlagiarismReport/${userId}/${assignmentId}`, {
+        responseType: 'blob', // Set responseType as blob
+      });
+
+      // Check if the response is successful
+      if (response.status === 200) {
+        // Convert the response to blob and create a URL
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a temporary link element and trigger the download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Plagiarism_Report.pdf');
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      } else {
+        console.error('Failed to download the report');
+      }
+    } catch (error) {
+      console.error('Error downloading the report:', error);
+    }
+  };
   
 
   return (
@@ -239,7 +273,7 @@ const FileUploadForm = () => {
         result.length > 0 &&
         <>
           <Box sx={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
-        <Button startIcon={<FiDownload/>} sx={{backgroundColor:'#1665b5',color:'white', fontWeight:'bold', padding:2, borderRadius:10, marginRight:7, fontFamily:'nunito, sans-serif', ":hover":{backgroundColor:'#1665b5',color:'white'}}}>
+        <Button onClick={downloadPlagiarismReport} startIcon={<FiDownload/>} sx={{backgroundColor:'#1665b5',color:'white', fontWeight:'bold', padding:2, borderRadius:10, marginRight:7, fontFamily:'nunito, sans-serif', ":hover":{backgroundColor:'#1665b5',color:'white'}}}>
           Download Report
         </Button>
       </Box>

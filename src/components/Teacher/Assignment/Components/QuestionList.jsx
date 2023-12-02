@@ -49,12 +49,12 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginRight: 4 }}>
-      <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom: 1 }}>
+      {/* <Paper sx={{ marginLeft: 2, marginTop: 2, marginBottom: 2, borderBottom: 1 }}>
         <SearchBar value={searched}
           onChange={(searchVal) => requestSearch(searchVal)}
           onCancelSearch={() => cancelSearch()}
         />
-      </Paper>
+      </Paper> */}
     </GridToolbarContainer>
   );
 }
@@ -192,7 +192,7 @@ export default function QuestionList({ questions , format}) {
         </Button>
       <DataGrid
         sx={{
-          paddingX: 2, backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
+          paddingX: 3,paddingY:3, backgroundColor: theme.palette.primary.background, '& .MuiDataGrid-cell:hover': {
             color: theme.palette.secondary.main,
           }, fontFamily: 'Nunito, sans-serif', marginTop: 3, borderRadius: 2, boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
         }}
