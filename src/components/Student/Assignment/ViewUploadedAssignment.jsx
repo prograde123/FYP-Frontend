@@ -169,7 +169,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
       
       </Box>
      {
-      isAlreadySubmitted &&  PastDueDate && !isAlreadyReport &&
+      isAlreadySubmitted &&  PastDueDate &&
       <Box sx={{
           marginRight:'7%',display:'flex',
           flexDirection:'row',
@@ -183,7 +183,8 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
                                     totalQuestions : totalQuestions,
                                     questions : questions,
                                     student : true,
-                                    studentTobeChecked : null
+                                    studentTobeChecked : null,
+                                    isAlreadyReport : isAlreadyReport
                                   }})}
                       sx={{textDecoration:'underline',"&:hover": {
                         border: "white",

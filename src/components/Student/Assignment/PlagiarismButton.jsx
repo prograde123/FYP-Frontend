@@ -26,6 +26,7 @@ const FileUploadForm = () => {
   const [userID, setUserId] = useState(null);
   const [students_for_comparison, setStudents_for_comparison] = useState(null);
   const [noOneSubmitted, setNoOneSubmitted] = useState(false);
+  const [PlagiarismPercentage, setPlagiarismPercentage] = useState(null)
   const { aid } = useParams();
 
   const totalQuestions = useLocation().state?.totalQuestions;
@@ -33,6 +34,7 @@ const FileUploadForm = () => {
   const questions = useLocation().state?.questions;
   const student = useLocation().state?.student;
   const studentTobeChecked = useLocation().state?.studentTobeChecked;
+  const isAlreadyReport = useLocation().state?.isAlreadyReport
 
   const fetchStudentIDS = async (Uid) => {
     const res = await http.get(`/assignment/getStudentIds/${aid}`);
@@ -46,12 +48,20 @@ const FileUploadForm = () => {
     }
   };
 
+  const getPlagiarismReport = async () => {
+    if(isAlreadyReport){
+      const res = await http.get(`/Plagiarism/isSubmitted/${aid}`)
+      setPlagiarismPercentage(res.data.message.Overall_PlagiarismPercentage)
+    }
+  }
+
   useEffect(() => {
     if (student) {
       const userJSON = localStorage.getItem("User");
       const user = JSON.parse(userJSON);
       setUserId(user.userID._id);
       fetchStudentIDS(user.userID._id);
+      getPlagiarismReport()
     } else {
       setUserId(studentTobeChecked);
       fetchStudentIDS(studentTobeChecked);
@@ -185,7 +195,7 @@ const FileUploadForm = () => {
       console.log("Max Similarity Percentages:", maxArr);
 
       // mean of maxArr
-      if (student) {
+      if (!isAlreadyReport) {
         const Overall_PlagiarismPercentage =
           maxArr.reduce((sum, value) => sum + value, 0) / totalQuestions;
 
@@ -193,6 +203,8 @@ const FileUploadForm = () => {
           "Overall Plagiarism Percentage:",
           Overall_PlagiarismPercentage
         );
+
+        setPlagiarismPercentage(Math.round(Overall_PlagiarismPercentage,4))
 
         for (let index = 0; index < totalQuestions; index++) {
           let plag = maxArr[index];
@@ -275,10 +287,10 @@ const FileUploadForm = () => {
     <div>
       <Box
         sx={{
-          marginRight: "7%",
           display: "flex",
           flexDirection: "row",
-          justifyContent: "flex-end",
+          justifyContent: "center",
+          padding:"1%"
         }}
       >
         <Button
@@ -291,7 +303,7 @@ const FileUploadForm = () => {
             borderRadius: 10,
             marginRight: 7,
             fontFamily: "nunito, sans-serif",
-            marginBottom: noOneSubmitted ? "3%" : "10%",
+            marginBottom: noOneSubmitted ? "10%" : "2%",
             ":hover": { backgroundColor: "#1665b5", color: "white" },
           }}
           disabled={noOneSubmitted}
@@ -310,6 +322,18 @@ const FileUploadForm = () => {
             }}
           >
             <Typography variant="h4">No one Else has submitted</Typography>
+          </Box>
+        )}
+         {!noOneSubmitted && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              padding: "4.3%",
+            }}
+          >
+            <Typography variant="h6">Note: Please wait for the Plagiarism to completly check your files before you download Report</Typography>
           </Box>
         )}
       </>
@@ -354,7 +378,31 @@ const FileUploadForm = () => {
             >
               <span className="underline">Plagiarism Scan Report</span>
             </p>
+            <p
+                style={{
+                  fontWeight: "bold",
+                  marginTop: 5,
+                  marginBottom: 45,
+                  fontSize: 22,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "end",
+                  marginRight : "4%"
+                }}
+              >
+                <span> Over All Plagiarism : </span>
+                <span
+                  style={{
+                    color: "red",
+                    marginLeft: 5,
+                  }}
+                >
+                  {" "}
+                  {PlagiarismPercentage}%{" "}
+                </span>
+              </p>
           </Box>
+          
         </>
       )}
       <Box id='wrapper'>
