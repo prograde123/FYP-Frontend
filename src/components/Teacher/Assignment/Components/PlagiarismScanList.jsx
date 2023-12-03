@@ -121,13 +121,14 @@ export default function Students({
             label="View"
             onClick={() =>
               // console.log(row.userId)
-              navigate(`/Student/CheckPlagiarism/${row.Assignment}`, {
+              navigate(`/Teacher/CheckPlagiarism/${row.Assignment}`, {
                 state: {
                   format: format,
                   totalQuestions: totalQuestions,
                   questions: questions,
                   student: false,
                   studentTobeChecked: row.userId,
+                  Over_All_Plagiarism : row.Overall_PlagiarismPercentage
                 },
               })
             }

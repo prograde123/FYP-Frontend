@@ -24,6 +24,7 @@ import PDFViewer from "../Assignment/pdf";
 import ViewUploadedTeacherAssig from "../Assignment/ViewUploadedAssignment";
 import ReportGenerator from '../Report/ClassGradeReport'
 import StudentIndividualReport from "../Report/StudentIndividualReport";
+import FileUploadForm from "../Assignment/PlagiarismButton";
 
 export default function TeacherBody() {
   const theme = useTheme();
@@ -98,6 +99,7 @@ export default function TeacherBody() {
               element={<EditedAddQuestion />}
               >
               </Route>
+              <Route path='/CheckPlagiarism/:aid' element = { <FileUploadForm />} />
               <Route
                 path="ViewSubmittedAssigList"
                 element={<ViewSubmittedAssigList />}
