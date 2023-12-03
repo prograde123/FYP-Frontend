@@ -65,10 +65,9 @@ const SignUp = () => {
     return true;
   };
 
-  
   const ValidateEmail = () => {
     const emailPattern = /^[a-zA-Z0-9_.-]+@comsats\.edu\.pk$/;
-  
+
     if (email === "") {
       setEmailError("Email cannot be empty");
       return false;
@@ -76,11 +75,10 @@ const SignUp = () => {
       setEmailError("Email Error");
       return false;
     }
-  
+
     setEmailError("");
     return true;
   };
-  
 
   const validatePasswords = () => {
     if (pass == "" || Cpass == "") {
@@ -461,20 +459,21 @@ const SignUp = () => {
                       >
                         Click to browse or <br />
                         Drag and Drop Files
-                        <input 
-                        name="image"
-                        onChange={handleImageChange}
-                        hidden
-                        accept="image/*"
-                        multiple
-                        type="file" />
+                        <input
+                          name="image"
+                          onChange={handleImageChange}
+                          hidden
+                          accept="image/*"
+                          multiple
+                          type="file"
+                        />
                       </Button>
                     </Button>
                     {selectedImageName && (
-                    <p style={{ marginTop: 10 }}>
-                      Selected Image: {selectedImageName}
-                    </p>
-                  )}
+                      <p style={{ marginTop: 10 }}>
+                        Selected Image: {selectedImageName}
+                      </p>
+                    )}
                   </Typography>
                 </Box>
               </Box>
@@ -551,9 +550,7 @@ const SignUp = () => {
                     height={28}
                     style={{ marginRight: 5 }}
                   />
-                
                 </Button>
-                
               </Box>
             </Box>
           </Box>
@@ -563,9 +560,15 @@ const SignUp = () => {
       {/* image side */}
       <Box bgcolor={theme.palette.secondary.main} sx={{ width: "58%" }}>
         <Box
-          sx={{ overflow: "hidden", display: "flex", justifyContent: "center" }}
+          sx={{
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            height: "200",
+            marginTop:18
+          }}
         >
-          <img
+          {/* <img
             style={{
               maxWidth: "100%",
               height: "72vh",
@@ -573,9 +576,19 @@ const SignUp = () => {
               marginTop: 50,
             }}
             src="https://png.pngtree.com/png-vector/20220609/ourmid/pngtree-woman-working-at-computer-sitting-at-table-png-image_4840281.png"
-          />
+          /> */}
+
+          <lottie-player
+            src="https://lottie.host/0507cd32-fc15-492a-9313-4dd2b186971a/qqjqQgw8EH.json"
+            background="##FFFFFF"
+            speed="1"
+            loop
+            autoplay
+            direction="1"
+            mode="normal"
+          ></lottie-player>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             flexDirection: "row",
@@ -583,7 +596,7 @@ const SignUp = () => {
           }}
         >
           <CircleGrid color="#696969" size="120px" zIndex={1} />
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
