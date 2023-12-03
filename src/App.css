@@ -3,7 +3,73 @@ p{
   font-family: 'Nunito', sans-serif;
 }
 
-@media only screen and (max-width: 700px) {
+#myLottieAnimation {
+  width: 355px;
+  height: 200px;
+}
+#myLottieAnimation2 {
+  width: '100%';
+  height: 700px;
+}
+#myLottieAnimation3 {
+  height: 600px;
+}
+
+.wrapper{
+  display: flex;
+}
+.wrapper .static-txt{
+  color: black;
+}
+.wrapper .dynamic-txts{
+  margin-left: 1px;
+  margin-top: 0px;
+  height: 90px;
+  font-size: 90px;
+  line-height: 0px;
+  overflow: hidden;
+}
+.dynamic-txts li{
+  list-style: none;
+  color: #FC6D6D;
+  font-size: 60px;
+  font-weight: 500;
+  position: relative;
+  font-family: 'Nunito', sans-serif;
+  font-weight: bolder;
+  top: 0;
+  animation: slide 12s steps(4) infinite;
+}
+@keyframes slide {
+  100%{
+    top: -360px;
+  }
+}
+.dynamic-txts li span{
+  position: relative;
+  margin: 0;
+  line-height: 90px;
+}
+.dynamic-txts li span::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+  border-left: 2px solid #FC6D6D;
+  animation: typing 3s steps(10) infinite;
+}
+@keyframes typing {
+  40%, 60%{
+    left: calc(100% + 30px);
+  }
+  100%{
+    left: 0;
+  }
+}
+
+@media only screen and (max-width: 750px) {
   .example {display: none;}
 }
 

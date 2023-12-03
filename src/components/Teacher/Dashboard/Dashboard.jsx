@@ -373,8 +373,9 @@ function Dashboard() {
               </Button>
             </Box>
           </Box>
-          <Box>
-            <img className="example" src={welcome}></img>
+          <Box className="example" sx={{maxHeight:'10', width:'20'}}>
+            {/* <img className="example" src={welcome}></img> */}
+            <lottie-player className="example" id="myLottieAnimation" src="https://lottie.host/11998279-e778-4cff-81ac-9c5d817778b4/donNh0tGbl.json" background="##FFFFFF" speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
           </Box>
         </Grid>
         <Grid

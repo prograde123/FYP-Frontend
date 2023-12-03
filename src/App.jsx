@@ -9,9 +9,10 @@ import TeacherBody from "./components/Teacher/Body/TeacherBody";
 import { useEffect } from "react";
 import StudentBody from "./components/Student/Body/StudentBody";
 import StartPage from "./components/LandingPage/StartPage";
-import ContactUs from "./components/LandingPage/ContactUs";
+import ContactUs from "./components/StartingPage/ContactUs";
 import FileUploadForm from "./test";
 import ReportGenerator from './components/Teacher/Report/ClassGradeReport'
+import LandingPage from "./components/StartingPage/LandingPage";
 
 function Auth() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function App() {
     <>
       <Routes>
         <Route path="/Auth" element={<Auth />}></Route>
-        <Route path="/" element={<StartPage />}></Route>
+        <Route path="/" element={<LandingPage />}></Route>
         <Route path="/SignIn" element={<SignIn />}></Route>
         <Route path="/TeacherSignUp" element={<SignUpTeacher />} />
         <Route path="/StudentSignUp" element={<SignUpStudent />} />

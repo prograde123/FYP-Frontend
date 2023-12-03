@@ -497,10 +497,10 @@ const SignUpStudent = () => {
                       </Button>
                     </Button>
                     {selectedImageName && (
-                    <p style={{ marginTop: 10 }}>
-                      Selected Image: {selectedImageName}
-                    </p>
-                  )}
+                      <p style={{ marginTop: 10 }}>
+                        Selected Image: {selectedImageName}
+                      </p>
+                    )}
                   </Typography>
                 </Box>
               </Box>
@@ -527,7 +527,7 @@ const SignUpStudent = () => {
                   padding: 2,
                   fontSize: 16,
                   fontWeight: "bold",
-                  marginTop: 1,
+                  marginTop: 2.2,
                   borderRadius: 2,
                 }}
               >
@@ -535,15 +535,15 @@ const SignUpStudent = () => {
               </Button>
             </Box>
 
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-around",
               }}
             >
-              <p sx={{ fontWeight: "bold" }}>- OR -</p>
-            </Box>
+              <p sx={{ fontWeight: "bold" }}></p>
+            </Box> */}
             <Box
               sx={{
                 display: "flex",
@@ -559,10 +559,7 @@ const SignUpStudent = () => {
                   justifyContent: "space-between",
                   width: "80%",
                 }}
-              >
-               
-               
-              </Box>
+              ></Box>
             </Box>
           </Box>
         </Box>
@@ -571,9 +568,15 @@ const SignUpStudent = () => {
       {/* image side */}
       <Box bgcolor={theme.palette.secondary.main} sx={{ width: "58%" }}>
         <Box
-          sx={{ overflow: "hidden", display: "flex", justifyContent: "center" }}
+          sx={{
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            height: "200",
+            marginTop:10
+          }}
         >
-          <img
+          {/* <img
             style={{
               maxWidth: "100%",
               height: "75vh",
@@ -581,9 +584,11 @@ const SignUpStudent = () => {
               marginTop: 30,
             }}
             src="https://png.pngtree.com/png-vector/20220526/ourmid/pngtree-online-registration-or-sign-up-login-for-account-on-smartphone-app-png-image_4740852.png"
-          />
+          /> */}
+
+<lottie-player src="https://lottie.host/8e8fd282-cdc4-43c8-adcf-a007ae6c0d72/wQLZZCLJNt.json" background="##FFFFFF" speed="1"  loop autoplay direction="1" mode="normal"></lottie-player>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             flexDirection: "row",
@@ -591,7 +596,7 @@ const SignUpStudent = () => {
           }}
         >
           <CircleGrid color="#696969" size="120px" zIndex={1} />
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
