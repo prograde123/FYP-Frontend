@@ -10,7 +10,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import "../../App.css"
-
+import logo1 from '.././../assets/logo1.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -149,7 +149,7 @@ export default function DrawerAppBar() {
               <MenuIcon />
             </IconButton>
             <Typography  onClick={() => { navigate('/Student/Home') }} component="div" sx={{cursor:'pointer', flexGrow: 1, display:'flex', flexDirection:'row', textAlign:'center', alignItems:'center',fontSize:30, fontFamily:'Dela Gothic One' }} data-aos="fade-right">
-               <img className='logo' style={{marginRight:10}} height={55} width={55} src='https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg'/>
+               <img className='logo' style={{marginRight:10}} height={40} width={50} src={logo1}/>
               <span style={{ color: newtheme.palette.secondary.footer, fontWeight: 'bolder',fontFamily: 'Nunito, sans-serif',}}>PROGRADE</span>
             </Typography>
             

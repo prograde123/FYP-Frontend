@@ -437,7 +437,7 @@ function LandingPage() {
               </Box>
               <Box>
                 <p style={{ fontWeight: "bolder", fontSize: 22 }}>
-                  Intro. to Python
+                  Introduction to Python
                 </p>
                 <p>
                   Hamburger pork beef shank turducken drumstick pork loin. Pork<br/>
@@ -445,16 +445,16 @@ function LandingPage() {
                   mignon buffalo alcatra swine
                 </p>
                 <ul>
-                  <li style={{marginBottom:15}}>
+                  <li style={{marginBottom:15, fontFamily:'Nunito, sans-serif'}}>
                   Pig swine prosciutto rump pork chop
                   </li>
-                  <li style={{marginBottom:15}}>
+                  <li style={{marginBottom:15, fontFamily:'Nunito, sans-serif'}}>
                   Tail spare ribs capicola flank shank
                   </li>
-                  <li style={{marginBottom:15}}>
+                  <li style={{marginBottom:15, fontFamily:'Nunito, sans-serif'}}>
                   Beef ribs sirloin cupim frankfurter
                   </li>
-                  <li style={{marginBottom:15}}>
+                  <li style={{marginBottom:15, fontFamily:'Nunito, sans-serif'}}>
                   Tail spare ribs capicola flank shank
                   </li>
                 </ul>

@@ -23,6 +23,8 @@ import Backdrop from "@mui/material/Backdrop";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
+import logo1 from '../../assets/logo1.png'
+import logo2 from '../../assets/logo2.png'
 
 const drawerWidth = 200;
 
@@ -124,9 +126,9 @@ export default function StartPageBar() {
             >
               <img
                 style={{ marginRight: 10 }}
-                height={65}
-                width={60}
-                src="https://t3.ftcdn.net/jpg/01/75/47/24/360_F_175472459_m4dpg0n9MIynKofOrRpbw71HO6xgDlVq.jpg"
+                height={40}
+                width={50}
+                src={logo1}
               />
               <span
                 style={{
