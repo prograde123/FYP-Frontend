@@ -31,6 +31,7 @@ const ViewUploadedAssig = () => {
   const [isTeacher, setIsTeacher] = React.useState(false);
   const [isAlreadySubmitted, setIsSubmitted] = React.useState(false);
   const [isAlreadySubmitted1, setIsSubmitted1] = React.useState(false);
+  const [isAlreadyReport, setisAlreadyReport] = React.useState(false);
   const [totalQuestions , setTotalQuestions] = React.useState(0)
   const [PastDueDate ,setPastDueDate] = React.useState(false)
 
@@ -66,6 +67,9 @@ const ViewUploadedAssig = () => {
       if (res1.data.success) {
         setIsSubmitted1(true);
       }
+
+      const res2 = await http.get(`/Plagiarism/isSubmitted/${Assignmentid}`)
+      setisAlreadyReport(res2.data.success)
     } catch (error) {
       console.log(error);
     }finally {
@@ -165,7 +169,7 @@ const formattedTime = formatTimeToAMPM(time.getHours(), time.getMinutes());
       
       </Box>
      {
-      isAlreadySubmitted &&  PastDueDate &&
+      isAlreadySubmitted &&  PastDueDate && !isAlreadyReport &&
       <Box sx={{
           marginRight:'7%',display:'flex',
           flexDirection:'row',
