@@ -39,6 +39,8 @@
     "echarts": "^5.4.3",
     "firebase": "^9.17.1",
     "formik": "^2.2.9",
+    "html2pdf.js": "^0.10.1",
+    "jspdf": "^2.5.1",
     "jwt-decode": "^4.0.0",
     "mui-image": "^1.0.7",
     "mui-one-time-password-input": "^1.1.0",
