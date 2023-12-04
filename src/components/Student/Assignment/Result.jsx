@@ -412,7 +412,7 @@ const Result = () => {
                       }}
                     >
                       {" "}
-                      Obtained Marks : {sumObtainedMarks1}
+                      Obtained Marks : { showMarks ? sumObtainedMarks1 : "Submit Plagiarism Report First"}
                     </Typography>
                   </Box>
                   <Box>
@@ -494,7 +494,9 @@ const Result = () => {
                           {" "}
                           Question Marks: {res.TotalMarks}
                         </Typography>
-                        <Typography
+                        {
+                          showMarks ?
+                          <Typography
                           sx={{
                             marginRight: 3,
                             fontSize: 16,
@@ -502,8 +504,20 @@ const Result = () => {
                           }}
                         >
                           {" "}
-                          Obtained Marks: {res.ObtainedMarks}/{res.TotalMarks}
+                          Obtained Marks:  {res.ObtainedMarks}/{res.TotalMarks}
                         </Typography>
+                        :
+                        <Typography
+                        sx={{
+                          marginRight: 3,
+                          fontSize: 16,
+                          fontFamily: "Nunito, sans-serif",
+                        }}
+                      >
+                        {" "}
+                        Obtained Marks:  Check Plagiarism
+                      </Typography>
+                        }
                       </Box>
                     </Box>
 

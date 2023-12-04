@@ -173,7 +173,7 @@ function Homepage() {
             />
             <Tab
               icon={<BsBootstrapReboot fontSize={25} />}
-              label="R Language"
+              label="A Language"
               sx={{ color: newtheme.palette.secondary.footer, marginRight: 7 ,fontFamily: 'Nunito, sans-serif',fontWeight:'bolder' }}
             />
             <Tab
